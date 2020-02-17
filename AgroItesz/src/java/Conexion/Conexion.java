@@ -30,9 +30,9 @@ public class Conexion {
         return url + serverName + ":" + portNumber + ";databaseName=" + databaseName + ";";//+"selectMethod="+ selectMethod + ";";
     }
 
-    private java.sql.Connection getConnection() {
+    public java.sql.Connection getConnection() {
         try {
-            //Class.forName("com.microsoft.jdbc.sqlserver.SQLServerDriver");
+            Class.forName("Microsoft SQL Server 2005");
             connection = java.sql.DriverManager.getConnection(getConnectionUrl(),
                     userName, password);
             if (connection != null) {
@@ -83,7 +83,7 @@ public class Conexion {
         dm = null;
     }
 
-    private void closeConnection() {
+    public void closeConnection() {
         try {
             if (connection != null) {
                 connection.close();
@@ -94,8 +94,8 @@ public class Conexion {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        Conexion myDbTest = new Conexion();
-        myDbTest.displayDbProperties();
-    }
+//    public static void main(String[] args) throws Exception {
+//        Conexion myDbTest = new Conexion();
+//        myDbTest.displayDbProperties();
+//    }
 }
