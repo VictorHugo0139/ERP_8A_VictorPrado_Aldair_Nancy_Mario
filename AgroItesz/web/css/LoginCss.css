@@ -1,3 +1,13 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 8/12/2019, 10:09:19 PM
+    Author     : Nancy 
+*/
+
 
 /* BASIC */
 
@@ -44,7 +54,7 @@ h2 {
   align-items: center;
   flex-direction: column; 
   justify-content: center;
- /* width: 100%;*/
+ // width: 100%;
   min-height: 100%;
   padding: 20px;
 }
@@ -90,7 +100,7 @@ h2.active {
 /* FORM TYPOGRAPHY*/
 
 input[type=button], input[type=submit], input[type=reset], input[type=password]  {
-  background-color: #808080;
+  background-color: #56baed;
   border: none;
   color: white;
   padding: 15px 80px;
