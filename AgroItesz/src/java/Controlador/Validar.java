@@ -5,6 +5,8 @@
  */
 package Controlador;
 
+import Modelo.Usuarios;
+import Modelo.UsuariosDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class Validar extends HttpServlet {
 
+    UsuariosDAO uDao= new UsuariosDAO();
+    Usuarios usr=new Usuarios();
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -30,18 +35,18 @@ public class Validar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Validar</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Validar at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+//        try (PrintWriter out = response.getWriter()) {
+//            /* TODO output your page here. You may use following sample code. */
+//            out.println("<!DOCTYPE html>");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Servlet Validar</title>");            
+//            out.println("</head>");
+//            out.println("<body>");
+//            out.println("<h1>Servlet Validar at " + request.getContextPath() + "</h1>");
+//            out.println("</body>");
+//            out.println("</html>");
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -70,7 +75,21 @@ public class Validar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        String accion=request.getParameter("accion");
+        if (accion.equalsIgnoreCase("Ingresar")) {
+            String user= request.getParameter("Usuario");
+            String pass= request.getParameter("Password");
+            usr= uDao.validar(user, pass);
+            if(usr.getNombre()!=null){
+                request.setAttribute(user, usr);
+                request.getRequestDispatcher("Controlador?accion=principal").forward(request, response);
+               // request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
+        }else{
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
+        
     }
 
     /**
