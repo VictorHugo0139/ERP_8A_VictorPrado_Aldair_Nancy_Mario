@@ -14,7 +14,7 @@
         <link href="css/LoginCss.css" rel="stylesheet" type="text/css"/>  
     </head>
     <body>
-         <form id="form1" method="POST" action="LoginServlet"> 
+         <form id="form1" method="POST" action="Validar"> 
         
             <div class="wrapper fadeInDown">
                 <div id="formContent">
@@ -26,7 +26,7 @@
 
                     <input type="text" id="login" class="fadeIn second" required name="Usuario" placeholder="Usuario" >
                     <input type="Password" id="password" class="fadeIn third" required name="Password" placeholder="Contraseña">
-                    <input type="submit" class="fadeIn fourth"  onClick="return validarfor();" value="Iniciar sesión">  
+                    <input type="submit" class="fadeIn fourth"   value="Ingresar" name="accion">  
                     
                         <br/>                        
                         <!-- <strong class="ErrorCSS" href="#">Error<strong> -->

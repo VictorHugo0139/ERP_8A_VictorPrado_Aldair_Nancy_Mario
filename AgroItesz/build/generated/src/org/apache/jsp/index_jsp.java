@@ -53,7 +53,7 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        <link href=\"css/LoginCss.css\" rel=\"stylesheet\" type=\"text/css\"/>  \n");
       out.write("    </head>\n");
       out.write("    <body>\n");
-      out.write("         <form id=\"form1\" method=\"POST\" action=\"LoginServlet\"> \n");
+      out.write("         <form id=\"form1\" method=\"POST\" action=\"Validar\"> \n");
       out.write("        \n");
       out.write("            <div class=\"wrapper fadeInDown\">\n");
       out.write("                <div id=\"formContent\">\n");
@@ -65,7 +65,7 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\n");
       out.write("                    <input type=\"text\" id=\"login\" class=\"fadeIn second\" required name=\"Usuario\" placeholder=\"Usuario\" >\n");
       out.write("                    <input type=\"Password\" id=\"password\" class=\"fadeIn third\" required name=\"Password\" placeholder=\"Contraseña\">\n");
-      out.write("                    <input type=\"submit\" class=\"fadeIn fourth\"  onClick=\"return validarfor();\" value=\"Iniciar sesión\">  \n");
+      out.write("                    <input type=\"submit\" class=\"fadeIn fourth\"   value=\"Iniciar sesión\" name=\"accion\">  \n");
       out.write("                    \n");
       out.write("                        <br/>                        \n");
       out.write("                        <!-- <strong class=\"ErrorCSS\" href=\"#\">Error<strong> -->\n");
