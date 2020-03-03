@@ -15,7 +15,7 @@ public class Conexion {
     private final String portNumber = "1433";
     private final String databaseName = "ERP2020";
     private final String userName = "sa";
-    private final String password = "Chitoge39";
+    private final String password = "123.hola";
     private final String statement = "select * from clientes;";
     // Informs the driver to use server a side-cursor,
     // which permits more than one active statement
