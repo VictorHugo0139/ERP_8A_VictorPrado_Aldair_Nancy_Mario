@@ -5,13 +5,15 @@
  */
 package Conexion;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Statement;
 
 public class Conexion {
 
     private java.sql.Connection connection = null;
     private final String url = "jdbc:sqlserver://";
-    private final String serverName = "DESKTOP-1I12CES";
+    String serverName;
     private final String portNumber = "1433";
     private final String databaseName = "ERP2020";
     private final String userName = "sa";
@@ -27,12 +29,23 @@ public class Conexion {
     }
 
     private String getConnectionUrl() {
+        try {
+            InetAddress addr = InetAddress.getLocalHost();
+
+//// IP
+//byte[] ipAddr = addr.getAddress();
+// hostname
+            serverName = addr.getHostName();
+
+        } catch (UnknownHostException uhe) {
+            uhe.printStackTrace();
+        }
         return url + serverName + ":" + portNumber + ";databaseName=" + databaseName + ";";//+"selectMethod="+ selectMethod + ";";
     }
 
     public java.sql.Connection getConnection() {
         try {
-            Class.forName("Microsoft SQL Server 2005");
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = java.sql.DriverManager.getConnection(getConnectionUrl(),
                     userName, password);
             if (connection != null) {
@@ -94,8 +107,8 @@ public class Conexion {
         }
     }
 
-//    public static void main(String[] args) throws Exception {
-//        Conexion myDbTest = new Conexion();
-//        myDbTest.displayDbProperties();
-//    }
+    public static void main(String[] args) throws Exception {
+        Conexion myDbTest = new Conexion();
+        myDbTest.displayDbProperties();
+    }
 }
