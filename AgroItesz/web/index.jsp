@@ -14,7 +14,7 @@
         <link href="css/LoginCss.css" rel="stylesheet" type="text/css"/>  
     </head>
     <body>
-         <form id="form1" method="POST" action="Validar"> 
+         <form id="form1" method="POST" action="Controlador"> 
         
             <div class="wrapper fadeInDown">
                 <div id="formContent">

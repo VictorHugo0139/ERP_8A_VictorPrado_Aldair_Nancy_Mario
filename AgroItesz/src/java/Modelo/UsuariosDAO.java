@@ -1,4 +1,3 @@
-
 package Modelo;
 
 import Conexion.Conexion;
@@ -6,21 +5,24 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class UsuariosDAO {
-    Conexion cn= new Conexion();
+public class UsuariosDAO implements Validar {
+
+    Conexion cn = new Conexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
-    
-    public Usuarios validar(String user, String pw){
-         Usuarios us= new Usuarios();
-         String sql="select * from Usuario where nombre=? and contrasenia=?;";
+    String sql;
+    int r;
+
+    public Usuarios validar(String user, String pw) {
+        Usuarios us = new Usuarios();
+        sql = "select * from Usuario where nombre=? and contrasenia=?;";
         try {
-            con=cn.getConnection();
-            ps=con.prepareStatement(sql);
-//            ps.setString(1, user);
-//            ps.setString(2, pw);
-            rs=ps.executeQuery(sql);
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, user);
+            ps.setString(2, pw);
+            rs = ps.executeQuery();
             while (rs.next()) {
                 us.setNombre(rs.getString("nombre"));
                 us.setContrasenia(rs.getString("contrasenia"));
@@ -29,5 +31,30 @@ public class UsuariosDAO {
         } catch (Exception e) {
         }
         return us;
+    }
+
+    @Override
+    public int validar(Usuarios usr) {
+        String sql = "select * from Usuario where nombre=? and contrasenia=?;";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, usr.getNombre());
+            ps.setString(2, usr.getContrasenia());
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                r=r+1;
+                usr.setNombre(rs.getString("nombre"));
+                usr.setContrasenia(rs.getString("contrasenia"));
+                usr.setEstatus(rs.getString("estatus").charAt(0));
+            }
+            if (r==1) {
+                return 1;
+            }else{
+                return 0;
+            }
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }

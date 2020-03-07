@@ -1,6 +1,8 @@
 
 package Controlador;
 
+import Modelo.Usuarios;
+import Modelo.UsuariosDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -11,6 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 public class Controlador extends HttpServlet {
 
+    UsuariosDAO usrDao= new UsuariosDAO();
+    Usuarios usr= new Usuarios();
+    int r;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -23,12 +29,17 @@ public class Controlador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String accion=request.getParameter("accion");
-        switch(accion){
-            case "principal":
+        if(accion.equals("Ingresar")){
+            String nom=request.getParameter("Usuario");
+            String contra=request.getParameter("Password");
+            usr.setNombre(nom);
+            usr.setContrasenia(contra);
+            r=usrDao.validar(usr);
+            if (r==1) {
                 request.getRequestDispatcher("principal.jsp").forward(request, response);
-                break;
-            default:
-                throw new AssertionError();
+            }else{
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
         }
     }
 
