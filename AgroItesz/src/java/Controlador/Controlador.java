@@ -32,8 +32,9 @@ public class Controlador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String accion=request.getParameter("accion");
-        if(accion.equals("Ingresar")){
-            String nom=request.getParameter("Usuario");
+        switch(accion){
+            case "Ingresar":
+                String nom=request.getParameter("Usuario");
             String contra=request.getParameter("Password");
             usr.setNombre(nom);
             usr.setContrasenia(contra);
@@ -47,9 +48,23 @@ public class Controlador extends HttpServlet {
             }else{
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
-        }else{
-            cn.closeConnection();
+                break;
+            case "Salir":
+                cn.closeConnection();
             request.getRequestDispatcher("index.jsp").forward(request, response);
+                break;
+            case "Cultivos":
+                request.getRequestDispatcher("ViewCultivos.jsp").forward(request, response);
+                break;
+            case "Clientes":
+                request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
+                break;
+            case "Transportes":
+                request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
+                break;
+            case "Socios":
+                request.getRequestDispatcher("ViewSocios.jsp").forward(request, response);
+                break;
         }
     }
 

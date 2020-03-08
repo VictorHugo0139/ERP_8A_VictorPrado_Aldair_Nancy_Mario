@@ -57,7 +57,7 @@
         </style>
     <img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Edición de clientes</title>
+    <title>Edicion de Asociaciones</title>
 </head>
 
 <body style="background-color: #dfd7f5;">
@@ -65,7 +65,7 @@
         <nav>
             <ul>
                 <li>
-                    <a>Clientes</a>
+                    <a>Asociaciones</a>
                 </li>
                 <li class="busqueda">
 
