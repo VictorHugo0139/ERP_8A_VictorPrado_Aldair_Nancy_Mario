@@ -1,10 +1,12 @@
 
 package Controlador;
 
+import Conexion.Conexion;
 import Modelo.Usuarios;
 import Modelo.UsuariosDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public class Controlador extends HttpServlet {
-
+    Conexion cn = new Conexion();
+    Connection con;
     UsuariosDAO usrDao= new UsuariosDAO();
     Usuarios usr= new Usuarios();
     int r;
@@ -36,10 +39,17 @@ public class Controlador extends HttpServlet {
             usr.setContrasenia(contra);
             r=usrDao.validar(usr);
             if (r==1) {
+                cn.setUserName(nom);
+                cn.setPassword(contra);
+                con=cn.getConnection();
+                request.getSession().setAttribute("nom", nom);
                 request.getRequestDispatcher("principal.jsp").forward(request, response);
             }else{
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
+        }else{
+            cn.closeConnection();
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
     }
 

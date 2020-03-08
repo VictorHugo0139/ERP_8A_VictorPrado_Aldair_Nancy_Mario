@@ -16,13 +16,21 @@ public class Conexion {
     String serverName;
     private final String portNumber = "1433";
     private final String databaseName = "ERP2020";
-    private final String userName = "sa";
-    private final String password = "123.hola";
+    private String userName = "sa";
+    private String password = "123.hola";
     private final String statement = "select * from clientes;";
     // Informs the driver to use server a side-cursor,
     // which permits more than one active statement
     // on a connection.
     //private final String selectMethod = "Direct";
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     // Constructor
     public Conexion() {

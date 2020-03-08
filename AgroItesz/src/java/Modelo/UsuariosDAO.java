@@ -12,7 +12,7 @@ public class UsuariosDAO implements Validar {
     PreparedStatement ps;
     ResultSet rs;
     String sql;
-    int r;
+    
 
     public Usuarios validar(String user, String pw) {
         Usuarios us = new Usuarios();
@@ -35,6 +35,7 @@ public class UsuariosDAO implements Validar {
 
     @Override
     public int validar(Usuarios usr) {
+        int r=0;
         String sql = "select * from Usuario where nombre=? and contrasenia=?;";
         try {
             con = cn.getConnection();
@@ -46,8 +47,9 @@ public class UsuariosDAO implements Validar {
                 r=r+1;
                 usr.setNombre(rs.getString("nombre"));
                 usr.setContrasenia(rs.getString("contrasenia"));
-                usr.setEstatus(rs.getString("estatus").charAt(0));
+//                usr.setEstatus(rs.getString("estatus").charAt(0));
             }
+            cn.closeConnection();
             if (r==1) {
                 return 1;
             }else{
