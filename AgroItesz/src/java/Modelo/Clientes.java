@@ -2,18 +2,18 @@
 package Modelo;
 
 public class Clientes {
-    int idCliente;
-    String nombre;
-    String razonSocial;
-    float limiteCredito;
-    String direccion;
-    String codigoPostal;
-    String rfc;
-    String telefono;
-    String email;
-    char tipo;
-    int idCiudad;
-    char estado;
+    private int idCliente;
+    private String nombre;
+    private String razonSocial;
+    private float limiteCredito;
+    private String direccion;
+    private String codigoPostal;
+    private String rfc;
+    private String telefono;
+    private String email;
+    private char tipo;
+    private int idCiudad;
+    private char estado;
 
     public Clientes() {
     }
