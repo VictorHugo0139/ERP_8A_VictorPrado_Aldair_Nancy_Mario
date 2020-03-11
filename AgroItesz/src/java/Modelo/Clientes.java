@@ -15,9 +15,6 @@ public class Clientes {
     private int idCiudad;
     private char estado;
 
-    public Clientes() {
-    }
-
     public Clientes(int idCliente, String nombre, String razonSocial, float limiteCredito, String direccion, String codigoPostal, String rfc, String telefono, String email, char tipo, int idCiudad, char estado) {
         this.idCliente = idCliente;
         this.nombre = nombre;

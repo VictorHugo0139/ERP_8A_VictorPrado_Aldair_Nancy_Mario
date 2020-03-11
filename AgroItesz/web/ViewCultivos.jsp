@@ -84,7 +84,48 @@
         </button>
     </div>
     <div style="margin-left: 180px; margin-top: 5px; border: 1px solid #aa0bb0; height: 400px; width: 1000px;">
-
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>#cliente</th>
+                    <th>nombre</th>
+                    <th>razón social</th>
+                    <th>limite crédito</th>
+                    <th>dirección</th>
+                    <th>Código Postal</th>
+                    <th>rfc</th>
+                    <th>teléfono</th>
+                    <th>email</th>
+                    <th>tipo</th>
+                    <th>ciudad</th>
+                    <th>estatus</th>
+                </tr>
+            </thead>
+            <%
+               datos=dao.consultar();
+               for(Cultivos cl : datos){
+                   
+            %>
+            <tbody>
+                <tr>
+                    <th><%= cl.getIdCliente() %></th>
+                    <th><%= cl.getNombre()%></th>
+                    <th><%= cl.getRazonSocial() %></th>
+                    <th><%= cl.getLimiteCredito() %></th>
+                    <th><%= cl.getDireccion() %></th>
+                    <th><%= cl.getCodigoPostal() %></th>
+                    <th><%= cl.getRfc() %></th>
+                    <th><%= cl.getTelefono() %></th>
+                    <th><%= cl.getEmail() %></th>
+                    <th><%= cl.getTipo()%></th>
+                    <th><%= cl.getIdCiudad() %></th>
+                    <th><%= cl.getEstado() %></th>
+                </tr>
+                <%   
+                    }
+                %>
+            </tbody>
+        </table>
     </div>
 </body>
 
