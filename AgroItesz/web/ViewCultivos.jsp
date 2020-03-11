@@ -57,6 +57,29 @@
             nav>ul>li{
                 float: left;
             }
+            
+             #customers {
+                font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            #customers td, #customers th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+            #customers tr:hover {background-color: #ddd;}
+
+            #customers th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #1b0c45;
+                color: white;
+            }
         </style>
     <img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -90,13 +113,16 @@
         </button>
     </div>
     <div style="margin-left: 180px; margin-top: 5px; border: 1px solid #aa0bb0; height: 400px; width: 1000px;">
-        <table border="1">
+        <table width='100%' border='0' cellpadding='0' id='customers' >
             <thead>
                 <tr>
-                    <th>#cultivo</th>
-                    <th>Nombre</th>
-                    <th>costoAsesoria</th>
-                    <th>Estatus</th>
+                     <th id='tde' width='10%' style='border: 0;' scope='col'>idCultivo</th>
+                     <th id='tde' width='25%' style='border: 0;' scope='col'>Nombre</th>
+                     <th id='tde' width='20%' style='border: 0;' scope='col'>costoAseesoria</th>
+                     <th id='tde' width='10%' style='border: 0;' scope='col'>Estatus</th>
+                     <th id='tde' width='15%' style='border: 0;' scope='col'>Consultar</th>
+                     <th id='tde' width='10%' style='border: 0;' scope='col'>Editar </th>                                        
+                     <th id='tde' width='15%' style='border: 0;' scope='col'>Eliminar</th>
                 </tr>
             </thead>
             <%
