@@ -1,10 +1,12 @@
 package Modelo;
 
+
 public class Cultivos {
     private int idCultivo;
     private String nombre;
     private int CostoAsesoria;
     private char estado;
+    //Hola
     
     public Cultivos(int idCultivo, String nombre, int CostoAsesoria, char estado){
         this.idCultivo = idCultivo;
