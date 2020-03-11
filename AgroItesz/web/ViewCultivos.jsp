@@ -1,3 +1,6 @@
+<%@page import="Modelo.CultivosDAO"%>
+<%@page import="java.util.*" %>
+<%@page import="Modelo.Cultivos" %>
 <!DOCTYPE html>
 <html>
 
@@ -59,7 +62,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Edición de Cultivos</title>
 </head>
-
+<%
+    CultivosDAO dao= new CultivosDAO();
+    List<Cultivos> datos = new ArrayList<>();
+%>
 <body style="background-color: #dfd7f5;">
     <header>
         <nav>
@@ -87,38 +93,22 @@
         <table border="1">
             <thead>
                 <tr>
-                    <th>#cliente</th>
-                    <th>nombre</th>
-                    <th>razón social</th>
-                    <th>limite crédito</th>
-                    <th>dirección</th>
-                    <th>Código Postal</th>
-                    <th>rfc</th>
-                    <th>teléfono</th>
-                    <th>email</th>
-                    <th>tipo</th>
-                    <th>ciudad</th>
-                    <th>estatus</th>
+                    <th>#cultivo</th>
+                    <th>Nombre</th>
+                    <th>costoAsesoria</th>
+                    <th>Estatus</th>
                 </tr>
             </thead>
             <%
-               datos=dao.consultar();
+               datos =  dao.consultar();
                for(Cultivos cl : datos){
-                   
+               
             %>
             <tbody>
                 <tr>
-                    <th><%= cl.getIdCliente() %></th>
+                    <th><%= cl.getIdCultivo()%></th>
                     <th><%= cl.getNombre()%></th>
-                    <th><%= cl.getRazonSocial() %></th>
-                    <th><%= cl.getLimiteCredito() %></th>
-                    <th><%= cl.getDireccion() %></th>
-                    <th><%= cl.getCodigoPostal() %></th>
-                    <th><%= cl.getRfc() %></th>
-                    <th><%= cl.getTelefono() %></th>
-                    <th><%= cl.getEmail() %></th>
-                    <th><%= cl.getTipo()%></th>
-                    <th><%= cl.getIdCiudad() %></th>
+                    <th><%= cl.getCostoAsesoria()%></th>
                     <th><%= cl.getEstado() %></th>
                 </tr>
                 <%   
