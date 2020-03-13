@@ -1,7 +1,9 @@
 
-package Modelo;
+package Modelo.datos;
 
 import Conexion.Conexion;
+import Modelo.CRUD;
+import Modelo.Clientes;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

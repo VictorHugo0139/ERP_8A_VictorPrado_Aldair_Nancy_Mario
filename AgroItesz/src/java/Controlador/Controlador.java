@@ -3,7 +3,7 @@ package Controlador;
 
 import Conexion.Conexion;
 import Modelo.Usuarios;
-import Modelo.UsuariosDAO;
+import Modelo.datos.UsuariosDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;

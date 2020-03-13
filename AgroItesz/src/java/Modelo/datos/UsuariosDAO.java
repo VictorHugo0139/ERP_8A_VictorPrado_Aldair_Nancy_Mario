@@ -1,6 +1,8 @@
-package Modelo;
+package Modelo.datos;
 
 import Conexion.Conexion;
+import Modelo.Usuarios;
+import Modelo.Validar;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -62,7 +62,31 @@
             </div>
         </div>
     </div>
+                 <div class="row"  id="admin1">               
+            <div class="col-md-4 col-sm-6">
+                <div class="box-for-img text-center">
+                    <a href="css/ofertas.html" class="boton_2 img5 img-responsive" style="height: 230px">
+                        Ofertas
+                    </a>
+
+                </div>
+            </div>
+
+    
+    <div class="row"  id="admin1">               
+            <div class="col-md-4 col-sm-6">
+                <div class="box-for-img text-center">
+                    <a href="socios.png" class="boton_2 img6 img-responsive" style="height: 230px">
+                        Miembros
+                        
+                    </a>
+                </div>
+            </div>
+    </div>
+                     
 </body>
+
+
 <footer class="last-section">
         <div class="container">
             <div class="row">
