@@ -2,11 +2,11 @@
 package Modelo;
 
 public class Usuarios {
-    String nombre;
-    String contrasenia;
-    char estatus;
-    int idTipoEmpleado;
-    int idTipoUsuario;
+    private String nombre;
+    private String contrasenia;
+    private char estatus;
+    private int idTipoEmpleado;
+    private int idTipoUsuario;
 
     public Usuarios() {
     }

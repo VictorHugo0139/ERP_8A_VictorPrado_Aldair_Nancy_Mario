@@ -62,7 +62,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Edición de clientes</title>
 </head>
-<% ClientesDAO dao= new ClientesDAO();
+<% ClientesDAO dao = new ClientesDAO();
     List<Clientes> datos = new ArrayList<>();
 %>
 <body style="background-color: #dfd7f5;">
@@ -73,23 +73,50 @@
                     <a>Clientes</a>
                 </li>
                 <li class="busqueda">
-
-                    <button style="width: 20%; background-color: #15b332; color: #fff; font-weight: bold;" class="busqueda">
+                    <form action="Controlador?accion=ClientesS">
+                        <button style="width: 20%; background-color: #15b332; color: #fff; font-weight: bold;" class="busqueda">
                         <img src="Images/busqueda.jpg" alt="buscar" style="width: 10%; height: 10%;">
                         Buscar
                     </button>
                     <input type="text" name="busqueda" id="busqueda" class="busqueda" style="width: 30%;">
+                    </form>
+                    
                 </li>
             </ul>
         </nav>
     </header>
     <div style="margin-left: 180px; margin-top: 10px">
-        <button style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;" value="ClientesI" name="accion" >
-            Agregar
-        </button>
+        <form action="Controlador?accion=ClientesI" method="POST">
+            <table border="0">
+                <tbody>
+                    <tr>
+                        <td><input type="text" placeholder="Nombre" name="txtNombre"/></td>
+                        <td><input type="text" placeholder="Razón Social" name="txtRazonSocial"/></td>
+                        <td><input type="text" placeholder="Límite de crédito" name="txtLimiteCredito"/></td>
+                        <td><input type="text" placeholder="Dirección" name="txtDireccion"/></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" placeholder="Código Postal" name="txtCodigoPostal"/></td>
+                        <td><input type="text" placeholder="RFC" name="txtRFC"/></td>
+                        <td><input type="text" placeholder="Teléfono" name="txtTelefono"/></td>
+                        <td><input type="text" placeholder="Email" name="txtEmail"/></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" placeholder="Tipo" name="txtTipo"/></td>
+                        <td><input type="text" placeholder="Ciudad" name="txtCiudad"/></td>
+                        <td><input type="text" placeholder="Estatus" name="txtEstatus"/></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
+                Agregar
+            </button>
+        </form>
+
     </div>
     <div style="margin-left: 180px; margin-top: 5px; border: 1px solid #aa0bb0; height: 420px; width: 1002px;">
-<table border="1">
+        <table border="1" >
             <thead>
                 <tr>
                     <th>#cliente</th>
@@ -104,29 +131,43 @@
                     <th>tipo</th>
                     <th>ciudad</th>
                     <th>estatus</th>
+                    <th>Acciones</th> 
                 </tr>
             </thead>
             <%
-               datos=dao.consultar();
-               for(Clientes cl : datos){
-                   
+                int idc;
+                datos = dao.consultar();
+                for (Clientes cl : datos) {
             %>
             <tbody>
                 <tr>
-                    <th><%= cl.getIdCliente() %></th>
-                    <th><%= cl.getNombre()%></th>
-                    <th><%= cl.getRazonSocial() %></th>
-                    <th><%= cl.getLimiteCredito() %></th>
-                    <th><%= cl.getDireccion() %></th>
-                    <th><%= cl.getCodigoPostal() %></th>
-                    <th><%= cl.getRfc() %></th>
-                    <th><%= cl.getTelefono() %></th>
-                    <th><%= cl.getEmail() %></th>
-                    <th><%= cl.getTipo()%></th>
-                    <th><%= cl.getIdCiudad() %></th>
-                    <th><%= cl.getEstado() %></th>
+                    <td><%=  idc = cl.getIdCliente()%></td>
+                    <td><%= cl.getNombre()%></td>
+                    <td><%= cl.getRazonSocial()%></td>
+                    <td><%= cl.getLimiteCredito()%></td>
+                    <td><%= cl.getDireccion()%></td>
+                    <td><%= cl.getCodigoPostal()%></td>
+                    <td><%= cl.getRfc()%></td>
+                    <td><%= cl.getTelefono()%></td>
+                    <td><%= cl.getEmail()%></td>
+                    <td><%= cl.getTipo()%></td>
+                    
+                    <td><%= cl.getIdCiudad()%></td>
+                    <%
+                        if (cl.getEstado() == 'A') {
+                    %>
+                    <td>Activo</td> 
+                    <%    } else {                    %>
+                    <td>Inactivo</td>
+                    <%    }%>
+                    <td> <form action="Controlador?accion=ClientesU&id=<%= idc%>" method="POST">
+                            <button type="submit" >Editar</button>
+                        </form>
+                        <form action="Controlador?accion=ClientesD&id=<%= idc%>" method="POST">
+                            <button type="submit"  >Eliminar</button>
+                        </form>
                 </tr>
-                <%   
+                <%
                     }
                 %>
             </tbody>

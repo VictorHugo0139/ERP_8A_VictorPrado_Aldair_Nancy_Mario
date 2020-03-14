@@ -130,8 +130,36 @@ public class ClientesDAO implements CRUD{
     }
 
     @Override
-    public List<?> filtrar(String campo, String criterio) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Clientes> filtrar(String campo, String criterio) {
+        List<Clientes> datos=new ArrayList<>();
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
+        con=cn.getConnection();
+        sql=("select*from Clientes where ? like '%?%';");
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1, campo);
+            ps.setString(2, criterio);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                datos.add(new Clientes(rs.getInt("idCliente"),
+                        rs.getString("nombre"),
+                        rs.getString("razonSocial"),
+                        rs.getFloat("limiteCredito"),
+                        rs.getString("direccion"),
+                        rs.getString("codigoPostal"),
+                        rs.getString("rfc"),
+                        rs.getString("telefono"),
+                        rs.getString("email"),
+                        rs.getString("tipo").charAt(0),
+                        rs.getInt("idCiudad"),
+                        rs.getString("estatus").charAt(0)));
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return datos;
     }
     
     
