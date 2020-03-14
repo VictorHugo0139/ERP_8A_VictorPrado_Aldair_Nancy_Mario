@@ -16,8 +16,8 @@ public class Conexion {
     String serverName;
     private final String portNumber = "1433";
     private final String databaseName = "ERP2020";
-    private String userName = "sa";
-    private String password = "123.hola";
+    private String userName;
+    private String password;
     private final String statement = "select * from clientes;";
     // Informs the driver to use server a side-cursor,
     // which permits more than one active statement
@@ -65,48 +65,49 @@ public class Conexion {
         }
         return connection;
     }
-
-    /*
-  * Display the driver properties, database details
-     */
-    public void displayDbProperties() {
-        java.sql.DatabaseMetaData dm = null;
-        java.sql.ResultSet result = null;
-        try {
-            connection = this.getConnection();
-            if (connection != null) {
-                dm = connection.getMetaData();
-                System.out.println("Driver Information");
-                System.out.println("\tDriver Name: " + dm.getDriverName());
-                System.out
-                        .println("\tDriver Version: " + dm.getDriverVersion());
-                System.out.println("\nDatabase Information ");
-                System.out.println("\tDatabase Name: " + dm.getDatabaseProductName());
-                System.out.println("\tDatabase Version: " + dm.getDatabaseProductVersion());
-
-                Statement select = connection.createStatement();
-                result = select.executeQuery(statement);
-
-                while (result.next()) {
-                    System.out.println("Nombre: " + result.getString(1) + "\n");
-                    System.out.println("Apellido: " + result.getString(2) + "\n");
-                    System.out.println("Dni: " + result.getString(3) + "\n");
-                }
-                result.close();
-                result = null;
-                closeConnection();
-            } else {
-                System.out.println("Error: No active Connection");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        dm = null;
-    }
-
+//
+//    /*
+//  * Display the driver properties, database details
+//     */
+//    public void displayDbProperties() {
+//        java.sql.DatabaseMetaData dm = null;
+//        java.sql.ResultSet result = null;
+//        try {
+//            connection = this.getConnection();
+//            if (connection != null) {
+//                dm = connection.getMetaData();
+//                System.out.println("Driver Information");
+//                System.out.println("\tDriver Name: " + dm.getDriverName());
+//                System.out
+//                        .println("\tDriver Version: " + dm.getDriverVersion());
+//                System.out.println("\nDatabase Information ");
+//                System.out.println("\tDatabase Name: " + dm.getDatabaseProductName());
+//                System.out.println("\tDatabase Version: " + dm.getDatabaseProductVersion());
+//
+//                Statement select = connection.createStatement();
+//                result = select.executeQuery(statement);
+//
+//                while (result.next()) {
+//                    System.out.println("Nombre: " + result.getString(1) + "\n");
+//                    System.out.println("Apellido: " + result.getString(2) + "\n");
+//                    System.out.println("Dni: " + result.getString(3) + "\n");
+//                }
+//                result.close();
+//                result = null;
+//                closeConnection();
+//            } else {
+//                System.out.println("Error: No active Connection");
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        dm = null;
+//    }
+//
     public void closeConnection() {
         try {
             if (connection != null) {
+                System.out.println("Close conection");
                 connection.close();
             }
             connection = null;
@@ -114,9 +115,9 @@ public class Conexion {
             e.printStackTrace();
         }
     }
-
-    public static void main(String[] args) throws Exception {
-        Conexion myDbTest = new Conexion();
-        myDbTest.displayDbProperties();
-    }
+//
+//    public static void main(String[] args) throws Exception {
+//        Conexion myDbTest = new Conexion();
+//        myDbTest.displayDbProperties();
+//    }
 }
