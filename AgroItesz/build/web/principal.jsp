@@ -31,7 +31,7 @@
             <div class="col-md-4 col-sm-6">
                 <div class="box-for-img text-center">
                     <a href="Controlador?accion=Cultivos" class="boton_2 img1 img-responsive" style="height: 230px">
-                       cultivos<a href="Images/cultivos.png"></a> 
+                        cultivos<a href="Images/cultivos.png"></a> 
                     </a>
 
                 </div>
@@ -60,42 +60,41 @@
                     </a>
                 </div>
             </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="box-for-img text-center">
+                    <a href="Controlador?accion=Ofertas" class="boton_2 img5 img-responsive" style="height: 230px">
+                        Ofertas<a href="Images/Ofertas.png"></a>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-md-4 col-sm-6">
+                <div class="box-for-img text-center">
+                    <a href="Controlador?accion=Miembros" class="boton_2 img6 img-responsive" style="height: 230px">
+                        Miembros<a href="Images/Miembros.png"></a>
+                    </a>
+                </div>
+            </div>
+            
         </div>
-    </div>
-                 <div class="row"  id="admin1">               
-            <div class="col-md-4 col-sm-6">
-                <div class="box-for-img text-center">
-                    <a href="css/ofertas.html" class="boton_2 img5 img-responsive" style="height: 230px">
-                        Ofertas
-                    </a>
 
-                </div>
-            </div>
-
-    
-    <div class="row"  id="admin1">               
-            <div class="col-md-4 col-sm-6">
-                <div class="box-for-img text-center">
-                    <a href="socios.png" class="boton_2 img6 img-responsive" style="height: 230px">
-                        Miembros
-                        
-                    </a>
-                </div>
-            </div>
     </div>
-                     
+                
+
+
 </body>
 
 
 <footer class="last-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
 
-                    <p>© 2020 AGROITESZ</p>
+                <p>© 2020 AGROITESZ</p>
 
-                </div>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 </html>

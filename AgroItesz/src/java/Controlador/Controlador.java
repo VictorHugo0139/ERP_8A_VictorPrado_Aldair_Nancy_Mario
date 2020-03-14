@@ -65,6 +65,12 @@ public class Controlador extends HttpServlet {
             case "Socios":
                 request.getRequestDispatcher("ViewSocios.jsp").forward(request, response);
                 break;
+            case "Ofertas":
+                request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
+                break;
+            case "Miembros":
+                request.getRequestDispatcher("ViewMiembros.jsp").forward(request, response);
+                break;
             case "ClientesI":
                 System.out.println("Estoy ingresando datos");
                 break;

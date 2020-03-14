@@ -1,6 +1,6 @@
-<%@page import="Modelo.datos.CultivosDAO"%>
+<%@page import="Modelo.datos.MiembrosDAO"%>
 <%@page import="java.util.*" %>
-<%@page import="Modelo.Cultivos" %>
+<%@page import="Modelo.Miembros" %>
 <!DOCTYPE html>
 <html>
 
@@ -57,8 +57,8 @@
             nav>ul>li{
                 float: left;
             }
-            
-             #customers {
+
+            #customers {
                 font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
                 border-collapse: collapse;
                 width: 100%;
@@ -81,20 +81,22 @@
                 color: white;
             }
         </style>
+
+
     <img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Edición de Cultivos</title>
+    <title>Edición de Miembros</title>
 </head>
 <%
-    CultivosDAO dao= new CultivosDAO();
-    List<Cultivos> datos = new ArrayList<>();
+    MiembrosDAO dao = new MiembrosDAO();
+    List<Miembros> datos = new ArrayList<>();
 %>
 <body style="background-color: #dfd7f5;">
     <header>
         <nav>
             <ul>
                 <li>
-                    <a>Cultivos</a>
+                    <a>Miembro</a>
                 </li>
                 <li class="busqueda">
 
@@ -116,28 +118,29 @@
         <table width='100%' border='0' cellpadding='0' id='customers' >
             <thead>
                 <tr>
-                     <th id='tde' width='10%' style='border: 0;' scope='col'>idCultivo</th>
-                     <th id='tde' width='25%' style='border: 0;' scope='col'>Nombre</th>
-                     <th id='tde' width='20%' style='border: 0;' scope='col'>costoAseesoria</th>
-                     <th id='tde' width='10%' style='border: 0;' scope='col'>Estatus</th>
-                     <th id='tde' width='15%' style='border: 0;' scope='col'>Consultar</th>
-                     <th id='tde' width='10%' style='border: 0;' scope='col'>Editar </th>                                        
-                     <th id='tde' width='15%' style='border: 0;' scope='col'>Eliminar</th>
+                    <th id='tde' width='10%' style='border: 0;' scope='col'>idCliente</th>
+                    <th id='tde' width='25%' style='border: 0;' scope='col'>idAsosacione</th>
+                    <th id='tde' width='25%' style='border: 0;' scope='col'>FechaIncorporacion</th>
+                    <th id='tde' width='20%' style='border: 0;' scope='col'>Estatus</th>
+                    <th id='tde' width='10%' style='border: 0;' scope='col'>idProducto</th>
+                    <th id='tde' width='15%' style='border: 0;' scope='col'>Consultar</th>
+                    <th id='tde' width='10%' style='border: 0;' scope='col'>Editar </th>                                        
+                    <th id='tde' width='15%' style='border: 0;' scope='col'>Eliminar</th>
                 </tr>
             </thead>
             <%
-               datos =  dao.consultar();
-               for(Cultivos cl : datos){
-               
+                // datos =  dao.consultar();
+                for (Miembros Ml : datos) {
+
             %>
             <tbody>
                 <tr>
-                    <th><%= cl.getIdCultivo()%></th>
-                    <th><%= cl.getNombre()%></th>
-                    <th><%= cl.getCostoAsesoria()%></th>
-                    <th><%= cl.getEstado() %></th>
+                    <th><%= Ml.getIdCliente()%></th>
+                    <th><%= Ml.getdAsosacione()%></th>
+                    <th><%= Ml.getFechaIncorporacion()%></th>
+                    <th><%= Ml.getEstatus()%></th>
                 </tr>
-                <%   
+                <%
                     }
                 %>
             </tbody>
@@ -146,3 +149,4 @@
 </body>
 
 </html>
+

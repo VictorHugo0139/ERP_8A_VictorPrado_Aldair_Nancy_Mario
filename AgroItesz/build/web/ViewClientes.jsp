@@ -1,4 +1,4 @@
-<%@page import="Modelo.ClientesDAO" %>
+<%@page import="Modelo.datos.ClientesDAO" %>
 <%@page import="java.util.*" %>
 <%@page import="Modelo.Clientes" %>
 <!DOCTYPE html>

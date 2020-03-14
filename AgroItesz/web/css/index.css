@@ -84,6 +84,24 @@ body {
     padding: 0 auto;
    background-size:  auto;  
 }
+.img5{
+     background-color: #ABB1AC;
+    background-image: url("../Images/Ofertas.png") ;
+    background-position : center center;
+    background-repeat: no-repeat;
+    margin:20px 20px 10px 20px;
+    padding: 0 auto;
+   background-size:  auto;  
+}
+.img6{
+     background-color: #ABB1AC;
+    background-image: url("../Images/Miembros.png") ;
+    background-position : center center;
+    background-repeat: no-repeat;
+    margin:20px 20px 10px 20px;
+    padding: 0 auto;
+   background-size:  auto;  
+}
 
 
 .download-section {
