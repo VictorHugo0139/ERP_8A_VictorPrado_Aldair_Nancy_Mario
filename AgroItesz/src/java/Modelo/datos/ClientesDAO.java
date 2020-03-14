@@ -71,6 +71,8 @@ public class ClientesDAO implements CRUD{
     public String actualizar(Object obj) {
          Clientes cl=(Clientes) obj;
         String respuesta="";
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
         con=cn.getConnection();
         sql=("update Clientes set nombre=?, razonSocial=?, limiteCredito=?, direccion=?, codigoPostal=?, rfc=?, telefono=?, email=?, tipo=?, idCiudad=?, estatus=? where idCliente=?"); 
         try {
@@ -99,6 +101,8 @@ public class ClientesDAO implements CRUD{
     @Override
     public List<Clientes> consultar() {
         List<Clientes> datos=new ArrayList<>();
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
         con=cn.getConnection();
         sql=("select * from Clientes");
         try {
