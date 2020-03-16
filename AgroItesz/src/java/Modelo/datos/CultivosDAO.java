@@ -51,14 +51,14 @@ public class CultivosDAO implements CRUD {
     }
 
     @Override
-    public String eliminar(Object obj) {
-        Cultivos cl=(Cultivos) obj;
+    public String eliminar(int id) {
+//        Cultivos cl=(Cultivos) obj;
         String respuesta="";
         con=cn.getConnection();
         sql=("delete from Cultivos where idCultivo=? "); 
         try {
             ps=con.prepareStatement(sql);
-            ps.setInt(1, cl.getIdCultivo());
+            ps.setInt(1, id);
             int filas= ps.executeUpdate();
             respuesta="se eliminaron "+filas+" filas correctamente";
             cn.closeConnection();

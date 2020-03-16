@@ -30,6 +30,10 @@ public class Clientes {
         this.estado = estado;
     }
 
+    public Clientes() {
+       
+    }
+
     public int getIdCliente() {
         return idCliente;
     }
