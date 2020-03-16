@@ -24,22 +24,24 @@ public class ClientesDAO implements CRUD{
     public String insertar(Object obj) {
         Clientes cl=(Clientes) obj;
         String respuesta="";
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
         con=cn.getConnection();
-        sql=("insert into clientes values(?,?,?,?,?,?,?,?,?,?,?,?)"); 
+        sql=("insert into Clientes(nombre,razonSocial,limiteCredito,direccion,codigoPostal,rfc,telefono,email,tipo,idCiudad,estatus)\n" +
+"values (?,?,?,?,?,?,?,?,?,?,?)"); 
         try {
             ps=con.prepareStatement(sql);
-            ps.setInt(1, cl.getIdCliente());
-            ps.setString(2, cl.getNombre());
-            ps.setString(3, cl.getRazonSocial());
-            ps.setFloat(4, cl.getLimiteCredito());
-            ps.setString(5, cl.getDireccion());
-            ps.setString(6, cl.getCodigoPostal());
-            ps.setString(7, cl.getRfc());
-            ps.setString(8, cl.getTelefono());
-            ps.setString(9, cl.getEmail());
-            ps.setString(10, ""+cl.getTipo());
-            ps.setInt(11, cl.getIdCiudad());
-            ps.setString(12, ""+cl.getEstado());
+            ps.setString(1, cl.getNombre());
+            ps.setString(2, cl.getRazonSocial());
+            ps.setFloat(3, cl.getLimiteCredito());
+            ps.setString(4, cl.getDireccion());
+            ps.setString(5, cl.getCodigoPostal());
+            ps.setString(6, cl.getRfc());
+            ps.setString(7, cl.getTelefono());
+            ps.setString(8, cl.getEmail());
+            ps.setString(9, ""+cl.getTipo());
+            ps.setInt(10, cl.getIdCiudad());
+            ps.setString(11, ""+cl.getEstado());
             int filas= ps.executeUpdate();
             respuesta="se insertaron "+filas+" filas";
             cn.closeConnection();
@@ -50,14 +52,15 @@ public class ClientesDAO implements CRUD{
     }
 
     @Override
-    public String eliminar(Object obj) {
-        Clientes cl=(Clientes) obj;
+    public String eliminar(int id) {
         String respuesta="";
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
         con=cn.getConnection();
-        sql=("delete from Clientes where idCliente=? "); 
+        sql=("update Clientes set estatus='I' where idCliente=? "); 
         try {
             ps=con.prepareStatement(sql);
-            ps.setInt(1, cl.getIdCliente());
+            ps.setInt(1, id);
             int filas= ps.executeUpdate();
             respuesta="se eliminaron "+filas+" filas";
             cn.closeConnection();
@@ -135,11 +138,46 @@ public class ClientesDAO implements CRUD{
         cn.setUserName(UsuariosDAO.name);
         cn.setPassword(UsuariosDAO.p);
         con=cn.getConnection();
-        sql=("select*from Clientes where ? like '%?%';");
+//        String c="\'"+criterio+"\'";
+        System.out.println(campo+" y "+criterio);
+        sql="select * from Clientes where "+campo+" like '%"+criterio+"%'";
+//        sql=("select * from Clientes where ? like CONCAT( '%',?,'%');");
         try {
             ps=con.prepareStatement(sql);
-            ps.setString(1, campo);
-            ps.setString(2, criterio);
+//            ps.setString(1, campo);
+//            ps.setString(2, criterio);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                datos.add(new Clientes(rs.getInt("idCliente"),
+                        rs.getString("nombre"),
+                        rs.getString("razonSocial"),
+                        rs.getFloat("limiteCredito"),
+                        rs.getString("direccion"),
+                        rs.getString("codigoPostal"),
+                        rs.getString("rfc"),
+                        rs.getString("telefono"),
+                        rs.getString("email"),
+                        rs.getString("tipo").charAt(0),
+                        rs.getInt("idCiudad"),
+                        rs.getString("estatus").charAt(0)));
+                System.out.println(rs.getInt("idCliente")+","+rs.getString("nombre"));
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return datos;
+    }
+    
+    
+    public List<Clientes> consultarId(int id) {
+        List<Clientes> datos=new ArrayList<>();
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
+        con=cn.getConnection();
+        sql=("select * from Clientes where idCliente="+id);
+        try {
+            ps=con.prepareStatement(sql);
             rs=ps.executeQuery();
             while(rs.next()){
                 datos.add(new Clientes(rs.getInt("idCliente"),
@@ -161,6 +199,4 @@ public class ClientesDAO implements CRUD{
         }
         return datos;
     }
-    
-    
 }
