@@ -1,4 +1,3 @@
-
 package Controlador;
 
 import Conexion.Conexion;
@@ -12,14 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 public class Controlador extends HttpServlet {
+
     Conexion cn = new Conexion();
     Connection con;
-    UsuariosDAO usrDao= new UsuariosDAO();
-    Usuarios usr= new Usuarios();
+    UsuariosDAO usrDao = new UsuariosDAO();
+    Usuarios usr = new Usuarios();
     int r;
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,27 +30,27 @@ public class Controlador extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String accion=request.getParameter("accion");
-        switch(accion){
+        String accion = request.getParameter("accion");
+        switch (accion) {
             case "Ingresar":
-                String nom=request.getParameter("Usuario");
-            String contra=request.getParameter("Password");
-            usr.setNombre(nom);
-            usr.setContrasenia(contra);
-            r=usrDao.validar(usr);
-            if (r==1) {
-                cn.setUserName(nom);
-                cn.setPassword(contra);
-                con=cn.getConnection();
-                request.getSession().setAttribute("nom", nom);
-                request.getRequestDispatcher("principal.jsp").forward(request, response);
-            }else{
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            }
+                String nom = request.getParameter("Usuario");
+                String contra = request.getParameter("Password");
+                usr.setNombre(nom);
+                usr.setContrasenia(contra);
+                r = usrDao.validar(usr);
+                if (r == 1) {
+                    cn.setUserName(nom);
+                    cn.setPassword(contra);
+                    con = cn.getConnection();
+                    request.getSession().setAttribute("nom", nom);
+                    request.getRequestDispatcher("principal.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                }
                 break;
             case "Salir":
                 cn.closeConnection();
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
                 break;
             case "Cultivos":
                 request.getRequestDispatcher("ViewCultivos.jsp").forward(request, response);
@@ -67,6 +66,9 @@ public class Controlador extends HttpServlet {
                 break;
             case "Ofertas":
                 request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
+                break;
+            case "OfertasAsosacion":
+                request.getRequestDispatcher("ViewOfertasAsosacion.jsp").forward(request, response);
                 break;
             case "Miembros":
                 request.getRequestDispatcher("ViewMiembros.jsp").forward(request, response);
