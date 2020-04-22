@@ -126,7 +126,7 @@
                 </tr>
             </thead>
             <%
-               datos =  dao.consultar();
+               //datos =  dao.consultar();
                for(Cultivos cl : datos){
                
             %>
