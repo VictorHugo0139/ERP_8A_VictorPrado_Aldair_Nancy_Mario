@@ -45,4 +45,23 @@ public class TransportesDAO implements CRUD{
         }
         return respuesta;
     }
+    
+    @Override
+    public String eliminar(int id) {
+        String respuesta="";
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
+        con=cn.getConnection();
+        sql=("update Transporte set estatus='I' where idUnidadTransporte=? "); 
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas= ps.executeUpdate();
+            respuesta="se eliminaron "+filas+" filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
+    }
 }
