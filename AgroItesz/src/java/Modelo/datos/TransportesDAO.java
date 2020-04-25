@@ -64,4 +64,56 @@ public class TransportesDAO implements CRUD{
         }
         return respuesta;
     }
+    
+    @Override
+    public String actualizar(Object obj) {
+         Transporte tr=(Transporte) obj;
+        String respuesta="";
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
+        con=cn.getConnection();
+        sql=("update UnidadTransporte set placas=?, marca=?, modelo=?, anio=?, capacidad=?, estatus=? where idUnidadTransporte=?"); 
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1, tr.getPlacas());
+            ps.setString(2, tr.getMarca());
+            ps.setString(3, tr.getModelo());
+            ps.setInt(4, tr.getAño());
+            ps.setInt(5, tr.getCapacidad());
+            ps.setString(6, ""+tr.getEstado());
+            ps.setInt(7, tr.getIdTransporte());
+            int filas= ps.executeUpdate();
+            respuesta="se actualizaron "+filas+" filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
+    }
+    
+    @Override
+    public List<Transporte> consultar() {
+        List<Transporte> datos=new ArrayList<>();
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
+        con=cn.getConnection();
+        sql=("select * from UnidadTransporte");
+        try {
+            ps=con.prepareStatement(sql);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                datos.add(new Transporte(rs.getInt("idUnidadTransporte"),
+                        rs.getString("placas"),
+                        rs.getString("marca"),
+                        rs.getString("modelo"),
+                        rs.getInt("anio"),
+                        rs.getInt("capacidad"),
+                        rs.getString("estatus").charAt(0)));
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return datos;
+    }
 }
