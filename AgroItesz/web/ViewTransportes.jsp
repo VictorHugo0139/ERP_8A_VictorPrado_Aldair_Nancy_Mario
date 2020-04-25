@@ -1,4 +1,4 @@
-<%@page import="Modelo.datos.TransportesDAO" %>
+<%@page import="Modelo.datos.TransporteDAO" %>
 <%@page import="java.util.*" %>
 <%@page import="Modelo.Transporte" %>
 <!DOCTYPE html>
@@ -48,7 +48,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Edición de Transportes</title>
 </head>
-<% TransportesDAO dao = new TransportesDAO();
+<% TransporteDAO dao = new TransporteDAO();
     List<Transporte> datos = (List<Transporte>)request.getAttribute("datosCl");
 %>
 <body style="background-color: #dfd7f5;">
