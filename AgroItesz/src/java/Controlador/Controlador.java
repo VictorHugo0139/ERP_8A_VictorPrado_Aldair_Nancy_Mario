@@ -2,8 +2,10 @@ package Controlador;
 
 import Conexion.Conexion;
 import Modelo.Clientes;
+import Modelo.Transporte;
 import Modelo.Usuarios;
 import Modelo.datos.ClientesDAO;
+import Modelo.datos.TransportesDAO;
 import Modelo.datos.UsuariosDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,7 +25,10 @@ public class Controlador extends HttpServlet {
     Usuarios usr = new Usuarios();
     ClientesDAO cldao=new ClientesDAO();
     Clientes cl= new Clientes();
+    TransportesDAO trdao=new TransportesDAO();
+    Transporte tr = new Transporte();
     List<Clientes> datosC= new ArrayList<>();
+    List<Transporte> datosT= new ArrayList<>();
     int r;
     String res;
 
@@ -69,6 +74,8 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
                 break;
             case "Transportes":
+                datosT=trdao.consultar();
+                request.setAttribute("datosTR", datosT);
                 request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
                 break;
             case "Socios":

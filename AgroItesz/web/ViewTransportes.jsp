@@ -1,90 +1,148 @@
+<%@page import="Modelo.datos.TransportesDAO" %>
+<%@page import="java.util.*" %>
+<%@page import="Modelo.Transporte" %>
 <!DOCTYPE html>
 <html>
 
     <head>
         <style>
             /*estilo nav general*/
-            nav{
-                border-radius: 1em;
+            #N {
+                background-color: #1b0c45;
+                margin-left: 13.5%;
+                margin-right: 11%;
             }
-            nav ul{
-                list-style: none;
+            #U {
+                list-style-type: none;
                 padding: 0;
+                overflow: hidden;
+                background-color: #1b0c45;
+                
             }
-            .busqueda{
-                float: right;
-                margin-right: 20px;
-                margin-top: 7px;
-                border-radius: 0.33em;
+            #U li {
+                display: inline;
             }
-            nav li{
-                line-height: 3rem;
-                position: relative;
-            }
-            nav li ul{
-                position: absolute;
-            }
-            nav a{
-                color: #fff;
-                display: block;
-                padding: 0 2.5em;
+            #U li a {
+                font-family: Arial;
+                font-size: 21px;
                 text-decoration: none;
-                font-size: x-large;
-                transition: .5s;
-            }
-            nav a:hover{
-                background: #301b69;
-                color: #fff;
-            }
-            nav li ul{
-                display: none;
-            }
-            nav li:hover ul{
-                display: block;
-            }
-            /*Primer nivel*/
-            nav>ul{
-                background: #1b0c45;
-                display: table;
-                border-radius: 1em;
-                width: 95%;
-                max-width: 1000px;
-                margin: auto;
-            }
-            nav>ul>li{
                 float: left;
+                padding: 10px;
+                background-color: #1b0c45;
+                color: #fff;
+                margin: 0;     
+            }
+            #U li form {
+                width: 443px;
+                margin: 0;
+                font-family: Arial;
+                font-size: 11px;
+                text-decoration: none;
+                float: right;
+                padding: 10px;
+                background-color: #1b0c45;
+                color: #fff;
             }
         </style>
     <img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Edicion de Transportes</title>
+    <title>Edición de Transportes</title>
 </head>
-
+<% TransportesDAO dao = new TransportesDAO();
+    List<Transporte> datos = (List<Transporte>)request.getAttribute("datosCl");
+%>
 <body style="background-color: #dfd7f5;">
     <header>
-        <nav>
-            <ul>
+        <nav id="N">
+            <ul id="U">
                 <li>
-                    <a>Transporte</a>
+                    <a>Transportes</a>
                 </li>
-                <li class="busqueda">
+                <li>
+                    <form action="Controlador?accion=TransportesS" method="POST" >
+                        <input type="text" placeholder="búsqueda" name="busqueda"   > 
+                        <input type="text" placeholder="en base a:" name="campo" > 
+                        <button style="width: 20%; background-color: #15b332; color: #fff; font-weight: bold;"  type="submit">
+                            <img src="Images/busqueda.jpg" alt="buscar" style="width: 10%; height: 10%;">
+                            Buscar
+                        </button>
+                    </form>
 
-                    <button style="width: 20%; background-color: #15b332; color: #fff; font-weight: bold;" class="busqueda">
-                        <img src="Images/busqueda.jpg" alt="buscar" style="width: 10%; height: 10%;">
-                        Buscar
-                    </button>
-                    <input type="text" name="busqueda" id="busqueda" class="busqueda" style="width: 30%;">
                 </li>
             </ul>
         </nav>
     </header>
     <div style="margin-left: 180px; margin-top: 10px">
-        <button style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
-            Agregar
-        </button>
-    </div>
-    <div style="margin-left: 180px; margin-top: 5px; border: 1px solid #aa0bb0; height: 400px; width: 1000px;">
+        <form action="Controlador?accion=TransporteI" method="POST">
+            <table border="0">
+                <tbody>
+                    <tr>
+                        <td><input type="text" placeholder="Placas" name="txtPlacas"/></td>
+                        <td><input type="text" placeholder="Marca" name="txtMarca"/></td>
+                        <td><input type="text" placeholder="Modelo" name="txtModelo"/></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" placeholder="Año" name="txtAño"/></td>
+                        <td><input type="text" placeholder="Capacidad" name="txtCapacidad"/></td>
+                        <td><input type="text" placeholder="Teléfono" name="txtTelefono"/></td>
+                        <td><input type="text" placeholder="Estatus" name="txtEstatus"/></td>
+                    </tr>
+                </tbody>
+            </table>
 
+            <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
+                Agregar
+            </button>
+        </form>
+
+    </div>
+    <div style="margin-left: 180px; margin-top: 5px; border: 1px solid #aa0bb0; height: 420px; width: 1002px;">
+        <table border="1" >
+            <thead>
+                <tr>
+                    <th>#transporte</th>
+                    <th>placas</th>
+                    <th>marca</th>
+                    <th>modelo</th>
+                    <th>Año</th>
+                    <th>Capacidad</th>
+                    <th>estatus</th>
+                    <th>Acciones</th> 
+                </tr>
+            </thead>
+            <%
+                int idc;
+                //datos = dao.consultar();
+                for (Transporte tr : datos) {
+            %>
+            <tbody>
+                <tr>
+                    <td><%=  idc = tr.getIdTransporte()%></td>
+                    <td><%= tr.getPlacas()%></td>
+                    <td><%= tr.getMarca()%></td>
+                    <td><%= tr.getModelo()%></td>
+                    <td><%= tr.getAño()%></td>
+                    <td><%= tr.getCapacidad()%></td>
+                    <%
+                        if (tr.getEstado() == 'A') {
+                    %>
+                    <td>Activo</td> 
+                    <%    } else {                    %>
+                    <td>Inactivo</td>
+                    <%    }%>                        </form>
+
+                    <td> <form action="Controlador?accion=TransporteU&id=<%= idc%>" method="POST">
+                            <button type="submit" value='<%= idc%>' name="idc">Editar</button>
+                        </form>
+                        <form action="Controlador?accion=TransporteD&id=<%= idc%>" method="POST">
+                            <button type="submit" value='<%= idc%>' name="idc">Eliminar</button>
+                        </form>
+                </tr>
+                <%
+                    }
+                %>
+            </tbody>
+        </table>
     </div>
 </body>
 
