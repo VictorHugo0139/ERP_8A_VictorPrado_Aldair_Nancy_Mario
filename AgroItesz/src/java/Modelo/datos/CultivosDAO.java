@@ -93,6 +93,8 @@ public class CultivosDAO implements CRUD {
     public List<Cultivos> consultar() 
     {
           List <Cultivos> datos = new ArrayList<>();
+          cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
         con=cn.getConnection();
         sql = "select * from Cultivos";
         try {

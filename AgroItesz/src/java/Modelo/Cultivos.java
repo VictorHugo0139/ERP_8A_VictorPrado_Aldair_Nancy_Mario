@@ -15,6 +15,10 @@ public class Cultivos {
         this.estado = estado;
     }
 
+    public Cultivos() {
+        
+    }
+
     public int getIdCultivo() {
         return idCultivo;
     }

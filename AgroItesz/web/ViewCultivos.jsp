@@ -87,7 +87,7 @@
 </head>
 <%
     CultivosDAO dao= new CultivosDAO();
-    List<Cultivos> datos = new ArrayList<>();
+    List<Cultivos> datos = (List<Cultivos>)request.getAttribute("datosCl");
 %>
 <body style="background-color: #dfd7f5;">
     <header>

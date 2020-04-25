@@ -2,8 +2,10 @@ package Controlador;
 
 import Conexion.Conexion;
 import Modelo.Clientes;
+import Modelo.Cultivos;
 import Modelo.Usuarios;
 import Modelo.datos.ClientesDAO;
+import Modelo.datos.CultivosDAO;
 import Modelo.datos.UsuariosDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,8 +24,11 @@ public class Controlador extends HttpServlet {
     UsuariosDAO usrDao = new UsuariosDAO();
     Usuarios usr = new Usuarios();
     ClientesDAO cldao=new ClientesDAO();
+    CultivosDAO culdao=new CultivosDAO();
     Clientes cl= new Clientes();
+    Cultivos cul= new Cultivos();
     List<Clientes> datosC= new ArrayList<>();
+    List<Cultivos> datosCu= new ArrayList<>();
     int r;
     String res;
 
@@ -61,6 +66,8 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("index.jsp").forward(request, response);
                 break;
             case "Cultivos":
+                datosCu=culdao.consultar();
+                request.setAttribute("datosCl", datosCu);
                 request.getRequestDispatcher("ViewCultivos.jsp").forward(request, response);
                 break;
             case "Clientes":
@@ -85,10 +92,10 @@ public class Controlador extends HttpServlet {
                 break;
             case "ClientesI":
                 cl=new Clientes(0,
-                        request.getParameter("txtNombre"),
+                        request.getParameter("txtNombre")+" "+request.getParameter("txtApellido"),
                         request.getParameter("txtRazonSocial"),
                         Float.parseFloat(request.getParameter("txtLimiteCredito")),
-                        request.getParameter("txtDireccion"),
+                        request.getParameter("txtCalle")+" No. "+request.getParameter("txtNumero"),
                         request.getParameter("txtCodigoPostal"),
                         request.getParameter("txtRFC"),
                         request.getParameter("txtTelefono"),
@@ -112,7 +119,7 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
                 break;
             case "ClientesS":
-                datosC=cldao.filtrar(request.getParameter("campo"), request.getParameter("busquda"));
+                datosC=cldao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
                 request.setAttribute("datosCl", datosC);
                 request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
                 break;
