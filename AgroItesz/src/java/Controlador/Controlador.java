@@ -4,8 +4,10 @@ import Conexion.Conexion;
 import Modelo.Clientes;
 import Modelo.Cultivos;
 import Modelo.Usuarios;
+import Modelo.Transporte;
 import Modelo.datos.ClientesDAO;
 import Modelo.datos.CultivosDAO;
+import Modelo.datos.TransporteDAO;
 import Modelo.datos.UsuariosDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,6 +31,9 @@ public class Controlador extends HttpServlet {
     Cultivos cul= new Cultivos();
     List<Clientes> datosC= new ArrayList<>();
     List<Cultivos> datosCu= new ArrayList<>();
+    TransporteDAO trdao=new TransporteDAO();
+    Transporte tr = new Transporte();
+    List<Transporte> datosT= new ArrayList<>();
     int r;
     String res;
 
