@@ -130,6 +130,13 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosC);
                 request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
                 break;
+            case "TransporteD":
+                res=trdao.eliminar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosT=trdao.consultar();
+                request.setAttribute("datosCl", datosC);
+                request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
+                break;
         }
     }
 
