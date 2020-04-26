@@ -43,8 +43,32 @@
                 background-color: #1b0c45;
                 color: #fff;
             }
+            #customers {
+                font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            #customers td, #customers th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+            #customers tr:hover {background-color: #ddd;}
+
+            #customers th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #1b0c45;
+                color: white;
+            }
         </style>
-    <img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" />
+     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <a href="principal.jsp"><img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" /></a>
+    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Edición de Transportes</title>
 </head>
@@ -72,20 +96,21 @@
             </ul>
         </nav>
     </header>
-    <div style="margin-left: 180px; margin-top: 10px">
+    <button id="btnMostrar">+</button>
+    <div style="margin-left: 180px; margin-top: 10px" id="divI">
         <form action="Controlador?accion=TransporteI" method="POST">
-            <table border="0">
+            <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td><input type="text" placeholder="Placas" name="txtPlacas"/></td>
-                        <td><input type="text" placeholder="Marca" name="txtMarca"/></td>
-                        <td><input type="text" placeholder="Modelo" name="txtModelo"/></td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Placas" name="txtPlacas" style="width: 90%;"/></td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Marca" name="txtMarca" style="width: 90%;"/></td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Modelo" name="txtModelo" style="width: 90%;"/></td>
                     </tr>
                     <tr>
-                        <td><input type="text" placeholder="Año" name="txtAño"/></td>
-                        <td><input type="text" placeholder="Capacidad" name="txtCapacidad"/></td>
-                        <td><input type="text" placeholder="Teléfono" name="txtTelefono"/></td>
-                        <td><input type="text" placeholder="Estatus" name="txtEstatus"/></td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Año" name="txtAño" style="width: 90%;"/></td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Capacidad" name="txtCapacidad" style="width: 90%;"/></td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Teléfono" name="txtTelefono" style="width: 90%;"/></td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Estatus" name="txtEstatus" style="width: 90%;"/></td>
                     </tr>
                 </tbody>
             </table>
@@ -96,18 +121,19 @@
         </form>
 
     </div>
-    <div style="margin-left: 180px; margin-top: 5px; border: 1px solid #aa0bb0; height: 420px; width: 1002px;">
-        <table border="1" >
+    
+    <div>
+        <table width='100%' border='0' cellpadding='0' id='customers'>
             <thead>
                 <tr>
-                    <th>#transporte</th>
-                    <th>placas</th>
-                    <th>marca</th>
-                    <th>modelo</th>
-                    <th>Año</th>
-                    <th>Capacidad</th>
-                    <th>estatus</th>
-                    <th>Acciones</th> 
+                    <th  width='1%' style='border: 0;' scope='col'>#transporte</th>
+                    <th  width='1%' style='border: 0;' scope='col'>placas</th>
+                    <th  width='1%' style='border: 0;' scope='col'>marca</th>
+                    <th  width='1%' style='border: 0;' scope='col'>modelo</th>
+                    <th  width='1%' style='border: 0;' scope='col'>Año</th>
+                    <th  width='1%' style='border: 0;' scope='col'>Capacidad</th>
+                    <th  width='1%' style='border: 0;' scope='col'>estatus</th>
+                    <th  width='1%' style='border: 0;' scope='col'>Acciones</th> 
                 </tr>
             </thead>
             <%
@@ -144,6 +170,40 @@
             </tbody>
         </table>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>   
+    <script type="text/javascript" charset="utf8" 
+    src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>  
 </body>
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#divI').hide();
+        $('#btnMostrar').click(function (){
+            if($('#btnMostrar').text()=='-'){
+                $('#divI').hide();
+                $('#btnMostrar').text('+');
+            }else{
+                $('#divI').show();
+                $('#btnMostrar').text('-');
+            }
+        });
+        $('#customers').DataTable({
+            language: {
+                processing: "Procesando...",
+                search: "Buscar:",
+                lengthMenu: "Mostrar _MENU_ elementos",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
+                infoEmpty: "No se encontraron elementos para mostrar",
+                infoFiltered: "(Filtrado de _MAX_ elementos en total)",
+                loadingRecords: "Cargando datos...",
+                zeroRecords: "No se encontraron elementos para mostrar",
+                paginate: {
+                    first: "Primer",
+                    previous: "Anterior",
+                    next: "Siguiente",
+                    last: "Último"
+                }
+            }
+        });
+    });
+</script>  
 </html>
