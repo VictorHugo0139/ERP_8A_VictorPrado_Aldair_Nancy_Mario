@@ -77,6 +77,7 @@
 <% //ClientesDAO dao = new ClientesDAO();
     CiudadesDAO city = new CiudadesDAO();
     List<Clientes> datos = (List<Clientes>) request.getAttribute("datosCl");
+    List<Clientes> datosF = (List<Clientes>) request.getAttribute("datosCl");
 %>
 <body style="background-color: #dfd7f5;">
     <header>
@@ -87,8 +88,22 @@
                 </li>
                 <li>
                     <form action="Controlador?accion=ClientesS" method="POST" >
-                        <input type="text" placeholder="búsqueda" name="busqueda"   > 
-                        <input type="text" placeholder="en base a:" name="campo" > 
+                        <input type="text" placeholder="búsqueda" name="busqueda"   >
+                        <label>En base a:</label>
+                        <select name="campo">
+                            <option value="idCliente">#Cliente</option>
+                            <option value="nombre">Nombre</option>
+                            <option value="razonSocial">Razón Social</option>
+                            <option value="limiteCredito">Limite Crédito</option>
+                            <option value="direccion">Dirección</option>
+                            <option value="codigoPostal">Código Postal</option>
+                            <option value="rfc">RFC</option>
+                            <option value="telefono">Teléfono</option>
+                            <option value="email">Email</option>
+                            <option value="tipo">Genero</option>
+                            <option value="Ciudad">Ciudad</option>
+                            <option value="estatus">Estatus</option>
+                        </select>
                         <button style="width: 20%; background-color: #15b332; color: #fff; font-weight: bold;"  type="submit">
                             <img src="Images/busqueda.jpg" alt="buscar" style="width: 10%; height: 10%;">
                             Buscar
@@ -101,27 +116,51 @@
     </header>
     <button id="btnMostrar">+</button>
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
-        <form action="Controlador?accion=ClientesI" method="POST">
+        <form action="Controlador?accion=ClientesI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" style="width: 90%;"/></td>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Apellido" name="txtApellido" style="width: 90%;"/></td>
-                        <td style="width: 25%"><input type="text" placeholder="Razón Social" name="txtRazonSocial" style="width: 90%;"/></td>
-                        <td style="width: 25%"><input type="number" placeholder="Límite de crédito" name="txtLimiteCredito" style="width: 90%;"/></td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" style="width: 90%;" required/></td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Apellido" name="txtApellido" style="width: 90%;" required /></td>
+                        <td style="width: 25%"><input type="text" placeholder="Razón Social" name="txtRazonSocial" style="width: 90%;" required/></td>
+                        <td style="width: 25%"><input type="number" placeholder="Límite de crédito" name="txtLimiteCredito" style="width: 90%;" required/></td>
                     </tr>
                     <tr>
-                        <td colspan="2"><input type="text" placeholder="Calle" name="txtCalle" style="width: 90%;"/></td>
+                        <td colspan="2"><input type="text" placeholder="Nombre de la calle" name="txtCalle" style="width: 90%;" required/></td>
                         <td><input type="number" placeholder="Numero" name="txtNumero" style="width: 90%;"/></td>
-                        <td><input type="number" placeholder="Código Postal" name="txtCodigoPostal" style="width: 80%;"/></td>
-                        <td><input type="text" placeholder="RFC" name="txtRFC"/></td>
-                        <td><input type="email" placeholder="Email" name="txtEmail"/></td>
+                        <td><input type="number" placeholder="Código Postal" name="txtCodigoPostal" style="width: 80%;" required/></td>
+                        <td><input type="text" placeholder="RFC" name="txtRFC" required/></td>
+                        <td colspan="2"><input type="email" placeholder="Email" name="txtEmail" style="width: 90%;" required/></td>
                     </tr>
                     <tr>
-                        <td><input type="tel" placeholder="Teléfono" name="txtTelefono"/></td>
-                        <td><input type="text" placeholder="Genero" name="txtTipo"/></td>
-                        <td><input type="text" placeholder="Ciudad" name="txtCiudad"/></td>
-                        <td><input type="text" placeholder="Estatus" name="txtEstatus"/></td>
+                        <td><input type="tel" placeholder="Teléfono" name="txtTelefono" required/></td>
+                        <td><label>Genero:</label></td>
+                        <td colspan="2"><input type="radio" id="Masculino" name="txtTipo" value="M" required>
+                            <label for="Masculino">Masculino</label>
+                            <input type="radio" id="Femenino" name="txtTipo" value="F">
+                            <label for="Femenino">Femenino</label>
+                            <input type="radio" id="Otro" name="txtTipo" value="O">
+                            <label for="Otro">Otro</label>
+                        </td>
+                        <td >
+                            <label style="color: grey;font-weight: lighter;">Ciudad:</label>
+                            <select name="txtCiudad">
+                                <%
+                                    for (Clientes cl : datosF) {
+                                        String Ciudad = city.OneCity(cl.getIdCiudad());
+                                %>
+                                <option value="<%= cl.getTipo()%>"><%= Ciudad%></option>
+                                <%
+                                    }
+                                %>
+                            </select>
+                        </td>
+                        <td><label>Estatus</label>
+                            <input type="radio" id="Activo" name="txtEstatus" value="A" required>
+                            <label for="Activo">Activo</label>
+                            <input type="radio" id="Inactivo" name="txtEstatus" value="I">
+                            <label for="Inactivo">Inactivo</label>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -130,25 +169,25 @@
                 Agregar
             </button>
         </form>
-
+        </br>
     </div>
-    
+
     <div>
         <table width='100%' border='0' cellpadding='0' id='customers'>
             <thead>
                 <tr>
-                    <th  width='1%' style='border: 0;' scope='col'>#cliente</th>
-                    <th  width='10%' style='border: 0;' scope='col'>nombre</th>
-                    <th  width='25%' style='border: 0;' scope='col'>razón social</th>
-                    <th  width='10%' style='border: 0;' scope='col'>limite crédito</th>
-                    <th  width='10%' style='border: 0;' scope='col'>dirección</th>
+                    <th  width='1%' style='border: 0;' scope='col'>#Cliente</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Nombre</th>
+                    <th  width='25%' style='border: 0;' scope='col'>Razón Social</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Limite Crédito</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Dirección</th>
                     <th  width='10%' style='border: 0;' scope='col'>Código Postal</th>
-                    <th  width='10%' style='border: 0;' scope='col'>rfc</th>
-                    <th  width='10%' style='border: 0;' scope='col'>teléfono</th>
-                    <th  width='10%' style='border: 0;' scope='col'>email</th>
-                    <th  width='10%' style='border: 0;' scope='col'>tipo</th>
-                    <th  width='10%' style='border: 0;' scope='col'>ciudad</th>
-                    <th  width='10%' style='border: 0;' scope='col'>estatus</th>
+                    <th  width='10%' style='border: 0;' scope='col'>RFC</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Teléfono</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Email</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Genero</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Ciudad</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Estatus</th>
                     <th  width='10%' style='border: 0;' scope='col'>Acciones</th> 
                 </tr>
             </thead>
@@ -159,7 +198,7 @@
                     for (Clientes cl : datos) {
                 %>
                 <tr>
-                    <td><%=  idc = cl.getIdCliente()%></td>
+                    <td><%= idc = cl.getIdCliente()%></td>
                     <td><%= cl.getNombre()%></td>
                     <td><%= cl.getRazonSocial()%></td>
                     <td><%= cl.getLimiteCredito()%></td>
@@ -196,16 +235,188 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>   
     <script type="text/javascript" charset="utf8" 
-    src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>      
+    src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>   
+    <script type="text/javascript">
+            function Validar(formulario)
+            {
+                var formatoEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                var formatoNomAp = /^[^0-9.,\/\\:;_\-\^\{\[\"\!\|°¬#\$%&\(\)\=\?\'¡¿\}\]´¨\*\+\~`@]+$/;
+                var formatoRZ = /^[^0-9,\/\\:;_\^\{\[\"\!\|°¬#\$%&\(\)\=\?\'¡¿\}\]´¨\*\+\~`@]+$/;
+                var formatoLC = /^[^a-zA-Z,\/\\:;_\-\^\{\[\"\!\|°¬#\$%&\(\)\=\?\'¡¿\}\]´¨\*\+\~`@]+$/;
+                var formatoCalle = /^[\w ]+$/;
+                var formatoNumero = /^[^a-zA-Z.,\/\\:;_\-\^\{\[\"\!\|°¬#\$%&\(\)\=\?\'¡¿\}\]´¨\*\+\~`@]+$/;
+                var t = false;
+                if (formulario.txtEmail.value.match(formatoEmail))
+                {
+                    if (formulario.txtNombre.value.length > 2)
+                    {
+                        if (formulario.txtApellido.value.length > 2)
+                        {
+                            if ((formulario.txtNombre.value.length +
+                                    formulario.txtApellido.value.length) < 99)
+                            {
+                                if (formulario.txtNombre.value.match(formatoNomAp))
+                                {
+                                    if (formulario.txtApellido.value.match(formatoNomAp))
+                                    {
+                                        if (formulario.txtRazonSocial.value.length > 2)
+                                        {
+                                            if (formulario.txtRazonSocial.value.length < 100)
+                                            {
+                                                if (formulario.txtRazonSocial.value.match(formatoRZ))
+                                                {
+                                                    if (formulario.txtLimiteCredito.value.match(formatoLC))
+                                                    {
+                                                        if (formulario.txtLimiteCredito.value >= 0)
+                                                        {
+                                                            if (formulario.txtCalle.value.match(formatoCalle))
+                                                            {
+                                                                if (formulario.txtNumero.value.match(formatoNumero))
+                                                                {
+                                                                    if (formulario.txtNumero.value > 0)
+                                                                    {
+                                                                        if (formulario.txtCalle.value.length + formulario.txtNumero.value.length < 75)
+                                                                        {
+
+                                                                            if (formulario.txtCodigoPostal.value.match(formatoNumero))
+                                                                            {
+                                                                                if (formulario.txtCodigoPostal.value.length === 5)
+                                                                                {
+                                                                                    if (formulario.txtRFC.value.length < 13)
+                                                                                    {
+                                                                                        if (formulario.txtTelefono.value.match(formatoNumero))
+                                                                                        {
+                                                                                            for (var i = 0; i < 3; i++)
+                                                                                            {
+                                                                                                if (formulario.txtTipo[i].checked === true)
+                                                                                                {
+                                                                                                    t = true;
+                                                                                                }
+                                                                                            }
+                                                                                            if (t === false) {
+                                                                                                alert("Debes selecionar el genero");
+                                                                                                formulario.txtTipo.focus();
+                                                                                                return false;
+                                                                                            } else {
+                                                                                                t = false;
+                                                                                                for (var i = 0; i < 2; i++)
+                                                                                                {
+                                                                                                    if (formulario.txtEstatus[i].checked === true)
+                                                                                                    {
+                                                                                                        t = true;
+                                                                                                    }
+                                                                                                }
+                                                                                                if (t === false) {
+                                                                                                    alert("Debes selecionar el estatus");
+                                                                                                    formulario.txtEstatus.focus();
+                                                                                                    return false;
+                                                                                                }
+                                                                                            }
+                                                                                        } else {
+
+                                                                                        }
+                                                                                    } else {
+                                                                                        alert("El RFC no debe tener más de 13 digitos");
+                                                                                        formulario.txtRFC.focus();
+                                                                                        return false;
+                                                                                    }
+                                                                                } else {
+                                                                                    alert("El codigo postal se compone de 5 digitos");
+                                                                                    formulario.txtCodigoPostal.focus();
+                                                                                    return false;
+                                                                                }
+                                                                            } else {
+                                                                                alert("El codigo postal contiene algún caracter no permitido o está vacío");
+                                                                                formulario.txtCodigoPostal.focus();
+                                                                                return false;
+                                                                            }
+                                                                        } else {
+                                                                            alert("El domicilio proporcionado es demasiado largo");
+                                                                            formulario.txtCalle.focus();
+                                                                            return false;
+                                                                        }
+                                                                    } else {
+                                                                        alert("El numero de domicilio no puede ser 0 ni menor");
+                                                                        formulario.txtNumero.focus();
+                                                                        return false;
+                                                                    }
+                                                                } else {
+                                                                    alert("El numero de domicilio contiene algún caracter no permitido o está vacío");
+                                                                    formulario.txtNumero.focus();
+                                                                    return false;
+                                                                }
+                                                            } else {
+                                                                alert("El nombre de la calle contiene algún caracter no permitido o está vacío");
+                                                                formulario.txtCalle.focus();
+                                                                return false;
+                                                            }
+                                                        } else {
+                                                            alert("Puede no tener limite de credito pero no puede ser negativo");
+                                                            formulario.txtLimiteCredito.focus();
+                                                            return false;
+                                                        }
+                                                    } else {
+                                                        alert("El límite de crédito contiene algún caracter no permitido o está vacío");
+                                                        formulario.txtLimiteCredito.focus();
+                                                        return false;
+                                                    }
+                                                } else {
+                                                    alert("La razón social contiene algún caracter no permitido o está vacío");
+                                                    formulario.txtRazonSocial.focus();
+                                                    return false;
+                                                }
+                                            } else {
+                                                alert("La razón social es demasiado extensa");
+                                                formulario.txtRazonSocial.focus();
+                                                return false;
+                                            }
+                                        } else {
+                                            alert("La razón social es demasiado corta");
+                                            formulario.txtRazonSocial.focus();
+                                            return false;
+                                        }
+                                    } else {
+                                        alert("El apellido contiene algún caracter no permitido o está vacío");
+                                        formulario.txtApellido.focus();
+                                        return false;
+                                    }
+                                } else {
+                                    alert("El nombre contiene algún caracter no permitido o está vacío");
+                                    formulario.txtNombre.focus();
+                                    return false;
+                                }
+                            } else {
+                                alert("nombre y/o apellido demasiado largos");
+                                formulario.txtNombre.focus();
+                                return false;
+                            }
+                        } else {
+                            alert("El apellido es demasiado corto");
+                            formulario.txtApellido.focus();
+                            return false;
+                        }
+                    } else {
+                        alert("El nombre es demasiado corto");
+                        formulario.txtNombre.focus();
+                        return false;
+                    }
+                } else
+                {
+                    alert("Ingresa una dirección de correo valida");
+                    formulario.txtEmail.focus();
+                    return false;
+                }
+            }
+    </script>
 </body>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#divI').hide();
-        $('#btnMostrar').click(function (){
-            if($('#btnMostrar').text()=='-'){
+        $('#btnMostrar').click(function () {
+            if ($('#btnMostrar').text() === '-') {
                 $('#divI').hide();
                 $('#btnMostrar').text('+');
-            }else{
+            } else {
                 $('#divI').show();
                 $('#btnMostrar').text('-');
             }
