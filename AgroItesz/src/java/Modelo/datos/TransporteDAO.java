@@ -29,7 +29,7 @@ public class TransporteDAO implements CRUD{
         cn.setUserName(UsuariosDAO.name);
         cn.setPassword(UsuariosDAO.p);
         con=cn.getConnection();
-        sql=("insert into UnidadesTransporte(placa,marca,modelo,anio,capacidad,estatus)\n" +
+        sql=("insert into UnidadesTransporte(placas,marca,modelo,anio,capacidad,estatus)\n" +
 "values (?,?,?,?,?,?)"); 
         try {
             ps=con.prepareStatement(sql);
