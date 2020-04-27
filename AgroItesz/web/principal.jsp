@@ -19,6 +19,7 @@
             </div>
 
             <ul class="nav navbar-nav navbar-right">
+                
                 <li><a href="#"><span class="glyphicon"></span> Bienvenido(a): ${nom}</a></li>
                 <li><a  href="Controlador?accion=Salir"><span class="glyphicon glyphicon-log-in"></span> Cerrar Sesión</a></li>
             </ul>

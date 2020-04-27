@@ -107,9 +107,8 @@
                         <td style="width: 25%" colspan="2"><input type="text" placeholder="Modelo" name="txtModelo" style="width: 90%;"/></td>
                     </tr>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Año" name="txtAño" style="width: 90%;"/></td>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Capacidad" name="txtCapacidad" style="width: 90%;"/></td>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Teléfono" name="txtTelefono" style="width: 90%;"/></td>
+                        <td style="width: 25%" colspan="2"><input type="number" placeholder="Año" name="txtAño" style="width: 90%;"/></td>
+                        <td style="width: 25%" colspan="2"><input type="numer" placeholder="Capacidad" name="txtCapacidad" style="width: 90%;"/></td>
                         <td style="width: 25%" colspan="2"><input type="text" placeholder="Estatus" name="txtEstatus" style="width: 90%;"/></td>
                     </tr>
                 </tbody>

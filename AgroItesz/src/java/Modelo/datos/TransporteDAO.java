@@ -24,7 +24,28 @@ public class TransporteDAO implements CRUD{
     
     @Override
     public String insertar(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Transporte tr=(Transporte) obj;
+        String respuesta="";
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
+        con=cn.getConnection();
+        sql=("insert into UnidadesTransporte(placa,marca,modelo,anio,capacidad,estatus)\n" +
+"values (?,?,?,?,?,?)"); 
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1, tr.getPlacas());
+            ps.setString(2, tr.getMarca());
+            ps.setString(3, tr.getModelo());
+            ps.setInt(4, tr.getAño());
+            ps.setInt(5, tr.getCapacidad());
+            ps.setString(6, ""+tr.getEstado());
+            int filas= ps.executeUpdate();
+            respuesta="se insertaron "+filas+" filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(TransporteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
     }
 
     @Override
