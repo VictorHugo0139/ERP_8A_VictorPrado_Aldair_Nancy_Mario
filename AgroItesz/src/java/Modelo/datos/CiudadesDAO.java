@@ -16,11 +16,23 @@ import java.util.logging.Logger;
 
 public class CiudadesDAO implements CRUD{
 
-    Conexion cn= new Conexion();
+private static CiudadesDAO cdao;
+    Conexion cn= Conexion.getInsConexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
     String sql;
+    
+    public static CiudadesDAO getCiudadesDAO(){
+    if(cdao==null){
+        cdao= new CiudadesDAO();
+    }                   
+    return cdao;                     
+}
+
+    private CiudadesDAO() {
+    }
+
     
     @Override
     public String insertar(Object obj) {
@@ -45,9 +57,7 @@ public class CiudadesDAO implements CRUD{
     @Override
     public List<Ciudades> filtrar(String campo, String criterio) {
          List<Ciudades> datos=new ArrayList<>();
-        cn.setUserName(UsuariosDAO.name);
-        cn.setPassword(UsuariosDAO.p);
-        con=cn.getConnection();
+        con=cn.getConexion();
         sql=("select*from Ciudades where ? like '%?%';");
         try {
             ps=con.prepareStatement(sql);
@@ -68,9 +78,7 @@ public class CiudadesDAO implements CRUD{
     }
     public String OneCity(int idCity) {
         String nombre="";
-        cn.setUserName(UsuariosDAO.name);
-        cn.setPassword(UsuariosDAO.p);
-        con=cn.getConnection();
+        con=cn.getConexion();
         sql=("select*from Ciudades where idCiudad=?;");
         try {
             ps=con.prepareStatement(sql);

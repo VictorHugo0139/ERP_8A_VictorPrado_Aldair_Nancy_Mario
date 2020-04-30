@@ -9,7 +9,8 @@ import java.sql.ResultSet;
 
 public class UsuariosDAO implements Validar {
 
-    Conexion cn = new Conexion();
+private static UsuariosDAO udao;
+    Conexion cn= Conexion.getInsConexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
@@ -17,11 +18,22 @@ public class UsuariosDAO implements Validar {
     public static String name;
     public static String p;
 
+    public static UsuariosDAO getUsuariosDAO(){
+    if(udao==null){
+        udao= new UsuariosDAO();
+    }                   
+    return udao;                     
+}
+
+    private UsuariosDAO(){
+        
+    }
+    
     public Usuarios validar(String user, String pw) {
         Usuarios us = new Usuarios();
         sql = "select * from Usuario where nombre=? and contrasenia=?;";
         try {
-            con = cn.getConnection();
+            con = cn.getConexion();
             ps = con.prepareStatement(sql);
             ps.setString(1, user);
             ps.setString(2, pw);
@@ -43,7 +55,7 @@ public class UsuariosDAO implements Validar {
         try {
             cn.setUserName(usr.getNombre());
             cn.setPassword(usr.getContrasenia());
-            con = cn.getConnection();
+            con = cn.getConexion();
             ps = con.prepareStatement(sql);
             ps.setString(1, usr.getNombre());
             ps.setString(2, usr.getContrasenia());

@@ -15,11 +15,22 @@ import java.util.logging.Logger;
 
 
 public class TransporteDAO implements CRUD{
- Conexion cn= new Conexion();
+private static TransporteDAO trdao;
+    Conexion cn=Conexion.getInsConexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
     String sql;
+
+    public static TransporteDAO getTransporteDAO(){
+    if(trdao==null){
+        trdao= new TransporteDAO();
+    }                   
+    return trdao;                     
+}
+
+    public TransporteDAO() {
+    }
 
     
     @Override
@@ -28,7 +39,7 @@ public class TransporteDAO implements CRUD{
         String respuesta="";
         cn.setUserName(UsuariosDAO.name);
         cn.setPassword(UsuariosDAO.p);
-        con=cn.getConnection();
+        con=cn.getConexion();
         sql=("insert into UnidadesTransporte(placas,marca,modelo,anio,capacidad,estatus)\n" +
 "values (?,?,?,?,?,?)"); 
         try {
@@ -53,7 +64,7 @@ public class TransporteDAO implements CRUD{
         String respuesta="";
         cn.setUserName(UsuariosDAO.name);
         cn.setPassword(UsuariosDAO.p);
-        con=cn.getConnection();
+        con=cn.getConexion();
         sql=("update UnidadesTransporte set estatus='I' where idUnidadTransporte=? "); 
         try {
             ps=con.prepareStatement(sql);
@@ -77,7 +88,7 @@ public class TransporteDAO implements CRUD{
         List<Transporte> datos=new ArrayList<>();
         cn.setUserName(UsuariosDAO.name);
         cn.setPassword(UsuariosDAO.p);
-        con=cn.getConnection();
+        con=cn.getConexion();
         sql=("select * from unidadesTransporte");
         try {
             ps=con.prepareStatement(sql);
