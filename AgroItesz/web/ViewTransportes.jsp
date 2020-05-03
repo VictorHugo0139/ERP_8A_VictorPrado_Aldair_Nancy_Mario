@@ -135,12 +135,12 @@
                     <th  width='1%' style='border: 0;' scope='col'>Acciones</th> 
                 </tr>
             </thead>
+             <tbody>
             <%
                 int idc;
                 //datos = dao.consultar();
                 for (Transporte tr : datos) {
             %>
-            <tbody>
                 <tr>
                     <td><%=  idc = tr.getIdTransporte()%></td>
                     <td><%= tr.getPlacas()%></td>
