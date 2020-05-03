@@ -14,19 +14,28 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ClientesDAO implements CRUD{
-    Conexion cn= new Conexion();
+
+private static ClientesDAO cldao;    
+    Conexion cn= Conexion.getInsConexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
     String sql;
+public static ClientesDAO getClientesDAO(){
+    if(cldao==null){
+        cldao= new ClientesDAO();
+    }                   
+    return cldao;                     
+}
+
+    private ClientesDAO() {
+    }
 
     @Override
     public String insertar(Object obj) {
         Clientes cl=(Clientes) obj;
         String respuesta="";
-        cn.setUserName(UsuariosDAO.name);
-        cn.setPassword(UsuariosDAO.p);
-        con=cn.getConnection();
+        con=cn.getConexion();
         sql=("insert into Clientes(nombre,razonSocial,limiteCredito,direccion,codigoPostal,rfc,telefono,email,tipo,idCiudad,estatus)\n" +
 "values (?,?,?,?,?,?,?,?,?,?,?)"); 
         try {
@@ -54,9 +63,7 @@ public class ClientesDAO implements CRUD{
     @Override
     public String eliminar(int id) {
         String respuesta="";
-        cn.setUserName(UsuariosDAO.name);
-        cn.setPassword(UsuariosDAO.p);
-        con=cn.getConnection();
+        con=cn.getConexion();
         sql=("update Clientes set estatus='I' where idCliente=? "); 
         try {
             ps=con.prepareStatement(sql);
@@ -74,9 +81,7 @@ public class ClientesDAO implements CRUD{
     public String actualizar(Object obj) {
          Clientes cl=(Clientes) obj;
         String respuesta="";
-        cn.setUserName(UsuariosDAO.name);
-        cn.setPassword(UsuariosDAO.p);
-        con=cn.getConnection();
+        con=cn.getConexion();
         sql=("update Clientes set nombre=?, razonSocial=?, limiteCredito=?, direccion=?, codigoPostal=?, rfc=?, telefono=?, email=?, tipo=?, idCiudad=?, estatus=? where idCliente=?"); 
         try {
             ps=con.prepareStatement(sql);
@@ -104,9 +109,7 @@ public class ClientesDAO implements CRUD{
     @Override
     public List<Clientes> consultar() {
         List<Clientes> datos=new ArrayList<>();
-        cn.setUserName(UsuariosDAO.name);
-        cn.setPassword(UsuariosDAO.p);
-        con=cn.getConnection();
+        con=cn.getConexion();
         sql=("select * from Clientes");
         try {
             ps=con.prepareStatement(sql);
@@ -135,9 +138,7 @@ public class ClientesDAO implements CRUD{
     @Override
     public List<Clientes> filtrar(String campo, String criterio) {
         List<Clientes> datos=new ArrayList<>();
-        cn.setUserName(UsuariosDAO.name);
-        cn.setPassword(UsuariosDAO.p);
-        con=cn.getConnection();
+        con=cn.getConexion();
 //        String c="\'"+criterio+"\'";
         System.out.println(campo+" y "+criterio);
         sql="select * from Clientes where "+campo+" like '%"+criterio+"%'";
@@ -172,9 +173,7 @@ public class ClientesDAO implements CRUD{
     
     public List<Clientes> consultarId(int id) {
         List<Clientes> datos=new ArrayList<>();
-        cn.setUserName(UsuariosDAO.name);
-        cn.setPassword(UsuariosDAO.p);
-        con=cn.getConnection();
+        con=cn.getConexion();
         sql=("select * from Clientes where idCliente="+id);
         try {
             ps=con.prepareStatement(sql);

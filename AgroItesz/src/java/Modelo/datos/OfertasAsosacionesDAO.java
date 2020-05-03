@@ -5,10 +5,23 @@
  */
 package Modelo.datos;
 
+import Conexion.Conexion;
+
 /**
  *
  * @author Nancy
  */
 public class OfertasAsosacionesDAO {
+    private static OfertasAsosacionesDAO ofAdao;
     
+    public static OfertasAsosacionesDAO getOfertasAsociacionesDAO(){
+    if(ofAdao==null){
+        ofAdao= new OfertasAsosacionesDAO();
+    }                   
+    return ofAdao;                     
+}
+
+    private OfertasAsosacionesDAO() {
+    }
+
 }

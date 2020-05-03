@@ -22,17 +22,30 @@ import java.util.logging.Logger;
  * @author resid
  */
 public class CultivosDAO implements CRUD {
-    Conexion cn= new Conexion();
+
+    private static CultivosDAO culdao;
+    Conexion cn=Conexion.getInsConexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
     String sql;
 
+    public static CultivosDAO getCultivosDAO(){
+    if(culdao==null){
+        culdao= new CultivosDAO();
+    }                   
+    return culdao;                     
+}
+
+    public CultivosDAO() {
+    }
+
+    
     @Override
     public String insertar(Object obj) {
         Cultivos cult=(Cultivos) obj;
         String respuesta="";
-        con=cn.getConnection();
+        con=cn.getConexion();
         sql = ("insert into cultivos values (?,?,?,?)");
         try {
             ps=con.prepareStatement(sql);
@@ -54,7 +67,7 @@ public class CultivosDAO implements CRUD {
     public String eliminar(int id) {
 //        Cultivos cl=(Cultivos) obj;
         String respuesta="";
-        con=cn.getConnection();
+        con=cn.getConexion();
         sql=("delete from Cultivos where idCultivo=? "); 
         try {
             ps=con.prepareStatement(sql);
@@ -72,7 +85,7 @@ public class CultivosDAO implements CRUD {
     public String actualizar(Object obj) {
        Cultivos cult=(Cultivos) obj;
         String respuesta="";
-        con=cn.getConnection();
+        con=cn.getConexion();
         sql = "update Cultivos set nombre=?,costoAsesoria=?,estatus=?";
         try {
             ps=con.prepareStatement(sql);
@@ -95,7 +108,7 @@ public class CultivosDAO implements CRUD {
           List <Cultivos> datos = new ArrayList<>();
           cn.setUserName(UsuariosDAO.name);
         cn.setPassword(UsuariosDAO.p);
-        con=cn.getConnection();
+        con=cn.getConexion();
         sql = "select * from Cultivos";
         try {
             ps=con.prepareStatement(sql);

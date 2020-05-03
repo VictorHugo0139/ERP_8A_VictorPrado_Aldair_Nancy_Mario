@@ -21,11 +21,12 @@ import javax.servlet.http.HttpServletResponse;
 
 public class Controlador extends HttpServlet {
 
-    Conexion cn = new Conexion();
+//    Conexion cn = new Conexion();
+    Conexion cn= Conexion.getInsConexion();
     Connection con;
-    UsuariosDAO usrDao = new UsuariosDAO();
+    UsuariosDAO usrDao =UsuariosDAO.getUsuariosDAO();
     Usuarios usr = new Usuarios();
-    ClientesDAO cldao=new ClientesDAO();
+    ClientesDAO cldao=ClientesDAO.getClientesDAO();
     CultivosDAO culdao=new CultivosDAO();
     Clientes cl= new Clientes();
     Cultivos cul= new Cultivos();
@@ -59,7 +60,7 @@ public class Controlador extends HttpServlet {
                 if (r == 1) {
                     cn.setUserName(nom);
                     cn.setPassword(contra);
-                    con = cn.getConnection();
+                    con = cn.getConexion();
                     request.getSession().setAttribute("nom", nom);
                     request.getRequestDispatcher("principal.jsp").forward(request, response);
                 } else {

@@ -75,7 +75,7 @@
     <title>Edición de clientes</title>
 </head>
 <% //ClientesDAO dao = new ClientesDAO();
-    CiudadesDAO city = new CiudadesDAO();
+    CiudadesDAO city =CiudadesDAO.getCiudadesDAO();
     List<Clientes> datos = (List<Clientes>) request.getAttribute("datosCl");
     List<Clientes> datosF = (List<Clientes>) request.getAttribute("datosCl");
 %>
