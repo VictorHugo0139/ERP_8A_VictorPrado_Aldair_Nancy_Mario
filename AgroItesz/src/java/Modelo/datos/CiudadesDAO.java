@@ -50,8 +50,24 @@ private static CiudadesDAO cdao;
     }
 
     @Override
-    public List<?> consultar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Ciudades> consultar() {
+        List<Ciudades> datos=new ArrayList<>();
+        con=cn.getConexion();
+        sql=("select*from Ciudades;");
+        try {
+            ps=con.prepareStatement(sql);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                datos.add(new Ciudades(rs.getInt("idCiudad"),
+                        rs.getString("nombre"), 
+                        rs.getInt("idEstado"), 
+                        rs.getString("estatus").charAt(0)));
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return datos; 
     }
 
     @Override
