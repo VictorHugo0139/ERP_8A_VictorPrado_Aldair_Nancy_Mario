@@ -40,15 +40,6 @@ public class Controlador extends HttpServlet {
     OfertasDAO ofdao = OfertasDAO.getOfertasDAO();
     Ofertas of = new Ofertas();
     List<Ofertas> datosO= new ArrayList<>();
-    ClientesDAO cldao = ClientesDAO.getClientesDAO();
-    CultivosDAO culdao = new CultivosDAO();
-    Clientes cl = new Clientes();
-    Cultivos cul = new Cultivos();
-    List<Clientes> datosC = new ArrayList<>();
-    List<Cultivos> datosCu = new ArrayList<>();
-    TransporteDAO trdao = new TransporteDAO();
-    Transporte tr = new Transporte();
-    List<Transporte> datosT = new ArrayList<>();
     int r;
     String res;
 
