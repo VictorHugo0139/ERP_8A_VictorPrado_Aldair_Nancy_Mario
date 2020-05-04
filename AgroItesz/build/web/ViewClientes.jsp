@@ -220,7 +220,10 @@
             </table>
 
             <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
-                Agregar
+                Actualizar
+            </button>
+            <button type="button" id="Cancel" style="width: 20%; background-color: #fc1919; color: #fff; font-weight: bold; border-radius: 0.33em;">
+                Cancelar
             </button>
         </form>
         </br>
@@ -271,13 +274,13 @@
                     <td>Activo</td> 
                     <td><button class="boton">Editar</button>
                         <form action="Controlador?accion=ClientesD&id=<%= idc%>" method="POST">
-                            <button type="submit" value='<%= idc%>' name="idc">Eliminar</button>
+                            <button type="submit" value='<%= idc%>' name="idc" class="boton2">Eliminar</button>
                         </form></td>
                     <%    } else {                    %>
                     <td>Inactivo</td>
                     <td><button class="boton">Editar</button>
                         <form action="Controlador?accion=ClientesR&id=<%= idc%>" method="POST">
-                            <button type="submit" value='<%= idc%>' name="idc">Reactivar</button>
+                            <button type="submit" value='<%= idc%>' name="idc" class="boton2">Reactivar</button>
                         </form></td>
                     <%    }%>                        
 
@@ -631,9 +634,14 @@
         $('#btnMostrar').click(function () {
             if ($('#btnMostrar').text() === '-') {
                 $('#divI').hide();
+                $('.boton').show();
+                $('.boton2').show();
                 $('#btnMostrar').text('+');
+                
             } else {
                 $('#divI').show();
+                $('.boton').hide();
+                $('.boton2').hide();
                 $('#btnMostrar').text('-');
             }
         });
@@ -641,6 +649,7 @@
 
             //valores obtendra el dato del td por posciones [0]
             $('#btnMostrar').hide();
+            $('.boton2').hide();
             $('#divI').hide();
             $('#divA').show();
             $('#nombre').val($(this).parents("tr").find("td")[1].innerHTML);
@@ -689,6 +698,12 @@
             $('#idCl').hide();
             console.log($('#idCl').val());
             $('#nombre').focus();
+        });
+        $('#Cancel').click(function () {
+            $('#divA').hide();
+            $('#divI').hide();
+            $('.boton2').show();
+            $('#btnMostrar').show();
         });
         $('#customers').DataTable({
             language: {
