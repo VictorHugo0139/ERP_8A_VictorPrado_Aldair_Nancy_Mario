@@ -29,7 +29,7 @@ private static TransporteDAO trdao;
     return trdao;                     
 }
 
-    public TransporteDAO() {
+    private TransporteDAO() {
     }
 
     
@@ -104,7 +104,7 @@ private static TransporteDAO trdao;
             }
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TransporteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return datos;
     }

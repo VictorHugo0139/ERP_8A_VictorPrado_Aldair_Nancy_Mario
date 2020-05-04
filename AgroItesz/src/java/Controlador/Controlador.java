@@ -5,10 +5,12 @@ import Modelo.Clientes;
 import Modelo.Cultivos;
 import Modelo.Usuarios;
 import Modelo.Transporte;
+import Modelo.Ofertas;
 import Modelo.datos.ClientesDAO;
 import Modelo.datos.CultivosDAO;
 import Modelo.datos.TransporteDAO;
 import Modelo.datos.UsuariosDAO;
+import Modelo.datos.OfertasDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -32,9 +34,12 @@ public class Controlador extends HttpServlet {
     Cultivos cul= new Cultivos();
     List<Clientes> datosC= new ArrayList<>();
     List<Cultivos> datosCu= new ArrayList<>();
-    TransporteDAO trdao=new TransporteDAO();
+    TransporteDAO trdao=TransporteDAO.getTransporteDAO();
     Transporte tr = new Transporte();
     List<Transporte> datosT= new ArrayList<>();
+    OfertasDAO ofdao = OfertasDAO.getOfertasDAO();
+    Ofertas of = new Ofertas();
+    List<Ofertas> datosO= new ArrayList<>();
     int r;
     String res;
 
@@ -90,6 +95,8 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewSocios.jsp").forward(request, response);
                 break;
             case "Ofertas":
+                datosO=ofdao.consultar();
+                request.setAttribute("datosCl", datosO);
                 request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
                 break;
             case "OfertasAsosacion":
@@ -152,6 +159,7 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("resp", res);
                 request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
                 break;
+                
         }
     }
 

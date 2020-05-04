@@ -72,7 +72,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Edición de Transportes</title>
 </head>
-<% TransporteDAO dao = new TransporteDAO();
+<%  TransporteDAO dao = TransporteDAO.getTransporteDAO();
     List<Transporte> datos = (List<Transporte>)request.getAttribute("datosCl");
 %>
 <body style="background-color: #dfd7f5;">

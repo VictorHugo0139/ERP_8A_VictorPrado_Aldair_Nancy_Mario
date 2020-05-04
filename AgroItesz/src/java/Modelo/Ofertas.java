@@ -17,10 +17,26 @@ public class Ofertas {
     private int PorDescuento;
     private int FechaInicio;
     private int FechaFin;
-    private int CantMinProducto;
+    private int canMinProducto;
     private char Estatus;
     private int idProducto;
 
+    public Ofertas(int idOfertas, String Nombre, String Descripcion, int PorDescuento, int FechaInicio, int FechaFin, int canMinProducto, char Estatus, int idProducto) {
+        this.idOfertas = idOfertas;
+        this.Nombre = Nombre;
+        this.Descripcion = Descripcion;
+        this.PorDescuento = PorDescuento;
+        this.FechaInicio = FechaInicio;
+        this.FechaFin = FechaFin;
+        this.canMinProducto = canMinProducto;
+        this.Estatus = Estatus;
+        this.idProducto = idProducto;
+    }
+    
+    public Ofertas(){
+        
+    }
+    
     public int getIdOfertas() {
         return idOfertas;
     }
@@ -69,12 +85,12 @@ public class Ofertas {
         this.FechaFin = FechaFin;
     }
 
-    public int getCantMinProducto() {
-        return CantMinProducto;
+    public int getCanMinProducto() {
+        return canMinProducto;
     }
 
-    public void setCantMinProducto(int CantMinProducto) {
-        this.CantMinProducto = CantMinProducto;
+    public void setCanMinProducto(int CantMinProducto) {
+        this.canMinProducto = CantMinProducto;
     }
 
     public char getEstatus() {
