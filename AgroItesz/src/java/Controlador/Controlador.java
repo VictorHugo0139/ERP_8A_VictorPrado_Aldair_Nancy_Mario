@@ -24,9 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 public class Controlador extends HttpServlet {
 
 //    Conexion cn = new Conexion();
-    Conexion cn= Conexion.getInsConexion();
+    Conexion cn = Conexion.getInsConexion();
     Connection con;
-    UsuariosDAO usrDao =UsuariosDAO.getUsuariosDAO();
+    UsuariosDAO usrDao = UsuariosDAO.getUsuariosDAO();
     Usuarios usr = new Usuarios();
     ClientesDAO cldao=ClientesDAO.getClientesDAO();
     CultivosDAO culdao=new CultivosDAO();
@@ -40,6 +40,15 @@ public class Controlador extends HttpServlet {
     OfertasDAO ofdao = OfertasDAO.getOfertasDAO();
     Ofertas of = new Ofertas();
     List<Ofertas> datosO= new ArrayList<>();
+    ClientesDAO cldao = ClientesDAO.getClientesDAO();
+    CultivosDAO culdao = new CultivosDAO();
+    Clientes cl = new Clientes();
+    Cultivos cul = new Cultivos();
+    List<Clientes> datosC = new ArrayList<>();
+    List<Cultivos> datosCu = new ArrayList<>();
+    TransporteDAO trdao = new TransporteDAO();
+    Transporte tr = new Transporte();
+    List<Transporte> datosT = new ArrayList<>();
     int r;
     String res;
 
@@ -77,17 +86,17 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("index.jsp").forward(request, response);
                 break;
             case "Cultivos":
-                datosCu=culdao.consultar();
+                datosCu = culdao.consultar();
                 request.setAttribute("datosCl", datosCu);
                 request.getRequestDispatcher("ViewCultivos.jsp").forward(request, response);
                 break;
             case "Clientes":
-                datosC=cldao.consultar();
+                datosC = cldao.consultar();
                 request.setAttribute("datosCl", datosC);
                 request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
                 break;
             case "Transportes":
-                datosT=trdao.consultar();
+                datosT = trdao.consultar();
                 request.setAttribute("datosCl", datosT);
                 request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
                 break;
@@ -106,11 +115,11 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewMiembros.jsp").forward(request, response);
                 break;
             case "ClientesI":
-                cl=new Clientes(0,
-                        request.getParameter("txtNombre")+" "+request.getParameter("txtApellido"),
+                cl = new Clientes(0,
+                        request.getParameter("txtNombre") + " " + request.getParameter("txtApellido"),
                         request.getParameter("txtRazonSocial"),
                         Float.parseFloat(request.getParameter("txtLimiteCredito")),
-                        request.getParameter("txtCalle")+" No. "+request.getParameter("txtNumero"),
+                        request.getParameter("txtCalle") + " No. " + request.getParameter("txtNumero"),
                         request.getParameter("txtCodigoPostal"),
                         request.getParameter("txtRFC"),
                         request.getParameter("txtTelefono"),
@@ -118,43 +127,67 @@ public class Controlador extends HttpServlet {
                         request.getParameter("txtTipo").charAt(0),
                         Integer.parseInt(request.getParameter("txtCiudad")),
                         request.getParameter("txtEstatus").charAt(0));
-                res=cldao.insertar(cl);
-                datosC=cldao.consultar();
+                res = cldao.insertar(cl);
+                datosC = cldao.consultar();
                 request.setAttribute("datosCl", datosC);
                 request.setAttribute("resp", res);
                 request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
                 break;
             case "ClientesU":
+                cl = new Clientes(Integer.parseInt(request.getParameter("idCl")),
+                        request.getParameter("txtNombre"),
+                        request.getParameter("txtRazonSocial"),
+                        Float.parseFloat(request.getParameter("txtLimiteCredito")),
+                        request.getParameter("txtUbicacion"),
+                        request.getParameter("txtCodigoPostal"),
+                        request.getParameter("txtRFC"),
+                        request.getParameter("txtTelefono"),
+                        request.getParameter("txtEmail"),
+                        request.getParameter("txtTipoA").charAt(0),
+                        Integer.parseInt(request.getParameter("txtCiudad")),
+                        request.getParameter("txtEstatusA").charAt(0));
+                res = cldao.actualizar(cl);
+                datosC = cldao.consultar();
+                request.setAttribute("datosCl", datosC);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
                 break;
             case "ClientesD":
-                res=cldao.eliminar(Integer.parseInt(request.getParameter("idc")));
+                res = cldao.eliminar(Integer.parseInt(request.getParameter("idc")));
                 request.setAttribute("resp", res);
-                datosC=cldao.consultar();
+                datosC = cldao.consultar();
+                request.setAttribute("datosCl", datosC);
+                request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
+                break;
+            case "ClientesR":
+                res = cldao.reactivar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosC = cldao.consultar();
                 request.setAttribute("datosCl", datosC);
                 request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
                 break;
             case "ClientesS":
-                datosC=cldao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
+                datosC = cldao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
                 request.setAttribute("datosCl", datosC);
                 request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
                 break;
             case "TransporteD":
-                res=trdao.eliminar(Integer.parseInt(request.getParameter("idc")));
+                res = trdao.eliminar(Integer.parseInt(request.getParameter("idc")));
                 request.setAttribute("resp", res);
-                datosT=trdao.consultar();
+                datosT = trdao.consultar();
                 request.setAttribute("datosCl", datosT);
                 request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
                 break;
             case "TransporteI":
-                tr=new Transporte(0,
+                tr = new Transporte(0,
                         request.getParameter("txtPlacas"),
                         request.getParameter("txtMarca"),
                         request.getParameter("txtModelo"),
                         Integer.parseInt(request.getParameter("txtAño")),
                         Integer.parseInt(request.getParameter("txtCapacidad")),
                         request.getParameter("txtEstatus").charAt(0));
-                res=trdao.insertar(tr);
-                datosT=trdao.consultar();
+                res = trdao.insertar(tr);
+                datosT = trdao.consultar();
                 request.setAttribute("datosCl", datosT);
                 request.setAttribute("resp", res);
                 request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
