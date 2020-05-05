@@ -18,6 +18,7 @@ import Modelo.datos.MiembrosDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -220,6 +221,22 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosT);
                 request.setAttribute("resp", res);
                 request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
+                break;
+            case "OfertasI":
+                of = new Ofertas(0,
+                        request.getParameter("txtNombre"),
+                        request.getParameter("txtDescripcion"),
+                        Integer.parseInt(request.getParameter("txtPorDescuento")),
+                        Date.valueOf("txtFechaInicio"),
+                        Date.valueOf("txtFechaFin"),
+                        Integer.parseInt("txtCantMinProducto"),
+                        request.getParameter("txtEstatus").charAt(0),
+                        Integer.parseInt(request.getParameter("txtProducto")));
+                res = ofdao.insertar(cl);
+                datosO = ofdao.consultar();
+                request.setAttribute("datosCl", datosO);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
                 break;
         }
     }
