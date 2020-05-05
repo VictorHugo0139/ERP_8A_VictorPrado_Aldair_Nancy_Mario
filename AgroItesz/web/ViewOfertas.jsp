@@ -90,11 +90,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Ediciï¿½n de Ofertas</title>
+    <title>Edicion de Ofertas</title>
 </head>
 <%  ProductosDAO product = ProductosDAO.getProducosDAO();
     List<Ofertas> datos = (List<Ofertas>) request.getAttribute("datosCl");
-    List<Ofertas> datosF = (List<Ofertas>) request.getAttribute("datosCl");
+    List<Productos> datosPr = product.consultar();
 %>
 
 <body style="background-color: #dfd7f5;">
@@ -103,45 +103,35 @@
             <ul id="U">
                 <li style="width: 50px;">
                     <a href="principal.jsp" style="width: 50px;"><img src="Images/arrow-left.png" height="70%" width="70%" alt="Regresar" /></a>
-
+                    
                 </li>
                 <li>
-                    <a>Ofertas</a>
+                    <a>Clientes</a>
                 </li>
                 <li>
-                    <form action="Controlador?accion=OfertasS" method="POST">
-                        <input type="text" placeholder="bï¿½squeda" name="busqueda">
-                        <input type="text" placeholder="en base a:" name="campo">
-                        <button style="width: 20%; background-color: #15b332; color: #fff; font-weight: bold;" type="submit">
-                            <img src="Images/busqueda.jpg" alt="buscar" style="width: 10%; height: 10%;">
+                    <form action="Controlador?accion=OfertasS" method="POST" >
+                        <input type="text" placeholder="búsqueda" name="busqueda" style="color: black;">
+                        <label>En base a:</label>
+                        <select name="campo" style="color: black;">
+                            <option value="idCliente">#Oferta</option>
+                            <option value="nombre">Nombre</option>
+                            <option value="razonSocial">Razón Social</option>
+                            <option value="limiteCredito">Limite Crédito</option>
+                            <option value="direccion">Dirección</option>
+                            <option value="codigoPostal">Código Postal</option>
+                            <option value="rfc">RFC</option>
+                            <option value="telefono">Teléfono</option>
+                            <option value="email">Email</option>
+                            <option value="tipo">Genero</option>
+                            <option value="Ciudad">Ciudad</option>
+                            <option value="estatus">Estatus</option>
+                        </select>
+                        <button style="width: 20%; background-color: #15b332; color: #fff; font-weight: bold;"  type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
                             Buscar
                         </button>
                     </form>
 
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </header>
-                            <button id="btnMostrarf">+</button>
-                            <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
-                            <div style="margin-left: 180px; margin-top: 10px" id="divI">
-                                <form action="Controlador?accion=OfertasI" method="POST">
-                                    <table border="0" style="width: 100%">
-                                        <tbody>
-                                            <tr>
-                                                <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" style="width: 90%;" /></td>
-                                                <td style="width: 25%" colspan="2"><input type="text" placeholder="Descripciï¿½n" name="txtDes" style="width: 90%;" /></td>
-                                                <td style="width: 25%" colspan="2"><input type="nombre" placeholder="%Descuento" name="txtModelo" style="width: 90%;" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td style="width: 25%" colspan="2"><input type="date" placeholder="Fecha Inicial" name="txtAï¿½o" style="width: 90%;" /></td>
-                                                <td style="width: 25%" colspan="2"><input type="date" placeholder="Fecha Final" name="txtCapacidad" style="width: 90%;" /></td>
-                                                <td style="width: 25%" colspan="2"><input type="number" placeholder="Cantidad Minima del Producto" name="txtEstatus" style="width: 90%;" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label style="color: grey;font-weight: lighter;">Producto:</label>
-                                                    <select name="txtProducto">
                 </li>
             </ul>
         </nav>
@@ -149,28 +139,29 @@
     <button id="btnMostrarf">+</button>
     <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
-        <form action="Controlador?accion=OfertasI" method="POST">
+        <form action="Controlador?accion=OfertasI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtPlacas" style="width: 90%;" /></td>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Descripciï¿½n" name="txtMarca" style="width: 90%;" /></td>
-                        <td style="width: 25%" colspan="2"><input type="nombre" placeholder="%Descuento" name="txtModelo" style="width: 90%;" /></td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" style="width: 90%;" required/></td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Descripcion" name="txtDescripcion" style="width: 90%;" required /></td>
+                        <td style="width: 25%"><input type="number" placeholder="%Descuento" name="txtPorDescuento" style="width: 90%;" required/></td>
+                        <td style="width: 25%"><input type="Date" placeholder="Fecha de inicio" name="txtFechaInicio" style="width: 90%;" step="0.01" required/></td>
                     </tr>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="date" placeholder="Fecha Inicial" name="txtAï¿½o" style="width: 90%;" /></td>
-                        <td style="width: 25%" colspan="2"><input type="date" placeholder="Fecha Final" name="txtCapacidad" style="width: 90%;" /></td>
-                        <td style="width: 25%" colspan="2"><input type="number" placeholder="Cantidad Minima del Producto" name="txtEstatus" style="width: 90%;" /></td>
+                        <td colspan="2"><input type="Date" placeholder="Fecha de Fin" name="txtFechaFin" style="width: 90%;" required/></td>
+                        <td><input type="number" placeholder="Cantidad minima del Producto" name="txtCantMinProducto" style="width: 90%;"/></td>
                     </tr>
                     <tr>
-                        <td>
-                            <label style="color: grey;font-weight: lighter;">Producto:</label>
+                        <td >
+                            <label style="color: grey;font-weight: lighter;">Productos:</label>
                             <select name="txtProducto">
                                 <%
-                                    for (Ofertas of : datosF) {
-                                        String Producto = product.OneProduct(of.getIdProducto());
+                                    for (Productos pr : datosPr) {
+                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
+
                                 %>
-                                <option value="<%=Producto%>"><%=of.getDescripcion()%></option>
+                                <option value="<%= pr.getIdProducto()%>"><%= pr.getNombre()%></option>
                                 <%
                                     }
                                 %>
@@ -190,117 +181,59 @@
                 Agregar
             </button>
         </form>
-
+        </br>
     </div>
-
-    <div style="margin-left: 180px; margin-top: 10px" id="divA">
-        <form action="Controlador?accion=OfertasA" method="POST">
-            <table border="0" style="width: 100%">
-                <tbody>
-                    <tr>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtPlacas" id="nombre" style="width: 90%;" /></td>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Descripciï¿½n" name="txtMarca" id="descripcion" style="width: 90%;" /></td>
-                        <td style="width: 25%" colspan="2"><input type="nombre" placeholder="%Descuento" name="txtModelo" id="descuento" style="width: 90%;" /></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 25%" colspan="2"><input type="date" placeholder="Fecha Inicial" name="txtAï¿½o" id="fechaI" style="width: 90%;" /></td>
-                        <td style="width: 25%" colspan="2"><input type="date" placeholder="Fecha Final" name="txtCapacidad" id="fechaF" style="width: 90%;" /></td>
-                        <td style="width: 25%" colspan="2"><input type="number" placeholder="Cantidad Minima del Producto" id="cantidad" name="txtEstatus" style="width: 90%;" /></td>
-                    </tr>
-                    <tr>
-                        <td id="CD">
-                            
-                        </td>
-                        <td><label>Estatus</label>
-                            <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
-                            <label for="Activo">Activo</label>
-                            <input type="radio" id="InactivoA" name="txtEstatus" value="I">
-                            <label for="Inactivo">Inactivo</label>
-                        </td>
-                        <td><input type="number" name="idCl" id="idCl"/> </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
-                Agregar
-            </button>
-        </form>
-
-    </div>
-
     <div>
         <table width='100%' border='0' cellpadding='0' id='customers'>
             <thead>
                 <tr>
-                    <th width='1%' style='border: 0;' scope='col'>#oferta</th>
-                    <th width='1%' style='border: 0;' scope='col'>Nombre</th>
-                    <th width='1%' style='border: 0;' scope='col'>Descripcion</th>
-                    <th width='1%' style='border: 0;' scope='col'>%Descuento</th>
-                    <th width='1%' style='border: 0;' scope='col'>Fecha de Inicio</th>
-                    <th width='1%' style='border: 0;' scope='col'>Fecha de Fin</th>
-                    <th width='1%' style='border: 0;' scope='col'>Cantidad Minima del Producto</th>
-                    <th width='1%' style='border: 0;' scope='col'>Producto</th>
-                    <th width='1%' style='border: 0;' scope='col'>Estatus</th>
-                    <th width='1%' style='border: 0;' scope='col'>Acciones</th>
-
+                    <th  width='1%' style='border: 0;' scope='col'>#Oferta</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Nombre</th>
+                    <th  width='25%' style='border: 0;' scope='col'>Descripcion</th>
+                    <th  width='10%' style='border: 0;' scope='col'>% de Descuento</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Fecha de inicio</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Fecha de Fin</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Cantidad minima del producto</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Producto</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Estatus</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Acciones</th> 
                 </tr>
             </thead>
             <tbody>
                 <%
                     int idc;
                     //datos = dao.consultar();
-                    for (Ofertas ofe : datos) {
+                    for (Ofertas of : datos) {
                 %>
                 <tr>
-                    <td>
-                        <%=  idc = ofe.getIdOfertas()%>
-                    </td>
-                    <td>
-                        <%= ofe.getNombre()%>
-                    </td>
-                    <td>
-                        <%= ofe.getDescripcion()%>
-                    </td>
-                    <td>
-                        <%= ofe.getPorDescuento()%>
-                    </td>
-                    <td>
-                        <%= ofe.getFechaInicio()%>
-                    </td>
-                    <td>
-                        <%= ofe.getFechaFin()%>
-                    </td>
-                    <td>
-                        <%= ofe.getCanMinProducto()%>
-                    </td>
-
+                    <td><%= idc = of.getIdOfertas()%></td>
+                    <td><%= of.getNombre()%></td>
+                    <td><%= of.getDescripcion()%></td>
+                    <td><%= of.getPorDescuento()%></td>
+                    <td><%= of.getFechaInicio()%></td>
+                    <td><%= of.getFechaFin()%></td>
+                    <td><%= of.getCanMinProducto()%></td>
                     <%
-                        String Producto = product.OneProduct(ofe.getIdProducto());
+                        String Producto = product.OneProduct(of.getIdProducto());
                     %>
-                    <td>
-                        <%=Producto%>
-                    </td>
-                    </form>
+                    <td><%=Producto%></td>
                     <%
-                        if (ofe.getEstatus() == 'A') {
+                        if (of.getEstatus() == 'A') {
                     %>
-                    <td>Activo</td>
+                    <td>Activo</td> 
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
                         <form action="Controlador?accion=ClientesD&id=<%= idc%>" method="POST">
                             <button type="submit" value='<%= idc%>' name="idc" class="boton2">
                                 <span  class='glyphicon glyphicon-ban-circle'></span></button>
-                        </form>
-                    </td>
-                    <%    } else {%>
+                        </form></td>
+                    <%    } else {                    %>
                     <td>Inactivo</td>
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
                         <form action="Controlador?accion=ClientesR&id=<%= idc%>" method="POST">
                             <button type="submit" value='<%= idc%>' name="idc" class="boton2">
-                                <span  class='glyphicon glyphicon-ok-circle'></span></button>
-                        </form>
-                    </td>
-                    <%    }%>
+                            <span  class='glyphicon glyphicon-ok-circle'></span></button>
+                        </form></td>
+                    <%    }%>                        
                 </tr>
                 <%
                     }
@@ -308,12 +241,19 @@
             </tbody>
         </table>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-</body>
-<script type="text/javascript">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>   
+    <script type="text/javascript" charset="utf8" 
+    src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>   
+    <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript">
     $(document).ready(function () {
-        console.log();
         $('#divI').hide();
         $('#divA').hide();
         $('#btnMostrarf').hide();
@@ -332,44 +272,6 @@
                 $('#btnMostrar').html("<span  class='glyphicon glyphicon-minus-sign'></span>");
             }
         });
-        $('.boton').click(function () {
-            $('#btnMostrar').hide();
-            $('.boton2').hide();
-            $('#divI').hide();
-            $('#divA').show();
-            $('#nombre').val($(this).parents("tr").find("td")[1].innerHTML);
-            $('#descripcion').val($(this).parents("tr").find("td")[2].innerHTML);
-            $('#descuento').val($(this).parents("tr").find("td")[3].innerHTML);
-            var today = $(this).parents("tr").find("td")[4].innerHTML.toString().format('YYYY-MM-DD');
-            $('#fechaI').val(today);
-            $('#fechaF').val($(this).parents("tr").find("td")[5].innerHTML);
-            $('#cantidad').val($(this).parents("tr").find("td")[6].innerHTML);
-            var valor = $(this).parents("tr").find("td")[7].innerHTML;
-            console.log(valor);
-            $('#CD').html("<label style='color: grey;font-weight: lighter;'>Producto:</label>" +
-                    "<select name='txtProducto'>" +
-    <%
-                                    for (Ofertas of : datosF) {
-                                        String Producto = product.OneProduct(of.getIdProducto());
-    %>
-            "<option value='<%=of.getDescripcion()%>'><%=Producto%></option>" +
-    <%
-                                    }
-    %>
-            "</select>");
-            $('#' + valor).attr('selected', 'selected').change();
-            if ($(this).parents("tr").find("td")[8].innerHTML === 'Activo') {
-                $('#ActivoA').prop("checked", true);
-            } else {
-                $('#InactivoA').prop("checked", true);
-            }
-            valor=$(this).parents("tr").find("td")[0].innerHTML;
-            console.log(valor);
-            $('#idCl').val(valor);
-            $('#idCl').hide();
-            console.log($('#idCl').val());
-            $('#nombre').focus();
-        });
         $('#customers').DataTable({
             language: {
                 processing: "Procesando...",
@@ -384,11 +286,10 @@
                     first: "Primer",
                     previous: "Anterior",
                     next: "Siguiente",
-                    last: "ï¿½ltimo"
+                    last: "Último"
                 }
             }
         });
     });
-</script>
-
+</script>  
 </html>

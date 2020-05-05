@@ -48,8 +48,33 @@ public class ProductosDAO implements CRUD{
     }
 
     @Override
-    public List<?> consultar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Productos> consultar() {
+        List<Productos> datos=new ArrayList<>();
+        con=cn.getConexion();
+        sql=("select*from Productos;");
+        try {
+            ps=con.prepareStatement(sql);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                datos.add(new Productos(rs.getInt("idProducto"),
+                        rs.getString("nombre"), 
+                        rs.getString("descripcion"),
+                        rs.getInt("puntoReorden"),
+                        rs.getInt("precioCompra"),
+                        rs.getInt("precioVenta"),
+                        rs.getString("ingredienteActivo"),
+                        rs.getString("bandatoxicologica"),
+                        rs.getString("aplicacion"),
+                        rs.getNString("uso"),
+                        rs.getInt("idLaboratorio"),
+                        rs.getInt("idCategoria"),
+                        rs.getString("estatus").charAt(0)));
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(OfertasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return datos; 
     }
 
     @Override
