@@ -149,14 +149,12 @@
                                 %>
                             </select>
                         </td>
-                        <td style="width: 25%"><input type="text" placeholder="Razón Social" name="txtRazonSocial" style="width: 90%;" required/></td>
                         <td><label>Estatus</label>
                             <input type="radio" id="Activo" name="txtEstatus" value="A" required>
                             <label for="Activo">Activo</label>
-                            
+                            <input type="radio" id="InActivo" name="txtEstatus" value="I" required>
                             <label for="Inactivo">Inactivo</label>
                         </td>
-                        <td><input type="text" name="txtFechaInc" ></td>
                     </tr>
                 </tbody>
             </table>
@@ -171,7 +169,7 @@
 
     <div style="margin-left: 180px; margin-top: 10px" id="divA">
         
-        <form action="Controlador?accion=ClientesU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
+        <form action="Controlador?accion=MiembrosA" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
@@ -225,14 +223,14 @@
                     %>
                     <td>Activo</td> 
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                        <form action="Controlador?accion=ClientesD&id=<%= idc%>" method="POST">
+                        <form action="Controlador?accion=MiembrosD&id=<%= idc%>" method="POST">
                             <button type="submit" value='<%= idc%>' name="idc" class="boton2">
                                 <span  class='glyphicon glyphicon-ban-circle'></span></button>
                         </form></td>
                     <%    } else {                    %>
                     <td>Inactivo</td>
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                        <form action="Controlador?accion=ClientesR&id=<%= idc%>" method="POST">
+                        <form action="Controlador?accion=MiembrosR&id=<%= idc%>" method="POST">
                             <button type="submit" value='<%= idc%>' name="idc" class="boton2">
                             <span  class='glyphicon glyphicon-ok-circle'></span></button>
                         </form></td>

@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -37,6 +38,7 @@ public class Controlador extends HttpServlet {
     MiembrosDAO midao = MiembrosDAO.getMiembrosDAO();
     CultivosDAO culdao = new CultivosDAO();
     Clientes cl = new Clientes();
+    Miembros mi = new Miembros();
     Cultivos cul = new Cultivos();
     List<Clientes> datosC = new ArrayList<>();
     List<Miembros> datosM = new ArrayList<>();
@@ -239,11 +241,43 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
                 break;
             case "OfertasD":
-                res = ofdao.eliminar(Integer.parseInt(request.getParameter("ido")));
+                res = ofdao.eliminar(Integer.parseInt(request.getParameter("id")));
                 request.setAttribute("resp", res);
                 datosO = ofdao.consultar();
                 request.setAttribute("datosCl", datosO);
                 request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
+                break;
+                case "OfertasR":
+                res = ofdao.reactivar(Integer.parseInt(request.getParameter("id")));
+                request.setAttribute("resp", res);
+                datosO = ofdao.consultar();
+                request.setAttribute("datosCl", datosO);
+                request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
+                break;
+            case "MiembrosI":
+                mi = new Miembros(Integer.parseInt(request.getParameter("txtClientes")),
+                        Integer.parseInt(request.getParameter("txtAsociaciones")),
+                        request.getParameter("txtEstatus").charAt(0),
+                        Date.valueOf(LocalDate.MIN));
+                res = midao.insertar(mi);
+                datosM = midao.consultar();
+                request.setAttribute("datosCl", datosM);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewMiembros.jsp").forward(request, response);
+                break;
+            case "MiembrosD":
+                res = midao.eliminar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosM = midao.consultar();
+                request.setAttribute("datosCl", datosM);
+                request.getRequestDispatcher("ViewMiembros.jsp").forward(request, response);
+                break;
+            case "MiembrosR":
+                res = midao.reactivar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosM = midao.consultar();
+                request.setAttribute("datosCl", datosM);
+                request.getRequestDispatcher("ViewMiembros.jsp").forward(request, response);
                 break;
         }
     }

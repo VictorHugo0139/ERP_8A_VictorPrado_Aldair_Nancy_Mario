@@ -79,16 +79,7 @@
             }
         </style>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-    <a href="principal.jsp"><img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" /></a>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Edicion de Ofertas</title>
 </head>
@@ -223,14 +214,14 @@ System.out.println(", "+pr.getNombre());
                     %>
                     <td>Activo</td> 
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                        <form action="Controlador?accion=ClientesD&id=<%= ido%>" method="POST">
+                        <form action="Controlador?accion=OfertasD&id=<%= ido%>" method="POST">
                             <button type="submit" value='<%= ido%>' name="idc" class="boton2">
                                 <span  class='glyphicon glyphicon-ban-circle'></span></button>
                         </form></td>
                     <%    } else {                    %>
                     <td>Inactivo</td>
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                        <form action="Controlador?accion=ClientesR&id=<%= ido%>" method="POST">
+                        <form action="Controlador?accion=OfertasR&id=<%= ido%>" method="POST">
                             <button type="submit" value='<%= ido%>' name="idc" class="boton2">
                             <span  class='glyphicon glyphicon-ok-circle'></span></button>
                         </form></td>

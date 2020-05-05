@@ -46,14 +46,14 @@ public class MiembrosDAO implements CRUD {
         Miembros mi = (Miembros) obj;
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("insert into Miembros(idCliente,idAsosiacion,estatus,fechaIncorporacion)\n"
-                + "values (?,?,?,?);");
+        sql = ("SET IDENTITY_INSERT Miembros ON;\n" +
+"insert into Miembros(idCliente,idAsosiacion,estatus,fechaIncorporacion)\n" +
+"values (?,?,?,GETDATE());");
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, mi.getIdCliente());
             ps.setInt(2, mi.getidAsosaciones());
             ps.setString(3, "" + mi.getEstatus());
-            ps.setDate(4, mi.getFechaIncorporacion());
             int filas = ps.executeUpdate();
             respuesta = "se insertaron " + filas + " filas";
             cn.closeConnection();
@@ -101,13 +101,12 @@ public String reactivar(int id) {
         Miembros mi = (Miembros) obj;
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update Miembros set idAsosiacion=?, estatus=?, fechaIncorporacion=?  where idCliente=?;");
+        sql = ("update Miembros set idAsosiacion=?, estatus=?  where idCliente=?;");
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, mi.getidAsosaciones());
             ps.setString(2, "" + mi.getEstatus());
-            ps.setDate(3, mi.getFechaIncorporacion());
-            ps.setInt(4, mi.getIdCliente());
+            ps.setInt(3, mi.getIdCliente());
             int filas = ps.executeUpdate();
             respuesta = "se actualizaron " + filas + " filas";
             cn.closeConnection();
