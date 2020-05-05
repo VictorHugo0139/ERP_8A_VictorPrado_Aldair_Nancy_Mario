@@ -60,7 +60,35 @@ public static OfertasDAO getOfertasDAO(){
     
     @Override
     public String eliminar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update Ofertas set estatus='I' where idOferta=? ");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            respuesta = "se eliminaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(OfertasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
+    }
+    
+    public String reactivar(int id) {
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update Ofertas set estatus='A' where idOferta=? ");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            respuesta = "se reactivaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(OfertasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
     }
 
     @Override

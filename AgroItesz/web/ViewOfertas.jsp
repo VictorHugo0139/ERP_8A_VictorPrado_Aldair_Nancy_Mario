@@ -202,12 +202,12 @@ System.out.println(", "+pr.getNombre());
             </thead>
             <tbody>
                 <%
-                    int idc;
+                    int ido;
                     //datos = dao.consultar();
                     for (Ofertas of : datos) {
                 %>
                 <tr>
-                    <td><%= idc = of.getIdOfertas()%></td>
+                    <td><%= ido = of.getIdOfertas()%></td>
                     <td><%= of.getNombre()%></td>
                     <td><%= of.getDescripcion()%></td>
                     <td><%= of.getPorDescuento()%></td>
@@ -223,15 +223,15 @@ System.out.println(", "+pr.getNombre());
                     %>
                     <td>Activo</td> 
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                        <form action="Controlador?accion=ClientesD&id=<%= idc%>" method="POST">
-                            <button type="submit" value='<%= idc%>' name="idc" class="boton2">
+                        <form action="Controlador?accion=ClientesD&id=<%= ido%>" method="POST">
+                            <button type="submit" value='<%= ido%>' name="idc" class="boton2">
                                 <span  class='glyphicon glyphicon-ban-circle'></span></button>
                         </form></td>
                     <%    } else {                    %>
                     <td>Inactivo</td>
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                        <form action="Controlador?accion=ClientesR&id=<%= idc%>" method="POST">
-                            <button type="submit" value='<%= idc%>' name="idc" class="boton2">
+                        <form action="Controlador?accion=ClientesR&id=<%= ido%>" method="POST">
+                            <button type="submit" value='<%= ido%>' name="idc" class="boton2">
                             <span  class='glyphicon glyphicon-ok-circle'></span></button>
                         </form></td>
                     <%    }%>                        

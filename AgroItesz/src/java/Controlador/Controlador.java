@@ -238,6 +238,13 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("resp", res);
                 request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
                 break;
+            case "OfertasD":
+                res = ofdao.eliminar(Integer.parseInt(request.getParameter("ido")));
+                request.setAttribute("resp", res);
+                datosO = ofdao.consultar();
+                request.setAttribute("datosCl", datosO);
+                request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
+                break;
         }
     }
 
