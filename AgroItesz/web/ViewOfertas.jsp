@@ -118,6 +118,30 @@
                         </button>
                     </form>
 
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </header>
+                            <button id="btnMostrarf">+</button>
+                            <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
+                            <div style="margin-left: 180px; margin-top: 10px" id="divI">
+                                <form action="Controlador?accion=OfertasI" method="POST">
+                                    <table border="0" style="width: 100%">
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" style="width: 90%;" /></td>
+                                                <td style="width: 25%" colspan="2"><input type="text" placeholder="Descripci�n" name="txtDes" style="width: 90%;" /></td>
+                                                <td style="width: 25%" colspan="2"><input type="nombre" placeholder="%Descuento" name="txtModelo" style="width: 90%;" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 25%" colspan="2"><input type="date" placeholder="Fecha Inicial" name="txtA�o" style="width: 90%;" /></td>
+                                                <td style="width: 25%" colspan="2"><input type="date" placeholder="Fecha Final" name="txtCapacidad" style="width: 90%;" /></td>
+                                                <td style="width: 25%" colspan="2"><input type="number" placeholder="Cantidad Minima del Producto" name="txtEstatus" style="width: 90%;" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label style="color: grey;font-weight: lighter;">Producto:</label>
+                                                    <select name="txtProducto">
                 </li>
             </ul>
         </nav>

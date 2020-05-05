@@ -32,7 +32,30 @@ public static OfertasDAO getOfertasDAO(){
 
     @Override
     public String insertar(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Ofertas of=(Ofertas) obj;
+        String respuesta="";
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
+        con=cn.getConexion();
+        sql=("insert into Ofertas(nombre,descripcion,porDescuento,fechaInicio,fechaFin,canMinProducto,estatus,idProducto)\n" +
+        "values (?,?,?,?,?,?,?,?)"); 
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1, of.getNombre());
+            ps.setString(2, of.getDescripcion());
+            ps.setInt(3, of.getPorDescuento());
+            ps.setDate(4, of.getFechaInicio());
+            ps.setDate(5, of.getFechaFin());
+            ps.setInt(6, of.getCanMinProducto());
+            ps.setString(7, ""+of.getEstatus());
+            ps.setInt(8, of.getIdProducto());
+            int filas= ps.executeUpdate();
+            respuesta="se insertaron "+filas+" filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(OfertasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
     }
 
     @Override
