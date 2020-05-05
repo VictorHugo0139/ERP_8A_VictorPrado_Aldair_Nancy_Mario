@@ -32,18 +32,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Agroitesz.Soft</title>
         
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <link href="css/index.css" rel="stylesheet" type="text/css"/>
     <a href="css/fonts-googleappis.txt"></a>
 </head>
-<body>
+<body style="background: no-repeat;">
     <nav class="navbar navbar-inverse" style="background: #121214;">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -147,6 +139,7 @@
                     </a>
                 </div>
             </div>
+            
             <div class="col-md-4 col-sm-6">
                 <div class="box-for-img text-center">
                     <a href="Controlador?accion=Transportes" class="boton_2 img3 img-responsive" style="height: 230px">
@@ -175,7 +168,7 @@
             <div class="col-md-4 col-sm-6">
                 <div class="box-for-img text-center">
                     <a href="Controlador?accion=Miembros" class="boton_2 img6 img-responsive" style="height: 230px">
-                        Miembros<a href="Images/Miembros.png"></a>
+                        Miembros<a href="Images/Miembros-logo.png"></a>
                     </a>
                 </div>
             </div>
@@ -186,6 +179,15 @@
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
+    <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        
 </body>
 <script type="text/javascript">
                     $(document).ready(function () {

@@ -19,7 +19,7 @@
                 padding: 0;
                 overflow: hidden;
                 background-color: #1b0c45;
-                
+
             }
             #U li {
                 display: inline;
@@ -68,15 +68,15 @@
                 color: white;
             }
         </style>
-     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <a href="principal.jsp"><img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" /></a>
-    
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Edición de Ofertas</title>
 </head>
 <%  ProductosDAO product = ProductosDAO.getProducosDAO();
-    List<Ofertas> datos = (List<Ofertas>)request.getAttribute("datosCl");
-    List<Ofertas> datosF = (List<Ofertas>)request.getAttribute("datosCl");
+    List<Ofertas> datos = (List<Ofertas>) request.getAttribute("datosCl");
+    List<Ofertas> datosF = (List<Ofertas>) request.getAttribute("datosCl");
 %>
 <body style="background-color: #dfd7f5;">
     <header>
@@ -128,7 +128,7 @@
                                     for (Ofertas of : datosF) {
                                         String Producto = product.OneProduct(of.getIdProducto());
                                 %>
-                                <option value="<%= of.getDescripcion()%>"><%= Producto%></option>
+                                <option value="<%=Producto%>"><%=of.getDescripcion()%></option>
                                 <%
                                     }
                                 %>
@@ -144,7 +144,7 @@
         </form>
 
     </div>
-    
+
     <div>
         <table width='100%' border='0' cellpadding='0' id='customers'>
             <thead>
@@ -158,14 +158,15 @@
                     <th  width='1%' style='border: 0;' scope='col'>Cantidad Minima del Producto</th> 
                     <th  width='1%' style='border: 0;' scope='col'>Estatus</th> 
                     <th  width='1%' style='border: 0;' scope='col'>Producto</th>
+                    <th  width='1%' style='border: 0;' scope='col'>Opciones</th>
                 </tr>
             </thead>
-             <tbody>
-            <%
-                int idc;
-                //datos = dao.consultar();
-                for (Ofertas ofe : datos) {
-            %>
+            <tbody>
+                <%
+                    int idc;
+                    //datos = dao.consultar();
+                    for (Ofertas ofe : datos) {
+                %>
                 <tr>
                     <td><%=  idc = ofe.getIdOfertas()%></td>
                     <td><%= ofe.getNombre()%></td>
@@ -180,8 +181,7 @@
                     <td>Activo</td> 
                     <%    } else {                    %>
                     <td>Inactivo</td>
-                    <%    }%>                        
-                    <%
+                    <%    } 
                         String Producto = product.OneProduct(ofe.getIdProducto());
                     %>
                     <td><%=Producto%></td>
@@ -192,7 +192,7 @@
                         </form>
                         <form action="Controlador?accion=OfertasD&id=<%= idc%>" method="POST">
                             <button type="submit" value='<%= idc%>' name="idc">Eliminar</button>
-                        </form>
+                        </form></td> 
                 </tr>
                 <%
                     }
@@ -206,12 +206,13 @@
 </body>
 <script type="text/javascript">
     $(document).ready(function () {
+        console.log();
         $('#divI').hide();
-        $('#btnMostrar').click(function (){
-            if($('#btnMostrar').text()=='-'){
+        $('#btnMostrar').click(function () {
+            if ($('#btnMostrar').text() == '-') {
                 $('#divI').hide();
                 $('#btnMostrar').text('+');
-            }else{
+            } else {
                 $('#divI').show();
                 $('#btnMostrar').text('-');
             }
