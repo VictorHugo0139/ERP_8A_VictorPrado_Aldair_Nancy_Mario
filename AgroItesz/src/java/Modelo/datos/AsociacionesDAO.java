@@ -3,7 +3,7 @@ package Modelo.datos;
 
 import Conexion.Conexion;
 import Modelo.CRUD;
-import Modelo.Ofertas;
+import Modelo.Asociaciones;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,23 +13,24 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class OfertasDAO implements CRUD{
-    private static OfertasDAO ofdao;    
+public class AsociacionesDAO implements CRUD{
+    private static AsociacionesDAO asdao;    
     Conexion cn= Conexion.getInsConexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
     String sql;
-public static OfertasDAO getOfertasDAO(){
-    if(ofdao==null){
-        ofdao= new OfertasDAO();
+public static AsociacionesDAO geAsociacionestDAO(){
+    if(asdao==null){
+        asdao= new AsociacionesDAO();
     }                   
-    return ofdao;                     
+    return asdao;                     
 }
 
-    private OfertasDAO() {
+    private AsociacionesDAO() {
     }
 
+    
     @Override
     public String insertar(Object obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -46,27 +47,21 @@ public static OfertasDAO getOfertasDAO(){
     }
 
     @Override
-    public List<Ofertas> consultar() {
-        List<Ofertas> datos=new ArrayList<>();
+    public List<Asociaciones> consultar() {
+        List<Asociaciones> datos=new ArrayList<>();
         con=cn.getConexion();
-        sql=("select * from Ofertas");
+        sql=("select * from Asociaciones");
         try {
             ps=con.prepareStatement(sql);
             rs=ps.executeQuery();
             while(rs.next()){
-                datos.add(new Ofertas(rs.getInt("idOferta"),
+                datos.add(new Asociaciones(rs.getInt("idAsosiacion"),
                         rs.getString("nombre"),
-                        rs.getString("descripcion"),
-                        rs.getInt("porDescuento"),
-                        rs.getDate("fechaInicio"),
-                        rs.getDate("fechaFin"),
-                        rs.getInt("canMinProducto"),
-                        rs.getString("estatus").charAt(0),
-                        rs.getInt("idProducto")));
+                        rs.getString("estatus").charAt(0)));
             }
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(OfertasDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AsociacionesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return datos;
     }
@@ -75,5 +70,5 @@ public static OfertasDAO getOfertasDAO(){
     public List<?> filtrar(String campo, String criterio) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
 }

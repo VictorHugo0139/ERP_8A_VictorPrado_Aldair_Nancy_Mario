@@ -6,11 +6,13 @@ import Modelo.Cultivos;
 import Modelo.Usuarios;
 import Modelo.Transporte;
 import Modelo.Ofertas;
+import Modelo.Asociaciones;
 import Modelo.datos.ClientesDAO;
 import Modelo.datos.CultivosDAO;
 import Modelo.datos.TransporteDAO;
 import Modelo.datos.UsuariosDAO;
 import Modelo.datos.OfertasDAO;
+import Modelo.datos.AsociacionesDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -40,6 +42,9 @@ public class Controlador extends HttpServlet {
     OfertasDAO ofdao = OfertasDAO.getOfertasDAO();
     Ofertas of = new Ofertas();
     List<Ofertas> datosO= new ArrayList<>();
+    AsociacionesDAO asdao = AsociacionesDAO.geAsociacionestDAO();
+    Asociaciones as = new Asociaciones();
+    List<Asociaciones> datosA= new ArrayList<>();
     int r;
     String res;
 
@@ -96,6 +101,8 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
                 break;
             case "Socios":
+                datosA=asdao.consultar();
+                request.setAttribute("datosCl", datosA);
                 request.getRequestDispatcher("ViewSocios.jsp").forward(request, response);
                 break;
             case "Ofertas":
