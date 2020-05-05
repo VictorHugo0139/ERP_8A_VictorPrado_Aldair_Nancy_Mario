@@ -94,7 +94,7 @@
                         <label>En base a:</label>
                         <select name="campo" style="color: black;">
                             <option value="idCliente">#Cliente</option>
-                            <option value="nombre">Nombre</option>
+                            <option value="Asociacion">Asociacion</option>
                             <option value="razonSocial">Razón Social</option>
                             <option value="limiteCredito">Limite Crédito</option>
                             <option value="direccion">Dirección</option>
