@@ -176,6 +176,42 @@
             </form>
             </br>
         </div>
+        
+        <div style="margin-left: 180px; margin-top: 10px" id="divA">
+            <form action="Controlador?accion=OfertasU" method="POST" name="formInsertar">
+                <table border="0" style="width: 100%">
+                    <tbody> 
+                        <tr>
+                            <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" id="nombre" style="width: 90%;" required/></td>
+                            <td style="width: 25%" colspan="2"><input type="text" placeholder="Descripcion" name="txtDescripcion" id="descripcion" style="width: 90%;" required /></td>
+                            <td style="width: 25%"><input type="number" step="0.01" placeholder="%Descuento" name="txtPorDescuento" id="porDescuento" style="width: 90%;" required/></td>
+                            <td style="width: 25%"><input type="Date" placeholder="Fecha de inicio" name="txtFechaInicio" id="txtFechaIni" style="width: 90%;" value="" required/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="Date" placeholder="Fecha de Fin" name="txtFechaFin" id="txtFechaFin" style="width: 90%;" required/></td>
+                            <td><input type="number" placeholder="Cantidad minima del Producto" name="txtCantMinProducto" id="cantMin" style="width: 90%;"/></td>
+                        </tr>
+                        <tr>
+                            <td id="CD">
+                                
+                            </td>
+                            <td><label>Estatus</label>
+                                <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
+                                <label for="Activo">Activo</label>
+                                <input type="radio" id="InactivoA" name="txtEstatus" value="I">
+                                <label for="Inactivo">Inactivo</label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
+                    Agregar
+                </button>
+            </form>
+            </br>
+        </div>
+        
         <div>
             <table width='100%' border='0' cellpadding='0' id='customers'>
                 <thead>
@@ -272,23 +308,59 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#divI').hide();
-                $('#divA').hide();
-                $('#btnMostrarf').hide();
-                $('#btnMostrar').click(function () {
-                    if ($('#btnMostrarf').text() === '-') {
-                        $('#divI').hide();
-                        $('.boton').show();
-                        $('.boton2').show();
-                        $('#btnMostrarf').text('+');
-                        $('#btnMostrar').html("<span  class='glyphicon glyphicon-plus-sign'></span>");
-                    } else {
-                        $('#divI').show();
-                        $('.boton').hide();
-                        $('.boton2').hide();
-                        $('#btnMostrarf').text('-');
-                        $('#btnMostrar').html("<span  class='glyphicon glyphicon-minus-sign'></span>");
-                    }
-                });
+        $('#divA').hide();
+        $('#btnMostrarf').hide();
+        $('#btnMostrar').click(function () {
+            if ($('#btnMostrarf').text() === '-') {
+                $('#divI').hide();
+                $('.boton').show();
+                $('.boton2').show();
+                $('#btnMostrarf').text('+');
+                $('#btnMostrar').html("<span  class='glyphicon glyphicon-plus-sign'></span>");
+            } else {
+                $('#divI').show();
+                $('.boton').hide();
+                $('.boton2').hide();
+                $('#btnMostrarf').text('-');
+                $('#btnMostrar').html("<span  class='glyphicon glyphicon-minus-sign'></span>");
+            }
+        });
+        $('.boton').click(function () {
+            $('#btnMostrar').hide();
+            $('.boton2').hide();
+            $('#divI').hide();
+            $('#divA').show();
+            $('#nombre').val($(this).parents("tr").find("td")[1].innerHTML);
+            $('#descripcion').val($(this).parents("tr").find("td")[2].innerHTML);
+            $('#porDescuento').val($(this).parents("tr").find("td")[3].innerHTML);
+            $('#txtFechaIni').val($(this).parents("tr").find("td")[4].innerHTML);
+            $('#txtFechaFin').val($(this).parents("tr").find("td")[5].innerHTML);
+            $('#cantMin').val($(this).parents("tr").find("td")[6].innerHTML);
+            var valor = $(this).parents("tr").find("td")[7].innerHTML;
+            //console.log(valor);
+            $('#CD').html("<label style='color: grey;font-weight: lighter;'>Productos:</label>"+
+                                "<select name='txtProducto'>"+
+                                    <%
+                                        for (Productos pr : datosPr) {
+                                    %>
+                                    "<option value='<%= pr.getIdProducto()%>'><%= pr.getNombre()%></option>"+
+                                    <%
+                                        }
+                                    %>
+                                "</select>");
+                                $('#' + valor).attr('selected', 'selected').change();
+                                 
+            if ($(this).parents("tr").find("td")[8].innerHTML === 'Activo') {
+                $('#ActivoA').prop("checked", true);
+            } else {
+                $('#InactivoA').prop("checked", true);
+            }
+            console.log($(this).parents("tr").find("td")[0].innerHTML);
+            valor=$(this).parents("tr").find("td")[0].innerHTML;
+            console.log(valor);
+            $('#nombre').focus();
+                                
+        });
                 $('#txtFechaI').val(hoyFecha());
                 $('#txtFechaF').val(hoyFecha());
                 $('#customers').DataTable({

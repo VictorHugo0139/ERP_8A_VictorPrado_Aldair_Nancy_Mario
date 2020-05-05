@@ -254,6 +254,22 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosO);
                 request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
                 break;
+                case "OfertasU":
+                of = new Ofertas(0,
+                        request.getParameter("txtNombre"),
+                        request.getParameter("txtDescripcion"),
+                        Integer.parseInt(request.getParameter("txtPorDescuento")),
+                        Date.valueOf(request.getParameter("txtFechaInicio")),
+                        Date.valueOf(request.getParameter("txtFechaFin")),
+                        Integer.parseInt(request.getParameter("txtCantMinProducto")),
+                        request.getParameter("txtEstatus").charAt(0),
+                        Integer.parseInt(request.getParameter("txtProducto")));
+                res = ofdao.actualizar(of);
+                datosO = ofdao.consultar();
+                request.setAttribute("datosCl", datosO);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
+                break;
             case "MiembrosI":
                 mi = new Miembros(Integer.parseInt(request.getParameter("txtClientes")),
                         Integer.parseInt(request.getParameter("txtAsociaciones")),
