@@ -78,9 +78,44 @@ private static TransporteDAO trdao;
         return respuesta;
     }
 
+    public String reactivar(int id) {
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update UnidadesTransporte set estatus='A' where idUnidadTransporte=? ");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            respuesta = "se reactivaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(TransporteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
+    }
+    
     @Override
     public String actualizar(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Transporte tr = (Transporte) obj;
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update UnidadesTransporte set placas=?, marca=?, modelo=?, anio=?, capacidad=?, estatus=? where idUnidadTransporte=?");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, tr.getPlacas());
+            ps.setString(2, tr.getMarca());
+            ps.setString(3, tr.getModelo());
+            ps.setInt(4, tr.getAño());
+            ps.setInt(5, tr.getCapacidad());
+            ps.setString(6, "" + tr.getEstado());
+            ps.setInt(7, tr.getIdTransporte());
+            int filas = ps.executeUpdate();
+            respuesta = "se actualizaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(TransporteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
     }
 
     @Override

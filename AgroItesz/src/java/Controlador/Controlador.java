@@ -200,7 +200,21 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("resp", res);
                 request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
                 break;
-
+            case "TransporteU":
+                tr = new Transporte(Integer.parseInt(request.getParameter("idTr")),
+                        request.getParameter("txtPlacas"),
+                        request.getParameter("txtMarca"),
+                        request.getParameter("txtModelo"),
+                        Integer.parseInt(request.getParameter("txtAño")),
+                        Integer.parseInt(request.getParameter("txtCapacidad")),
+                        request.getParameter("txtEstatus").charAt(0));
+                res = trdao.actualizar(cl);
+                datosT = trdao.consultar();
+                request.setAttribute("datosCl", datosT);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
+                break;
+                
         }
     }
 
