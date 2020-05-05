@@ -65,9 +65,9 @@ public class ProductosDAO implements CRUD{
                         rs.getString("ingredienteActivo"),
                         rs.getString("bandatoxicologica"),
                         rs.getString("aplicacion"),
-                        rs.getNString("uso"),
+                        rs.getString("uso"),
                         rs.getInt("idLaboratorio"),
-                        rs.getInt("idCategoria"),
+                        rs.getInt("idCategorias"),
                         rs.getString("estatus").charAt(0)));
             }
             cn.closeConnection();

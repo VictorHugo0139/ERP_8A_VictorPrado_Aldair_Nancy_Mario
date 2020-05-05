@@ -159,7 +159,8 @@
                                 <%
                                     for (Productos pr : datosPr) {
                                         //String Ciudad = city.OneCity(cl.getIdCiudad());
-
+System.out.println(pr.getIdProducto());
+System.out.println(", "+pr.getNombre());
                                 %>
                                 <option value="<%= pr.getIdProducto()%>"><%= pr.getNombre()%></option>
                                 <%

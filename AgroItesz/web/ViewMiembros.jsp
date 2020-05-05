@@ -74,8 +74,9 @@
     <title>Edición de clientes</title>
 </head>
 <% 
+    ClientesDAO cldao=ClientesDAO.getClientesDAO();
     List<Miembros> datos = (List<Miembros>) request.getAttribute("datosCl");
-  
+  List<Clientes> datosCl = cldao.consultar();
 %>
 <body style="background-color: #dfd7f5;">
     <header>
@@ -95,16 +96,8 @@
                         <select name="campo" style="color: black;">
                             <option value="idCliente">#Cliente</option>
                             <option value="Asociacion">Asociacion</option>
-                            <option value="razonSocial">Razón Social</option>
-                            <option value="limiteCredito">Limite Crédito</option>
-                            <option value="direccion">Dirección</option>
-                            <option value="codigoPostal">Código Postal</option>
-                            <option value="rfc">RFC</option>
-                            <option value="telefono">Teléfono</option>
-                            <option value="email">Email</option>
-                            <option value="tipo">Genero</option>
-                            <option value="Ciudad">Ciudad</option>
                             <option value="estatus">Estatus</option>
+                            <option value="fechaIncorporación">Fecha</option>
                         </select>
                         <button style="width: 20%; background-color: #15b332; color: #fff; font-weight: bold;"  type="submit">
                             <span class="glyphicon glyphicon-search"></span>
@@ -123,42 +116,34 @@
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" style="width: 90%;" required/></td>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Apellido" name="txtApellido" style="width: 90%;" required /></td>
-                        <td style="width: 25%"><input type="text" placeholder="Razón Social" name="txtRazonSocial" style="width: 90%;" required/></td>
-                        <td style="width: 25%"><input type="number" placeholder="Límite de crédito" name="txtLimiteCredito" style="width: 90%;" step="0.01" required/></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><input type="text" placeholder="Nombre de la calle" name="txtCalle" style="width: 90%;" required/></td>
-                        <td><input type="number" placeholder="Numero" name="txtNumero" style="width: 90%;"/></td>
-                        <td><input type="number" placeholder="Código Postal" name="txtCodigoPostal" style="width: 80%;" required/></td>
-                        <td><input type="text" placeholder="RFC" name="txtRFC" required/></td>
-                        <td colspan="2"><input type="email" placeholder="Email" name="txtEmail" style="width: 90%;" required/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="tel" placeholder="Teléfono" name="txtTelefono" required/></td>
-                        <td><label>Genero:</label></td>
-                        <td colspan="2"><input type="radio" id="Masculino" name="txtTipo" value="M" required>
-                            <label for="Masculino">Masculino</label>
-                            <input type="radio" id="Femenino" name="txtTipo" value="F">
-                            <label for="Femenino">Femenino</label>
-                            <input type="radio" id="Otro" name="txtTipo" value="O">
-                            <label for="Otro">Otro</label>
-                        </td>
-                        <td >
-                            <label style="color: grey;font-weight: lighter;">Ciudad:</label>
+                        <td style="width: 25%" colspan="2">
+                            <label style="color: grey;font-weight: lighter;">Cliente:</label>
                             <select name="txtCiudad">
                                 <%
-                                    for (Ciudades ci : datosCiu) {
+                                    for (Clientes cl : datosCl) {
                                         //String Ciudad = city.OneCity(cl.getIdCiudad());
 
                                 %>
-                                <option value="<%= ci.getIdCiudad()%>"><%= ci.getNombre()%></option>
+                                <option value="<%= cl.getIdCliente()%>"><%= cl.getNombre()%></option>
                                 <%
                                     }
                                 %>
                             </select>
                         </td>
+                        <td style="width: 25%" colspan="2">
+                            <select name="txtCiudad">
+                                <%
+                                    for (Clientes cl : datosCl) {
+                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
+
+                                %>
+                                <option value="<%= cl.getIdCliente()%>"><%= cl.getNombre()%></option>
+                                <%
+                                    }
+                                %>
+                            </select>
+                        </td>
+                        <td style="width: 25%"><input type="text" placeholder="Razón Social" name="txtRazonSocial" style="width: 90%;" required/></td>
                         <td><label>Estatus</label>
                             <input type="radio" id="Activo" name="txtEstatus" value="A" required>
                             <label for="Activo">Activo</label>
@@ -183,36 +168,15 @@
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" id="nombre" style="width: 90%;" required/></td>
-                        <td style="width: 25%"><input type="text" placeholder="Razón Social" name="txtRazonSocial" id="razonSocial" style="width: 90%;" required/></td>
-                        <td style="width: 25%"><input type="number" placeholder="Límite de crédito" name="txtLimiteCredito" id="limiteCredito" step="0.01" style="width: 90%;" required/></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><input type="text" placeholder="Nombre de la calle" name="txtUbicacion" id="ubicacion" style="width: 90%;" required/></td>
-                        <td><input type="number" placeholder="Código Postal" name="txtCodigoPostal" id="codigoPostal" style="width: 80%;" required/></td>
-                        <td><input type="text" placeholder="RFC" name="txtRFC" id="RFC" required/></td>
-                        <td colspan="2"><input type="email" placeholder="Email" name="txtEmail" id="email" style="width: 90%;" required/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="tel" placeholder="Teléfono" name="txtTelefono" id="telefono" required/></td>
-                        <td><label>Genero:</label></td>
-                        <td colspan="2"><input type="radio" id="MasculinoA" name="txtTipoA" value="M" required>
-                            <label for="Masculino">Masculino</label>
-                            <input type="radio" id="FemeninoA" name="txtTipoA" value="F">
-                            <label for="Femenino">Femenino</label>
-                            <input type="radio" id="OtroA" name="txtTipoA" value="O">
-                            <label for="Otro">Otro</label>
-                        </td>
-                        <td id='CD'>
-
-                        </td>
-                        <td><label>Estatus:</label>
-                            <input type="radio" id="ActivoA" name="txtEstatusA" value="A" required>
+                        <td style="width: 25%" colspan="2" id="CD"></td>
+                        <td style="width: 25%" colspan="2" id="CD2"></td>
+                        <td style="width: 25%"><input type="text" placeholder="Razón Social" name="txtRazonSocial" style="width: 90%;" required/></td>
+                        <td><label>Estatus</label>
+                            <input type="radio" id="Activo" name="txtEstatus" value="A" required>
                             <label for="Activo">Activo</label>
-                            <input type="radio" id="InactivoA" name="txtEstatusA" value="I">
+                            <input type="radio" id="Inactivo" name="txtEstatus" value="I">
                             <label for="Inactivo">Inactivo</label>
                         </td>
-                        <td><input type="number" name="idCl" id="idCl"/> </td>
                     </tr>
                 </tbody>
             </table>
