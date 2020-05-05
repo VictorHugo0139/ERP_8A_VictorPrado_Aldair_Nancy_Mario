@@ -5,6 +5,8 @@
  */
 package Modelo;
 
+import java.sql.Date;
+
 /**
  *
  * @author Nancy
@@ -15,13 +17,13 @@ public class Ofertas {
     private String Nombre;
     private String Descripcion;
     private int PorDescuento;
-    private int FechaInicio;
-    private int FechaFin;
+    private Date FechaInicio;
+    private Date FechaFin;
     private int canMinProducto;
     private char Estatus;
     private int idProducto;
 
-    public Ofertas(int idOfertas, String Nombre, String Descripcion, int PorDescuento, int FechaInicio, int FechaFin, int canMinProducto, char Estatus, int idProducto) {
+    public Ofertas(int idOfertas, String Nombre, String Descripcion, int PorDescuento, Date FechaInicio, Date FechaFin, int canMinProducto, char Estatus, int idProducto) {
         this.idOfertas = idOfertas;
         this.Nombre = Nombre;
         this.Descripcion = Descripcion;
@@ -36,7 +38,7 @@ public class Ofertas {
     public Ofertas(){
         
     }
-    
+
     public int getIdOfertas() {
         return idOfertas;
     }
@@ -69,19 +71,19 @@ public class Ofertas {
         this.PorDescuento = PorDescuento;
     }
 
-    public int getFechaInicio() {
+    public Date getFechaInicio(){
         return FechaInicio;
     }
 
-    public void setFechaInicio(int FechaInicio) {
+    public void setFechaInicio(Date FechaInicio) {
         this.FechaInicio = FechaInicio;
     }
 
-    public int getFechaFin() {
+    public Date getFechaFin() {
         return FechaFin;
     }
 
-    public void setFechaFin(int FechaFin) {
+    public void setFechaFin(Date FechaFin) {
         this.FechaFin = FechaFin;
     }
 
@@ -89,8 +91,8 @@ public class Ofertas {
         return canMinProducto;
     }
 
-    public void setCanMinProducto(int CantMinProducto) {
-        this.canMinProducto = CantMinProducto;
+    public void setCanMinProducto(int canMinProducto) {
+        this.canMinProducto = canMinProducto;
     }
 
     public char getEstatus() {
@@ -108,6 +110,4 @@ public class Ofertas {
     public void setIdProducto(int idProducto) {
         this.idProducto = idProducto;
     }
-    
-
 }

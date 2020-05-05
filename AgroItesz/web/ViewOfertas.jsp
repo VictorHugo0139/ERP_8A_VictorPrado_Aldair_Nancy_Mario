@@ -158,6 +158,8 @@
                     <th  width='1%' style='border: 0;' scope='col'>Cantidad Minima del Producto</th> 
                     <th  width='1%' style='border: 0;' scope='col'>Estatus</th> 
                     <th  width='1%' style='border: 0;' scope='col'>Producto</th>
+                    <th  width='1%' style='border: 0;' scope='col'>Acciones</th> 
+
                 </tr>
             </thead>
              <tbody>
