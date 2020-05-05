@@ -208,7 +208,6 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("resp", res);
                 request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
                 break;
-                
         }
     }
 

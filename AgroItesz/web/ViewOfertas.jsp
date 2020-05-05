@@ -129,8 +129,8 @@
                                     <table border="0" style="width: 100%">
                                         <tbody>
                                             <tr>
-                                                <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtPlacas" style="width: 90%;" /></td>
-                                                <td style="width: 25%" colspan="2"><input type="text" placeholder="Descripci�n" name="txtMarca" style="width: 90%;" /></td>
+                                                <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" style="width: 90%;" /></td>
+                                                <td style="width: 25%" colspan="2"><input type="text" placeholder="Descripci�n" name="txtDes" style="width: 90%;" /></td>
                                                 <td style="width: 25%" colspan="2"><input type="nombre" placeholder="%Descuento" name="txtModelo" style="width: 90%;" /></td>
                                             </tr>
                                             <tr>
