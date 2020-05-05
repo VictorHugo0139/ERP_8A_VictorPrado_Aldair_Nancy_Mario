@@ -186,6 +186,13 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosT);
                 request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
                 break;
+            case "TransporteR":
+                res = trdao.reactivar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosT = trdao.consultar();
+                request.setAttribute("datosCl", datosT);
+                request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
+                break;
             case "TransporteI":
                 tr = new Transporte(0,
                         request.getParameter("txtPlacas"),

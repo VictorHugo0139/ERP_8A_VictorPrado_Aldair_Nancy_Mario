@@ -144,17 +144,17 @@
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Placas" name="txtPlacas" style="width: 90%;"/></td>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Marca" name="txtMarca" style="width: 90%;"/></td>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Modelo" name="txtModelo" style="width: 90%;"/></td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Placas" name="txtPlacas" id="placas" style="width: 90%;"/></td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Marca" name="txtMarca" id="marca" style="width: 90%;"/></td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Modelo" name="txtModelo"id="modelo" style="width: 90%;"/></td>
                     </tr>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="number" placeholder="Año" name="txtAño" style="width: 90%;"/></td>
-                        <td style="width: 25%" colspan="2"><input type="numer" placeholder="Capacidad" name="txtCapacidad" style="width: 90%;"/></td>
+                        <td style="width: 25%" colspan="2"><input type="number" placeholder="Año" name="txtAño" id="anio" style="width: 90%;"/></td>
+                        <td style="width: 25%" colspan="2"><input type="numer" placeholder="Capacidad" name="txtCapacidad" id="capacidad" style="width: 90%;"/></td>
                         <td><label>Estatus</label>
-                            <input type="radio" id="Activo" name="txtEstatus" value="A" required>
+                            <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
                             <label for="Activo">Activo</label>
-                            <input type="radio" id="Inactivo" name="txtEstatus" value="I">
+                            <input type="radio" id="InactivoA" name="txtEstatus" value="I">
                             <label for="Inactivo">Inactivo</label>
                         </td>
                         <td><input type="number" name="idTr" id="idTr"/> </td>
@@ -204,14 +204,14 @@
                     %>
                     <td>Activo</td> 
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                        <form action="Controlador?accion=ClientesD&id=<%= idc%>" method="POST">
+                        <form action="Controlador?accion=TransporteD&id=<%= idc%>" method="POST">
                             <button type="submit" value='<%= idc%>' name="idc" class="boton2">
                                 <span  class='glyphicon glyphicon-ban-circle'></span></button>
                         </form></td>
                     <%    } else {                    %>
                     <td>Inactivo</td>
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                        <form action="Controlador?accion=ClientesR&id=<%= idc%>" method="POST">
+                        <form action="Controlador?accion=TransporteR&id=<%= idc%>" method="POST">
                             <button type="submit" value='<%= idc%>' name="idc" class="boton2">
                             <span  class='glyphicon glyphicon-ok-circle'></span></button>
                         </form></td>
@@ -260,7 +260,6 @@
             $('#modelo').val($(this).parents("tr").find("td")[3].innerHTML);
             $('#anio').val($(this).parents("tr").find("td")[4].innerHTML);
             $('#capacidad').val($(this).parents("tr").find("td")[5].innerHTML);
-            $('#' + valor).attr('selected', 'selected').change();
             
             if ($(this).parents("tr").find("td")[6].innerHTML === 'Activo') {
                 $('#ActivoA').prop("checked", true);
@@ -299,55 +298,6 @@
                 }
             }
         });
-    });$('.boton').click(function () {
-
-            //valores obtendra el dato del td por posciones [0]
-            $('#btnMostrar').hide();
-            $('.boton2').hide();
-            $('#divI').hide();
-            $('#divA').show();
-            $('#placas').val($(this).parents("tr").find("td")[1].innerHTML);
-            $('#marca').val($(this).parents("tr").find("td")[2].innerHTML);
-            $('#modelo').val($(this).parents("tr").find("td")[3].innerHTML);
-            $('#anio').val($(this).parents("tr").find("td")[4].innerHTML);
-            $('#capacidad').val($(this).parents("tr").find("td")[5].innerHTML);
-            $('#' + valor).attr('selected', 'selected').change();     
-            if ($(this).parents("tr").find("td")[6].innerHTML === 'Activo') {
-                $('#ActivoA').prop("checked", true);
-            } else {
-                $('#InactivoA').prop("checked", true);
-            }
-            console.log($(this).parents("tr").find("td")[0].innerHTML);
-            valor=$(this).parents("tr").find("td")[0].innerHTML;
-            console.log(valor);
-            $('#idTr').val(valor);
-            $('#idTr').hide();
-            console.log($('#idTr').val());
-            $('#nombre').focus();
-        });
-        $('#Cancel').click(function () {
-            $('#divA').hide();
-            $('#divI').hide();
-            $('.boton2').show();
-            $('#btnMostrar').show();
-        });
-        $('#customers').DataTable({
-            language: {
-                processing: "Procesando...",
-                search: "Buscar:",
-                lengthMenu: "Mostrar _MENU_ elementos",
-                info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
-                infoEmpty: "No se encontraron elementos para mostrar",
-                infoFiltered: "(Filtrado de _MAX_ elementos en total)",
-                loadingRecords: "Cargando datos...",
-                zeroRecords: "No se encontraron elementos para mostrar",
-                paginate: {
-                    first: "Primer",
-                    previous: "Anterior",
-                    next: "Siguiente",
-                    last: "Último"
-                }
-            }
-        });
+    });
 </script>  
 </html>
