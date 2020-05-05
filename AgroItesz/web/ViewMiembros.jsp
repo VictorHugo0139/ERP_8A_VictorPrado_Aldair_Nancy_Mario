@@ -1,3 +1,6 @@
+<%@page import="Modelo.datos.MiembrosDAO"%>
+<%@page import="Modelo.Asociaciones"%>
+<%@page import="Modelo.datos.AsociacionesDAO"%>
 <%@page import="Modelo.Miembros"%>
 <%@page import="Modelo.datos.ClientesDAO" %>
 <%@page import="java.util.*" %>
@@ -74,9 +77,12 @@
     <title>Edición de clientes</title>
 </head>
 <% 
+    MiembrosDAO midao=MiembrosDAO.getMiembrosDAO();
     ClientesDAO cldao=ClientesDAO.getClientesDAO();
+    AsociacionesDAO asdao=AsociacionesDAO.geAsociacionestDAO();
     List<Miembros> datos = (List<Miembros>) request.getAttribute("datosCl");
   List<Clientes> datosCl = cldao.consultar();
+  List<Asociaciones> datosas = asdao.consultar();
 %>
 <body style="background-color: #dfd7f5;">
     <header>
@@ -90,7 +96,7 @@
                     <a>Miembros</a>
                 </li>
                 <li>
-                    <form action="Controlador?accion=ClientesS" method="POST" >
+                    <form action="Controlador?accion=MiembrosS" method="POST" >
                         <input type="text" placeholder="búsqueda" name="busqueda" style="color: black;">
                         <label>En base a:</label>
                         <select name="campo" style="color: black;">
@@ -112,13 +118,13 @@
     <button id="btnMostrarf">+</button>
     <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
-        <form action="Controlador?accion=ClientesI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
+        <form action="Controlador?accion=MiembrosI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
                         <td style="width: 25%" colspan="2">
                             <label style="color: grey;font-weight: lighter;">Cliente:</label>
-                            <select name="txtCiudad">
+                            <select name="txtClientes">
                                 <%
                                     for (Clientes cl : datosCl) {
                                         //String Ciudad = city.OneCity(cl.getIdCiudad());
@@ -131,13 +137,13 @@
                             </select>
                         </td>
                         <td style="width: 25%" colspan="2">
-                            <select name="txtCiudad">
+                            <select name="txtAsociaciones">
                                 <%
-                                    for (Clientes cl : datosCl) {
+                                    for (Asociaciones as : datosas) {
                                         //String Ciudad = city.OneCity(cl.getIdCiudad());
 
                                 %>
-                                <option value="<%= cl.getIdCliente()%>"><%= cl.getNombre()%></option>
+                                <option value="<%= as.getIdAsociacion()%>"><%= as.getNombre()%></option>
                                 <%
                                     }
                                 %>
@@ -147,9 +153,10 @@
                         <td><label>Estatus</label>
                             <input type="radio" id="Activo" name="txtEstatus" value="A" required>
                             <label for="Activo">Activo</label>
-                            <input type="radio" id="Inactivo" name="txtEstatus" value="I">
+                            
                             <label for="Inactivo">Inactivo</label>
                         </td>
+                        <td><input type="text" name="txtFechaInc" ></td>
                     </tr>
                 </tbody>
             </table>
@@ -172,9 +179,9 @@
                         <td style="width: 25%" colspan="2" id="CD2"></td>
                         <td style="width: 25%"><input type="text" placeholder="Razón Social" name="txtRazonSocial" style="width: 90%;" required/></td>
                         <td><label>Estatus</label>
-                            <input type="radio" id="Activo" name="txtEstatus" value="A" required>
+                            <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
                             <label for="Activo">Activo</label>
-                            <input type="radio" id="Inactivo" name="txtEstatus" value="I">
+                            <input type="radio" id="InactivoA" name="txtEstatus" value="I">
                             <label for="Inactivo">Inactivo</label>
                         </td>
                     </tr>
@@ -194,18 +201,10 @@
         <table width='100%' border='0' cellpadding='0' id='customers'>
             <thead>
                 <tr>
-                    <th  width='1%' style='border: 0;' scope='col'>#Cliente</th>
-                    <th  width='10%' style='border: 0;' scope='col'>Nombre</th>
-                    <th  width='25%' style='border: 0;' scope='col'>Razón Social</th>
-                    <th  width='10%' style='border: 0;' scope='col'>Limite Crédito</th>
-                    <th  width='10%' style='border: 0;' scope='col'>Dirección</th>
-                    <th  width='10%' style='border: 0;' scope='col'>Código Postal</th>
-                    <th  width='10%' style='border: 0;' scope='col'>RFC</th>
-                    <th  width='10%' style='border: 0;' scope='col'>Teléfono</th>
-                    <th  width='10%' style='border: 0;' scope='col'>Email</th>
-                    <th  width='10%' style='border: 0;' scope='col'>Genero</th>
-                    <th  width='10%' style='border: 0;' scope='col'>Ciudad</th>
-                    <th  width='10%' style='border: 0;' scope='col'>Estatus</th>
+                    <th  width='1%' style='border: 0;' scope='col'>Cliente</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Asociacion</th>
+                    <th  width='25%' style='border: 0;' scope='col'>Estatus</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Fecha Incorporacion</th>
                     <th  width='10%' style='border: 0;' scope='col'>Acciones</th> 
                 </tr>
             </thead>
@@ -213,25 +212,16 @@
                 <%
                     int idc;
                     //datos = dao.consultar();
-                    for (Clientes cl : datos) {
+                    for (Miembros mi : datos) {
+                idc = mi.getIdCliente();
                 %>
                 <tr>
-                    <td><%= idc = cl.getIdCliente()%></td>
-                    <td><%= cl.getNombre()%></td>
-                    <td><%= cl.getRazonSocial()%></td>
-                    <td><%= cl.getLimiteCredito()%></td>
-                    <td><%= cl.getDireccion()%></td>
-                    <td><%= cl.getCodigoPostal()%></td>
-                    <td><%= cl.getRfc()%></td>
-                    <td><%= cl.getTelefono()%></td>
-                    <td><%= cl.getEmail()%></td>
-                    <td><%= cl.getTipo()%></td>
+                    <td><%= midao.OneClient(idc)%></td>
+                    <td><%= midao.OneAsociation(idc)%></td>
+                    <td><%= mi.getFechaIncorporacion()%></td>
+                    
                     <%
-                        String Ciudad = city.OneCity(cl.getIdCiudad());
-                    %>
-                    <td><%=Ciudad%></td>
-                    <%
-                        if (cl.getEstado() == 'A') {
+                        if (mi.getEstatus() == 'A') {
                     %>
                     <td>Activo</td> 
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
@@ -648,17 +638,17 @@
             }
             var valor = $(this).parents("tr").find("td")[10].innerHTML;
             //console.log(valor);
-            $('#CD').html("<label style='color: grey;font-weight: lighter;'>Ciudad:</label>" +
-                    "<select name='txtCiudad' id='Ciudad'>" +
-    <%
-                                    for (Ciudades ci : datosCiu) {
+            $('#CD').html("<select name='txtClientes'>"+
+                                <%
+                                    for (Clientes cl : datosCl) {
                                         //String Ciudad = city.OneCity(cl.getIdCiudad());
-%>
-            "<option value='<%= ci.getIdCiudad()%>' id='<%= ci.getNombre()%>'><%= ci.getNombre()%></option>" +
-    <%
+
+                                %>
+                                +"<option value='<%= cl.getIdCliente()%>'><%= cl.getNombre()%></option>"+
+                                <%
                                     }
-    %>
-            "</select>");
+                                %>
+                            "</select>");
             $('#' + valor).attr('selected', 'selected').change();
             
             if ($(this).parents("tr").find("td")[11].innerHTML === 'Activo') {

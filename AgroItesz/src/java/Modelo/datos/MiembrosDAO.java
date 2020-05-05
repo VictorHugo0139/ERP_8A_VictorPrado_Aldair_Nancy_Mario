@@ -127,7 +127,7 @@ public String reactivar(int id) {
             rs = ps.executeQuery();
             while (rs.next()) {
                 datos.add(new Miembros(rs.getInt("idCliente"),
-                        rs.getInt("idAsociacion"),
+                        rs.getInt("idAsosiacion"),
                         rs.getString("estatus").charAt(0),
                         rs.getDate("fechaIncorporacion")));
             }
@@ -136,6 +136,41 @@ public String reactivar(int id) {
             Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return datos;    
+    }
+public String OneClient(int idClient) {
+        String nombre="";
+        con=cn.getConexion();
+        sql=("select c.nombre from Miembros m join Clientes c on m.idCliente=c.idCliente where m.idCliente=?;");
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(idClient));
+            rs=ps.executeQuery();
+            while(rs.next()){
+                nombre=rs.getString("nombre");
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nombre;
+    }
+
+public String OneAsociation(int idClient) {
+        String nombre="";
+        con=cn.getConexion();
+        sql=("select a.nombre from Miembros m join Asociaciones a on m.idAsosiacion=a.idAsosiacion where m.idCliente=?;");
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(idClient));
+            rs=ps.executeQuery();
+            while(rs.next()){
+                nombre=rs.getString("nombre");
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nombre;
     }
 
     @Override
