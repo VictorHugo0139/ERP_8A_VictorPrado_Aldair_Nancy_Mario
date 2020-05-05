@@ -229,12 +229,12 @@ public class Controlador extends HttpServlet {
                         request.getParameter("txtNombre"),
                         request.getParameter("txtDescripcion"),
                         Integer.parseInt(request.getParameter("txtPorDescuento")),
-                        Date.valueOf("txtFechaInicio"),
-                        Date.valueOf("txtFechaFin"),
-                        Integer.parseInt("txtCantMinProducto"),
+                        Date.valueOf(request.getParameter("txtFechaInicio")),
+                        Date.valueOf(request.getParameter("txtFechaFin")),
+                        Integer.parseInt(request.getParameter("txtCantMinProducto")),
                         request.getParameter("txtEstatus").charAt(0),
                         Integer.parseInt(request.getParameter("txtProducto")));
-                res = ofdao.insertar(cl);
+                res = ofdao.insertar(of);
                 datosO = ofdao.consultar();
                 request.setAttribute("datosCl", datosO);
                 request.setAttribute("resp", res);
