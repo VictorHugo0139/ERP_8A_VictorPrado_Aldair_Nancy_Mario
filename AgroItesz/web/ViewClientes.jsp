@@ -70,7 +70,15 @@
         </style>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <a href="principal.jsp"><img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" /></a>
+<!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Edición de clientes</title>
 </head>
@@ -85,7 +93,7 @@
         <nav id="N">
             <ul id="U">
                 <li style="width: 50px;">
-                    <a href="principal.jsp" style="width: 50px;"><img src="Images/arrow-left.png" height="50%" width="50%" alt="Regresar" /></a>
+                    <a href="principal.jsp" style="width: 50px;"><img src="Images/arrow-left.png" height="70%" width="70%" alt="Regresar" /></a>
                     
                 </li>
                 <li>
@@ -93,9 +101,9 @@
                 </li>
                 <li>
                     <form action="Controlador?accion=ClientesS" method="POST" >
-                        <input type="text" placeholder="búsqueda" name="busqueda"   >
+                        <input type="text" placeholder="búsqueda" name="busqueda" style="color: black;">
                         <label>En base a:</label>
-                        <select name="campo">
+                        <select name="campo" style="color: black;">
                             <option value="idCliente">#Cliente</option>
                             <option value="nombre">Nombre</option>
                             <option value="razonSocial">Razón Social</option>
@@ -110,7 +118,7 @@
                             <option value="estatus">Estatus</option>
                         </select>
                         <button style="width: 20%; background-color: #15b332; color: #fff; font-weight: bold;"  type="submit">
-                            <img src="Images/busqueda.jpg" alt="buscar" style="width: 10%; height: 10%;">
+                            <span class="glyphicon glyphicon-search"></span>
                             Buscar
                         </button>
                     </form>
@@ -119,7 +127,8 @@
             </ul>
         </nav>
     </header>
-    <button id="btnMostrar">+</button>
+    <button id="btnMostrarf">+</button>
+    <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
         <form action="Controlador?accion=ClientesI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
             <table border="0" style="width: 100%">
@@ -272,15 +281,17 @@
                         if (cl.getEstado() == 'A') {
                     %>
                     <td>Activo</td> 
-                    <td><button class="boton">Editar</button>
+                    <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
                         <form action="Controlador?accion=ClientesD&id=<%= idc%>" method="POST">
-                            <button type="submit" value='<%= idc%>' name="idc" class="boton2">Eliminar</button>
+                            <button type="submit" value='<%= idc%>' name="idc" class="boton2">
+                                <span  class='glyphicon glyphicon-ban-circle'></span></button>
                         </form></td>
                     <%    } else {                    %>
                     <td>Inactivo</td>
-                    <td><button class="boton">Editar</button>
+                    <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
                         <form action="Controlador?accion=ClientesR&id=<%= idc%>" method="POST">
-                            <button type="submit" value='<%= idc%>' name="idc" class="boton2">Reactivar</button>
+                            <button type="submit" value='<%= idc%>' name="idc" class="boton2">
+                            <span  class='glyphicon glyphicon-ok-circle'></span></button>
                         </form></td>
                     <%    }%>                        
 
@@ -631,18 +642,20 @@
     $(document).ready(function () {
         $('#divI').hide();
         $('#divA').hide();
+        $('#btnMostrarf').hide();
         $('#btnMostrar').click(function () {
-            if ($('#btnMostrar').text() === '-') {
+            if ($('#btnMostrarf').text() === '-') {
                 $('#divI').hide();
                 $('.boton').show();
                 $('.boton2').show();
-                $('#btnMostrar').text('+');
-                
+                $('#btnMostrarf').text('+');
+                $('#btnMostrar').html("<span  class='glyphicon glyphicon-plus-sign'></span>");
             } else {
                 $('#divI').show();
                 $('.boton').hide();
                 $('.boton2').hide();
-                $('#btnMostrar').text('-');
+                $('#btnMostrarf').text('-');
+                $('#btnMostrar').html("<span  class='glyphicon glyphicon-minus-sign'></span>");
             }
         });
         $('.boton').click(function () {

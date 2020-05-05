@@ -42,7 +42,7 @@ public java.sql.Connection getConexion(){
                 System.out.println("Connection Successful!");
             }
         } catch (ClassNotFoundException | SQLException e) {
-            System.out.println("Error Trace in getConnection() : " + e.getMessage());
+            System.out.println("El usuario o contraseña no son validos getConnection() :\n " + e.getMessage());
         }
     }
     return connection;

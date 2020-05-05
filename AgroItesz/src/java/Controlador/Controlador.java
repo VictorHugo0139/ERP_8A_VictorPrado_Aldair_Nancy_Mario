@@ -56,6 +56,10 @@ public class Controlador extends HttpServlet {
             throws ServletException, IOException {
         String accion = request.getParameter("accion");
         switch (accion) {
+            case "Cambio":
+                cn.closeConnection();//Cierro sesión del Usuario actual y abro la del siguiente.
+                /*No puse break;
+                porque quiero que llegue hasta el break de Ingresar*/
             case "Ingresar":
                 String nom = request.getParameter("Usuario");
                 String contra = request.getParameter("Password");
