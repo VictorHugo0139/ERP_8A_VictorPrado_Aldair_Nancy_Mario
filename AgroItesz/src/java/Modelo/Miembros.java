@@ -5,15 +5,23 @@
  */
 package Modelo;
 
-/**
- *
- * @author Nancy
- */
+import java.sql.Date;
+
 public class Miembros {
     private int idCliente;
-    private int dAsosacione;
+    private int idAsosaciones;
     private  char Estatus;
-    private int FechaIncorporacion;
+    private Date FechaIncorporacion;
+
+    public Miembros() {
+    }
+
+    public Miembros(int idCliente, int idAsosaciones, char Estatus, Date FechaIncorporacion) {
+        this.idCliente = idCliente;
+        this.idAsosaciones = idAsosaciones;
+        this.Estatus = Estatus;
+        this.FechaIncorporacion = FechaIncorporacion;
+    }
 
     public int getIdCliente() {
         return idCliente;
@@ -23,12 +31,12 @@ public class Miembros {
         this.idCliente = idCliente;
     }
 
-    public int getdAsosacione() {
-        return dAsosacione;
+    public int getidAsosaciones() {
+        return idAsosaciones;
     }
 
-    public void setdAsosacione(int dAsosacione) {
-        this.dAsosacione = dAsosacione;
+    public void setdAsosacione(int idAsosaciones) {
+        this.idAsosaciones = idAsosaciones;
     }
 
     public char getEstatus() {
@@ -39,11 +47,11 @@ public class Miembros {
         this.Estatus = Estatus;
     }
 
-    public int getFechaIncorporacion() {
+    public Date getFechaIncorporacion() {
         return FechaIncorporacion;
     }
 
-    public void setFechaIncorporacion(int FechaIncorporacion) {
+    public void setFechaIncorporacion(Date FechaIncorporacion) {
         this.FechaIncorporacion = FechaIncorporacion;
     }
     

@@ -7,12 +7,14 @@ import Modelo.Usuarios;
 import Modelo.Transporte;
 import Modelo.Ofertas;
 import Modelo.Asociaciones;
+import Modelo.Miembros;
 import Modelo.datos.ClientesDAO;
 import Modelo.datos.CultivosDAO;
 import Modelo.datos.TransporteDAO;
 import Modelo.datos.UsuariosDAO;
 import Modelo.datos.OfertasDAO;
 import Modelo.datos.AsociacionesDAO;
+import Modelo.datos.MiembrosDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -30,21 +32,23 @@ public class Controlador extends HttpServlet {
     Connection con;
     UsuariosDAO usrDao = UsuariosDAO.getUsuariosDAO();
     Usuarios usr = new Usuarios();
-    ClientesDAO cldao=ClientesDAO.getClientesDAO();
-    CultivosDAO culdao=new CultivosDAO();
-    Clientes cl= new Clientes();
-    Cultivos cul= new Cultivos();
-    List<Clientes> datosC= new ArrayList<>();
-    List<Cultivos> datosCu= new ArrayList<>();
-    TransporteDAO trdao=TransporteDAO.getTransporteDAO();
+    ClientesDAO cldao = ClientesDAO.getClientesDAO();
+    MiembrosDAO midao = MiembrosDAO.getMiembrosDAO();
+    CultivosDAO culdao = new CultivosDAO();
+    Clientes cl = new Clientes();
+    Cultivos cul = new Cultivos();
+    List<Clientes> datosC = new ArrayList<>();
+    List<Miembros> datosM = new ArrayList<>();
+    List<Cultivos> datosCu = new ArrayList<>();
+    TransporteDAO trdao = TransporteDAO.getTransporteDAO();
     Transporte tr = new Transporte();
-    List<Transporte> datosT= new ArrayList<>();
+    List<Transporte> datosT = new ArrayList<>();
     OfertasDAO ofdao = OfertasDAO.getOfertasDAO();
     Ofertas of = new Ofertas();
-    List<Ofertas> datosO= new ArrayList<>();
+    List<Ofertas> datosO = new ArrayList<>();
     AsociacionesDAO asdao = AsociacionesDAO.geAsociacionestDAO();
     Asociaciones as = new Asociaciones();
-    List<Asociaciones> datosA= new ArrayList<>();
+    List<Asociaciones> datosA = new ArrayList<>();
     int r;
     String res;
 
@@ -63,7 +67,7 @@ public class Controlador extends HttpServlet {
         switch (accion) {
             case "Cambio":
                 cn.closeConnection();//Cierro sesión del Usuario actual y abro la del siguiente.
-                /*No puse break;
+            /*No puse break;
                 porque quiero que llegue hasta el break de Ingresar*/
             case "Ingresar":
                 String nom = request.getParameter("Usuario");
@@ -101,12 +105,12 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
                 break;
             case "Socios":
-                datosA=asdao.consultar();
+                datosA = asdao.consultar();
                 request.setAttribute("datosCl", datosA);
                 request.getRequestDispatcher("ViewSocios.jsp").forward(request, response);
                 break;
             case "Ofertas":
-                datosO=ofdao.consultar();
+                datosO = ofdao.consultar();
                 request.setAttribute("datosCl", datosO);
                 request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
                 break;
@@ -114,6 +118,8 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewOfertasAsosacion.jsp").forward(request, response);
                 break;
             case "Miembros":
+                datosM = midao.consultar();
+                request.setAttribute("datosCl", datosM);
                 request.getRequestDispatcher("ViewMiembros.jsp").forward(request, response);
                 break;
             case "ClientesI":
@@ -194,7 +200,7 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("resp", res);
                 request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
                 break;
-                
+
         }
     }
 

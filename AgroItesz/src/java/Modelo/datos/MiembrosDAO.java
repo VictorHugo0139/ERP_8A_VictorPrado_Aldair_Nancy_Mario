@@ -6,23 +6,141 @@
 package Modelo.datos;
 
 import Conexion.Conexion;
+import Modelo.CRUD;
+import Modelo.Clientes;
+import Modelo.Miembros;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Nancy
  */
-public class MiembrosDAO {
+public class MiembrosDAO implements CRUD {
+
     private static MiembrosDAO midao;
-    
-    public static MiembrosDAO getMiembrosDAO(){
-    if(midao==null){
-        midao= new MiembrosDAO();
-    }                   
-    return midao;                     
-}
+    Conexion cn = Conexion.getInsConexion();
+    Connection con;
+    PreparedStatement ps;
+    ResultSet rs;
+    String sql;
+
+    public static MiembrosDAO getMiembrosDAO() {
+        if (midao == null) {
+            midao = new MiembrosDAO();
+        }
+        return midao;
+    }
 
     private MiembrosDAO() {
     }
 
+    @Override
+    public String insertar(Object obj) {
+        Miembros mi = (Miembros) obj;
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("insert into Miembros(idCliente,idAsosiacion,estatus,fechaIncorporacion)\n"
+                + "values (?,?,?,?);");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, mi.getIdCliente());
+            ps.setInt(2, mi.getidAsosaciones());
+            ps.setString(3, "" + mi.getEstatus());
+            ps.setDate(4, mi.getFechaIncorporacion());
+            int filas = ps.executeUpdate();
+            respuesta = "se insertaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
+    }
+
+    @Override
+    public String eliminar(int id) {
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update Miembros set estatus='I' where idCliente=?;");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            respuesta = "se eliminaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
+    }
     
+public String reactivar(int id) {
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update Miembros set estatus='A' where idCliente=?;");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            respuesta = "se reactivaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
+    }
+
+    @Override
+    public String actualizar(Object obj) {
+        Miembros mi = (Miembros) obj;
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update Miembros set idAsosiacion=?, estatus=?, fechaIncorporacion=?  where idCliente=?;");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, mi.getidAsosaciones());
+            ps.setString(2, "" + mi.getEstatus());
+            ps.setDate(3, mi.getFechaIncorporacion());
+            ps.setInt(4, mi.getIdCliente());
+            int filas = ps.executeUpdate();
+            respuesta = "se actualizaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
+    }
+
+    @Override
+    public List<Miembros> consultar() {
+    List<Miembros> datos = new ArrayList<>();
+        con = cn.getConexion();
+        sql = ("select * from Miembros;");
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                datos.add(new Miembros(rs.getInt("idCliente"),
+                        rs.getInt("idAsociacion"),
+                        rs.getString("estatus").charAt(0),
+                        rs.getDate("fechaIncorporacion")));
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return datos;    
+    }
+
+    @Override
+    public List<?> filtrar(String campo, String criterio) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
