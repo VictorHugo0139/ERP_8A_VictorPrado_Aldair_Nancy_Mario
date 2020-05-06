@@ -295,6 +295,52 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosM);
                 request.getRequestDispatcher("ViewMiembros.jsp").forward(request, response);
                 break;
+                
+                case "CultivosI":
+                cul = new Cultivos(0, 
+                        request.getParameter("txtNombre"),
+                        Float.parseFloat(request.getParameter("txtcostoAsesoria")),
+                        request.getParameter("txtEstatus").charAt(0));
+                res = culdao.insertar(cul);
+                datosCu = culdao.consultar();
+                request.setAttribute("datosCl", datosCu);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewCultivos.jsp").forward(request, response);
+                break;
+                
+            case "CultivosD":
+                res = ofdao.eliminar(Integer.parseInt(request.getParameter("id")));
+                request.setAttribute("resp", res);
+                datosO = ofdao.consultar();
+                request.setAttribute("datosCl", datosO);
+                request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
+                break;
+                
+                case "CultivosR":
+                res = ofdao.reactivar(Integer.parseInt(request.getParameter("id")));
+                request.setAttribute("resp", res);
+                datosO = ofdao.consultar();
+                request.setAttribute("datosCl", datosO);
+                request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
+                break;
+                
+                case "CultivosU":
+                of = new Ofertas(0,
+                        request.getParameter("txtNombre"),
+                        request.getParameter("txtDescripcion"),
+                        Integer.parseInt(request.getParameter("txtPorDescuento")),
+                        Date.valueOf(request.getParameter("txtFechaInicio")),
+                        Date.valueOf(request.getParameter("txtFechaFin")),
+                        Integer.parseInt(request.getParameter("txtCantMinProducto")),
+                        request.getParameter("txtEstatus").charAt(0),
+                        Integer.parseInt(request.getParameter("txtProducto")));
+                res = ofdao.actualizar(of);
+                datosO = ofdao.consultar();
+                request.setAttribute("datosCl", datosO);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
+                break;
+                
         }
     }
 

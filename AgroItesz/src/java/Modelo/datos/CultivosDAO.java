@@ -59,8 +59,7 @@ public class CultivosDAO implements CRUD {
         } catch (SQLException ex) {
             Logger.getLogger(CultivosDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return respuesta;
     }
 
     @Override
@@ -117,7 +116,7 @@ public class CultivosDAO implements CRUD {
             {
                 datos.add(new Cultivos (rs.getInt("idCultivo"),
                 rs.getString("nombre"),
-                rs.getInt("costoAsesoria"),
+                rs.getFloat("costoAsesoria"),
                 rs.getString("estatus").charAt(0)));
             }
             cn.closeConnection();
