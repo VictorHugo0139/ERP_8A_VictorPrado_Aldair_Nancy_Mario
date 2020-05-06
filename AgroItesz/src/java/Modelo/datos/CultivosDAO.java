@@ -46,7 +46,7 @@ public class CultivosDAO implements CRUD {
         Cultivos cult=(Cultivos) obj;
         String respuesta="";
         con=cn.getConexion();
-        sql = ("insert into cultivos values (?,?,?,?)");
+        sql = ("insert into Cultivos (idCutivo, nombre, costoAsesoria, estatus) values (?,?,?,?)");
         try {
             ps=con.prepareStatement(sql);
             ps.setInt(1, cult.getIdCultivo());
@@ -98,6 +98,22 @@ public class CultivosDAO implements CRUD {
             Logger.getLogger(CultivosDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        return respuesta;
+    }
+    
+    public String reactivar(int id) {
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update Cultivos  set estatus='A' where idCultivo=? ");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            respuesta = "se reactivaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(OfertasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return respuesta;
     }
 

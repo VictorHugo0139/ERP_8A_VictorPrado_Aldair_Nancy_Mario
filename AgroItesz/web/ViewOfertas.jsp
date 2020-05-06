@@ -79,6 +79,7 @@
                 color: white;
             }
         </style>
+         <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

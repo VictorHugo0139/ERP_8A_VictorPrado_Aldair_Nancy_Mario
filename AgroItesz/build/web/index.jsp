@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+         <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
         <title>Agroitesz - Inicio de sesión</title>

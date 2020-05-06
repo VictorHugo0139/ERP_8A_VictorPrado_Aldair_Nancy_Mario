@@ -82,7 +82,7 @@
                 color: white;
             }
         </style>
-
+ <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
     <img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Edición de Ofertas</title>

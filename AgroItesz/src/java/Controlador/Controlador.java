@@ -145,7 +145,7 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
                 break;
             case "ClientesU":
-                cl = new Clientes(Integer.parseInt(request.getParameter("idCl")),
+                cl = new Clientes(Integer.parseInt(request.getParameter("idCul")),
                         request.getParameter("txtNombre"),
                         request.getParameter("txtRazonSocial"),
                         Float.parseFloat(request.getParameter("txtLimiteCredito")),
@@ -247,14 +247,14 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosO);
                 request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
                 break;
-                case "OfertasR":
+            case "OfertasR":
                 res = ofdao.reactivar(Integer.parseInt(request.getParameter("id")));
                 request.setAttribute("resp", res);
                 datosO = ofdao.consultar();
                 request.setAttribute("datosCl", datosO);
                 request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
                 break;
-                case "OfertasU":
+            case "OfertasU":
                 of = new Ofertas(0,
                         request.getParameter("txtNombre"),
                         request.getParameter("txtDescripcion"),
@@ -296,7 +296,7 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewMiembros.jsp").forward(request, response);
                 break;
                 
-                case "CultivosI":
+            case "CultivosI":
                 cul = new Cultivos(0, 
                         request.getParameter("txtNombre"),
                         Float.parseFloat(request.getParameter("txtcostoAsesoria")),
@@ -309,38 +309,36 @@ public class Controlador extends HttpServlet {
                 break;
                 
             case "CultivosD":
-                res = ofdao.eliminar(Integer.parseInt(request.getParameter("id")));
+                res = culdao.eliminar(Integer.parseInt(request.getParameter("id")));
                 request.setAttribute("resp", res);
-                datosO = ofdao.consultar();
-                request.setAttribute("datosCl", datosO);
-                request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
+                datosCu = culdao.consultar();
+                request.setAttribute("datosCl", datosCu);
+                request.getRequestDispatcher("ViewCultivos.jsp").forward(request, response);
                 break;
-                
-                case "CultivosR":
-                res = ofdao.reactivar(Integer.parseInt(request.getParameter("id")));
+            case "CultivosR":
+                res = culdao.reactivar(Integer.parseInt(request.getParameter("id")));
                 request.setAttribute("resp", res);
-                datosO = ofdao.consultar();
-                request.setAttribute("datosCl", datosO);
-                request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
+                datosCu = culdao.consultar();
+                request.setAttribute("datosCl", datosCu);
+                request.getRequestDispatcher("ViewCultivs.jsp").forward(request, response);
                 break;
                 
                 case "CultivosU":
-                of = new Ofertas(0,
+                cul = new Cultivos(Integer.parseInt(request.getParameter("idCl")),
                         request.getParameter("txtNombre"),
-                        request.getParameter("txtDescripcion"),
-                        Integer.parseInt(request.getParameter("txtPorDescuento")),
-                        Date.valueOf(request.getParameter("txtFechaInicio")),
-                        Date.valueOf(request.getParameter("txtFechaFin")),
-                        Integer.parseInt(request.getParameter("txtCantMinProducto")),
-                        request.getParameter("txtEstatus").charAt(0),
-                        Integer.parseInt(request.getParameter("txtProducto")));
-                res = ofdao.actualizar(of);
-                datosO = ofdao.consultar();
-                request.setAttribute("datosCl", datosO);
+                        Float.parseFloat(request.getParameter("txtcostoAsesoria")),
+                        request.getParameter("txtEstatus").charAt(0));
+                res = culdao.actualizar(cul);
+                datosCu = culdao.consultar();
+                request.setAttribute("datosCl", datosCu);
                 request.setAttribute("resp", res);
-                request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
+                request.getRequestDispatcher("ViewCultivos.jsp").forward(request, response);
                 break;
-                
+            case "CultivosS":
+                datosCu = culdao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
+                request.setAttribute("datosCl", datosCu);
+                request.getRequestDispatcher("ViewCultivos.jsp").forward(request, response);
+                break;                
         }
     }
 

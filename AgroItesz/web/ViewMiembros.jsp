@@ -70,6 +70,7 @@
                 color: white;
             }
         </style>
+         <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <a href="principal.jsp"><img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" /></a>
 
