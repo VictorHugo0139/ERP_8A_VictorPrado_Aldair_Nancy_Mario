@@ -4,19 +4,15 @@ package Modelo;
 public class Cultivos {
     private int idCultivo;
     private String nombre;
-    private int CostoAsesoria;
+    private float CostoAsesoria;
     private char estado;
     //Hola
-    
-    public Cultivos(int idCultivo, String nombre, int CostoAsesoria, char estado){
+
+    public Cultivos(int idCultivo, String nombre, float CostoAsesoria, char estado) {
         this.idCultivo = idCultivo;
         this.nombre = nombre;
         this.CostoAsesoria = CostoAsesoria;
         this.estado = estado;
-    }
-
-    public Cultivos() {
-        
     }
 
     public int getIdCultivo() {
@@ -35,11 +31,11 @@ public class Cultivos {
         this.nombre = nombre;
     }
 
-    public int getCostoAsesoria() {
+    public float getCostoAsesoria() {
         return CostoAsesoria;
     }
 
-    public void setCostoAsesoria(int CostoAsesoria) {
+    public void setCostoAsesoria(float CostoAsesoria) {
         this.CostoAsesoria = CostoAsesoria;
     }
 
@@ -50,6 +46,13 @@ public class Cultivos {
     public void setEstado(char estado) {
         this.estado = estado;
     }
+    
+
+    public Cultivos() {
+        
+    }
+
+   
     
 }
 
