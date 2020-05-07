@@ -168,7 +168,7 @@
             <div class="col-md-4 col-sm-6">
                 <div class="box-for-img text-center">
                     <a href="Controlador?accion=Miembros" class="boton_2 img6 img-responsive" style="height: 230px">
-                        Miembros<a href="Images/Miembros-logo.png"></a>
+                        Miembros<a href="Images/Miembros.png"></a>
                     </a>
                 </div>
             </div>
