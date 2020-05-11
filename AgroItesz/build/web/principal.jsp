@@ -2,10 +2,30 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link href="css/LoginCss.css" rel="stylesheet" type="text/css"/> 
         <style>
+            html {
+                min-height: 100%;
+                position: relative;
+            }
+            body {
+                margin: 0;
+                margin-bottom: 40px;
+            }
+            footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                color: white;
+            }
             #menu > li >a{
                 text-decoration: none;
+                color: #1f8f27;
+            }
+            #menu > li >a:hover{
+                text-decoration: none;
+                color: #22f530;
             }
             .submenu{
                 list-style: none;
@@ -27,12 +47,11 @@
                 color: white;
             }
         </style>
-         <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Agroitesz.Soft</title>
-        
         <link href="css/index.css" rel="stylesheet" type="text/css"/>
     <a href="css/fonts-googleappis.txt"></a>
 </head>
@@ -41,11 +60,10 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="" href="principal.jsp"><img src="Images/pla1.png" height="50" width="80" /><b class="titleMain"> Agroitesz </b></a>
-
             </div>
 
-            <ul class="nav navbar-nav navbar-right" id="menu">
-                <li><a href="#"><span class="glyphicon"></span>
+            <ul class="nav navbar-right" id="menu">
+                <li class="nav-item"><a href="#"><span class="glyphicon"></span>
                         <script type="text/javascript">
 
                             var today = new Date();
@@ -54,10 +72,10 @@
 
                             var mes = (m < 10) ? '0' + m : m;
 
-                            document.write('Fecha: ' + today.getDate(), '/' + mes, '/' + today.getFullYear());
+                            document.write('Fecha: ' + today.getDate(), '/' + mes, '/' + today.getFullYear() + '&nbsp');
 
                         </script></a></li>
-                <li><a href="#"><span class="glyphicon" id="reloj" ><script type="text/javascript">
+                <li class="nav-item"><a href="#"><span class="glyphicon" id="reloj" > <script type="text/javascript">
 
                     function startTime() {
 
@@ -84,7 +102,8 @@
                         startTime();
                     };
                             </script></span></a></li>
-                <li><a href="#"> Bienvenido(a): <span class="glyphicon glyphicon-user"></span>&nbsp ${nom}</a>
+
+                <li class="nav-item"><a href="#">&nbsp Bienvenido(a): <span class="glyphicon glyphicon-user"></span>&nbsp ${nom}</a>
                     <ul class="submenu">
                         <li><a href="#" id="cambiarUsuario"><span class="glyphicon glyphicon-log-in"></span>&nbsp Cambiar de Usuario </a></li>
                         <li><a id="cerrarSesion" href="Controlador?accion=Salir"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp Cerrar Sesión</a></li>
@@ -93,6 +112,7 @@
             </ul>
         </div>
     </nav>  
+
     <div id="Cambio" style="height: 803px">
         <form id="form1" method="POST" action="Controlador"> 
 
@@ -120,75 +140,85 @@
             </div>           
         </form>
     </div>        
-    <div id="Opciones" class="container" style="height: 803px">
 
-
-        <div class="row" id="admin" >               
-            <div class="col-md-4 col-sm-6">
-                <div class="box-for-img text-center">
-                    <a href="Controlador?accion=Cultivos" class="boton_2 img1 img-responsive" style="height: 230px">
-                        cultivos<a href="Images/cultivos.png"></a> 
-                    </a>
-
+                    <div class="container" style="margin-left: 20px">
+        <div class="row align-items-start">
+            <a href="Controlador?accion=Cultivos" style="text-decoration: none; color: #191c19;">
+                <div class="col">
+                    <div class="card" style="width: 10rem; height: 13rem;">
+                        <img class="card-img-top" src="Images/cultivos.png" alt="Card image cap">
+                        <div class="card-body">
+                            <br/>
+                            <h5 class="card-title">CULTIVOS</h5>
+                        </div>
+                    </div>
                 </div>
-            </div>     
-
-            <div class="col-md-4 col-sm-6">
-                <div class="box-for-img text-center">
-                    <a href="Controlador?accion=Clientes" class="boton_2 img2 img-responsive" style="height: 230px">
-                        Clientes<a href="Images/clientes.png"></a>
-                    </a>
+            </a> 
+            <a href="Controlador?accion=Clientes" style="text-decoration: none; color: #191c19;">
+                <div class="col" >
+                    <div class="card" style="width: 10rem; height: 13rem;">
+                        <img class="card-img-top" src="Images/clientes.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title" >CLIENTES</h5>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="col-md-4 col-sm-6">
-                <div class="box-for-img text-center">
-                    <a href="Controlador?accion=Transportes" class="boton_2 img3 img-responsive" style="height: 230px">
-                        Unidades de trasporte<a href="Images/Trasporte.png"></a>
-                    </a>
+            </a>  
+            <a href="Controlador?accion=Transportes" style="text-decoration: none; color: #191c19;">
+                <div class="col" >
+                    <div class="card" style="width: 10rem; height: 13rem;">
+                        <img class="" src="Images/Trasporte.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title" style="margin-right: -20px; margin-left: -17px; margin-top: 10px">
+                                TRANSPORTES</h5>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <br/>
+            </a>
+            <a href="Controlador?accion=Socios" style="text-decoration: none; color: #191c19;">
+                <div class="col" >
+                    <div class="card" style="width: 10rem; height: 13rem;">
+                        <img class="card-img-top" src="Images/socios.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title" style="margin-right: -10px; margin-left: -10px;">ASOCIACION</h5>
+                        </div>
+                    </div>
+                </div>
+            </a> 
+            <a href="Controlador?accion=Ofertas" style="text-decoration: none; color: #191c19;">
+                <div class="col" >
+                    <div class="card" style="width: 10rem; height: 13rem;">
+                        <img class="card-img-top" src="Images/Ofertas.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title" >OFERTAS</h5>
+                        </div>
+                    </div>
+                </div>
+            </a> 
+            <a href="Controlador?accion=Miembros" style="text-decoration: none; color: #191c19;">
+                <div class="col" >
+                    <div class="card" style="width: 10rem; height: 13rem;">
+                        <img class="card-img-top" src="Images/Miembros-logo.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title" >MIEMBROS</h5>
+                        </div>
+                    </div>
+                </div>
+            </a> 
         </div>
-        <div class="row"  id="admin1">               
-            <div class="col-md-4 col-sm-6">
-                <div class="box-for-img text-center">
-                    <a href="Controlador?accion=Socios" class="boton_2 img4 img-responsive" style="height: 230px">
-                        Asociaciones<a href="Images/socios.png"></a>
-                    </a>
-                </div>
-            </div>
+        <div class="row align-items-center">
 
-            <div class="col-md-4 col-sm-6">
-                <div class="box-for-img text-center">
-                    <a href="Controlador?accion=Ofertas" class="boton_2 img5 img-responsive" style="height: 230px">
-                        Ofertas<a href="Images/Ofertas.png"></a>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="box-for-img text-center">
-                    <a href="Controlador?accion=Miembros" class="boton_2 img6 img-responsive" style="height: 230px">
-                        Miembros<a href="Images/Miembros.png"></a>
-                    </a>
-                </div>
-            </div>
 
         </div>
+        <div class="row align-items-end">
 
+        </div>
     </div>
 
-
-    <script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
-    <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 <script type="text/javascript">
                     $(document).ready(function () {
