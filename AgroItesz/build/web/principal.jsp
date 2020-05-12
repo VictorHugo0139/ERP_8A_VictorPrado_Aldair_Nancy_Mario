@@ -221,9 +221,9 @@
             <a href="Controlador?accion=Envios" style="text-decoration: none; color: #191c19;">
                 <div class="col" >
                     <div class="card" style="width: 10rem; height: 13rem;">
-                        <img class="card-img-top" src="Images/Envio.png" style="width: 9rem; height: 9rem; margin-left: 9px;margin-bottom: 0;margin-top: 10px;" alt="Card image cap">
+                        <img class="card-img-top" src="Images/Envio.png" style="width: 90%; height: 65%; margin-left: 9px;margin-bottom: 0;margin-top: 10px;" alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title" style="margin-top: 17.5px;">ENVIÓS</h5>
+                            <h5 class="card-title" style="margin-top: 10%;">ENVÍOS</h5>
                         </div>
                     </div>
                 </div>
