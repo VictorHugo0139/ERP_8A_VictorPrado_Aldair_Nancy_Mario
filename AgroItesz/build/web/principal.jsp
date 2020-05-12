@@ -59,11 +59,12 @@
     <nav class="navbar navbar-inverse" style="background: #121214;">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="" href="principal.jsp"><img src="Images/pla1.png" height="50" width="80" /><b class="titleMain"> Agroitesz </b></a>
+                <a style="text-decoration: none;" href="principal.jsp"><img src="Images/pla1.png" height="50" width="80" /></a>
+                <a style="text-decoration: none;" href="principal.jsp"><b class="titleMain" style="color: #1f8f27;"> Agroitesz </b></a>
             </div>
 
             <ul class="nav navbar-right" id="menu">
-                <li class="nav-item"><a href="#"><span class="glyphicon"></span>
+                <li class="nav-item"><a ><span class="glyphicon"></span>
                         <script type="text/javascript">
 
                             var today = new Date();
@@ -72,10 +73,10 @@
 
                             var mes = (m < 10) ? '0' + m : m;
 
-                            document.write('Fecha: ' + today.getDate(), '/' + mes, '/' + today.getFullYear() + '&nbsp');
+                            document.write('Fecha: ' + today.getDate(), '/' + mes, '/' + today.getFullYear() + '&nbsp - &nbsp');
 
                         </script></a></li>
-                <li class="nav-item"><a href="#"><span class="glyphicon" id="reloj" > <script type="text/javascript">
+                <li class="nav-item"><a><span class="glyphicon" id="reloj" > <script type="text/javascript">
 
                     function startTime() {
 
@@ -103,7 +104,7 @@
                     };
                             </script></span></a></li>
 
-                <li class="nav-item"><a href="#">&nbsp Bienvenido(a): <span class="glyphicon glyphicon-user"></span>&nbsp ${nom}</a>
+                <li class="nav-item"><a href="#">&nbsp &nbsp Bienvenido(a): <span class="glyphicon glyphicon-user"></span>&nbsp ${nom}</a>
                     <ul class="submenu">
                         <li><a href="#" id="cambiarUsuario"><span class="glyphicon glyphicon-log-in"></span>&nbsp Cambiar de Usuario </a></li>
                         <li><a id="cerrarSesion" href="Controlador?accion=Salir"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp Cerrar Sesión</a></li>
@@ -141,15 +142,14 @@
         </form>
     </div>        
 
-                    <div class="container" style="margin-left: 20px">
+    <div class="container" style="margin-left: 20px">
         <div class="row align-items-start">
             <a href="Controlador?accion=Cultivos" style="text-decoration: none; color: #191c19;">
                 <div class="col">
                     <div class="card" style="width: 10rem; height: 13rem;">
-                        <img class="card-img-top" src="Images/cultivos.png" alt="Card image cap">
+                        <img class="card-img-top" style="width: 9rem; height: 9rem; margin-left: 5px;margin-bottom: 0;margin-top: 5px;" src="Images/cultivos2.png" alt="Card image cap">
                         <div class="card-body">
-                            <br/>
-                            <h5 class="card-title">CULTIVOS</h5>
+                            <h5 class="card-title"  style="margin-top: 10px;">CULTIVOS</h5>
                         </div>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
             <a href="Controlador?accion=Clientes" style="text-decoration: none; color: #191c19;">
                 <div class="col" >
                     <div class="card" style="width: 10rem; height: 13rem;">
-                        <img class="card-img-top" src="Images/clientes.png" alt="Card image cap">
+                        <img class="card-img-top" src="Images/clientes2.png" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title" >CLIENTES</h5>
                         </div>
@@ -167,9 +167,9 @@
             <a href="Controlador?accion=Transportes" style="text-decoration: none; color: #191c19;">
                 <div class="col" >
                     <div class="card" style="width: 10rem; height: 13rem;">
-                        <img class="" src="Images/Trasporte.png" alt="Card image cap">
+                        <img class="card-img-top" src="Images/Trasporte.png" style="width: 10.2rem; height: 10rem; margin-left: -3px;" alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title" style="margin-right: -20px; margin-left: -17px; margin-top: 10px">
+                            <h5 class="card-title" style="margin-right: -20px; margin-left: -17px; margin-top: 0px;margin-bottom: 5px;">
                                 TRANSPORTES</h5>
                         </div>
                     </div>
@@ -179,9 +179,9 @@
             <a href="Controlador?accion=Socios" style="text-decoration: none; color: #191c19;">
                 <div class="col" >
                     <div class="card" style="width: 10rem; height: 13rem;">
-                        <img class="card-img-top" src="Images/socios.png" alt="Card image cap">
+                        <img class="card-img-top" src="Images/Socios2.png" style="width: 9rem; height: 9rem;margin-left: 5px;margin-bottom: 0;margin-top: 5px;" alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title" style="margin-right: -10px; margin-left: -10px;">ASOCIACION</h5>
+                            <h5 class="card-title" style="margin-right: -10px; margin-left: -10px;margin-top: 10px;">ASOCIACION</h5>
                         </div>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
             <a href="Controlador?accion=Ofertas" style="text-decoration: none; color: #191c19;">
                 <div class="col" >
                     <div class="card" style="width: 10rem; height: 13rem;">
-                        <img class="card-img-top" src="Images/Ofertas.png" alt="Card image cap">
+                        <img class="card-img-top" src="Images/Ofertas3.png" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title" >OFERTAS</h5>
                         </div>
@@ -199,7 +199,7 @@
             <a href="Controlador?accion=Miembros" style="text-decoration: none; color: #191c19;">
                 <div class="col" >
                     <div class="card" style="width: 10rem; height: 13rem;">
-                        <img class="card-img-top" src="Images/Miembros-logo.png" alt="Card image cap">
+                        <img class="card-img-top" src="Images/MiembrosA.png" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title" >MIEMBROS</h5>
                         </div>
@@ -208,7 +208,16 @@
             </a> 
         </div>
         <div class="row align-items-center">
-
+            <a href="Controlador?accion=Ventas" style="text-decoration: none; color: #191c19;">
+                <div class="col" >
+                    <div class="card" style="width: 10rem; height: 13rem;">
+                        <img class="card-img-top" src="Images/IconoVentas3.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title" >VENTAS</h5>
+                        </div>
+                    </div>
+                </div>
+            </a> 
 
         </div>
         <div class="row align-items-end">

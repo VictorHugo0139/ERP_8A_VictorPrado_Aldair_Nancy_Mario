@@ -102,6 +102,11 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosC);
                 request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
                 break;
+            case "Ventas":
+                datosC = cldao.consultar();
+                request.setAttribute("datosCl", datosC);
+                request.getRequestDispatcher("ViewVentas.jsp").forward(request, response);
+                break;
             case "Transportes":
                 datosT = trdao.consultar();
                 request.setAttribute("datosCl", datosT);
@@ -295,9 +300,9 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosM);
                 request.getRequestDispatcher("ViewMiembros.jsp").forward(request, response);
                 break;
-                
+
             case "CultivosI":
-                cul = new Cultivos(0, 
+                cul = new Cultivos(0,
                         request.getParameter("txtNombre"),
                         Float.parseFloat(request.getParameter("txtcostoAsesoria")),
                         request.getParameter("txtEstatus").charAt(0));
@@ -307,7 +312,7 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("resp", res);
                 request.getRequestDispatcher("ViewCultivos.jsp").forward(request, response);
                 break;
-                
+
             case "CultivosD":
                 res = culdao.eliminar(Integer.parseInt(request.getParameter("id")));
                 request.setAttribute("resp", res);
@@ -322,8 +327,8 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosCu);
                 request.getRequestDispatcher("ViewCultivs.jsp").forward(request, response);
                 break;
-                
-                case "CultivosU":
+
+            case "CultivosU":
                 cul = new Cultivos(Integer.parseInt(request.getParameter("idCl")),
                         request.getParameter("txtNombre"),
                         Float.parseFloat(request.getParameter("txtcostoAsesoria")),
@@ -338,7 +343,7 @@ public class Controlador extends HttpServlet {
                 datosCu = culdao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
                 request.setAttribute("datosCl", datosCu);
                 request.getRequestDispatcher("ViewCultivos.jsp").forward(request, response);
-                break;                
+                break;
         }
     }
 
