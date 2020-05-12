@@ -19,13 +19,26 @@
                 width: 100%;
                 color: white;
             }
+            .Fecha, .AT{
+                font-size: medium;
+                margin-top: 0%;
+                color: #1f8f27;
+                transition: font-size .7s;
+            }
+            .Fecha:hover,.AT:hover{
+                font-size: large;
+                color: #22f530;
+            }
             #menu > li >a{
                 text-decoration: none;
                 color: #1f8f27;
+                font-size: medium;
+                transition: font-size .8s;
             }
             #menu > li >a:hover{
                 text-decoration: none;
                 color: #22f530;
+                font-size: 13.4pt;                
             }
             .submenu{
                 list-style: none;
@@ -35,6 +48,10 @@
                 opacity: 0;
                 transition: opacity 1.5s;
             }
+            .submenu li{
+                margin-left: 0%;
+                transition: margin-left 1.5s;
+            }
             .submenu > li >a{
                 text-decoration: none;
                 color: slategrey;
@@ -42,6 +59,12 @@
             #menu li:hover .submenu{
                 visibility:  visible;
                 opacity: 1;
+            }
+            
+            .submenu li:hover{
+                width: 100%;
+                margin-left: -15%;
+                background-color:  #1f8f27;
             }
             .submenu li a:hover{
                 color: white;
@@ -60,12 +83,11 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <a style="text-decoration: none;" href="principal.jsp"><img src="Images/pla1.png" height="50" width="80" /></a>
-                <a style="text-decoration: none;" href="principal.jsp"><b class="titleMain" style="color: #1f8f27;"> Agroitesz </b></a>
+                <a style="text-decoration: none;" href="principal.jsp" class="AT"  ><b > Agroitesz </b></a>
             </div>
-
-            <ul class="nav navbar-right" id="menu">
-                <li class="nav-item"><a ><span class="glyphicon"></span>
-                        <script type="text/javascript">
+            
+            <div style="margin-left: 0px;" class="Fecha">
+                <script type="text/javascript">
 
                             var today = new Date();
 
@@ -75,8 +97,8 @@
 
                             document.write('Fecha: ' + today.getDate(), '/' + mes, '/' + today.getFullYear() + '&nbsp - &nbsp');
 
-                        </script></a></li>
-                <li class="nav-item"><a><span class="glyphicon" id="reloj" > <script type="text/javascript">
+                        </script>
+             <script type="text/javascript">
 
                     function startTime() {
 
@@ -102,12 +124,15 @@
                     window.onload = function () {
                         startTime();
                     };
-                            </script></span></a></li>
-
+                            </script>
+            
+                <a><span class="glyphicon" id="reloj" ></span></a>
+            </div>
+            <ul class="nav navbar-right" id="menu">
                 <li class="nav-item"><a href="#">&nbsp &nbsp Bienvenido(a): <span class="glyphicon glyphicon-user"></span>&nbsp ${nom}</a>
                     <ul class="submenu">
-                        <li><a href="#" id="cambiarUsuario"><span class="glyphicon glyphicon-log-in"></span>&nbsp Cambiar de Usuario </a></li>
-                        <li><a id="cerrarSesion" href="Controlador?accion=Salir"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp Cerrar Sesión</a></li>
+                        <li style="margin-top: 20px;"><a href="#" id="cambiarUsuario"><span class="glyphicon glyphicon-log-in"></span>&nbsp Cambiar de Usuario </a></li>
+                        <li style="margin-top: 10px"><a id="cerrarSesion" href="Controlador?accion=Salir"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp Cerrar Sesión</a></li>
                     </ul>
                 </li>
             </ul>
