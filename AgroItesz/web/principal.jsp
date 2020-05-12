@@ -147,7 +147,7 @@
             <a href="Controlador?accion=Cultivos" style="text-decoration: none; color: #191c19;">
                 <div class="col">
                     <div class="card" style="width: 10rem; height: 13rem;">
-                        <img class="card-img-top" style="width: 9rem; height: 9rem; margin-left: 5px;margin-bottom: 0;margin-top: 5px;" src="Images/cultivos2.png" alt="Card image cap">
+                        <img class="card-img-top" style="width: 9rem; height: 9rem; margin-left: 5px;margin-bottom: 0;margin-top: 5px;" src="Images/Cultivos2.png" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title"  style="margin-top: 10px;">CULTIVOS</h5>
                         </div>
@@ -217,11 +217,20 @@
                         </div>
                     </div>
                 </div>
-            </a> 
-
+            </a>
+            <a href="Controlador?accion=Envios" style="text-decoration: none; color: #191c19;">
+                <div class="col" >
+                    <div class="card" style="width: 10rem; height: 13rem;">
+                        <img class="card-img-top" src="Images/Envio.png" style="width: 9rem; height: 9rem; margin-left: 9px;margin-bottom: 0;margin-top: 10px;" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title" style="margin-top: 17.5px;">ENVIÓS</h5>
+                        </div>
+                    </div>
+                </div>
+            </a>
         </div>
         <div class="row align-items-end">
-
+            
         </div>
     </div>
 
