@@ -9,6 +9,7 @@ import Modelo.Ofertas;
 import Modelo.Asociaciones;
 import Modelo.Miembros;
 import Modelo.Envios;
+import Modelo.Ventas;
 import Modelo.datos.ClientesDAO;
 import Modelo.datos.CultivosDAO;
 import Modelo.datos.TransporteDAO;
@@ -17,6 +18,7 @@ import Modelo.datos.OfertasDAO;
 import Modelo.datos.AsociacionesDAO;
 import Modelo.datos.MiembrosDAO;
 import Modelo.datos.EnviosDAO;
+import Modelo.datos.VentasDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -37,12 +39,14 @@ public class Controlador extends HttpServlet {
     UsuariosDAO usrDao = UsuariosDAO.getUsuariosDAO();
     Usuarios usr = new Usuarios();
     ClientesDAO cldao = ClientesDAO.getClientesDAO();
+    VentasDAO Vdao = VentasDAO.getVentasDAO();
     MiembrosDAO midao = MiembrosDAO.getMiembrosDAO();
     CultivosDAO culdao = new CultivosDAO();
     Clientes cl = new Clientes();
     Miembros mi = new Miembros();
     Cultivos cul = new Cultivos();
     List<Clientes> datosC = new ArrayList<>();
+    List<Ventas> datosV = new ArrayList<>();
     List<Miembros> datosM = new ArrayList<>();
     List<Cultivos> datosCu = new ArrayList<>();
     TransporteDAO trdao = TransporteDAO.getTransporteDAO();
@@ -108,8 +112,8 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
                 break;
             case "Ventas":
-                datosC = cldao.consultar();
-                request.setAttribute("datosCl", datosC);
+                datosV = Vdao.consultar();
+                request.setAttribute("datosCl", datosV);
                 request.getRequestDispatcher("ViewVentas.jsp").forward(request, response);
                 break;
             case "Transportes":
