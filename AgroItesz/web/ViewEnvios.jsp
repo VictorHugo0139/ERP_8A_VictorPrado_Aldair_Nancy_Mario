@@ -145,10 +145,10 @@
                 <table border="0" style="width: 100%">
                     <tbody> 
                         <tr>
-                            <td style="width: 25%" colspan="2"><input type="Date" placeholder="Fecha de Entrega Planeada" name="txtFechaEntregaP" style="width: 90%;" required/></td>
-                            <td style="width: 25%" colspan="2"><input type="Date" placeholder="fecha de Entrega Real" name="txtFechaEntregaR" style="width: 90%;" required /></td>
+                            <td style="width: 25%" colspan="2"><input type="Date" placeholder="Fecha de Entrega Planeada" name="txtFechaEntregaP" style="width: 90%;" value="" required/></td>
+                            <td style="width: 25%" colspan="2"><input type="Date" placeholder="fecha de Entrega Real" name="txtFechaEntregaR" style="width: 90%;" value="" required /></td>
                             <td style="width: 25%"><input type="text" step="0.01" placeholder="Direccion" name="txtDireccion" style="width: 90%;" required/></td>
-                            <td style="width: 25%"><input type="numbre" placeholder="Codigo Postal" name="txtCP" id="txtFechaI" style="width: 90%;" value="" required/></td>
+                            <td style="width: 25%"><input type="numbre" placeholder="Codigo Postal" name="txtCP" id="txtFechaI" style="width: 90%;"required/></td>
                         </tr>
                         <tr>
                             <td>
@@ -236,7 +236,10 @@
                 </table>
 
                 <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
-                    Agregar
+                    Actualizar
+                </button>
+                <button type="button" id="Cancel" style="width: 20%; background-color: #fc1919; color: #fff; font-weight: bold; border-radius: 0.33em;">
+                    Cancelar
                 </button>
             </form>
             </br>
@@ -264,45 +267,45 @@
                         //datos = dao.consultar();
                         for (Envios en : datos) {
                     %>
-                    
-                        <td><%= ido = en.getIdEnvio()%></td>
-                        <td><%= en.getFechaEntregaPlaneada()%></td>
-                        <td><%= en.getFechaEntregaReal()%></td>
-                        <td><%= en.getDireccion()%></td>
-                        <td><%= en.getCodigoPostal()%></td>
-                        <%
-                            String Venta = build.OneBuild(en.getIdVenta());
-                        %>
-                        <td><%=Venta%></td>
-                        <%
-                            String Transporte = transport.OneTransport(en.getIdTransporte());
-                        %>
-                        <td><%=Transporte%></td>
-                        <%
-                            String Ciudad = city.OneCity(en.getIdCiudad());
-                        %>
-                        <td><%=Ciudad%></td>
-                        <%
-                            if (en.getEstado() == 'A') {
-                        %>
-                        <td>Activo</td> 
-                        <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                            <form action="Controlador?accion=EnviosD&id=<%= ido%>" method="POST">
-                                <button type="submit" value='<%= ido%>' name="idc" class="boton2">
-                                    <span  class='glyphicon glyphicon-ban-circle'></span></button>
-                            </form></td>
-                            <%    } else {%>
-                        <td>Inactivo</td>
-                        <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                            <form action="Controlador?accion=EnviosR&id=<%= ido%>" method="POST">
-                                <button type="submit" value='<%= ido%>' name="idc" class="boton2">
-                                    <span  class='glyphicon glyphicon-ok-circle'></span></button>
-                            </form></td>
-                            <%    }%>                        
-                   >
-                    <%
-                        }
-                    %>
+
+                <td><%= ido = en.getIdEnvio()%></td>
+                <td><%= en.getFechaEntregaPlaneada()%></td>
+                <td><%= en.getFechaEntregaReal()%></td>
+                <td><%= en.getDireccion()%></td>
+                <td><%= en.getCodigoPostal()%></td>
+                <%
+                    String Venta = build.OneBuild(en.getIdVenta());
+                %>
+                <td><%=Venta%></td>
+                <%
+                    String Transporte = transport.OneTransport(en.getIdTransporte());
+                %>
+                <td><%=Transporte%></td>
+                <%
+                    String Ciudad = city.OneCity(en.getIdCiudad());
+                %>
+                <td><%=Ciudad%></td>
+                <%
+                    if (en.getEstado() == 'A') {
+                %>
+                <td>Activo</td> 
+                <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
+                    <form action="Controlador?accion=EnviosD&id=<%= ido%>" method="POST">
+                        <button type="submit" value='<%= ido%>' name="idc" class="boton2">
+                            <span  class='glyphicon glyphicon-ban-circle'></span></button>
+                    </form></td>
+                    <%    } else {%>
+                <td>Inactivo</td>
+                <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
+                    <form action="Controlador?accion=EnviosR&id=<%= ido%>" method="POST">
+                        <button type="submit" value='<%= ido%>' name="idc" class="boton2">
+                            <span  class='glyphicon glyphicon-ok-circle'></span></button>
+                    </form></td>
+                    <%    }%>                        
+                >
+                <%
+                    }
+                %>
                 </tbody>
             </table>
         </div>
@@ -366,35 +369,43 @@
                     $('.boton2').hide();
                     $('#divI').hide();
                     $('#divA').show();
-                    $('#nombre').val($(this).parents("tr").find("td")[1].innerHTML);
-                    $('#descripcion').val($(this).parents("tr").find("td")[2].innerHTML);
-                    $('#porDescuento').val($(this).parents("tr").find("td")[3].innerHTML);
-                    $('#txtFechaIni').val($(this).parents("tr").find("td")[4].innerHTML);
-                    $('#txtFechaFin').val($(this).parents("tr").find("td")[5].innerHTML);
-                    $('#cantMin').val($(this).parents("tr").find("td")[6].innerHTML);
-                    $('#cantMin').val($(this).parents("tr").find("td")[7].innerHTML);
-                    var valor = $(this).parents("tr").find("td")[8].innerHTML;
+                    $('#Envio').val($(this).parents("tr").find("td")[1].innerHTML);
+                    $('#txtFechaEntregaP').val($(this).parents("tr").find("td")[2].innerHTML);
+                    $('#txtFechaEntregaR').val($(this).parents("tr").find("td")[3].innerHTML);
+                    $('#Direccion').val($(this).parents("tr").find("td")[4].innerHTML);
+                    $('#Codigo Postal').val($(this).parents("tr").find("td")[5].innerHTML);
+                    var valor = $(this).parents("tr").find("td")[6].innerHTML;
                     //console.log(valor);
                     $('#CD').html("<label style='color: grey;font-weight: lighter;'>Productos:</label>" +
-                            "<select name='txtProducto'>" +
+                            "<select name='txtVenta'>" +
             <%
-                                        for (Transporte tr : datosTr) {
+                for (Ventas ve : datosVen) {
+            %>
+                    "<option value='<%= ve.getIdVenta()%>'><%= ve.getFecha()%></option>" +
+            <%
+                }
+            %>
+                    "</select>");
+                    $('#CD').html("<label style='color: grey;font-weight: lighter;'>Productos:</label>" +
+                            "<select name='txtTransporte'>" +
+            <%
+                for (Transporte tr : datosTr) {
             %>
                     "<option value='<%= tr.getIdTransporte()%>'><%= tr.getModelo()%></option>" +
             <%
-                                        }
+                }
             %>
                     "</select>");
                     $('#' + valor).attr('selected', 'selected').change();
                     $('#CD').html("<label style='color: grey;font-weight: lighter;'>Ciudad:</label>" +
                             "<select name='txtCiudad' id='Ciudad'>" +
             <%
-        for (Ciudades ci : datosCiu) {
-            //String Ciudad = city.OneCity(cl.getIdCiudad());
-            %>
+                for (Ciudades ci : datosCiu) {
+                    //String Ciudad = city.OneCity(cl.getIdCiudad());
+%>
                     "<option value='<%= ci.getIdCiudad()%>' id='<%= ci.getNombre()%>'><%= ci.getNombre()%></option>" +
             <%
-        }
+                }
             %>
                     "</select>");
                     $('#' + valor).attr('selected', 'selected').change();
@@ -410,8 +421,8 @@
                     $('#nombre').focus();
 
                 });
-                $('#txtFechaI').val(hoyFecha());
-                $('#txtFechaF').val(hoyFecha());
+                $('#txtFechaEntregaP').val(hoyFecha());
+                $('#txtFechaEntregaR').val(hoyFecha());
                 $('#customers').DataTable({
                     language: {
                         processing: "Procesando...",

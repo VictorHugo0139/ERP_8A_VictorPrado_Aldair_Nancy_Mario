@@ -153,7 +153,7 @@ private static TransporteDAO trdao;
             ps.setString(1, String.valueOf(idTransport));
             rs=ps.executeQuery();
             while(rs.next()){
-                nombre=rs.getString("nombre");
+                nombre=rs.getString("Modelo");
             }
             cn.closeConnection();
         } catch (SQLException ex) {

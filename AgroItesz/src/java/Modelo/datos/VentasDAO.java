@@ -132,7 +132,7 @@ public class VentasDAO implements CRUD{
             ps.setString(1, String.valueOf(idTransport));
             rs=ps.executeQuery();
             while(rs.next()){
-                nombre=rs.getString("nombre");
+                nombre=rs.getString("Fecha");
             }
             cn.closeConnection();
         } catch (SQLException ex) {
