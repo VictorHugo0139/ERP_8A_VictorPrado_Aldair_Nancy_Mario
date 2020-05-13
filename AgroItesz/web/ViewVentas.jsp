@@ -1,3 +1,7 @@
+<%@page import="Modelo.Empleados"%>
+<%@page import="Modelo.datos.EmpleadosDAO"%>
+<%@page import="Modelo.Sucursal"%>
+<%@page import="Modelo.datos.SucursalDAO"%>
 <%@page import="Modelo.datos.ClientesDAO"%>
 <%@page import="Modelo.Clientes"%>
 <%@page import="Modelo.Ventas"%>
@@ -79,8 +83,12 @@
     <title>Edición de Ventas</title>
 </head>
 <% ClientesDAO cdao=ClientesDAO.getClientesDAO();
+ SucursalDAO sdao= SucursalDAO.getSucursalDAO();
+ EmpleadosDAO edao=EmpleadosDAO.getEmpleadosDAO();
     List<Ventas> datos = (List<Ventas>) request.getAttribute("datosCl");
-     List<Clientes> c;
+     List<Clientes> c =cdao.consultar();
+     List<Sucursal> s =sdao.consultar();
+     List<Empleados> e =edao.consultar();
 %>
 <body style="background-color: #dfd7f5;">
     <header>
@@ -97,7 +105,7 @@
                     <a href="#">Detalle de ventas</a>
                 </li>
                 <li>
-                    <form action="Controlador?accion=ClientesS" method="POST" >
+                    <form action="Controlador?accion=VentasS" method="POST" >
                         <input type="text" placeholder="búsqueda" name="busqueda" style="color: black;">
                         <label>En base a:</label>
                         <select name="campo" style="color: black;">
@@ -110,7 +118,7 @@
                             <option value="tipo">Tipo</option>
                             <option value="idCliente">Cliente</option>
                             <option value="idSucursal">Sucursal</option>
-                            <option value="idEmpleado">idEmpleado</option>
+                            <option value="idEmpleado">Empleado</option>
                         </select>
                         <button style="width: 20%; background-color: #15b332; color: #fff; font-weight: bold;"  type="submit">
                             <span class="glyphicon glyphicon-search"></span>
@@ -125,29 +133,73 @@
     <button id="btnMostrarf">+</button>
     <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
-        <form action="Controlador?accion=ClientesI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
+        <form action="Controlador?accion=VentasI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="date" name="txtFecha" style="width: 90%;" required/></td>
-                        <td style="width: 25%" colspan="2"><input type="number" placeholder="Total a Pagar" name="txtTotalPagar" step="0.01" style="width: 90%;" required /></td>
-                        <td style="width: 25%"><input type="number" placeholder="Cantidad Pagada" name="txtCantPagada" style="width: 90%;" step="0.01" required/></td>
-                        <td colspan="2"><input type="radio" id="Masculino" name="txtTipo" value="M" required>
-                            <label for="Masculino">Masculino</label>
-                            <input type="radio" id="Femenino" name="txtTipo" value="F">
-                            <label for="Femenino">Femenino</label>
-                            <input type="radio" id="Otro" name="txtTipo" value="O">
-                            <label for="Otro">Otro</label>
-                        </td>
+                        <td style="width: 4.5%" ><label>Fecha:</label></td>
+                        <td style="width: 25%"><input type="date" name="txtFecha"  style="width: 90%;" required/></td>
+                        <td style="width: 25%"><input type="number" placeholder="Total a Pagar" name="txtTotalPagar"  step="0.01" style="width: 90%;" required /></td>
+                        <td style="width: 25%"><input type="number" placeholder="Cantidad Pagada" name="txtCantPagada"  style="width: 90%;" step="0.01" required/></td>
+                        
                     </tr>
                     <tr>
-                        <td><label>Estatus</label>
+                        <td colspan="2"><textarea type="text" placeholder="Comentarios" name="txtComentarios"  style="width: 91.8%; margin-top: 5px;" required></textarea></td>
+                        <td>
                             <input type="radio" id="Activo" name="txtEstatus" value="A" required>
                             <label for="Activo">Activo</label>
                             <input type="radio" id="Inactivo" name="txtEstatus" value="I">
                             <label for="Inactivo">Inactivo</label>
+                        &nbsp &nbsp &nbsp &nbsp
+                            <input type="radio" id="Producto" name="txtTipo" value="A" required>
+                            <label for="Activo">Producto</label>
+                            <input type="radio" id="Opcion" name="txtTipo" value="I">
+                            <label for="Inactivo">Asesoria</label>
                         </td>
-                        <td colspan="2"><input type="text" placeholder="Comentarios" name="txtComentarios" style="width: 90%;" required/></td>
+                        <td >
+                            <label style="color: grey;font-weight: lighter;">Cliente</label>
+                            <select name="txtCliente">
+                                <%
+                                    for (Clientes cl : c) {
+                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
+
+                                %>
+                                <option value="<%= cl.getIdCliente() %>"><%= cl.getNombre()%></option>
+                                <%
+                                    }
+                                %>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"></td>
+                        <td colspan="2">
+                            <label style="color: grey;font-weight: lighter; width: 13%;">Sucursal</label>
+                            <select name="txtSucursal">
+                                <%
+                                    for (Sucursal su : s) {
+                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
+
+                                %>
+                                <option value="<%= su.getIdSucursal() %>"><%= su.getNombre()%></option>
+                                <%
+                                    }
+                                %>
+                            </select>
+                            <label style="color: grey;font-weight: lighter;">Empleado</label>
+                            <select name="txtEmpleado">
+                                <%
+                                    for (Empleados em : e) {
+                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
+
+                                %>
+                                <option value="<%= em.getIdEmpleado() %>"><%= em.getNombre() %></option>
+                                <%
+                                    }
+                                %>
+                            </select>
+                            
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -162,29 +214,32 @@
 
     <div style="margin-left: 180px; margin-top: 10px" id="divA">
         
-        <form action="Controlador?accion=ClientesU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
+        <form action="Controlador?accion=VentasU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="date" name="txtFecha" style="width: 90%;" required/></td>
-                        <td style="width: 25%" colspan="2"><input type="number" placeholder="Total a Pagar" name="txtTotalPagar" step="0.01" style="width: 90%;" required /></td>
-                        <td style="width: 25%"><input type="number" placeholder="Cantidad Pagada" name="txtCantPagada" style="width: 90%;" step="0.01" required/></td>
-                        <td colspan="2"><input type="radio" id="Masculino" name="txtTipo" value="M" required>
-                            <label for="Masculino">Masculino</label>
-                            <input type="radio" id="Femenino" name="txtTipo" value="F">
-                            <label for="Femenino">Femenino</label>
-                            <input type="radio" id="Otro" name="txtTipo" value="O">
-                            <label for="Otro">Otro</label>
-                        </td>
+                        <td style="width: 4.5%" ><label>Fecha:</label></td>
+                        <td style="width: 25%"><input type="date" name="txtFecha" id="Fecha" style="width: 90%;" required/></td>
+                        <td style="width: 25%"><input type="number" placeholder="Total a Pagar" name="txtTotalPagar" id="TotalPagar" step="0.01" style="width: 90%;" required /></td>
+                        <td style="width: 25%"><input type="number" placeholder="Cantidad Pagada" name="txtCantPagada" id="CantPagada" style="width: 90%;" step="0.01" required/></td>
+                        
                     </tr>
                     <tr>
-                        <td><label>Estatus</label>
-                            <input type="radio" id="Activo" name="txtEstatus" value="A" required>
+                        <td colspan="2"><textarea type="text" placeholder="Comentarios" name="txtComentarios" id="Comentarios" style="width: 91.8%; margin-top: 5px;" required></textarea></td>
+                        <td>
+                            <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
                             <label for="Activo">Activo</label>
-                            <input type="radio" id="Inactivo" name="txtEstatus" value="I">
+                            <input type="radio" id="InactivoA" name="txtEstatus" value="I">
                             <label for="Inactivo">Inactivo</label>
+                        &nbsp &nbsp &nbsp &nbsp
+                            <input type="radio" id="ProductoA" name="txtTipo" value="A" required>
+                            <label for="Activo">Producto</label>
+                            <input type="radio" id="OpcionA" name="txtTipo" value="I">
+                            <label for="Inactivo">Asesoria</label>
                         </td>
-                        <td colspan="2"><input type="text" placeholder="Comentarios" name="txtComentarios" style="width: 90%;" required/></td>
+                        <td id="CD">
+                            
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -204,9 +259,9 @@
                 <tr>
                     <th  width='1%' style='border: 0;' scope='col'>#Venta</th>
                     <th  width='10%' style='border: 0;' scope='col'>Fecha</th>
-                    <th  width='25%' style='border: 0;' scope='col'>Total a Pagar</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Total a Pagar</th>
                     <th  width='10%' style='border: 0;' scope='col'>Cantidad Pagada</th>
-                    <th  width='10%' style='border: 0;' scope='col'>Comentarios</th>
+                    <th  width='25%' style='border: 0;' scope='col'>Comentarios</th>
                     <th  width='10%' style='border: 0;' scope='col'>Estatus</th>
                     <th  width='10%' style='border: 0;' scope='col'>Tipo</th>
                     <th  width='10%' style='border: 0;' scope='col'>Cliente</th>
@@ -237,10 +292,12 @@
                     <%    } else {                    %>
                     <td>Asesoria</td>
                     <%    }                   
-                    c=cdao.consultarId(v.getIdCliente()); %>
+                    c=cdao.consultarId(v.getIdCliente()); 
+                    s=sdao.consultarId(v.getIdSucursal());
+                    e=edao.consultarId(v.getIdEmpleado());%>
                     <td><%= c.get(0).getNombre() %></td>
-                    <td><%= v.getIdSucursal() %></td>
-                    <td><%= v.getIdEmpleado() %></td>
+                    <td><%= s.get(0).getNombre() %></td>
+                    <td><%= e.get(0).getNombre() %></td>
                     <%if(v.getEstatus()=='A'){ %>
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
                         <form action="Controlador?accion=VentasD&id=<%= idc%>" method="POST">
@@ -249,7 +306,7 @@
                         </form></td>
                     <%    } else {                    %>
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                        <form action="Controlador?accion=ClientesR&id=<%= idc%>" method="POST">
+                        <form action="Controlador?accion=VentasR&id=<%= idc%>" method="POST">
                             <button type="submit" value='<%= idc%>' name="idc" class="boton2">
                             <span  class='glyphicon glyphicon-ok-circle'></span></button>
                         </form></td>
@@ -302,33 +359,19 @@
             $('.boton2').hide();
             $('#divI').hide();
             $('#divA').show();
-            $('#nombre').val($(this).parents("tr").find("td")[1].innerHTML);
-            $('#razonSocial').val($(this).parents("tr").find("td")[2].innerHTML);
-            $('#limiteCredito').val($(this).parents("tr").find("td")[3].innerHTML);
-            $('#ubicacion').val($(this).parents("tr").find("td")[4].innerHTML);
-            $('#codigoPostal').val($(this).parents("tr").find("td")[5].innerHTML);
-            $('#RFC').val($(this).parents("tr").find("td")[6].innerHTML);
-            $('#telefono').val($(this).parents("tr").find("td")[7].innerHTML);
-            $('#email').val($(this).parents("tr").find("td")[8].innerHTML);
-            switch ($(this).parents("tr").find("td")[9].innerHTML) {
-                case 'F':
-                    $('#FemeninoA').prop("checked", true);
-                    break;
-                case 'M':
-                    $('#MasculinoA').prop("checked", true);
-                    break;
-                case 'O':
-                    $('#OtroA').prop("checked", true);
-                    break;
-            }
-            var valor = $(this).parents("tr").find("td")[10].innerHTML;
-           
-            $('#' + valor).attr('selected', 'selected').change();
-            
-            if ($(this).parents("tr").find("td")[11].innerHTML === 'Activo') {
+            $('#Fecha').val($(this).parents("tr").find("td")[1].innerHTML);
+            $('#TotalPagar').val($(this).parents("tr").find("td")[2].innerHTML);
+            $('#CantPagada').val($(this).parents("tr").find("td")[3].innerHTML);
+            $('#Comentarios').val($(this).parents("tr").find("td")[4].innerHTML);
+            if ($(this).parents("tr").find("td")[5].innerHTML === 'Activo') {
                 $('#ActivoA').prop("checked", true);
             } else {
                 $('#InactivoA').prop("checked", true);
+            }
+            if ($(this).parents("tr").find("td")[6].innerHTML === 'Producto') {
+                $('#ProductoA').prop("checked", true);
+            } else {
+                $('#OpcionA').prop("checked", true);
             }
             console.log($(this).parents("tr").find("td")[0].innerHTML);
             valor=$(this).parents("tr").find("td")[0].innerHTML;

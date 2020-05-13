@@ -12,6 +12,7 @@
             body {
                 margin: 0;
                 margin-bottom: 40px;
+                background-image: url("../Images/fondo.jpg") ;
             }
             footer {
                 position: absolute;
@@ -60,7 +61,28 @@
                 visibility:  visible;
                 opacity: 1;
             }
-            
+            .card-img-top{
+                width: 9rem; height: 9rem; margin-left: 5px;margin-bottom: 0;margin-top: 5px;
+            }
+            .card{
+                width: 10rem; height: 10rem;
+                transition: height 1.5s;
+            }
+            .card .card-title{
+                opacity: 0;
+                margin-top: -2rem;
+                transition: opacity 3s;
+                transition: margin-top 1.5s;
+            }
+            .card:hover{
+                width: 10rem; height: 12rem;
+            }
+            .card:hover .card-title{
+                opacity: 1;
+                margin-top: 0rem;
+                margin-left: -16px;
+                margin-right: -16px;
+            }
             .submenu li:hover{
                 width: 100%;
                 margin-left: -15%;
@@ -79,6 +101,7 @@
     <a href="css/fonts-googleappis.txt"></a>
 </head>
 <body style="background: no-repeat;">
+    
     <nav class="navbar navbar-inverse" style="background: #121214;">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -168,20 +191,20 @@
     </div>        
 
     <div class="container" style="margin-left: 20px">
-        <div class="row align-items-start">
+        <div class="row align-items-start" style="height: 13rem">
             <a href="Controlador?accion=Cultivos" style="text-decoration: none; color: #191c19;">
                 <div class="col">
-                    <div class="card" style="width: 10rem; height: 13rem;">
-                        <img class="card-img-top" style="width: 9rem; height: 9rem; margin-left: 5px;margin-bottom: 0;margin-top: 5px;" src="Images/Cultivos2.png" alt="Card image cap">
+                    <div class="card">
+                        <img class="card-img-top" src="Images/Cultivos2.png" alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title"  style="margin-top: 10px;">CULTIVOS</h5>
+                            <h5 class="card-title">CULTIVOS</h5>
                         </div>
                     </div>
                 </div>
             </a> 
             <a href="Controlador?accion=Clientes" style="text-decoration: none; color: #191c19;">
                 <div class="col" >
-                    <div class="card" style="width: 10rem; height: 13rem;">
+                    <div class="card">
                         <img class="card-img-top" src="Images/clientes2.png" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title" >CLIENTES</h5>
@@ -191,29 +214,28 @@
             </a>  
             <a href="Controlador?accion=Transportes" style="text-decoration: none; color: #191c19;">
                 <div class="col" >
-                    <div class="card" style="width: 10rem; height: 13rem;">
-                        <img class="card-img-top" src="Images/Trasporte.png" style="width: 10.2rem; height: 10rem; margin-left: -3px;" alt="Card image cap">
+                    <div class="card">
+                        <img class="card-img-top" src="Images/Trasporte.png" alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title" style="margin-right: -20px; margin-left: -17px; margin-top: 0px;margin-bottom: 5px;">
+                            <h5 class="card-title" >
                                 TRANSPORTES</h5>
                         </div>
                     </div>
                 </div>
-                <br/>
             </a>
             <a href="Controlador?accion=Socios" style="text-decoration: none; color: #191c19;">
                 <div class="col" >
-                    <div class="card" style="width: 10rem; height: 13rem;">
-                        <img class="card-img-top" src="Images/Socios2.png" style="width: 9rem; height: 9rem;margin-left: 5px;margin-bottom: 0;margin-top: 5px;" alt="Card image cap">
+                    <div class="card" >
+                        <img class="card-img-top" src="Images/Socios2.png"  alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title" style="margin-right: -10px; margin-left: -10px;margin-top: 10px;">ASOCIACION</h5>
+                            <h5 class="card-title" >ASOCIACION</h5>
                         </div>
                     </div>
                 </div>
             </a> 
             <a href="Controlador?accion=Ofertas" style="text-decoration: none; color: #191c19;">
                 <div class="col" >
-                    <div class="card" style="width: 10rem; height: 13rem;">
+                    <div class="card">
                         <img class="card-img-top" src="Images/Ofertas3.png" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title" >OFERTAS</h5>
@@ -223,7 +245,7 @@
             </a> 
             <a href="Controlador?accion=Miembros" style="text-decoration: none; color: #191c19;">
                 <div class="col" >
-                    <div class="card" style="width: 10rem; height: 13rem;">
+                    <div class="card" >
                         <img class="card-img-top" src="Images/MiembrosA.png" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title" >MIEMBROS</h5>
@@ -232,10 +254,10 @@
                 </div>
             </a> 
         </div>
-        <div class="row align-items-center">
+        <div class="row align-items-center" style="height: 11.95rem">
             <a href="Controlador?accion=Ventas" style="text-decoration: none; color: #191c19;">
                 <div class="col" >
-                    <div class="card" style="width: 10rem; height: 13rem;">
+                    <div class="card" >
                         <img class="card-img-top" src="Images/IconoVentas3.png" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title" >VENTAS</h5>
@@ -245,10 +267,10 @@
             </a>
             <a href="Controlador?accion=Envios" style="text-decoration: none; color: #191c19;">
                 <div class="col" >
-                    <div class="card" style="width: 10rem; height: 13rem;">
-                        <img class="card-img-top" src="Images/Envio.png" style="width: 90%; height: 65%; margin-left: 9px;margin-bottom: 0;margin-top: 10px;" alt="Card image cap">
+                    <div class="card" >
+                        <img class="card-img-top" src="Images/Envio.png" alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title" style="margin-top: 10%;">ENVÍOS</h5>
+                            <h5 class="card-title">ENVÍOS</h5>
                         </div>
                     </div>
                 </div>
