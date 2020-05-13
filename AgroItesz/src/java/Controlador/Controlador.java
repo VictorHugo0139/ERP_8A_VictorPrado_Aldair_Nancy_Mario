@@ -8,8 +8,11 @@ import Modelo.Transporte;
 import Modelo.Ofertas;
 import Modelo.Asociaciones;
 import Modelo.Miembros;
+<<<<<<< HEAD
 import Modelo.Envios;
 import Modelo.Ventas;
+=======
+>>>>>>> parent of f466dd5... Envios
 import Modelo.datos.ClientesDAO;
 import Modelo.datos.CultivosDAO;
 import Modelo.datos.TransporteDAO;
@@ -17,8 +20,11 @@ import Modelo.datos.UsuariosDAO;
 import Modelo.datos.OfertasDAO;
 import Modelo.datos.AsociacionesDAO;
 import Modelo.datos.MiembrosDAO;
+<<<<<<< HEAD
 import Modelo.datos.EnviosDAO;
 import Modelo.datos.VentasDAO;
+=======
+>>>>>>> parent of f466dd5... Envios
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -58,9 +64,6 @@ public class Controlador extends HttpServlet {
     AsociacionesDAO asdao = AsociacionesDAO.geAsociacionestDAO();
     Asociaciones as = new Asociaciones();
     List<Asociaciones> datosA = new ArrayList<>();
-    EnviosDAO endao = EnviosDAO.getEnviosDAO();
-    Envios en = new Envios();
-     List<Envios> datosE = new ArrayList<>();
     int r;
     String res;
 
@@ -352,11 +355,6 @@ public class Controlador extends HttpServlet {
                 datosCu = culdao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
                 request.setAttribute("datosCl", datosCu);
                 request.getRequestDispatcher("ViewCultivos.jsp").forward(request, response);
-                break;
-            case "Envios":
-                datosE = endao.consultar();
-                request.setAttribute("datosCl", datosE);
-                request.getRequestDispatcher("ViewEnvios.jsp").forward(request, response);
                 break;
         }
     }
