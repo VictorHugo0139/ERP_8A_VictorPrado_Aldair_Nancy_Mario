@@ -122,4 +122,22 @@ public class VentasDAO implements CRUD{
         }
         return datos;
     }
+    
+    public String OneBuild(int idTransport) {
+        String nombre="";
+        con=cn.getConexion();
+        sql=("select*from Ventas where idVenta=?;");
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(idTransport));
+            rs=ps.executeQuery();
+            while(rs.next()){
+                nombre=rs.getString("nombre");
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(VentasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nombre;
+    }
 }

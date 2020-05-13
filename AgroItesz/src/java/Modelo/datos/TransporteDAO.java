@@ -143,6 +143,24 @@ private static TransporteDAO trdao;
         }
         return datos;
     }
+    
+    public String OneTransport(int idTransport) {
+        String nombre="";
+        con=cn.getConexion();
+        sql=("select*from UnidadesTransporte where idUnidadTransporte=?;");
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(idTransport));
+            rs=ps.executeQuery();
+            while(rs.next()){
+                nombre=rs.getString("nombre");
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(TransporteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nombre;
+    }
 
     @Override
     public List<?> filtrar(String campo, String criterio) {
