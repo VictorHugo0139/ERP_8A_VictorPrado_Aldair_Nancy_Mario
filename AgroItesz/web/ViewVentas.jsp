@@ -112,7 +112,7 @@
                             <option value="idVenta">#Venta</option>
                             <option value="fecha">Fecha</option>
                             <option value="totalPagar">Total a Pagar</option>
-                            <option value="CantPagada">Cantidad Pagada</option>
+                            <option value="cantidad">Cantidad Pagada</option>
                             <option value="comentarios">Comentarios</option>
                             <option value="codigoPostal">Estatus</option>
                             <option value="tipo">Tipo</option>
