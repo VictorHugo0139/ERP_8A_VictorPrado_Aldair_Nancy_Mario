@@ -439,6 +439,20 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("resp", res);
                 request.getRequestDispatcher("ViewEnvios.jsp").forward(request, response);
                 break;
+                case "EnviosD":
+                res = endao.eliminar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosE = endao.consultar();
+                request.setAttribute("datosCl", datosE);
+                request.getRequestDispatcher("ViewEnvios.jsp").forward(request, response);
+                break;
+                case "EnviosR":
+                res = endao.reactivar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosE = endao.consultar();
+                request.setAttribute("datosCl", datosE);
+                request.getRequestDispatcher("ViewEnvios.jsp").forward(request, response);
+                break;
         }
     }
 

@@ -108,6 +108,7 @@ public static EnviosDAO getEnviosDAO(){
             ps.setInt(6, en.getIdTransporte());
             ps.setInt(7, en.getIdCiudad());
             ps.setString(8, ""+en.getEstado());
+            ps.setInt(9, en.getIdEnvio());
             int filas = ps.executeUpdate();
             respuesta = "se reactivaron " + filas + " filas";
             cn.closeConnection();
