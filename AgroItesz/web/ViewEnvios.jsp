@@ -235,8 +235,11 @@
                                 <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
                                 <label for="Activo">Activo</label>
                                 <input type="radio" id="InactivoA" name="txtEstatus" value="I">
-                                <label for="Inactivo">Inactivo</label>
+                                <label for="Inactivo">Inactivo</label> 
                             </td>
+                             <td colspan="3">
+                            <input type="number" name="idCl" id="idCl"/>
+                        </td>
                         </tr>
                     </tbody>
                 </table>
@@ -273,7 +276,7 @@
                         //datos = dao.consultar();
                         for (Envios en : datos) {
                     %>
-
+                <tr>
                 <td><%= ido = en.getIdEnvio()%></td>
                 <td><%= en.getFechaEntregaPlaneada()%></td>
                 <td><%= en.getFechaEntregaReal()%></td>
@@ -308,7 +311,7 @@
                             <span  class='glyphicon glyphicon-ok-circle'></span></button>
                     </form></td>
                     <%    }%>                        
-                >
+                </tr>
                 <%
                     }
                 %>
@@ -430,10 +433,22 @@
                         $('#InactivoA').prop("checked", true);
                     }
                     $('#nombre').focus();
-
+                    
+                    $('#' + valor).attr('selected', 'selected').change();
+                    var valor = $(this).parents("tr").find("td")[0].innerHTML;
+                    $('#idCl').val(valor);
+                    $('#idCl').hide();
+                    //console.log($('#idCl').val());
+                    $('#nombre').focus();
                 });
                 $('#txtFechaEntregaP').val(hoyFecha());
                 $('#txtFechaEntregaR').val(hoyFecha());
+                $('#Cancel').click(function () {
+                $('#divA').hide();
+                $('#divI').hide();
+                $('.boton2').show();
+                $('#btnMostrar').show();
+        });
                 $('#customers').DataTable({
                     language: {
                         processing: "Procesando...",

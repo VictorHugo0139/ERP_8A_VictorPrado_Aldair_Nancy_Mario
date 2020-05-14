@@ -112,7 +112,7 @@ public static EnviosDAO getEnviosDAO(){
             respuesta = "se reactivaron " + filas + " filas";
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(OfertasDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EnviosDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return respuesta;
     }
