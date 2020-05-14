@@ -52,7 +52,7 @@ public class CultivosDAO implements CRUD {
             ps.setInt(1, cult.getIdCultivo());
             ps.setString(2, cult.getNombre());
             ps.setFloat(3, cult.getCostoAsesoria());
-            ps.setInt(4, cult.getEstado());
+            ps.setString(4, "" + cult.getEstado());
             int filas =ps.executeUpdate();
             respuesta = "Se Insertaron "+filas+" filas correctamente";
             cn.closeConnection();
