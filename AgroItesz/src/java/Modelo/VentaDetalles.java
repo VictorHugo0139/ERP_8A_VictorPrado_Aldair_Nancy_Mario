@@ -10,7 +10,7 @@ package Modelo;
  * @author Nancy
  */
 public class VentaDetalles {
-
+    
     private int idVentaDetalle;
     private float precioVenta;
     private float cantidad;
@@ -88,6 +88,4 @@ public class VentaDetalles {
     public void setEstatus(char estatus) {
         this.estatus = estatus;
     }
-    
-
 }
