@@ -43,7 +43,6 @@ public class Controlador extends HttpServlet {
     MiembrosDAO midao = MiembrosDAO.getMiembrosDAO();
     CultivosDAO culdao = new CultivosDAO();
     Clientes cl = new Clientes();
-    Ventas v=new Ventas();
     Miembros mi = new Miembros();
     Cultivos cul = new Cultivos();
     List<Clientes> datosC = new ArrayList<>();
@@ -160,7 +159,7 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
                 break;
             case "ClientesU":
-                cl = new Clientes(Integer.parseInt(request.getParameter("idCl")),
+                cl = new Clientes(Integer.parseInt(request.getParameter("idCul")),
                         request.getParameter("txtNombre"),
                         request.getParameter("txtRazonSocial"),
                         Float.parseFloat(request.getParameter("txtLimiteCredito")),
@@ -358,55 +357,7 @@ public class Controlador extends HttpServlet {
                 datosE = endao.consultar();
                 request.setAttribute("datosCl", datosE);
                 request.getRequestDispatcher("ViewEnvios.jsp").forward(request, response);
-                break;  
-                 case "VentasI":
-                v = new Ventas(0,
-                        Date.valueOf(request.getParameter("txtFecha")),
-                       Float.parseFloat(request.getParameter("txtTotalPagar")),
-                        Float.parseFloat(request.getParameter("txtCantPagada")),
-                        request.getParameter("txtComentarios"),
-                        request.getParameter("txtEstatus").charAt(0),
-                        request.getParameter("txtTipo").charAt(0),
-                        Integer.parseInt(request.getParameter("txtCliente")),
-                        Integer.parseInt(request.getParameter("txtSucursal")),
-                        Integer.parseInt(request.getParameter("txtEmpleado")));
-                res = Vdao.insertar(v);
-                datosV = Vdao.consultar();
-                request.setAttribute("datosCl", datosV);
-                request.setAttribute("resp", res);
-                request.getRequestDispatcher("ViewVentas.jsp").forward(request, response);
-                break;
-            case "VentasU":
-                v = new Ventas(Integer.parseInt(request.getParameter("idCl")),
-                        Date.valueOf(request.getParameter("txtFecha")),
-                       Float.parseFloat(request.getParameter("txtTotalPagar")),
-                        Float.parseFloat(request.getParameter("txtCantPagada")),
-                        request.getParameter("txtComentarios"),
-                        request.getParameter("txtEstatus").charAt(0),
-                        request.getParameter("txtTipo").charAt(0),
-                        Integer.parseInt(request.getParameter("txtCliente")),
-                        Integer.parseInt(request.getParameter("txtSucursal")),
-                        Integer.parseInt(request.getParameter("txtEmpleado")));
-                res = Vdao.actualizar(v);
-                datosV = Vdao.consultar();
-                request.setAttribute("datosCl", datosV);
-                request.setAttribute("resp", res);
-                request.getRequestDispatcher("ViewVentas.jsp").forward(request, response);
-                break;
-            case "VentasD":
-                res = Vdao.eliminar(Integer.parseInt(request.getParameter("idc")));
-                request.setAttribute("resp", res);
-                datosV = Vdao.consultar();
-                request.setAttribute("datosCl", datosV);
-                request.getRequestDispatcher("ViewVentas.jsp").forward(request, response);
-                break;
-            case "VentasR":
-                res = Vdao.reactivar(Integer.parseInt(request.getParameter("idc")));
-                request.setAttribute("resp", res);
-                datosV = Vdao.consultar();
-                request.setAttribute("datosCl", datosV);
-                request.getRequestDispatcher("ViewVentas.jsp").forward(request, response);
-                break;
+                break;   
         }
     }
 

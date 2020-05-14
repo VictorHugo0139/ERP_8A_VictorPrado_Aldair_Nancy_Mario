@@ -74,21 +74,21 @@
                 color: white;
             }
         </style>
-        <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
-        <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+         <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+         <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <a href="principal.jsp"><img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" /></a>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Edición de Ventas</title>
 </head>
-<% ClientesDAO cdao = ClientesDAO.getClientesDAO();
-    SucursalDAO sdao = SucursalDAO.getSucursalDAO();
-    EmpleadosDAO edao = EmpleadosDAO.getEmpleadosDAO();
+<% ClientesDAO cdao=ClientesDAO.getClientesDAO();
+ SucursalDAO sdao= SucursalDAO.getSucursalDAO();
+ EmpleadosDAO edao=EmpleadosDAO.getEmpleadosDAO();
     List<Ventas> datos = (List<Ventas>) request.getAttribute("datosCl");
-    List<Clientes> c = cdao.consultar();
-    List<Sucursal> s = sdao.consultar();
-    List<Empleados> e = edao.consultar();
+     List<Clientes> c =cdao.consultar();
+     List<Sucursal> s =sdao.consultar();
+     List<Empleados> e =edao.consultar();
 %>
 <body style="background-color: #dfd7f5;">
     <header>
@@ -96,7 +96,7 @@
             <ul id="U">
                 <li style="width: 50px;">
                     <a href="principal.jsp" style="width: 50px;"><img src="Images/arrow-left.png" height="70%" width="70%" alt="Regresar" /></a>
-
+                    
                 </li>
                 <li class="seccion">
                     <a href="#">Ventas</a>
@@ -138,10 +138,10 @@
                 <tbody>
                     <tr>
                         <td style="width: 4.5%" ><label>Fecha:</label></td>
-                        <td style="width: 25%"><input type="date" name="txtFecha" id="txtF" style="width: 90%;" required/></td>
+                        <td style="width: 25%"><input type="date" name="txtFecha"  style="width: 90%;" required/></td>
                         <td style="width: 25%"><input type="number" placeholder="Total a Pagar" name="txtTotalPagar"  step="0.01" style="width: 90%;" required /></td>
                         <td style="width: 25%"><input type="number" placeholder="Cantidad Pagada" name="txtCantPagada"  style="width: 90%;" step="0.01" required/></td>
-
+                        
                     </tr>
                     <tr>
                         <td colspan="2"><textarea type="text" placeholder="Comentarios" name="txtComentarios"  style="width: 91.8%; margin-top: 5px;" required></textarea></td>
@@ -150,7 +150,7 @@
                             <label for="Activo">Activo</label>
                             <input type="radio" id="Inactivo" name="txtEstatus" value="I">
                             <label for="Inactivo">Inactivo</label>
-                            &nbsp &nbsp &nbsp &nbsp
+                        &nbsp &nbsp &nbsp &nbsp
                             <input type="radio" id="Producto" name="txtTipo" value="A" required>
                             <label for="Activo">Producto</label>
                             <input type="radio" id="Opcion" name="txtTipo" value="I">
@@ -164,7 +164,7 @@
                                         //String Ciudad = city.OneCity(cl.getIdCiudad());
 
                                 %>
-                                <option value="<%= cl.getIdCliente()%>"><%= cl.getNombre()%></option>
+                                <option value="<%= cl.getIdCliente() %>"><%= cl.getNombre()%></option>
                                 <%
                                     }
                                 %>
@@ -181,7 +181,7 @@
                                         //String Ciudad = city.OneCity(cl.getIdCiudad());
 
                                 %>
-                                <option value="<%= su.getIdSucursal()%>"><%= su.getNombre()%></option>
+                                <option value="<%= su.getIdSucursal() %>"><%= su.getNombre()%></option>
                                 <%
                                     }
                                 %>
@@ -193,12 +193,12 @@
                                         //String Ciudad = city.OneCity(cl.getIdCiudad());
 
                                 %>
-                                <option value="<%= em.getIdEmpleado()%>"><%= em.getNombre()%></option>
+                                <option value="<%= em.getIdEmpleado() %>"><%= em.getNombre() %></option>
                                 <%
                                     }
                                 %>
                             </select>
-
+                            
                         </td>
                     </tr>
                 </tbody>
@@ -213,7 +213,7 @@
 
 
     <div style="margin-left: 180px; margin-top: 10px" id="divA">
-
+        
         <form action="Controlador?accion=VentasU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
             <table border="0" style="width: 100%">
                 <tbody>
@@ -222,7 +222,7 @@
                         <td style="width: 25%"><input type="date" name="txtFecha" id="Fecha" style="width: 90%;" required/></td>
                         <td style="width: 25%"><input type="number" placeholder="Total a Pagar" name="txtTotalPagar" id="TotalPagar" step="0.01" style="width: 90%;" required /></td>
                         <td style="width: 25%"><input type="number" placeholder="Cantidad Pagada" name="txtCantPagada" id="CantPagada" style="width: 90%;" step="0.01" required/></td>
-
+                        
                     </tr>
                     <tr>
                         <td colspan="2"><textarea type="text" placeholder="Comentarios" name="txtComentarios" id="Comentarios" style="width: 91.8%; margin-top: 5px;" required></textarea></td>
@@ -231,28 +231,19 @@
                             <label for="Activo">Activo</label>
                             <input type="radio" id="InactivoA" name="txtEstatus" value="I">
                             <label for="Inactivo">Inactivo</label>
-                            &nbsp &nbsp &nbsp &nbsp
+                        &nbsp &nbsp &nbsp &nbsp
                             <input type="radio" id="ProductoA" name="txtTipo" value="A" required>
                             <label for="Activo">Producto</label>
                             <input type="radio" id="OpcionA" name="txtTipo" value="I">
                             <label for="Inactivo">Asesoria</label>
                         </td>
                         <td id="CD">
-
-                        </td>
-                    </tr>
-                    <tr>
-
-                        <td colspan="3">
-                            <input type="number" name="idCl" id="idCl"/>
-                        </td>
-                        <td id="CD2" colspan="2">
-
+                            
                         </td>
                     </tr>
                 </tbody>
             </table>
-
+            
             <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
                 Actualizar
             </button>
@@ -261,7 +252,6 @@
             </button>
         </form>
         </br>
-
     </div>
     <div>
         <table width='100%' border='0' cellpadding='0' id='customers'>
@@ -287,38 +277,38 @@
                     for (Ventas v : datos) {
                 %>
                 <tr>
-                    <td><%= idc = v.getIdVenta()%></td>
-                    <td><%= v.getFecha()%></td>
-                    <td><%= v.getTotalPagar()%></td>
-                    <td><%= v.getCantPagada()%></td>
-                    <td><%= v.getComentarios()%></td>
-                    <%if (v.getEstatus() == 'A') { %>
+                    <td><%= idc = v.getIdVenta() %></td>
+                    <td><%= v.getFecha() %></td>
+                    <td><%= v.getTotalPagar() %></td>
+                    <td><%= v.getCantPagada() %></td>
+                    <td><%= v.getComentarios() %></td>
+                    <%if(v.getEstatus()=='A'){ %>
                     <td>Activo</td>
                     <%    } else {                    %>
                     <td>Inactivo</td>
-                    <%    }
-                        if (v.getTipo() == 'P') { %>
+                    <%    } 
+                    if(v.getTipo()=='P'){ %>
                     <td>Producto</td>
                     <%    } else {                    %>
                     <td>Asesoria</td>
-                    <%    }
-                        c = cdao.consultarId(v.getIdCliente());
-                        s = sdao.consultarId(v.getIdSucursal());
-                        e = edao.consultarId(v.getIdEmpleado());%>
-                    <td><%= c.get(0).getNombre()%></td>
-                    <td><%= s.get(0).getNombre()%></td>
-                    <td><%= e.get(0).getNombre()%></td>
-                    <%if (v.getEstatus() == 'A') {%>
+                    <%    }                   
+                    c=cdao.consultarId(v.getIdCliente()); 
+                    s=sdao.consultarId(v.getIdSucursal());
+                    e=edao.consultarId(v.getIdEmpleado());%>
+                    <td><%= c.get(0).getNombre() %></td>
+                    <td><%= s.get(0).getNombre() %></td>
+                    <td><%= e.get(0).getNombre() %></td>
+                    <%if(v.getEstatus()=='A'){ %>
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
                         <form action="Controlador?accion=VentasD&id=<%= idc%>" method="POST">
                             <button type="submit" value='<%= idc%>' name="idc" class="boton2">
                                 <span  class='glyphicon glyphicon-ban-circle'></span></button>
                         </form></td>
-                        <%    } else {%>
+                    <%    } else {                    %>
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
                         <form action="Controlador?accion=VentasR&id=<%= idc%>" method="POST">
                             <button type="submit" value='<%= idc%>' name="idc" class="boton2">
-                                <span  class='glyphicon glyphicon-ok-circle'></span></button>
+                            <span  class='glyphicon glyphicon-ok-circle'></span></button>
                         </form></td>
                         <%    }%>   
                 </tr>
@@ -332,39 +322,16 @@
     <script type="text/javascript" charset="utf8" 
     src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>   
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        
+    
 </body>
-
-<script type="text/javascript">
-            function addZero(i) {
-                if (i < 10) {
-                    i = '0' + i;
-                }
-                return i;
-            }
-</script> 
-<script type="text/javascript">
-    function hoyFecha() {
-        var hoy = new Date();
-        var dd = hoy.getDate();
-        var mm = hoy.getMonth() + 1;
-        var yyyy = hoy.getFullYear();
-
-        dd = addZero(dd);
-        mm = addZero(mm);
-
-        return yyyy + '-' + mm + '-' + dd;
-    }
-</script> 
-
 <script type="text/javascript">
     $(document).ready(function () {
         $('#divI').hide();
@@ -378,7 +345,6 @@
                 $('#btnMostrarf').text('+');
                 $('#btnMostrar').html("<span  class='glyphicon glyphicon-plus-sign'></span>");
             } else {
-                $('#txtF').val(hoyFecha());
                 $('#divI').show();
                 $('.boton').hide();
                 $('.boton2').hide();
@@ -407,55 +373,12 @@
             } else {
                 $('#OpcionA').prop("checked", true);
             }
-
-            var valor = $(this).parents("tr").find("td")[7].innerHTML;
-            //console.log(valor);
-            $('#CD').html("<label style='color: grey;font-weight: lighter;'>Cliente</label>" +
-                    "<select name='txtCliente'>" +
-    <%
-                                    for (Clientes cl : c) {
-                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
-
-    %>
-            "<option value='<%= cl.getIdCliente()%>'><%= cl.getNombre()%></option>" +
-    <%
-                                    }
-    %>
-            "</select>");
-            $('#' + valor).attr('selected', 'selected').change();
-
-            var valor = $(this).parents("tr").find("td")[8].innerHTML;
-            //console.log(valor);
-            $('#CD2').html("<label style='color: grey;font-weight: lighter;'>Sucursal</label>" +
-                    "<select name='txtSucursal'>" +
-    <%
-                                    for (Sucursal su : s) {
-                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
-
-    %>
-            "<option value='<%= su.getIdSucursal()%>'><%= su.getNombre()%></option>" +
-    <%
-                                    }
-    %>
-            "</select>");
-            $('#CD2').append("<label style='color: grey;font-weight: lighter;'>Empleado</label>" +
-                    "<select name='txtEmpleado'>" +
-    <%
-                                    for (Empleados em : e) {
-                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
-
-    %>
-            "<option value='<%= em.getIdEmpleado()%>'><%= em.getNombre()%></option>" +
-    <%
-                                    }
-    %>
-            "</select>");
-
-            $('#' + valor).attr('selected', 'selected').change();
-            var valor = $(this).parents("tr").find("td")[0].innerHTML;
+            console.log($(this).parents("tr").find("td")[0].innerHTML);
+            valor=$(this).parents("tr").find("td")[0].innerHTML;
+            console.log(valor);
             $('#idCl').val(valor);
             $('#idCl').hide();
-            //console.log($('#idCl').val());
+            console.log($('#idCl').val());
             $('#nombre').focus();
         });
         $('#Cancel').click(function () {
