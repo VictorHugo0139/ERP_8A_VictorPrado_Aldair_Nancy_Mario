@@ -145,8 +145,8 @@
                 <table border="0" style="width: 100%">
                     <tbody> 
                         <tr>
-                            <td style="width: 25%" colspan="2"><input type="Date" placeholder="Fecha de Entrega Planeada" name="txtFechaEntregaP" style="width: 90%;" value="" required/></td>
-                            <td style="width: 25%" colspan="2"><input type="Date" placeholder="fecha de Entrega Real" name="txtFechaEntregaR" style="width: 90%;" value="" required /></td>
+                            <td style="width: 25%" colspan="2"><input type="Date" placeholder="Fecha de Entrega Planeada" name="txtFechaEntregaP" id="txtFEP" style="width: 90%;" value="" required/></td>
+                            <td style="width: 25%" colspan="2"><input type="Date" placeholder="fecha de Entrega Real" name="txtFechaEntregaR" id="txtFER" style="width: 90%;" value="" required /></td>
                             <td style="width: 25%"><input type="text" step="0.01" placeholder="Direccion" name="txtDireccion" style="width: 90%;" required/></td>
                             <td style="width: 25%"><input type="numbre" placeholder="Codigo Postal" name="txtCP" id="txtFechaI" style="width: 90%;"required/></td>
                         </tr>
@@ -159,7 +159,7 @@
                                             //String Ciudad = city.OneCity(cl.getIdCiudad());
 
                                     %>
-                                    <option value="<%= ve.getIdVenta()%>"><%= ve.getFecha()%></option>
+                                    <option value="<%= ve.getIdVenta()%>"><%= ve.getIdVenta()%></option>
                                     <%
                                         }
                                     %>
@@ -211,7 +211,7 @@
             </br>
         </div>
 
-        <div style="margin-left: 180px; margin-top: 10px" id="divA">
+    <div style="margin-left: 180px; margin-top: 10px" id="divA">
             <form action="Controlador?accion=EnviosU" method="POST" name="formInsertar">
                 <table border="0" style="width: 100%">
                     <tbody> 
@@ -225,12 +225,21 @@
                             <td id="CD">
 
                             </td>
+                            <td id="CD2">
+
+                            </td>
+                            <td id="CD3">
+
+                            </td>
                             <td><label>Estatus</label>
                                 <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
                                 <label for="Activo">Activo</label>
                                 <input type="radio" id="InactivoA" name="txtEstatus" value="I">
-                                <label for="Inactivo">Inactivo</label>
+                                <label for="Inactivo">Inactivo</label> 
                             </td>
+                             <td colspan="3">
+                            <input type="number" name="idCl" id="idCl"/>
+                        </td>
                         </tr>
                     </tbody>
                 </table>
@@ -267,7 +276,7 @@
                         //datos = dao.consultar();
                         for (Envios en : datos) {
                     %>
-
+                <tr>
                 <td><%= ido = en.getIdEnvio()%></td>
                 <td><%= en.getFechaEntregaPlaneada()%></td>
                 <td><%= en.getFechaEntregaReal()%></td>
@@ -302,7 +311,7 @@
                             <span  class='glyphicon glyphicon-ok-circle'></span></button>
                     </form></td>
                     <%    }%>                        
-                >
+                </tr>
                 <%
                     }
                 %>
@@ -357,6 +366,8 @@
                         $('#btnMostrarf').text('+');
                         $('#btnMostrar').html("<span  class='glyphicon glyphicon-plus-sign'></span>");
                     } else {
+                        $('#txtFEP').val(hoyFecha());
+                        $('#txtFER').val(hoyFecha());
                         $('#divI').show();
                         $('.boton').hide();
                         $('.boton2').hide();
@@ -369,40 +380,46 @@
                     $('.boton2').hide();
                     $('#divI').hide();
                     $('#divA').show();
-                    $('#Envio').val($(this).parents("tr").find("td")[1].innerHTML);
-                    $('#txtFechaEntregaP').val($(this).parents("tr").find("td")[2].innerHTML);
-                    $('#txtFechaEntregaR').val($(this).parents("tr").find("td")[3].innerHTML);
-                    $('#Direccion').val($(this).parents("tr").find("td")[4].innerHTML);
-                    $('#Codigo Postal').val($(this).parents("tr").find("td")[5].innerHTML);
-                    var valor = $(this).parents("tr").find("td")[6].innerHTML;
-                    //console.log(valor);
-                    $('#CD').html("<label style='color: grey;font-weight: lighter;'>Productos:</label>" +
+                    $('#txtFechaEntP').val($(this).parents("tr").find("td")[1].innerHTML);
+                    $('#txtFechaEntR').val($(this).parents("tr").find("td")[2].innerHTML);
+                    $('#Direccion').val($(this).parents("tr").find("td")[3].innerHTML);
+                    $('#txtCP').val($(this).parents("tr").find("td")[4].innerHTML);
+                    var valor = $(this).parents("tr").find("td")[5].innerHTML;
+
+                    console.log(valor);
+                    $('#CD').html("<label style='color: grey;font-weight: lighter;'>Venta:</label>" +
                             "<select name='txtVenta'>" +
-            <%
+            <%  
                 for (Ventas ve : datosVen) {
             %>
-                    "<option value='<%= ve.getIdVenta()%>'><%= ve.getFecha()%></option>" +
+                    "<option value='<%= ve.getIdVenta()%>' id='<%= ve.getIdVenta() %>'><%= ve.getIdVenta()%></option>" +
             <%
-                }
-            %>
-                    "</select>");
-                    $('#CD').html("<label style='color: grey;font-weight: lighter;'>Productos:</label>" +
-                            "<select name='txtTransporte'>" +
-            <%
-                for (Transporte tr : datosTr) {
-            %>
-                    "<option value='<%= tr.getIdTransporte()%>'><%= tr.getModelo()%></option>" +
-            <%
+
                 }
             %>
                     "</select>");
                     $('#' + valor).attr('selected', 'selected').change();
-                    $('#CD').html("<label style='color: grey;font-weight: lighter;'>Ciudad:</label>" +
+
+                    var valor = $(this).parents("tr").find("td")[6].innerHTML;
+                    $('#CD2').html("<label style='color: grey;font-weight: lighter;'>Transporte:</label>" +
+                            "<select name='txtTransporte'>"+
+            <%
+                for (Transporte tr : datosTr) {
+            %>
+                    "<option value='<%= tr.getIdTransporte()%>' id='<%= tr.getModelo()%>'><%= tr.getModelo()%></option>" +
+            <%
+                }
+            %>
+                    "</select>"
+                    );
+                    $('#' + valor).attr('selected', 'selected').change();
+                    var valor = $(this).parents("tr").find("td")[7].innerHTML;
+                    $('#CD3').html("<label style='color: grey;font-weight: lighter;'>Ciudad:</label>" +
                             "<select name='txtCiudad' id='Ciudad'>" +
             <%
                 for (Ciudades ci : datosCiu) {
                     //String Ciudad = city.OneCity(cl.getIdCiudad());
-%>
+            %>
                     "<option value='<%= ci.getIdCiudad()%>' id='<%= ci.getNombre()%>'><%= ci.getNombre()%></option>" +
             <%
                 }
@@ -410,19 +427,28 @@
                     "</select>");
                     $('#' + valor).attr('selected', 'selected').change();
 
-                    if ($(this).parents("tr").find("td")[9].innerHTML === 'Activo') {
+                    if ($(this).parents("tr").find("td")[8].innerHTML === 'Activo') {
                         $('#ActivoA').prop("checked", true);
                     } else {
                         $('#InactivoA').prop("checked", true);
                     }
-                    console.log($(this).parents("tr").find("td")[0].innerHTML);
-                    valor = $(this).parents("tr").find("td")[0].innerHTML;
-                    console.log(valor);
                     $('#nombre').focus();
-
+                    
+                    $('#' + valor).attr('selected', 'selected').change();
+                    var valor = $(this).parents("tr").find("td")[0].innerHTML;
+                    $('#idCl').val(valor);
+                    $('#idCl').hide();
+                    //console.log($('#idCl').val());
+                    $('#nombre').focus();
                 });
                 $('#txtFechaEntregaP').val(hoyFecha());
                 $('#txtFechaEntregaR').val(hoyFecha());
+                $('#Cancel').click(function () {
+                $('#divA').hide();
+                $('#divI').hide();
+                $('.boton2').show();
+                $('#btnMostrar').show();
+        });
                 $('#customers').DataTable({
                     language: {
                         processing: "Procesando...",

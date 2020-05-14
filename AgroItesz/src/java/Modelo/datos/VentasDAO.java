@@ -43,19 +43,53 @@ public class VentasDAO implements CRUD{
 
     @Override
     public String insertar(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    Ventas v = (Ventas) obj;
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("insert into Ventas(fecha,totalPagar,CantPagada,comentarios,estatus,tipo,idCliente,idSucursal,idEmpleado)\n"
+                + "values (?,?,?,?,?,?,?,?,?)");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setDate(1, v.getFecha());
+            ps.setFloat(2, v.getTotalPagar());
+            ps.setFloat(3, v.getCantPagada());
+            ps.setString(4, v.getComentarios());
+            ps.setString(5,""+v.getEstatus());
+            ps.setString(6,""+v.getTipo());
+            ps.setInt(7, v.getIdCliente());
+            ps.setInt(8, v.getIdSucursal());
+            ps.setInt(9, v.getIdEmpleado());
+            int filas = ps.executeUpdate();
+            respuesta = "se insertaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;   
     }
 
     @Override
     public String eliminar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update Ventas set estatus='I' where idVenta=? ");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            respuesta = "se eliminaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
     }
     
     
     public String reactivar(int id) {
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update Clientes set estatus='A' where idCliente=? ");
+        sql = ("update Ventas set estatus='A' where idVenta=? ");
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -71,7 +105,29 @@ public class VentasDAO implements CRUD{
 
     @Override
     public String actualizar(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         Ventas v = (Ventas) obj;
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update Ventas set fecha=?, totalPagar=?, CantPagada=?, comentarios=?, estatus=?, tipo=?, idCliente=?, idSucursal=?, idEmpleado=? where idVenta=?");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setDate(1, v.getFecha());
+            ps.setFloat(2, v.getTotalPagar());
+            ps.setFloat(3, v.getCantPagada());
+            ps.setString(4, v.getComentarios());
+            ps.setString(5,""+v.getEstatus());
+            ps.setString(6,""+v.getTipo());
+            ps.setInt(7, v.getIdCliente());
+            ps.setInt(8, v.getIdSucursal());
+            ps.setInt(9, v.getIdEmpleado());
+            ps.setInt(10, v.getIdVenta());
+            int filas = ps.executeUpdate();
+            respuesta = "se actualizaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
     }
 
     @Override
@@ -132,7 +188,7 @@ public class VentasDAO implements CRUD{
             ps.setString(1, String.valueOf(idTransport));
             rs=ps.executeQuery();
             while(rs.next()){
-                nombre=rs.getString("Fecha");
+                nombre=rs.getString("idVenta");
             }
             cn.closeConnection();
         } catch (SQLException ex) {

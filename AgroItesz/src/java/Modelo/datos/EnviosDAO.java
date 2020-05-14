@@ -33,17 +33,89 @@ public static EnviosDAO getEnviosDAO(){
     
     @Override
     public String insertar(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Envios en=(Envios) obj;
+        String respuesta="";
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
+        con=cn.getConexion();
+        sql=("insert into Envios(fechaEntregaPlaneada,fechaEntregaReal,direccion,codigoPostal,idVenta,idUnidadTransporte,idCiudad,estatus)\n" +
+        "values (?,?,?,?,?,?,?,?)"); 
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setDate(1, en.getFechaEntregaPlaneada());
+            ps.setDate(2, en.getFechaEntregaReal());
+            ps.setString(3, en.getDireccion());
+            ps.setInt(4, en.getCodigoPostal());
+            ps.setInt(5, en.getIdVenta());
+            ps.setInt(6, en.getIdTransporte());
+            ps.setInt(7, en.getIdCiudad());
+            ps.setString(8, ""+en.getEstado());
+            int filas= ps.executeUpdate();
+            respuesta="se insertaron "+filas+" filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(EnviosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
     }
 
     @Override
     public String eliminar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update Envios set estatus='I' where idEnvio=? ");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            respuesta = "se eliminaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(EnviosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
+    }
+    
+    public String reactivar(int id) {
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update Envios set estatus='A' where idEnvio=? ");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            respuesta = "se reactivaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(EnviosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
     }
 
     @Override
     public String actualizar(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Envios en=(Envios) obj;
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update Envios set fechaEntregaPlaneada=?, fechaEntregaReal=?, direccion=?, codigoPostal=?, idVenta=?, idUnidadTransporte=?, idCiudad=?, estatus=? where idEnvio=? ");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setDate(1, en.getFechaEntregaPlaneada());
+            ps.setDate(2, en.getFechaEntregaReal());
+            ps.setString(3, en.getDireccion());
+            ps.setInt(4, en.getCodigoPostal());
+            ps.setInt(5, en.getIdVenta());
+            ps.setInt(6, en.getIdTransporte());
+            ps.setInt(7, en.getIdCiudad());
+            ps.setString(8, ""+en.getEstado());
+            ps.setInt(9, en.getIdEnvio());
+            int filas = ps.executeUpdate();
+            respuesta = "se reactivaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(EnviosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
     }
 
     @Override
