@@ -15,12 +15,14 @@ public class Tripulacion {
     private int idEnvio;
     private String rol;
     private char estado;
+    private int idTripulacion;
 
-    public Tripulacion(int idEmpleado, int idEnvio, String rol, char estado) {
+    public Tripulacion(int idEmpleado, int idEnvio, String rol, char estado, int idTripulacion) {
         this.idEmpleado = idEmpleado;
         this.idEnvio = idEnvio;
         this.rol = rol;
         this.estado = estado;
+        this.idTripulacion = idTripulacion;
     }
 
     public int getIdEmpleado() {
@@ -56,6 +58,14 @@ public class Tripulacion {
     }
 
     public Tripulacion() {
+    }
+
+    public int getIdTripulacion() {
+        return idTripulacion;
+    }
+
+    public void setIdTripulacion(int idTripulacion) {
+        this.idTripulacion = idTripulacion;
     }
     
     

@@ -102,6 +102,7 @@
                             <option value="idEnvio">#Envio</option>
                             <option value="rol">Rol</option>
                             <option value="Estatus">Estatus</option>
+                            <option value="idTripulacion">#Tripulacion</option>
                         </select>
                         <button style="width: 20%; background-color: #15b332; color: #fff; font-weight: bold;"  type="submit">
                             <span class="glyphicon glyphicon-search"></span>
@@ -131,7 +132,6 @@
                             <input type="radio" id="Inactivo" name="txtEstatus" value="I">
                             <label for="Inactivo">Inactivo</label>
                         </td>
-                    </tr>
                 </tbody>
             </table>
 
@@ -163,6 +163,8 @@
                             <label for="Inactivo">Inactivo</label>
                         </td>
                         <td><input type="number" name="idCl" id="idCl"/> </td>
+                        <tr>
+                            <td style="width: 25%" colspan="2"><input type="text" placeholder="idTripulacion" name="txtidTriúlacion" style="width: 90%;" required/></td>
                     </tr>
                 </tbody>
             </table>
@@ -181,8 +183,9 @@
             <thead>
                 <tr>
                      <th id='tde' width='10%' style='border: 0;' scope='col'>idEmpleado</th>
-                     <th id='tde' width='30%' style='border: 0;' scope='col'>idEnvio</th>
+                     <th id='tde' width='10%' style='border: 0;' scope='col'>idEnvio</th>
                      <th id='tde' width='20%' style='border: 0;' scope='col'>Rol</th>
+                     <th id='tde' width='10%' style='border: 0;' scope='col'>idTripulacion</th>
                      <th id='tde' width='10%' style='border: 0;' scope='col'>Estatus</th>
                      <th  width='10%' style='border: 0;' scope='col'>Acciones</th>
                 </tr>
@@ -197,6 +200,7 @@
                     <td><%= idTrip = tr.getIdEmpleado()%></td>
                     <td><%= tr.getIdEnvio()%></td>
                     <td><%= tr.getRol()%></td>
+                    <td><%= tr.getIdTripulacion()%></td>
                     <%
                         if (tr.getEstado() == 'A') {
                     %>
@@ -214,8 +218,6 @@
                             <span  class='glyphicon glyphicon-ok-circle'></span></button>
                         </form></td>
                     <%    }%>                        
-
-                    
                 </tr>
                 <%
                     }
@@ -260,8 +262,10 @@
             $('.boton2').hide();
             $('#divI').hide();
             $('#divA').show();
-            $('#txtNombre').val($(this).parents("tr").find("td")[1].innerHTML);
-            $('#txtcostoAsesoria').val($(this).parents("tr").find("td")[2].innerHTML);
+            $('#txtidEmpleado').val($(this).parents("tr").find("td")[1].innerHTML);
+            $('#txtidEnvio').val($(this).parents("tr").find("td")[2].innerHTML);
+            $('#txtRol').val($(this).parents("tr").find("td")[2].innerHTML);
+            $('#txtEstatus').val($(this).parents("tr").find("td")[2].innerHTML);
             var valor = $(this).parents("tr").find("td")[7].innerHTML;
             //console.log(valor);
                                 $('#' + valor).attr('selected', 'selected').change();

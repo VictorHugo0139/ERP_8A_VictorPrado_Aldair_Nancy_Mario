@@ -12,7 +12,7 @@ import Modelo.Envios;
 import Modelo.Empleados;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.ResultSet;  
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,14 +46,15 @@ public class TripulacionDAO {
         cn.setUserName(UsuariosDAO.name);
         cn.setPassword(UsuariosDAO.p);
         con=cn.getConexion();
-        sql=("insert into Tripulacion(idEmpleado,idEnvio)\n" +
-        "values (?,?,?,?)"); 
+        sql=("insert into Tripulacion(idEmpleado,idEnvio,rol,estatus,idTripulacion)\n" +
+        "values (?,?,?,?,?)"); 
         try {
             ps=con.prepareStatement(sql);
             ps.setInt(1, trip.getIdEmpleado());
             ps.setInt(2, trip.getIdEnvio());
             ps.setString(3, trip.getRol());
             ps.setString(4, ""+trip.getEstado());
+            ps.setInt(5, trip.getIdTripulacion());
             int filas= ps.executeUpdate();
             respuesta="se insertaron "+filas+" filas";
             cn.closeConnection();
@@ -63,13 +64,13 @@ public class TripulacionDAO {
         return respuesta;
     }
 
-    public String eliminar(String rol) {
+    public String eliminar(int id) {
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update Tripulacion set estatus='I' where rol=? ");
+        sql = ("update Tripulacion set estatus='I' where idTripulacion=? ");
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, rol);
+            ps.setInt(5, id);
             int filas = ps.executeUpdate();
             respuesta = "se eliminaron " + filas + " filas";
             cn.closeConnection();
@@ -82,10 +83,10 @@ public class TripulacionDAO {
     public String reactivar(int id) {
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update Envios set estatus='A' where idEnvio=? ");
+        sql = ("update Tripulacion set estatus='A' where idTripulacion=? ");
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(5, id);
             int filas = ps.executeUpdate();
             respuesta = "se reactivaron " + filas + " filas";
             cn.closeConnection();
@@ -96,21 +97,17 @@ public class TripulacionDAO {
     }
 
     public String actualizar(Object obj) {
-        Envios en=(Envios) obj;
+        Tripulacion trip=(Tripulacion) obj;
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update Envios set fechaEntregaPlaneada=?, fechaEntregaReal=?, direccion=?, codigoPostal=?, idVenta=?, idUnidadTransporte=?, idCiudad=?, estatus=? where idEnvio=? ");
+        sql = ("update Tripulacion set idEmpleado=?, idEnvio=?, rol=?, estatus=?, idTripulacion=?");
         try {
             ps = con.prepareStatement(sql);
-            ps.setDate(1, en.getFechaEntregaPlaneada());
-            ps.setDate(2, en.getFechaEntregaReal());
-            ps.setString(3, en.getDireccion());
-            ps.setInt(4, en.getCodigoPostal());
-            ps.setInt(5, en.getIdVenta());
-            ps.setInt(6, en.getIdTransporte());
-            ps.setInt(7, en.getIdCiudad());
-            ps.setString(8, ""+en.getEstado());
-            ps.setInt(9, en.getIdEnvio());
+            ps.setInt(1, trip.getIdEmpleado());
+            ps.setInt(2, trip.getIdEnvio());
+            ps.setString(3, trip.getRol() );
+            ps.setString(4, ""+trip.getEstado());
+            ps.setInt(5, trip.getIdTripulacion());
             int filas = ps.executeUpdate();
             respuesta = "se reactivaron " + filas + " filas";
             cn.closeConnection();
@@ -123,7 +120,7 @@ public class TripulacionDAO {
     public List<Tripulacion> consultar() {
         List<Tripulacion> datos=new ArrayList<>();
         con=cn.getConexion();
-        sql=("select * from Triulacion");
+        sql=("select * from Tripulacion");
         try {
             ps=con.prepareStatement(sql);
             rs=ps.executeQuery();
@@ -131,7 +128,8 @@ public class TripulacionDAO {
                 datos.add(new Tripulacion(rs.getInt("idEmpleado"),
                         rs.getInt("idEnvio"),
                         rs.getString("rol"),
-                        rs.getString("estatus").charAt(0)));
+                        rs.getString("estatus").charAt(0),
+                        rs.getInt("idTripulacion")));
             }
             cn.closeConnection();
         } catch (SQLException ex) {

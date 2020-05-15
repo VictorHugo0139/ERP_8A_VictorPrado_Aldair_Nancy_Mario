@@ -459,11 +459,23 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosE);
                 request.getRequestDispatcher("ViewEnvios.jsp").forward(request, response);
                 break;
-                case "Tripulacion":
+            case "Tripulacion":
                 datosTrip = tripdao.consultar();
                 request.setAttribute("datosCl", datosTrip);
                 request.getRequestDispatcher("ViewTripulacion.jsp").forward(request, response);  
-                    break;
+            break;
+            case "TripulacionI":
+                
+            break;
+            case "TripulacionU":
+
+            break;
+            case "TripulacionD":
+
+            break;
+            case "TripulacionR":
+
+            break;
                     
         }
     }
