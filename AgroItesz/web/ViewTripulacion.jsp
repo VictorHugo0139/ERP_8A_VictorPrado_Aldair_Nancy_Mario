@@ -118,7 +118,7 @@
     <button id="btnMostrarf">+</button>
     <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
-        <form action="Controlador?accion=TripulacionI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
+        <form action="Controlador?accion=TripulacionI" method="POST" name="formInsertar" onsubmit="">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
@@ -145,7 +145,7 @@
 
     <div style="margin-left: 180px; margin-top: 10px" id="divA">
         
-        <form action="Controlador?accion=TrippulacionU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
+        <form action="Controlador?accion=TripulacionU" method="POST" name="formActualizar" onsubmit="">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
@@ -157,15 +157,14 @@
 
                         </td>
                         <td><label>Estatus:</label>
-                            <input type="radio" id="ActivoA" name="txtEstatusA" value="A" required>
+                            <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
                             <label for="Activo">Activo</label>
-                            <input type="radio" id="InactivoA" name="txtEstatusA" value="I">
+                            <input type="radio" id="InactivoA" name="txtEstatus" value="I">
                             <label for="Inactivo">Inactivo</label>
                         </td>
-                        <td><input type="number" name="idCl" id="idCl"/> </td>
-                        <tr>
-                            <td style="width: 25%" colspan="2"><input type="text" placeholder="idTripulacion" name="txtidTriúlacion" style="width: 90%;" required/></td>
-                    </tr>
+                        <td colspan="3">
+                            <input type="number" name="idCl" id="idCl"/>
+                        </td>
                 </tbody>
             </table>
 
@@ -264,13 +263,13 @@
             $('#divA').show();
             $('#txtidEmpleado').val($(this).parents("tr").find("td")[1].innerHTML);
             $('#txtidEnvio').val($(this).parents("tr").find("td")[2].innerHTML);
-            $('#txtRol').val($(this).parents("tr").find("td")[2].innerHTML);
-            $('#txtEstatus').val($(this).parents("tr").find("td")[2].innerHTML);
-            var valor = $(this).parents("tr").find("td")[7].innerHTML;
+            $('#txtRol').val($(this).parents("tr").find("td")[3].innerHTML);
+            $('#txtEstatus').val($(this).parents("tr").find("td")[4].innerHTML);
+            var valor = $(this).parents("tr").find("td")[5].innerHTML;
             //console.log(valor);
                                 $('#' + valor).attr('selected', 'selected').change();
                                  
-            if ($(this).parents("tr").find("td")[8].innerHTML === 'Activo') {
+            if ($(this).parents("tr").find("td")[6].innerHTML === 'Activo') {
                 $('#ActivoA').prop("checked", true);
             } else {
                 $('#InactivoA').prop("checked", true);

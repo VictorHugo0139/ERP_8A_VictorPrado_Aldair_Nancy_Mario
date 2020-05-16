@@ -465,10 +465,30 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewTripulacion.jsp").forward(request, response);  
             break;
             case "TripulacionI":
-                
+                trip = new Tripulacion(
+                        Integer.parseInt(request.getParameter("txtidEmpleado")),
+                        Integer.parseInt(request.getParameter("txtEnvio")),
+                        request.getParameter("txtRol"),
+                        request.getParameter("txtEstatus").charAt(0),
+                        0);
+                res = tripdao.insertar(trip);
+                datosTrip = tripdao.consultar();
+                request.setAttribute("datosCl", datosTrip);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewTripulacion.jsp").forward(request, response);
             break;
             case "TripulacionU":
-
+                trip = new Tripulacion(
+                        Integer.parseInt(request.getParameter("txtidEmpleado")),
+                        Integer.parseInt(request.getParameter("txtEnvio")),
+                        request.getParameter("txtRol"),
+                        request.getParameter("txtEstatus").charAt(0),
+                        Integer.parseInt(request.getParameter("idCl")));
+                res = tripdao.actualizar(trip);
+                datosTrip = tripdao.consultar();
+                request.setAttribute("datosCl", datosTrip);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewTripulacion.jsp").forward(request, response);
             break;
             case "TripulacionD":
 

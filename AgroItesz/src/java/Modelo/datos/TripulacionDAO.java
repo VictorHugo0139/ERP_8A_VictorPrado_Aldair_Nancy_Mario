@@ -46,15 +46,14 @@ public class TripulacionDAO {
         cn.setUserName(UsuariosDAO.name);
         cn.setPassword(UsuariosDAO.p);
         con=cn.getConexion();
-        sql=("insert into Tripulacion(idEmpleado,idEnvio,rol,estatus,idTripulacion)\n" +
-        "values (?,?,?,?,?)"); 
+        sql=("insert into Tripulacion(idEmpleado,idEnvio,rol,estatus)\n" +
+        "values (?,?,?,?)"); 
         try {
             ps=con.prepareStatement(sql);
             ps.setInt(1, trip.getIdEmpleado());
             ps.setInt(2, trip.getIdEnvio());
             ps.setString(3, trip.getRol());
             ps.setString(4, ""+trip.getEstado());
-            ps.setInt(5, trip.getIdTripulacion());
             int filas= ps.executeUpdate();
             respuesta="se insertaron "+filas+" filas";
             cn.closeConnection();
@@ -100,14 +99,13 @@ public class TripulacionDAO {
         Tripulacion trip=(Tripulacion) obj;
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update Tripulacion set idEmpleado=?, idEnvio=?, rol=?, estatus=?, idTripulacion=?");
+        sql = ("update Tripulacion set idEmpleado=?, idEnvio=?, rol=?, estatus=?");
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, trip.getIdEmpleado());
             ps.setInt(2, trip.getIdEnvio());
             ps.setString(3, trip.getRol() );
             ps.setString(4, ""+trip.getEstado());
-            ps.setInt(5, trip.getIdTripulacion());
             int filas = ps.executeUpdate();
             respuesta = "se reactivaron " + filas + " filas";
             cn.closeConnection();
