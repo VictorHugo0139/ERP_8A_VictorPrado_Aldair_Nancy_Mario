@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modelo.datos;
 
 import Conexion.Conexion;
 import Modelo.CRUD;
+
 import Modelo.VentaDetalles;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class VentaDetallesDAO implements CRUD {
 
-    private static VentaDetallesDAO VDdao;
+    private static VentaDetallesDAO vDao;
     Conexion cn = Conexion.getInsConexion();
     Connection con;
     PreparedStatement ps;
@@ -31,10 +27,10 @@ public class VentaDetallesDAO implements CRUD {
     String sql;
 
     public static VentaDetallesDAO getVentaDetallesDAO() {
-        if (VDdao == null) {
-            VDdao = new VentaDetallesDAO();
+        if (vDao == null) {
+            vDao = new VentaDetallesDAO();
         }
-        return VDdao;
+        return vDao;
     }
 
     private VentaDetallesDAO() {
@@ -45,22 +41,21 @@ public class VentaDetallesDAO implements CRUD {
         VentaDetalles vD = (VentaDetalles) obj;
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("insert into vetaDetalle(idVentaDetalle,precioVenta,cantidad,subtotal,idVenta,idPresentacion,estatus)\n"
-                + "values (?,?,?,?,?,?,?)");
+        sql = ("insert into VentaDetalles(precioVenta,cantidad,subtotal,idVenta,idPresentacion,estatus;)\n"
+                + "values (?,?,?,?,?,?)");
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, vD.getIdVentaDetalle());
-            ps.setFloat(2, vD.getPrecioVenta());
-            ps.setFloat(3, vD.getCantidad());
-            ps.setFloat(4, vD.getSubtotal());
-            ps.setInt(5, vD.getIdVenta());
-            ps.setInt(6, vD.getIdPresentacion());
-            ps.setInt(7, vD.getEstatus());
+            ps.setFloat(1, vD.getPrecioVenta());
+            ps.setFloat(2, vD.getCantidad());
+            ps.setFloat(3, vD.getSubtotal());
+            ps.setInt(4, vD.getIdVenta());
+            ps.setInt(5, vD.getIdPresentacion());
+            ps.setInt(6, vD.getEstatus());
             int filas = ps.executeUpdate();
             respuesta = "se insertaron " + filas + " filas";
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(VentaDetallesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return respuesta;
     }
@@ -69,7 +64,7 @@ public class VentaDetallesDAO implements CRUD {
     public String eliminar(int id) {
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update Clientes set estatus='I' where idVentaDetalle=? ");
+        sql = ("update VentaDetalles set estatus='I' where idVentaDetalles=? ");
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -77,7 +72,7 @@ public class VentaDetallesDAO implements CRUD {
             respuesta = "se eliminaron " + filas + " filas";
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(VentaDetallesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return respuesta;
     }
@@ -85,7 +80,7 @@ public class VentaDetallesDAO implements CRUD {
     public String reactivar(int id) {
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update VentaDetalle set estatus='A' where idVentaDetalle=? ");
+        sql = ("update VentaDetalles set estatus='A' where idVentaDetalles=? ");
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -93,7 +88,7 @@ public class VentaDetallesDAO implements CRUD {
             respuesta = "se reactivaron " + filas + " filas";
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(VentaDetallesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return respuesta;
     }
@@ -103,28 +98,48 @@ public class VentaDetallesDAO implements CRUD {
         VentaDetalles vD = (VentaDetalles) obj;
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update VentaDetalles set precioVenta=?,cantidad=?,subtotal=?,idVenta=?,idPresentacion=?,estatus=?,where idVentaDetalle=?");
+        sql = ("update VentaDetalles set precioVenta=?,cantidad=?,subtotal=?,idVenta=?,idPresentacion=?,estatus=?where idVentaDetalle=?");
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, vD.getIdVentaDetalle());
             ps.setFloat(2, vD.getPrecioVenta());
             ps.setFloat(3, vD.getCantidad());
             ps.setFloat(4, vD.getSubtotal());
-            ps.setInt(5, vD.getIdVenta());
-            ps.setInt(6, vD.getIdPresentacion());
+            ps.setInt(5, +vD.getIdVenta());
+            ps.setInt(6, +vD.getIdPresentacion());
             ps.setInt(7, vD.getEstatus());
             int filas = ps.executeUpdate();
             respuesta = "se actualizaron " + filas + " filas";
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(VentaDetallesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return respuesta;
     }
 
     @Override
-    public List<?> consultar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<VentaDetalles> consultar() {
+        List<VentaDetalles> datos = new ArrayList<>();
+        con = cn.getConexion();
+        sql = ("select * from VentaDetalles");
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                datos.add(new VentaDetalles(rs.getInt("IdVentaDetalle"),
+                        rs.getFloat("PrecioVenta"),
+                        rs.getFloat("Cantidad"),
+                        rs.getFloat("Subtotal"),
+                        rs.getInt("IdVenta"),
+                        rs.getInt("IdPresentacion"),
+                        rs.getString("estatus").charAt(0)));
+
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return datos;
     }
 
     @Override
@@ -132,168 +147,39 @@ public class VentaDetallesDAO implements CRUD {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-/**  @Override
-    public List<VentasDetalles> consultar() {
-        List<VentasDetalles> datos = new ArrayList<>();
-        con = cn.getConexion();
-        sql = ("select * from VentasDetalles");
-        try {
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                datos.add(new VentasDetalles(rs.getInt("idVentasDetalles")
-                        
-                        rs.getString("estatus").charAt(0)));
-            }
-            cn.closeConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return datos;
-    }
-
-    @Override
-    public List<Clientes> filtrar(String campo, String criterio) {
-        List<Clientes> datos = new ArrayList<>();
-        con = cn.getConexion();
-//        String c="\'"+criterio+"\'";
-//        System.out.println(campo+" y "+criterio);
-        if ("Ciudad".equals(campo)) {
-            sql = "select*from clientes c join ciudades ci on c.idCiudad=ci.idCiudad where ci.nombre like'%" + criterio + "%';";
-            try {
-                ps = con.prepareStatement(sql);
-                rs = ps.executeQuery();
-                while (rs.next()) {
-                    datos.add(new Clientes(rs.getInt("idCliente"),
-                            rs.getString("nombre"),
-                            rs.getString("razonSocial"),
-                            rs.getFloat("limiteCredito"),
-                            rs.getString("direccion"),
-                            rs.getString("codigoPostal"),
-                            rs.getString("rfc"),
-                            rs.getString("telefono"),
-                            rs.getString("email"),
-                            rs.getString("tipo").charAt(0),
-                            rs.getInt("idCiudad"),
-                            rs.getString("estatus").charAt(0)));
-                }
-                cn.closeConnection();
-            } catch (SQLException ex) {
-                Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            if ("estatus".equals(campo)) {
-                if (criterio.startsWith("in") | criterio.startsWith("In")) {
-                    sql = "select * from Clientes where " + campo + " = 'I'";
-                    try {
-                        ps = con.prepareStatement(sql);
-                        rs = ps.executeQuery();
-                        while (rs.next()) {
-                            datos.add(new Clientes(rs.getInt("idCliente"),
-                                    rs.getString("nombre"),
-                                    rs.getString("razonSocial"),
-                                    rs.getFloat("limiteCredito"),
-                                    rs.getString("direccion"),
-                                    rs.getString("codigoPostal"),
-                                    rs.getString("rfc"),
-                                    rs.getString("telefono"),
-                                    rs.getString("email"),
-                                    rs.getString("tipo").charAt(0),
-                                    rs.getInt("idCiudad"),
-                                    rs.getString("estatus").charAt(0)));
-                        }
-                        cn.closeConnection();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } else {
-                    if (criterio.startsWith("ac") | criterio.startsWith("Ac")) {
-                        sql = "select * from Clientes where " + campo + " = 'A'";
-                        try {
-                            ps = con.prepareStatement(sql);
-                            rs = ps.executeQuery();
-                            while (rs.next()) {
-                                datos.add(new Clientes(rs.getInt("idCliente"),
-                                        rs.getString("nombre"),
-                                        rs.getString("razonSocial"),
-                                        rs.getFloat("limiteCredito"),
-                                        rs.getString("direccion"),
-                                        rs.getString("codigoPostal"),
-                                        rs.getString("rfc"),
-                                        rs.getString("telefono"),
-                                        rs.getString("email"),
-                                        rs.getString("tipo").charAt(0),
-                                        rs.getInt("idCiudad"),
-                                        rs.getString("estatus").charAt(0)));
-                            }
-                            cn.closeConnection();
-                        } catch (SQLException ex) {
-                            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    } else {
-                        return datos;
-                    }
-                }
-            } else {
-                sql = "select * from Clientes where " + campo + " like '%" + criterio + "%'";
-//        sql=("select * from Clientes where ? like CONCAT( '%',?,'%');");
-                try {
-                    ps = con.prepareStatement(sql);
-//            ps.setString(1, campo);
-//            ps.setString(2, criterio);
-                    rs = ps.executeQuery();
-                    while (rs.next()) {
-                        datos.add(new Clientes(rs.getInt("idCliente"),
-                                rs.getString("nombre"),
-                                rs.getString("razonSocial"),
-                                rs.getFloat("limiteCredito"),
-                                rs.getString("direccion"),
-                                rs.getString("codigoPostal"),
-                                rs.getString("rfc"),
-                                rs.getString("telefono"),
-                                rs.getString("email"),
-                                rs.getString("tipo").charAt(0),
-                                rs.getInt("idCiudad"),
-                                rs.getString("estatus").charAt(0)));
-                        System.out.println(rs.getInt("idCliente") + "," + rs.getString("nombre"));
-                    }
-                    cn.closeConnection();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-
-        return datos;
-    }
-
-    public List<Clientes> consultarId(int id) {
-        List<Clientes> datos = new ArrayList<>();
+    public List<VentaDetalles> consultarId(int id) {
+        List<VentaDetalles> datos = new ArrayList<>();
         con = cn.getConexion();
         sql = ("select * from Clientes where idCliente=" + id);
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                datos.add(new Clientes(rs.getInt("idCliente"),
-                        rs.getString("nombre"),
-                        rs.getString("razonSocial"),
-                        rs.getFloat("limiteCredito"),
-                        rs.getString("direccion"),
-                        rs.getString("codigoPostal"),
-                        rs.getString("rfc"),
-                        rs.getString("telefono"),
-                        rs.getString("email"),
-                        rs.getString("tipo").charAt(0),
-                        rs.getInt("idCiudad"),
-                        rs.getString("estatus").charAt(0)));
+                datos.add(new VentaDetalles());
             }
             cn.closeConnection();
         } catch (SQLException ex) {
             Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return datos;
-    }*/
+    }
+
+    public String OneBuild(int idTransport) {
+        String nombre = "";
+        con = cn.getConexion();
+        sql = ("select*from VentaDetalle where idVentaDetalles=?;");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(idTransport));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                nombre = rs.getString("idVentaDetalles");
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(VentasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nombre;
+    }
+
 }
-
-

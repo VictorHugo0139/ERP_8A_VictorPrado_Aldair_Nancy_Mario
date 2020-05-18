@@ -102,8 +102,9 @@
                     <a href="#">Ventas</a>
                 </li>
                 <li class="seccion">
-                    <a href="#">Detalle de ventas</a>
+                    <a href="ViewVentaDetalles.jsp">Detalle de ventas</a>
                 </li>
+                
                 <li>
                     <form action="Controlador?accion=VentasS" method="POST" >
                         <input type="text" placeholder="búsqueda" name="busqueda" style="color: black;">
@@ -133,7 +134,7 @@
     <button id="btnMostrarf">+</button>
     <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
-        <form action="Controlador?accion=VentasI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
+        <form action="Controlador?accion=VentaI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
@@ -171,8 +172,7 @@
                             </select>
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="3"></td>
+                    <tr>                        <td colspan="3"></td>
                         <td colspan="2">
                             <label style="color: grey;font-weight: lighter; width: 13%;">Sucursal</label>
                             <select name="txtSucursal">
@@ -413,13 +413,13 @@
             $('#CD').html("<label style='color: grey;font-weight: lighter;'>Cliente</label>" +
                     "<select name='txtCliente'>" +
     <%
-                                    for (Clientes cl : c) {
-                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
+        for (Clientes cl : c) {
+            //String Ciudad = city.OneCity(cl.getIdCiudad());
 
     %>
             "<option value='<%= cl.getIdCliente()%>'><%= cl.getNombre()%></option>" +
     <%
-                                    }
+        }
     %>
             "</select>");
             $('#' + valor).attr('selected', 'selected').change();
@@ -429,25 +429,25 @@
             $('#CD2').html("<label style='color: grey;font-weight: lighter;'>Sucursal</label>" +
                     "<select name='txtSucursal'>" +
     <%
-                                    for (Sucursal su : s) {
-                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
+        for (Sucursal su : s) {
+            //String Ciudad = city.OneCity(cl.getIdCiudad());
 
     %>
             "<option value='<%= su.getIdSucursal()%>'><%= su.getNombre()%></option>" +
     <%
-                                    }
+        }
     %>
             "</select>");
             $('#CD2').append("<label style='color: grey;font-weight: lighter;'>Empleado</label>" +
                     "<select name='txtEmpleado'>" +
     <%
-                                    for (Empleados em : e) {
-                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
+        for (Empleados em : e) {
+            //String Ciudad = city.OneCity(cl.getIdCiudad());
 
     %>
             "<option value='<%= em.getIdEmpleado()%>'><%= em.getNombre()%></option>" +
     <%
-                                    }
+        }
     %>
             "</select>");
 

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Modelo;
-
+import java.sql.Date;
 /**
  *
  * @author Nancy
@@ -18,6 +18,8 @@ public class VentaDetalles {
     private int idVenta;
     private int idPresentacion;
     private char estatus;
+    
+    
 
     public VentaDetalles() {
     }
