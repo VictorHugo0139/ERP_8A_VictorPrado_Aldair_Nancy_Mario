@@ -4,7 +4,6 @@
 <%@page import="Modelo.VentasDetalles"%>
 <%@page import="Modelo.datos.VentasDetallesDAO"%>
 <%@page import="Modelo.datos.VentasDAO"%>
-
 <%@page import="Modelo.Ventas"%>
 <%@page import="java.util.*" %>
 <!DOCTYPE html>
@@ -87,7 +86,7 @@
     VentasDAO Vdao = VentasDAO.getVentasDAO();
     VentasDetallesDAO VDdao = VentasDetallesDAO.getVentasDetallesDAO();
     PresentacionDAO pRdao = PresentacionDAO.getPresentacionDAO();
-    List<VentaDetalles> datos = (List<VentaDetalles>) request.getAttribute("datosCl");
+    List<VentasDetalles> datos = (List<VentasDetalles>) request.getAttribute("datosCl");
     List<Ventas> v = Vdao.consultar();
     List<Presentacion> p = pRdao.consultar();
 

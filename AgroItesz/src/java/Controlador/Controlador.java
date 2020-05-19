@@ -128,10 +128,10 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosV);
                 request.getRequestDispatcher("ViewVentas.jsp").forward(request, response);
                 break;
-            case "VentaDetalles":
+            case "VentasDetalles":
                 datosVD = VDdao.consultar();
                 request.setAttribute("datosCl", datosVD);
-                request.getRequestDispatcher("ViewVentaDetalles.jsp").forward(request, response);
+                request.getRequestDispatcher("ViewVentasDetalles.jsp").forward(request, response);
                 break;
             case "Transportes":
                 datosT = trdao.consultar();
