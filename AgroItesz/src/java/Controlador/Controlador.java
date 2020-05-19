@@ -12,6 +12,7 @@ import Modelo.Ventas;
 import Modelo.Presentacion;
 import Modelo.datos.PresentacionDAO;
 import Modelo.Envios;
+import Modelo.Tripulacion;
 import Modelo.Ventas;
 import Modelo.VentasDetalles;
 import Modelo.datos.ClientesDAO;
@@ -23,6 +24,7 @@ import Modelo.datos.AsociacionesDAO;
 import Modelo.datos.MiembrosDAO;
 import Modelo.datos.VentasDAO;
 import Modelo.datos.EnviosDAO;
+import Modelo.datos.TripulacionDAO;
 import Modelo.datos.VentasDetallesDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -50,12 +52,14 @@ public class Controlador extends HttpServlet {
     PresentacionDAO pRdao = new PresentacionDAO();
     MiembrosDAO midao = MiembrosDAO.getMiembrosDAO();
     CultivosDAO culdao = new CultivosDAO();
+    TripulacionDAO tripdao=new TripulacionDAO();
     Clientes cl = new Clientes();
     Ventas v=new Ventas();
     VentasDetalles vD=new VentasDetalles();
     Miembros mi = new Miembros();
     Cultivos cul = new Cultivos();
     List<Clientes> datosC = new ArrayList<>();
+    List<Tripulacion> datosTrip=new ArrayList<>();
     List<Presentacion> datosPr = new ArrayList<>();
     List<Ventas> datosV = new ArrayList<>();
     List<VentasDetalles> datosVD = new ArrayList<>();
@@ -499,6 +503,12 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosE);
                 request.getRequestDispatcher("ViewEnvios.jsp").forward(request, response);
                 break;
+                case "Tripulacion":
+                datosTrip = tripdao.consultar();
+                request.setAttribute("datosCl", datosTrip);
+                request.getRequestDispatcher("ViewTripulacion.jsp").forward(request, response);  
+                    break;
+                    
         }
     }
 
