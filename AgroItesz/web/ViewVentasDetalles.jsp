@@ -81,7 +81,7 @@
     <a href="principal.jsp"><img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" /></a>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>VentaDetalle</title>
+    <title>VentasDetalle</title>
 </head>
 <%
     VentasDAO Vdao = VentasDAO.getVentasDAO();

@@ -102,7 +102,7 @@
                     <a href="Controlador?accion=Ventas">Ventas</a>
                 </li>
                 <li class="seccion">
-                    <a href="Controlador?accion=VentaDetalles">Detalle de ventas</a>
+                    <a href="Controlador?accion=VentasDetalles">Detalle de ventas</a>
                 </li>
 
                 <li>
