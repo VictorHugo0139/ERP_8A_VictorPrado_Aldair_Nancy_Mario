@@ -3,7 +3,7 @@ package Modelo.datos;
 import Conexion.Conexion;
 import Modelo.CRUD;
 
-import Modelo.VentaDetalles;
+import Modelo.VentasDetalles;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,28 +17,28 @@ import java.util.logging.Logger;
  *
  * @author Nancy
  */
-public class VentaDetallesDAO implements CRUD {
+public class VentasDetallesDAO implements CRUD {
 
-    private static VentaDetallesDAO vDao;
+    private static VentasDetallesDAO vDao;
     Conexion cn = Conexion.getInsConexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
     String sql;
 
-    public static VentaDetallesDAO getVentaDetallesDAO() {
+    public static VentasDetallesDAO getVentasDetallesDAO() {
         if (vDao == null) {
-            vDao = new VentaDetallesDAO();
+            vDao = new VentasDetallesDAO();
         }
         return vDao;
     }
 
-    private VentaDetallesDAO() {
+    private VentasDetallesDAO() {
     }
 
     @Override
     public String insertar(Object obj) {
-        VentaDetalles vD = (VentaDetalles) obj;
+        VentasDetalles vD = (VentasDetalles) obj;
         String respuesta = "";
         con = cn.getConexion();
         sql = ("insert into VentasDetalle(precioVenta,cantidad,subtotal,idVenta,idPresentacion,estatus;)\n"
@@ -95,7 +95,7 @@ public class VentaDetallesDAO implements CRUD {
 
     @Override
     public String actualizar(Object obj) {
-        VentaDetalles vD = (VentaDetalles) obj;
+        VentasDetalles vD = (VentasDetalles) obj;
         String respuesta = "";
         con = cn.getConexion();
         sql = ("update VentasDetalle set precioVenta=?,cantidad=?,subtotal=?,idVenta=?,idPresentacion=?,estatus=?where idVentaDetalle=?");
@@ -118,15 +118,15 @@ public class VentaDetallesDAO implements CRUD {
     }
 
     @Override
-    public List<VentaDetalles> consultar() {
-        List<VentaDetalles> datos = new ArrayList<>();
+    public List<VentasDetalles> consultar() {
+        List<VentasDetalles> datos = new ArrayList<>();
         con = cn.getConexion();
         sql = ("select * from VentasDetalle");
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                datos.add(new VentaDetalles(rs.getInt("IdVentaDetalle"),
+                datos.add(new VentasDetalles(rs.getInt("IdVentaDetalle"),
                         rs.getFloat("PrecioVenta"),
                         rs.getFloat("Cantidad"),
                         rs.getFloat("Subtotal"),
@@ -147,15 +147,15 @@ public class VentaDetallesDAO implements CRUD {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public List<VentaDetalles> consultarId(int id) {
-        List<VentaDetalles> datos = new ArrayList<>();
+    public List<VentasDetalles> consultarId(int id) {
+        List<VentasDetalles> datos = new ArrayList<>();
         con = cn.getConexion();
         sql = ("select * from Clientes where idCliente=" + id);
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                datos.add(new VentaDetalles());
+                datos.add(new VentasDetalles());
             }
             cn.closeConnection();
         } catch (SQLException ex) {

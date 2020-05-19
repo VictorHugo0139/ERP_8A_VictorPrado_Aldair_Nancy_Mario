@@ -13,7 +13,7 @@ import Modelo.Presentacion;
 import Modelo.datos.PresentacionDAO;
 import Modelo.Envios;
 import Modelo.Ventas;
-import Modelo.VentaDetalles;
+import Modelo.VentasDetalles;
 import Modelo.datos.ClientesDAO;
 import Modelo.datos.CultivosDAO;
 import Modelo.datos.TransporteDAO;
@@ -23,7 +23,7 @@ import Modelo.datos.AsociacionesDAO;
 import Modelo.datos.MiembrosDAO;
 import Modelo.datos.VentasDAO;
 import Modelo.datos.EnviosDAO;
-import Modelo.datos.VentaDetallesDAO;
+import Modelo.datos.VentasDetallesDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -45,20 +45,20 @@ public class Controlador extends HttpServlet {
     Usuarios usr = new Usuarios();
     ClientesDAO cldao = ClientesDAO.getClientesDAO();
     VentasDAO Vdao = VentasDAO.getVentasDAO();
-    VentaDetallesDAO VDdao = VentaDetallesDAO.getVentaDetallesDAO();
+    VentasDetallesDAO VDdao = VentasDetallesDAO.getVentasDetallesDAO();
     Presentacion p = new Presentacion();
     PresentacionDAO pRdao = new PresentacionDAO();
     MiembrosDAO midao = MiembrosDAO.getMiembrosDAO();
     CultivosDAO culdao = new CultivosDAO();
     Clientes cl = new Clientes();
     Ventas v=new Ventas();
-    VentaDetalles vD=new VentaDetalles();
+    VentasDetalles vD=new VentasDetalles();
     Miembros mi = new Miembros();
     Cultivos cul = new Cultivos();
     List<Clientes> datosC = new ArrayList<>();
     List<Presentacion> datosPr = new ArrayList<>();
     List<Ventas> datosV = new ArrayList<>();
-    List<VentaDetalles> datosVD = new ArrayList<>();
+    List<VentasDetalles> datosVD = new ArrayList<>();
     List<Miembros> datosM = new ArrayList<>();
     List<Cultivos> datosCu = new ArrayList<>();
     TransporteDAO trdao = TransporteDAO.getTransporteDAO();
@@ -440,8 +440,8 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewEnvios.jsp").forward(request, response);
                 break;
                 
-            case "VentaDetallesU":
-                vD = new VentaDetalles(Integer.parseInt(request.getParameter("idVDl")),
+            case "VentasDetallesU":
+                vD = new VentasDetalles(Integer.parseInt(request.getParameter("idVDl")),
                         Float.valueOf(request.getParameter("txtprecioVenta")),
                         Float.parseFloat(request.getParameter("txtcantidad")),
                         Float.parseFloat(request.getParameter("txtsubtotal")),
@@ -452,21 +452,21 @@ public class Controlador extends HttpServlet {
                 datosVD = VDdao.consultar();
                 request.setAttribute("datosCl", datosVD);
                 request.setAttribute("resp", res);
-                request.getRequestDispatcher("ViewVentaDetalles.jsp").forward(request, response);
+                request.getRequestDispatcher("ViewVentasDetalles.jsp").forward(request, response);
                 break;
-            case "VentaDetallesD":
+            case "VentasDetallesD":
                 res = VDdao.eliminar(Integer.parseInt(request.getParameter("idVD")));
                 request.setAttribute("resp", res);
                 datosVD = VDdao.consultar();
                 request.setAttribute("datosCl", datosVD);
-                request.getRequestDispatcher("ViewVentaDetalles.jsp").forward(request, response);
+                request.getRequestDispatcher("ViewVentasDetalles.jsp").forward(request, response);
                 break;
-            case "VentaDestallesR":
+            case "VentasDestallesR":
                 res = VDdao.reactivar(Integer.parseInt(request.getParameter("idVD")));
                 request.setAttribute("resp", res);
                 datosVD = VDdao.consultar();
                 request.setAttribute("datosCl", datosVD);
-                request.getRequestDispatcher("ViewVentaDetalles.jsp").forward(request, response);
+                request.getRequestDispatcher("ViewVentasDetalles.jsp").forward(request, response);
                 break;
                 
                 case "EnviosU":

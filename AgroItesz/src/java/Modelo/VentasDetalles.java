@@ -9,7 +9,7 @@ import java.sql.Date;
  *
  * @author Nancy
  */
-public class VentaDetalles {
+public class VentasDetalles {
     
     private int idVentaDetalle;
     private float precioVenta;
@@ -21,10 +21,10 @@ public class VentaDetalles {
     
     
 
-    public VentaDetalles() {
+    public VentasDetalles() {
     }
 
-    public VentaDetalles(int idVentaDetalle, float precioVenta, float cantidad, float subtotal, int idVenta, int idPresentacion, char estatus) {
+    public VentasDetalles(int idVentaDetalle, float precioVenta, float cantidad, float subtotal, int idVenta, int idPresentacion, char estatus) {
         this.idVentaDetalle = idVentaDetalle;
         this.precioVenta = precioVenta;
         this.cantidad = cantidad;

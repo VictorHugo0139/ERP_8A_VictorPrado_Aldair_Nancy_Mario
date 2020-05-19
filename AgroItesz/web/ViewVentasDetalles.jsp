@@ -1,8 +1,8 @@
 
 <%@page import="Modelo.datos.PresentacionDAO"%>
 <%@page import="Modelo.Presentacion"%>
-<%@page import="Modelo.VentaDetalles"%>
-<%@page import="Modelo.datos.VentaDetallesDAO"%>
+<%@page import="Modelo.VentasDetalles"%>
+<%@page import="Modelo.datos.VentasDetallesDAO"%>
 <%@page import="Modelo.datos.VentasDAO"%>
 
 <%@page import="Modelo.Ventas"%>
@@ -85,7 +85,7 @@
 </head>
 <%
     VentasDAO Vdao = VentasDAO.getVentasDAO();
-    VentaDetallesDAO VDdao = VentaDetallesDAO.getVentaDetallesDAO();
+    VentasDetallesDAO VDdao = VentasDetallesDAO.getVentasDetallesDAO();
     PresentacionDAO pRdao = PresentacionDAO.getPresentacionDAO();
     List<VentaDetalles> datos = (List<VentaDetalles>) request.getAttribute("datosCl");
     List<Ventas> v = Vdao.consultar();
@@ -105,11 +105,11 @@
                     <a href="Controlador?accion=Ventas">Ventas</a>
                 </li>
                 <li class="seccion">
-                    <a href="Controlador?accion=VentaDetalles">Detalle de ventas</a>
+                    <a href="Controlador?accion=VentasDetalles">Detalle de ventas</a>
                 </li>
 
                 <li>
-                    <form action="Controlador?accion=VentaDetallesS" method="POST" >
+                    <form action="Controlador?accion=VentasDetallesS" method="POST" >
                         <input type="text" placeholder="búsqueda" name="busqueda" style="color: black;">
                         <label>En base a:</label>
                         <select name="campo" style="color: black;">
@@ -133,7 +133,7 @@
     <button id="btnMostrarf">+</button>
     <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
-        <form action="Controlador?accion=VentaDetallesI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
+        <form action="Controlador?accion=VentasDetallesI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
@@ -183,9 +183,9 @@
                 </tbody>
             </table>
 
-            <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
+           <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
                 Agregar
-            </button>
+          </button>
         </form>
 
     </div>
@@ -193,7 +193,7 @@
 
     <div style="margin-left: 180px; margin-top: 10px" id="divA">
 
-        <form action="Controlador?accion=VentaDeetallesU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
+        <form action="Controlador?accion=VentasDeetallesU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
@@ -254,7 +254,7 @@
                 <%
                     int idc;
                     //datos = dao.consultar();
-                    for (VentaDetalles vD : datos) {
+                    for (VentasDetalles vD : datos) {
                 %>
                 <tr>
                     <td><%= idc = vD.getIdVentaDetalle()%></td>
@@ -278,13 +278,13 @@
 
                     <%if (vD.getEstatus() == 'A') {%>
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                        <form action="Controlador?accion=VentaDetallesD&id=<%= idc%>" method="POST">
+                        <form action="Controlador?accion=VentasDetallesD&id=<%= idc%>" method="POST">
                             <button type="submit" value='<%= idc%>' name="idc" class="boton2">
                                 <span  class='glyphicon glyphicon-ban-circle'></span></button>
                         </form></td>
                         <%    } else {%>
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                        <form action="Controlador?accion=VentaDetallesR&id=<%= idc%>" method="POST">
+                        <form action="Controlador?accion=VentasDetallesR&id=<%= idc%>" method="POST">
                             <button type="submit" value='<%= idc%>' name="idc" class="boton2">
                                 <span  class='glyphicon glyphicon-ok-circle'></span></button>
                         </form></td>
