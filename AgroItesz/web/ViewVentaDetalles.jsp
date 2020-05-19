@@ -98,12 +98,16 @@
         <nav id="N">
             <ul id="U">
                 <li style="width: 50px;">
-                    <a href="ViewVentaDetalles.jsp" style="width: 50px;"><img src="Images/arrow-left.png" height="70%" width="70%" alt="Regresar" /></a>
+                    <a href="principal.jsp" style="width: 50px;"><img src="Images/arrow-left.png" height="70%" width="70%" alt="Regresar" /></a>
 
                 </li>
-                <li>
-                    <a>VentaDetalles</a>
+                <li class="seccion">
+                    <a href="Controlador?accion=Ventas">Ventas</a>
                 </li>
+                <li class="seccion">
+                    <a href="Controlador?accion=VentaDetalles">Detalle de ventas</a>
+                </li>
+
                 <li>
                     <form action="Controlador?accion=VentaDetallesS" method="POST" >
                         <input type="text" placeholder="búsqueda" name="busqueda" style="color: black;">
@@ -122,7 +126,6 @@
                             Buscar
                         </button>
                     </form>
-
                 </li>
             </ul>
         </nav>
@@ -159,7 +162,7 @@
                         <select name="txtVentas">
                             <%                                for (Ventas ve : v) {
                                     //String Ciudad = city.OneCity(cl.getIdCiudad());
-%>
+                            %>
                             <option value="<%= ve.getIdVenta()%>"><%= ve.getIdVenta()%></option>
                             <%
                                 }
@@ -270,10 +273,10 @@
                     <%    }
                         if (vD.getEstatus() == 'P') {%>
                     <td>Asesoria</td>
-                    }
-                    v = Vdao.consultarId(vD.getIdVenta());
-                    p = pRdao.consultarId(vD.getIdPresentacion());
-
+                    <% }
+                        v = Vdao.consultarId(vD.getIdVenta());
+                        p = pRdao.consultarId(vD.getIdPresentacion());
+                    %>
                     <td><%= v.get(0).getIdVenta()%></td>
                     <td><%= p.get(0).getIdPresentacion()%></td>
 
@@ -396,48 +399,48 @@
         }
     %>
             "</select>");
-                    $('#' + valor).attr('selected', 'selected').change();
+            $('#' + valor).attr('selected', 'selected').change();
 
-                    if ($(this).parents("tr").find("td")[8].innerHTML === 'Activo') {
-                        $('#ActivoA').prop("checked", true);
-                    } else {
-                        $('#InactivoA').prop("checked", true);
-                    }
-                    $('#nombre').focus();
-                    
-                    $('#' + valor).attr('selected', 'selected').change();
-                    var valor = $(this).parents("tr").find("td")[0].innerHTML;
-                    $('#idCl').val(valor);
-                    $('#idCl').hide();
-                    //console.log($('#idCl').val());
-                    $('#nombre').focus();
-                });
-                $('#txtFechaEntregaP').val(hoyFecha());
-                $('#txtFechaEntregaR').val(hoyFecha());
-                $('#Cancel').click(function () {
-                $('#divA').hide();
-                $('#divI').hide();
-                $('.boton2').show();
-                $('#btnMostrar').show();
+            if ($(this).parents("tr").find("td")[8].innerHTML === 'Activo') {
+                $('#ActivoA').prop("checked", true);
+            } else {
+                $('#InactivoA').prop("checked", true);
+            }
+            $('#nombre').focus();
+
+            $('#' + valor).attr('selected', 'selected').change();
+            var valor = $(this).parents("tr").find("td")[0].innerHTML;
+            $('#idCl').val(valor);
+            $('#idCl').hide();
+            //console.log($('#idCl').val());
+            $('#nombre').focus();
         });
-                $('#customers').DataTable({
-                    language: {
-                        processing: "Procesando...",
-                        search: "Buscar:",
-                        lengthMenu: "Mostrar _MENU_ elementos",
-                        info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
-                        infoEmpty: "No se encontraron elementos para mostrar",
-                        infoFiltered: "(Filtrado de _MAX_ elementos en total)",
-                        loadingRecords: "Cargando datos...",
-                        zeroRecords: "No se encontraron elementos para mostrar",
-                        paginate: {
-                            first: "Primer",
-                            previous: "Anterior",
-                            next: "Siguiente",
-                            last: "ultimo"
-                        }
-                    }
-                });
-            });
-        </script>  
+        $('#txtFechaEntregaP').val(hoyFecha());
+        $('#txtFechaEntregaR').val(hoyFecha());
+        $('#Cancel').click(function () {
+            $('#divA').hide();
+            $('#divI').hide();
+            $('.boton2').show();
+            $('#btnMostrar').show();
+        });
+        $('#customers').DataTable({
+            language: {
+                processing: "Procesando...",
+                search: "Buscar:",
+                lengthMenu: "Mostrar _MENU_ elementos",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
+                infoEmpty: "No se encontraron elementos para mostrar",
+                infoFiltered: "(Filtrado de _MAX_ elementos en total)",
+                loadingRecords: "Cargando datos...",
+                zeroRecords: "No se encontraron elementos para mostrar",
+                paginate: {
+                    first: "Primer",
+                    previous: "Anterior",
+                    next: "Siguiente",
+                    last: "ultimo"
+                }
+            }
+        });
+    });
+</script>  
 </html>

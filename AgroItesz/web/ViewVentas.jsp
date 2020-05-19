@@ -99,12 +99,12 @@
 
                 </li>
                 <li class="seccion">
-                    <a href="#">Ventas</a>
+                    <a href="Controlador?accion=Ventas">Ventas</a>
                 </li>
                 <li class="seccion">
-                    <a href="ViewVentaDetalles.jsp">Detalle de ventas</a>
+                    <a href="Controlador?accion=VentaDetalles">Detalle de ventas</a>
                 </li>
-                
+
                 <li>
                     <form action="Controlador?accion=VentasS" method="POST" >
                         <input type="text" placeholder="búsqueda" name="busqueda" style="color: black;">

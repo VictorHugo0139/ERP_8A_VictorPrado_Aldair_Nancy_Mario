@@ -41,7 +41,7 @@ public class VentaDetallesDAO implements CRUD {
         VentaDetalles vD = (VentaDetalles) obj;
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("insert into VentaDetalles(precioVenta,cantidad,subtotal,idVenta,idPresentacion,estatus;)\n"
+        sql = ("insert into VentasDetalle(precioVenta,cantidad,subtotal,idVenta,idPresentacion,estatus;)\n"
                 + "values (?,?,?,?,?,?)");
         try {
             ps = con.prepareStatement(sql);
@@ -64,7 +64,7 @@ public class VentaDetallesDAO implements CRUD {
     public String eliminar(int id) {
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update VentaDetalles set estatus='I' where idVentaDetalles=? ");
+        sql = ("update VentasDetalle set estatus='I' where idVentaDetalles=? ");
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -80,7 +80,7 @@ public class VentaDetallesDAO implements CRUD {
     public String reactivar(int id) {
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update VentaDetalles set estatus='A' where idVentaDetalles=? ");
+        sql = ("update VentasDetalle set estatus='A' where idVentaDetalles=? ");
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -98,7 +98,7 @@ public class VentaDetallesDAO implements CRUD {
         VentaDetalles vD = (VentaDetalles) obj;
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update VentaDetalles set precioVenta=?,cantidad=?,subtotal=?,idVenta=?,idPresentacion=?,estatus=?where idVentaDetalle=?");
+        sql = ("update VentasDetalle set precioVenta=?,cantidad=?,subtotal=?,idVenta=?,idPresentacion=?,estatus=?where idVentaDetalle=?");
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, vD.getIdVentaDetalle());
@@ -121,7 +121,7 @@ public class VentaDetallesDAO implements CRUD {
     public List<VentaDetalles> consultar() {
         List<VentaDetalles> datos = new ArrayList<>();
         con = cn.getConexion();
-        sql = ("select * from VentaDetalles");
+        sql = ("select * from VentasDetalle");
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -167,7 +167,7 @@ public class VentaDetallesDAO implements CRUD {
     public String OneBuild(int idTransport) {
         String nombre = "";
         con = cn.getConexion();
-        sql = ("select*from VentaDetalle where idVentaDetalles=?;");
+        sql = ("select*from VentasDetalle where idVentaDetalles=?;");
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, String.valueOf(idTransport));
