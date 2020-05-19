@@ -147,11 +147,7 @@
                 <label for="Activo">Activo</label>
                 <input type="radio" id="Inactivo" name="txtEstatus" value="I">
                 <label for="Inactivo">Inactivo</label>
-                &nbsp &nbsp &nbsp &nbsp
-                <input type="radio" id="Producto" name="txtTipo" value="A" required>
-                <label for="Activo">Producto</label>
-                <input type="radio" id="Opcion" name="txtTipo" value="I">
-                <label for="Inactivo">Asesoria</label>
+                
 
                 </tr>
 
@@ -296,7 +292,9 @@
                 </tr>
                 <%
                     }
+
                 %>
+                }
             </tbody>
         </table>
     </div>
