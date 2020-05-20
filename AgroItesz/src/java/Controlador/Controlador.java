@@ -14,6 +14,7 @@ import Modelo.datos.PresentacionDAO;
 import Modelo.Envios;
 import Modelo.Ventas;
 import Modelo.VentasDetalles;
+import Modelo.Tripulacion;
 import Modelo.datos.ClientesDAO;
 import Modelo.datos.CultivosDAO;
 import Modelo.datos.TransporteDAO;
@@ -24,6 +25,7 @@ import Modelo.datos.MiembrosDAO;
 import Modelo.datos.VentasDAO;
 import Modelo.datos.EnviosDAO;
 import Modelo.datos.VentasDetallesDAO;
+import Modelo.datos.TripulacionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -73,6 +75,10 @@ public class Controlador extends HttpServlet {
     EnviosDAO endao = EnviosDAO.getEnviosDAO();
     Envios en = new Envios();
     List<Envios> datosE = new ArrayList<>();
+    TripulacionDAO tripdao = TripulacionDAO.getTripulacionDAO();
+    Tripulacion trip = new Tripulacion();
+    List<Tripulacion> datosTrip = new ArrayList<>();
+    
     int r;
     String res;
 
@@ -521,6 +527,56 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosE);
                 request.getRequestDispatcher("ViewEnvios.jsp").forward(request, response);
                 break;
+            case "Tripulacion":
+                datosTrip = tripdao.consultar();
+                request.setAttribute("datosCl", datosTrip);
+                request.getRequestDispatcher("ViewTripulacion.jsp").forward(request, response);  
+            break;
+            case "TripulacionI":
+                trip = new Tripulacion(
+                Integer.parseInt(request.getParameter("txtidEmpleado")),
+                Integer.parseInt(request.getParameter("txtEnvio")),
+                request.getParameter("txtRol"),
+                request.getParameter("txtEstatus").charAt(0),
+                0);
+                res = tripdao.insertar(trip);
+                datosTrip = tripdao.consultar();
+                request.setAttribute("datosCl", datosTrip);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewTripulacion.jsp").forward(request, response);
+            break;
+            case "TripulacionU":
+                trip = new Tripulacion(
+                Integer.parseInt(request.getParameter("txtidEmpleado")),
+                Integer.parseInt(request.getParameter("txtEnvio")),
+                request.getParameter("txtRol"),
+                request.getParameter("txtEstatus").charAt(0),
+                Integer.parseInt(request.getParameter("idTrip")));
+                res = tripdao.actualizar(trip);
+                datosTrip = tripdao.consultar();
+                request.setAttribute("datosCl", datosTrip);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewTripulacion.jsp").forward(request, response);
+            break;
+            case "TripulacionD":
+                res = tripdao.eliminar(Integer.parseInt(request.getParameter("idTrip")));
+                request.setAttribute("resp", res);
+                datosTrip = tripdao.consultar();
+                request.setAttribute("datosCl", datosTrip);
+                request.getRequestDispatcher("ViewTripulacion.jsp").forward(request, response);
+            break;
+            case "TripulacionR":
+                res = tripdao.reactivar(Integer.parseInt(request.getParameter("idTrip")));
+                request.setAttribute("resp", res);
+                datosTrip = tripdao.consultar();
+                request.setAttribute("datosCl", datosTrip);
+                request.getRequestDispatcher("ViewTripulacion.jsp").forward(request, response);
+            break;
+//            case "TripulacionS":
+//                datosTrip = tripdao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
+//                request.setAttribute("datosCl", datosC);
+//                request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
+//            break;
         }
     }
 

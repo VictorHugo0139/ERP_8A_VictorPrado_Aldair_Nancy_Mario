@@ -275,6 +275,16 @@
                     </div>
                 </div>
             </a>
+                        <a href="Controlador?accion=Tripulacion" style="text-decoration: none; color: #191c19;">
+                <div class="col" >
+                    <div class="card" >
+                        <img class="card-img-top" src="Images/Tripulacion.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Tripulacion</h5>
+                        </div>
+                    </div>
+                </div>
+            </a>
         </div>
         <div class="row align-items-end">
             
