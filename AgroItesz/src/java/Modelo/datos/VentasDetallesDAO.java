@@ -98,16 +98,15 @@ public class VentasDetallesDAO implements CRUD {
         VentasDetalles vD = (VentasDetalles) obj;
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update VentasDetalle set precioVenta=?,cantidad=?,subtotal=?,idVenta=?,idPresentacion=?,estatus=?where idVentaDetalle=?");
+        sql = ("update VentasDetalle set precioVenta=?,cantidad=?,subtotal=?,idVenta=?,idPresentacion=?,estatus=? where idVentaDetalle=?");
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, vD.getIdVentaDetalle());
-            ps.setFloat(2, vD.getPrecioVenta());
-            ps.setFloat(3, vD.getCantidad());
-            ps.setFloat(4, vD.getSubtotal());
-            ps.setInt(5, +vD.getIdVenta());
-            ps.setInt(6, +vD.getIdPresentacion());
-            ps.setString(7, "" + vD.getEstatus());
+            ps.setFloat(1, vD.getPrecioVenta());
+            ps.setFloat(2, vD.getCantidad());
+            ps.setFloat(3, vD.getSubtotal());
+            ps.setInt(4, vD.getIdVenta());
+            ps.setInt(5, vD.getIdPresentacion());
+            ps.setString(6, "" + vD.getEstatus());
             int filas = ps.executeUpdate();
             respuesta = "se actualizaron " + filas + " filas";
             cn.closeConnection();
@@ -149,8 +148,8 @@ public class VentasDetallesDAO implements CRUD {
 //        String c="\'"+criterio+"\'";
 //        System.out.println(campo+" y "+criterio);
         if ("Ventas".equals(campo)) {
-          
-            sql = "select*from VentasDetalle vD join ventas v on v  vD.idVentas=v.idVentas where v.cliente like'%"+criterio+"%';";
+
+            sql = "select*from VentasDetalle vD join ventas v on v  vD.idVentas=v.idVentas where v.cliente like'%" + criterio + "%';";
             try {
                 ps = con.prepareStatement(sql);
                 rs = ps.executeQuery();
@@ -229,15 +228,15 @@ public class VentasDetallesDAO implements CRUD {
                     rs = ps.executeQuery();
                     while (rs.next()) {
                         while (rs.next()) {
-                datos.add(new VentasDetalles(rs.getInt("IdVentaDetalle"),
-                        rs.getFloat("precioVenta"),
-                        rs.getFloat("cantidad"),
-                        rs.getFloat("subtotal"),
-                        rs.getInt("IdVenta"),
-                        rs.getInt("IdPresentacion"),
-                        rs.getString("estatus").charAt(0)));
+                            datos.add(new VentasDetalles(rs.getInt("IdVentaDetalle"),
+                                    rs.getFloat("precioVenta"),
+                                    rs.getFloat("cantidad"),
+                                    rs.getFloat("subtotal"),
+                                    rs.getInt("IdVenta"),
+                                    rs.getInt("IdPresentacion"),
+                                    rs.getString("estatus").charAt(0)));
 
-            }
+                        }
                     }
                     cn.closeConnection();
                 } catch (SQLException ex) {
