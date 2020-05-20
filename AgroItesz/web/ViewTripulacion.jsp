@@ -4,6 +4,10 @@
     Author     : resid
 --%>
 
+<%@page import="Modelo.Envios"%>
+<%@page import="Modelo.datos.EnviosDAO"%>
+<%@page import="Modelo.Empleados"%>
+<%@page import="Modelo.datos.EmpleadosDAO"%>
 <%@page import="java.util.List"%>
 <%@page import="Modelo.datos.TripulacionDAO"%>
 <%@page import="Modelo.Tripulacion" %>
@@ -79,8 +83,12 @@
     <title>Ediciónn de Tripulacion</title>
 </head>
 <% //CultivosDAO dao = new CultivosDAO();
-    TripulacionDAO dao= new TripulacionDAO();
+    //TripulacionDAO dao= new TripulacionDAO();
+    EmpleadosDAO edao=EmpleadosDAO.getEmpleadosDAO();
+    EnviosDAO endao=EnviosDAO.getEnviosDAO();
     List<Tripulacion> datos = (List<Tripulacion>) request.getAttribute("datosCl");
+    List<Empleados> e = edao.consultar();
+    List<Envios> en = endao.consultar();
 %>
 <body style="background-color: #dfd7f5;">
     <header>
@@ -122,8 +130,35 @@
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="idEmpleado" name="txtidEmpleado" style="width: 90%;" required/></td>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="idEnvio" name="txtEnvio" style="width: 90%;" required /></td>
+                        
+                            <td style="width: 25%" colspan="2">
+                                <label style="color: grey;font-weight: lighter;">Empleado</label>
+                            <select name="txtidEmpleado">
+                                <%
+                                    for (Empleados em : e) {
+                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
+
+                                %>
+                                <option value="<%= em.getIdEmpleado() %>"><%=  em.getNombre() %></option>
+                                <%
+                                    }
+                                %>
+                            </select>
+                            </td>
+                            <td style="width: 25%" colspan="2">
+                                <label style="color: grey;font-weight: lighter;">Envio</label>
+                            <select name="txtEnvio">
+                                <%
+                                    for (Envios env : en) {
+                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
+
+                                %>
+                                <option value="<%= env.getIdEnvio() %>"><%= env.getFechaEntregaPlaneada()+" : "+env.getDireccion() %></option>
+                                <%
+                                    }
+                                %>
+                            </select>
+                            </td>
                         <td style="width: 25%" colspan="2"><input type="text" placeholder="rol" name="txtRol" style="width: 90%;" required /></td>
                     </tr>
                         <td><label>Estatus</label>
@@ -150,8 +185,8 @@
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td style="width: 10%" colspan="2"><input type="number" placeholder="idEmpleado" name="txtidEmpleado" id="idEmpleado" style="width: 90%;" required/></td>
-                        <td style="width: 10%" colspan="2"><input type="number" placeholder="idEnvio" name="txtEnvio" id="Envio" style="width: 90%;" required /></td>
+                        <td style="width: 25%"  id="CD"></td>
+                        <td style="width: 25%"  id="CD2"></td>
                         <td style="width: 25%" colspan="2"><input type="text" placeholder="rol" name="txtRol" id="Rol" style="width: 90%;" required /></td>
                     </tr>
                     <tr>
@@ -179,10 +214,10 @@
         <table width='100%' border='0' cellpadding='0' id='customers'>
             <thead>
                 <tr>
-                     <th id='tde' width='10%' style='border: 0;' scope='col'>idEmpleado</th>
+                    <th id='tde' width='10%' style='border: 0;' scope='col'>idTripulacion</th> 
+                    <th id='tde' width='10%' style='border: 0;' scope='col'>idEmpleado</th>
                      <th id='tde' width='10%' style='border: 0;' scope='col'>idEnvio</th>
-                     <th id='tde' width='20%' style='border: 0;' scope='col'>Rol</th>
-                     <th id='tde' width='10%' style='border: 0;' scope='col'>idTripulacion</th>
+                     <th id='tde' width='20%' style='border: 0;' scope='col'>Rol</th>                     
                      <th id='tde' width='10%' style='border: 0;' scope='col'>Estatus</th>
                      <th  width='10%' style='border: 0;' scope='col'>Acciones</th>
                 </tr>
@@ -192,12 +227,15 @@
                      int idTrip;
                //datos =  dao.consultar();
                for(Tripulacion tr : datos){
+                  e=edao.consultarId(tr.getIdEmpleado()); 
                 %>
                 <tr>
-                    <td><%= tr.getIdEmpleado()%></td>
-                    <td><%= tr.getIdEnvio()%></td>
-                    <td><%= tr.getRol()%></td>
                     <td><%= idTrip = tr.getIdTripulacion()%></td>
+                    <td><%= e.get(0).getNombre() %></td>
+                    <% en=endao.EnvioPorId(tr.getIdEnvio()); %>
+                    <td><%= en.get(0).getFechaEntregaPlaneada()+" : "+en.get(0).getDireccion() %></td>
+                    <td><%= tr.getRol()%></td>
+                    
                     <%
                         if (tr.getEstado() == 'A') {
                     %>
@@ -257,16 +295,45 @@
             }
         });
         $('.boton').click(function () {
-            var valor=$(this).parents("tr").find("td")[3].innerHTML;            
+            var valor=$(this).parents("tr").find("td")[0].innerHTML;            
             $('#idTrip').val(valor);
             $('#idTrip').hide();
             $('#btnMostrar').hide();
             $('.boton2').hide();
             $('#divI').hide();
             $('#divA').show();
-            $('#idEmpleado').val($(this).parents("tr").find("td")[0].innerHTML);
-            $('#Envio').val($(this).parents("tr").find("td")[1].innerHTML);
-            $('#Rol').val($(this).parents("tr").find("td")[2].innerHTML);
+             valor=$(this).parents("tr").find("td")[1].innerHTML;
+             $('#CD').html(" <label style='color: grey;font-weight: lighter;'>Empleado</label>"+
+                            "<select name='txtidEmpleado'>"+
+                                <%
+                                     e = edao.consultar();
+                                    for (Empleados em : e) {
+                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
+
+                                %>
+                                "<option value='<%= em.getIdEmpleado() %>' id='<%=  em.getNombre() %>'><%=  em.getNombre() %></option>"+
+                                <%
+                                    }
+                                %>
+                            "</select>");
+            $('#' + valor).attr('selected', 'selected').change();
+            valor=$(this).parents("tr").find("td")[2].innerHTML;
+            $('#CD2').html(" <label style='color: grey;font-weight: lighter;'>Envio</label>"+
+                            "<select name='txtEnvio'>"+
+                                <%
+                                    en = endao.consultar();
+                                    String a;
+                                    for (Envios env : en) {
+                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
+                                        a=env.getFechaEntregaPlaneada() + " : "+ env.getDireccion();
+                                %>
+                                "<option value='<%= env.getIdEnvio() %>' id='<%= a.replaceAll(" ", "") %>'><%= a %></option>"+
+                                <%
+                                    }
+                                %>
+                            "</select>");
+            $('#' + valor.split(' ').join('') ).attr('selected', 'selected').change();
+            $('#Rol').val($(this).parents("tr").find("td")[3].innerHTML);
                
             if ($(this).parents("tr").find("td")[4].innerHTML === 'Activo') {
                 $('#ActivoA').prop("checked", true);

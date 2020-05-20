@@ -144,6 +144,31 @@ public static EnviosDAO getEnviosDAO(){
         return datos;
     }
 
+     public List<Envios> EnvioPorId(int idEnvio) {
+        List<Envios> datos=new ArrayList<>();
+        con=cn.getConexion();
+        sql=("select * from Envios where idEnvio="+idEnvio);
+        try {
+            ps=con.prepareStatement(sql);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                datos.add(new Envios(rs.getInt("idEnvio"),
+                        rs.getDate("fechaEntregaPlaneada"),
+                        rs.getDate("fechaEntregaReal"),
+                        rs.getString("Direccion"),
+                        rs.getInt("codigoPostal"),
+                        rs.getInt("idVenta"),
+                        rs.getInt("idUnidadTransporte"),
+                        rs.getInt("idCiudad"),
+                        rs.getString("estatus").charAt(0)));
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(EnviosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return datos;
+    }
+
     @Override
     public List<?> filtrar(String campo, String criterio) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
