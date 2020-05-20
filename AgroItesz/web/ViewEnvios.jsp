@@ -211,8 +211,8 @@
             </br>
         </div>
 
-    <div style="margin-left: 180px; margin-top: 10px" id="divA">
-            <form action="Controlador?accion=EnviosU" method="POST" name="formActualizar">
+    <div style="margin-left: 180px; margin-top: 10px" id="divA" >
+            <form action="Controlador?accion=EnviosU" method="POST" name="formActualizar" onsubmit="return validar(formActualizar);">
                 <table border="0" style="width: 100%">
                     <tbody> 
                         <tr>
@@ -344,7 +344,7 @@
                     var mes2 = parseInt(formulario.txtFechaEntregaR.value.toString().substring(5, 7));
                     var dia2 = parseInt(formulario.txtFechaEntregaR.value.toString().substring(8, 10));
                     var formatoNumero = /^[^a-zA-Z.,\/\\:;_\-\^\{\[\"\!\|°¬#\$%&\(\)\=\?\'¡¿\}\]´¨\*\+\~`@]+$/;
-                    var formatoubicacion = /^[\w. ]+$/;
+                    var formatoubicacion = /^[\w.# ]+$/;
                     var t = false;
 
                     if (ano >= ano2) {
@@ -361,17 +361,17 @@
                                 return false;
                             }
                         }
-                        if (formulario.txtUbicacion.value.match(formatoubicacion))
+                        if (formulario.txtDireccion.value.match(formatoubicacion))
                         {
-                            if (formulario.txtUbicacion.value.length > 100)
+                            if (formulario.txtDireccion.value.length > 100)
                             {
                                 alert("El domicilio proporcionado es demasiado largo");
-                                formulario.txtUbicacion.focus();
+                                formulario.txtDireccion.focus();
                                 return false;
                             }
                         } else {
                             alert("La ubicación contiene algún caracter no permitido o está vacío");
-                            formulario.txtUbicacion.focus();
+                            formulario.txtDireccion.focus();
                             return false;
                         }
 
