@@ -141,7 +141,7 @@
         <button id="btnMostrarf">+</button>
         <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
         <div style="margin-left: 180px; margin-top: 10px" id="divI">
-            <form action="Controlador?accion=EnviosI" method="POST" name="formInsertar">
+            <form action="Controlador?accion=EnviosI" method="POST" name="formInsertar" onsubmit="return validar(formInsertar)">
                 <table border="0" style="width: 100%">
                     <tbody> 
                         <tr>
@@ -212,7 +212,7 @@
         </div>
 
     <div style="margin-left: 180px; margin-top: 10px" id="divA">
-            <form action="Controlador?accion=EnviosU" method="POST" name="formInsertar">
+            <form action="Controlador?accion=EnviosU" method="POST" name="formActualizar">
                 <table border="0" style="width: 100%">
                     <tbody> 
                         <tr>
@@ -332,12 +332,142 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
         <script type="text/javascript">
+                function validar(formulario) {
+                    var hoy = new Date();
+                    var dd = hoy.getDate();
+                    var mm = hoy.getMonth() + 1;
+                    var yyyy = hoy.getFullYear();
+                    var ano = parseInt(formulario.txtFechaEntregaP.value.toString().substring(0, 4));
+                    var mes = parseInt(formulario.txtFechaEntregaP.value.toString().substring(5, 7));
+                    var dia = parseInt(formulario.txtFechaEntregaP.value.toString().substring(8, 10));
+                    var ano2 = parseInt(formulario.txtFechaEntregaR.value.toString().substring(0, 4));
+                    var mes2 = parseInt(formulario.txtFechaEntregaR.value.toString().substring(5, 7));
+                    var dia2 = parseInt(formulario.txtFechaEntregaR.value.toString().substring(8, 10));
+                    var formatoNumero = /^[^a-zA-Z.,\/\\:;_\-\^\{\[\"\!\|°¬#\$%&\(\)\=\?\'¡¿\}\]´¨\*\+\~`@]+$/;
+                    var formatoubicacion = /^[\w. ]+$/;
+                    var t = false;
+
+                    if (ano >= ano2) {
+                        if (ano === ano2) {
+                            if (mes >= mes2) {
+                                if (dia < dia2) {
+                                    alert("El dia de entrega planeada debe ser mayor o igual a la fecha de entrega real");
+                                    formulario.txtFechaEntregaP.focus();
+                                    return false;
+                                }
+                            } else {
+                                alert("El mes de entrega planeada debe ser mayor o igual a la fecha de entrega real");
+                                formulario.txtFechaEntregaP.focus();
+                                return false;
+                            }
+                        }
+                        if (formulario.txtUbicacion.value.match(formatoubicacion))
+                        {
+                            if (formulario.txtUbicacion.value.length > 100)
+                            {
+                                alert("El domicilio proporcionado es demasiado largo");
+                                formulario.txtUbicacion.focus();
+                                return false;
+                            }
+                        } else {
+                            alert("La ubicación contiene algún caracter no permitido o está vacío");
+                            formulario.txtUbicacion.focus();
+                            return false;
+                        }
+
+                        if (formulario.txtCP.value.match(formatoNumero))
+                        {
+                            if (formulario.txtCP.value.length !== 5)
+                            {
+                                alert("El codigo postal se compone de 5 digitos");
+                                formulario.txtCP.focus();
+                                return false;
+                            }
+                        } else {
+                            alert("El codigo postal contiene algún caracter no permitido o está vacío");
+                            formulario.txtCP.focus();
+                            return false;
+                        }
+                        for (var i = 0; i < 2; i++)
+                        {
+                            if (formulario.txtEstatus[i].checked === true)
+                            {
+                                t = true;
+                                break;
+                            }
+                        }
+                        for (var i = 0; i < 2; i++)
+                        {
+                            if (formulario.txtEstatus[i].value !== "A" & formulario.txtEstatus[i].value !== "I") {
+                                alert("Un valor del estatus ha sido modificado por el usuario, No se enviarán los datos.");
+                                return false;
+                            }
+                        }
+
+                        if (t === false) {
+                            alert("Debes selecionar el estatus de la venta");
+                            formulario.txtEstatus.focus();
+                            return false;
+                        } else {
+                            if (isNaN(formulario.txtVenta.options[formulario.txtVenta.selectedIndex].value)) {
+                                alert("El valor asignado a la venta ha sido modificado por el usuario. No se enviará.");
+                                return false;
+                            } else {
+                                if (isNaN(formulario.txtTransporte.options[formulario.txtTransporte.selectedIndex].value)) {
+                                    alert("El valor asignado al transporte ha sido modificado por el usuario. No se enviará.");
+                                    return false;
+                                } else {
+                                    if (isNaN(formulario.txtCiudad.options[formulario.txtCiudad.selectedIndex].value)) {
+                                        alert("El valor asignado a la ciudad ha sido modificado por el usuario. No se enviará.");
+                                        return false;
+                                    } else {
+                                        alert("Datos enviados con éxito");
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        alert("El año ingresado es menor que el de la fecha de entrega");
+                        formulario.txtFechaEntregaP.focus();
+                        return false;
+                    }
+                }
+            </script>
+
+</body>
+        
+        <script type="text/javascript">
             function addZero(i) {
                 if (i < 10) {
                     i = '0' + i;
                 }
                 return i;
             }
+        </script> 
+        <script type="text/javascript">
+        function dia() {
+        var hoy = new Date();
+        var dd = hoy.getDate();
+
+        return dd;
+    }
+        </script> 
+        <script type="text/javascript">
+        function mes() {
+        var hoy = new Date();
+        var mm = hoy.getMonth() + 1;
+
+        return mm;
+    }
+        </script> 
+        <script type="text/javascript">
+        function ano() {
+        var hoy = new Date();
+        var yyyy = hoy.getFullYear();
+
+        return yyyy;
+    }
         </script> 
         <script type="text/javascript">
             function hoyFecha() {

@@ -134,7 +134,7 @@
     <button id="btnMostrarf">+</button>
     <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
-        <form action="Controlador?accion=VentaI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
+        <form action="Controlador?accion=VentaI" method="POST" name="formInsertar" onsubmit="return validar(formInsertar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
@@ -147,15 +147,20 @@
                     <tr>
                         <td colspan="2"><textarea type="text" placeholder="Comentarios" name="txtComentarios"  style="width: 91.8%; margin-top: 5px;" required></textarea></td>
                         <td>
-                            <input type="radio" id="Activo" name="txtEstatus" value="A" required>
-                            <label for="Activo">Activo</label>
-                            <input type="radio" id="Inactivo" name="txtEstatus" value="I">
-                            <label for="Inactivo">Inactivo</label>
-                            &nbsp &nbsp &nbsp &nbsp
-                            <input type="radio" id="Producto" name="txtTipo" value="A" required>
-                            <label for="Activo">Producto</label>
-                            <input type="radio" id="Opcion" name="txtTipo" value="I">
-                            <label for="Inactivo">Asesoria</label>
+                            <div>
+                                <label>&nbsp &nbsp &nbsp &nbsp Estatus</label> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp  
+                                <label>&nbsp &nbsp &nbsp &nbsp Tipo</label><br/>
+                                <input type="radio" id="Activo" name="txtEstatus" value="A" required>
+                                <label for="Activo">Activo</label>
+                                <input type="radio" id="Inactivo" name="txtEstatus" value="I">
+                                <label for="Inactivo">Inactivo</label>
+                                &nbsp &nbsp &nbsp &nbsp
+                                <input type="radio" id="Producto" name="txtTipo" value="E" required>
+                                <label for="Activo">Efectivo</label>
+                                <input type="radio" id="Opcion" name="txtTipo" value="C">
+                                <label for="Inactivo">Crédito</label> </div>
+
+
                         </td>
                         <td >
                             <label style="color: grey;font-weight: lighter;">Cliente</label>
@@ -214,7 +219,7 @@
 
     <div style="margin-left: 180px; margin-top: 10px" id="divA">
 
-        <form action="Controlador?accion=VentasU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
+        <form action="Controlador?accion=VentasU" method="POST" name="formActualizar" onsubmit="return validar(formActualizar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
@@ -227,15 +232,19 @@
                     <tr>
                         <td colspan="2"><textarea type="text" placeholder="Comentarios" name="txtComentarios" id="Comentarios" style="width: 91.8%; margin-top: 5px;" required></textarea></td>
                         <td>
-                            <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
-                            <label for="Activo">Activo</label>
-                            <input type="radio" id="InactivoA" name="txtEstatus" value="I">
-                            <label for="Inactivo">Inactivo</label>
-                            &nbsp &nbsp &nbsp &nbsp
-                            <input type="radio" id="ProductoA" name="txtTipo" value="A" required>
-                            <label for="Activo">Producto</label>
-                            <input type="radio" id="OpcionA" name="txtTipo" value="I">
-                            <label for="Inactivo">Asesoria</label>
+                            <div>
+                                <label>&nbsp &nbsp &nbsp &nbsp Estatus</label> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp  
+                                <label>&nbsp &nbsp &nbsp &nbsp Tipo</label><br/>
+                                <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
+                                <label for="Activo">Activo</label>
+                                <input type="radio" id="InactivoA" name="txtEstatus" value="I">
+                                <label for="Inactivo">Inactivo</label>
+                                &nbsp &nbsp &nbsp &nbsp
+                                <input type="radio" id="ProductoA" name="txtTipo" value="E" required>
+                                <label for="Activo">Efectivo</label>
+                                <input type="radio" id="OpcionA" name="txtTipo" value="C">
+                                <label for="Inactivo">Crédito</label> </div>
+
                         </td>
                         <td id="CD">
 
@@ -297,10 +306,10 @@
                     <%    } else {                    %>
                     <td>Inactivo</td>
                     <%    }
-                        if (v.getTipo() == 'P') { %>
-                    <td>Producto</td>
+                        if (v.getTipo() == 'E') { %>
+                    <td>Efectivo</td>
                     <%    } else {                    %>
-                    <td>Asesoria</td>
+                    <td>Crédito</td>
                     <%    }
                         c = cdao.consultarId(v.getIdCliente());
                         s = sdao.consultarId(v.getIdSucursal());
@@ -340,16 +349,170 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+    <script type="text/javascript">
+            function validar(formulario) {
+                var hoy = new Date();
+                var dd = hoy.getDate();
+                var mm = hoy.getMonth() + 1;
+                var yyyy = hoy.getFullYear();
+                var ano = parseInt(formulario.txtFecha.value.toString().substring(0, 4));
+                var mes = parseInt(formulario.txtFecha.value.toString().substring(5, 7));
+                var dia = parseInt(formulario.txtFecha.value.toString().substring(8, 10));
+                var formatoNumero = /^[^a-zA-Z,\/\\:;_\-\^\{\[\"\!\|°¬#\$%&\(\)\=\?\'¡¿\}\]´¨\*\+\~`@]+$/;
+                var t = false;
+
+                if (ano <= yyyy) {
+                    if (ano === yyyy) {
+                        if (mes <= mm) {
+                            if (dia > dd) {
+                                alert("El dia ingresado se encuentra en una fecha posterior a la actual");
+                                formulario.txtFecha.focus();
+                                return false;
+                            }
+                        } else {
+                            alert("El mes ingresado se encuentra en una fecha posterior a la actual");
+                            formulario.txtFecha.focus();
+                            return false;
+                        }
+                    }
+                    if (formulario.txtTotalPagar.value.match(formatoNumero)) {
+                        if (formulario.txtCantPagada.value.match(formatoNumero)) {
+                            if (formulario.txtTotalPagar.value <= 0) {
+                                alert("El total a pagar no puede ser menor ni igual a 0");
+                                formulario.txtTotalPagar.focus();
+                                return false;
+                            }
+                            if (formulario.txtCantPagada.value <= 0) {
+                                alert("La cantidad pagada no puede ser menor ni igual a 0. Es necesario que se reciba un pago");
+                                formulario.txtCantPagada.focus();
+                                return false;
+                            }
+                            if (formulario.txtTotalPagar.value < formulario.txtCantPagada.value) {
+                                alert("La cantidad pagada no puede ser mayor a la cantidad total a pagar.\n\
+        *Revisa los decimales");
+                                formulario.txtCantPagada.focus();
+                                return false;
+                            }
+                            if (formulario.txtComentarios.value !== "") {
+                                t = false;
+                                for (var i = 0; i < 2; i++)
+                                {
+                                    if (formulario.txtEstatus[i].checked === true)
+                                    {
+                                        t = true;
+                                        break;
+                                    }
+                                }
+                                for (var i = 0; i < 2; i++)
+                                {
+                                    if (formulario.txtEstatus[i].value !== "A" & formulario.txtEstatus[i].value !== "I") {
+                                        alert("Un valor del estatus ha sido modificado por el usuario, No se enviarán los datos.");
+                                        return false;
+                                    }
+                                }
+
+                                if (t === false) {
+                                    alert("Debes selecionar el estatus de la venta");
+                                    formulario.txtEstatus.focus();
+                                    return false;
+                                } else {
+                                    t = false;
+                                    tt = false;
+                                    for (var i = 0; i < 2; i++)
+                                    {
+                                        if (formulario.txtTipo[i].checked === true)
+                                        {
+                                            t = true;
+                                            break;
+                                        }
+                                    }
+                                    for (var i = 0; i < 2; i++)
+                                    {
+                                        if (formulario.txtTipo[i].value !== "E" & formulario.txtTipo[i].value !== "C") {
+                                            alert("Un valor del Tipo ha sido modificado por el usuario, No se enviarán los datos.");
+                                            return false;
+                                        }
+                                    }
+                                    if (t === false) {
+                                        alert("Debes selecionar el tipo de venta");
+                                        formulario.txtTipo.focus();
+                                        return false;
+                                    } else {
+                                        if (isNaN(formulario.txtCliente.options[formulario.txtCliente.selectedIndex].value)) {
+                                            alert("El valor asignado al cliente ha sido modificado por el usuario. No se enviará.");
+                                            return false;
+                                        } else {
+                                            if (isNaN(formulario.txtSucursal.options[formulario.txtSucursal.selectedIndex].value)) {
+                                                alert("El valor asignado a la sucursal ha sido modificado por el usuario. No se enviará.");
+                                                return false;
+                                            } else {
+                                                if (isNaN(formulario.txtEmpleado.options[formulario.txtEmpleado.selectedIndex].value)) {
+                                                    alert("El valor asignado al empleado ha sido modificado por el usuario. No se enviará.");
+                                                    return false;
+                                                } else {
+                                                    alert("Datos enviados con éxito");
+                                                    return true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                alert("Comenta algo que pueda ayudar a comprender la situación de la venta");
+                                formulario.txtComentarios.focus();
+                                return false;
+                            }
+                        } else {
+                            alert("El valor total a pagar debe ser numérico.");
+                            formulario.txtCantPagada.focus();
+                            return false;
+                        }
+                    } else {
+                        alert("El valor total a pagar debe ser numérico.");
+                        formulario.txtTotalPagar.focus();
+                        return false;
+                    }
+                } else {
+                    alert("El año ingresado es posterior al año actual");
+                    formulario.txtFecha.focus();
+                    return false;
+                }
+            }
+    </script>
 
 </body>
 
 <script type="text/javascript">
-            function addZero(i) {
-                if (i < 10) {
-                    i = '0' + i;
-                }
-                return i;
-            }
+    function addZero(i) {
+        if (i < 10) {
+            i = '0' + i;
+        }
+        return i;
+    }
+</script>
+<script type="text/javascript">
+    function dia() {
+        var hoy = new Date();
+        var dd = hoy.getDate();
+
+        return dd;
+    }
+</script> 
+<script type="text/javascript">
+    function mes() {
+        var hoy = new Date();
+        var mm = hoy.getMonth() + 1;
+
+        return mm;
+    }
+</script> 
+<script type="text/javascript">
+    function ano() {
+        var hoy = new Date();
+        var yyyy = hoy.getFullYear();
+
+        return yyyy;
+    }
 </script> 
 <script type="text/javascript">
     function hoyFecha() {
@@ -404,7 +567,7 @@
             } else {
                 $('#InactivoA').prop("checked", true);
             }
-            if ($(this).parents("tr").find("td")[6].innerHTML === 'Producto') {
+            if ($(this).parents("tr").find("td")[6].innerHTML === 'Efectivo') {
                 $('#ProductoA').prop("checked", true);
             } else {
                 $('#OpcionA').prop("checked", true);
