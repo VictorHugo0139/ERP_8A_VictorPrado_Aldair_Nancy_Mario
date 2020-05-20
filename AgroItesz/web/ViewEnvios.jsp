@@ -332,12 +332,104 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
         <script type="text/javascript">
+            function validar(formulario) {
+                var hoy = new Date();
+                var dd = hoy.getDate();
+                var mm = hoy.getMonth() + 1;
+                var yyyy = hoy.getFullYear();
+                var ano = parseInt(formulario.txtFechaEntregaP.value.toString().substring(0, 4));
+                var mes = parseInt(formulario.txtFechaEntregaP.value.toString().substring(5, 7));
+                var dia = parseInt(formulario.txtFechaEntregaP.value.toString().substring(8, 10));
+                var ano2 = parseInt(formulario.txtFechaEntregaR.value.toString().substring(0, 4));
+                var mes2 = parseInt(formulario.txtFechaEntregaR.value.toString().substring(5, 7));
+                var dia2 = parseInt(formulario.txtFechaEntregaR.value.toString().substring(8, 10));
+                var formatoNumero = /^[^a-zA-Z,\/\\:;_\-\^\{\[\"\!\|°¬#\$%&\(\)\=\?\'¡¿\}\]´¨\*\+\~`@]+$/;
+                var t = false;
+
+                if (ano >= ano2) {
+                    if (ano === ano2) {
+                        if (mes >= mes2) {
+                            if (dia > dia2) {
+                                alert("El dia ingresado es menor que la que se planea en la entrega");
+                                formulario.txtFecha.focus();
+                                return false;
+                            }
+                        } else {
+                            alert("El mes ingresado es menor que el que se planea en la entrega");
+                            formulario.txtFecha.focus();
+                            return false;
+                        }
+                                for (var i = 0; i < 2; i++)
+                                {
+                                    if (formulario.txtEstatus[i].value !== "A" & formulario.txtEstatus[i].value !== "I") {
+                                        alert("Un valor del estatus ha sido modificado por el usuario, No se enviarán los datos.");
+                                        return false;
+                                    }
+                                }
+
+                                if (t === false) {
+                                    alert("Debes selecionar el estatus de la venta");
+                                    formulario.txtEstatus.focus();
+                                    return false;
+                                } else {
+                                    t = false;
+                                    tt = false;
+                                    for (var i = 0; i < 2; i++)
+                                    {
+                                        if (formulario.txtTipo[i].checked === true)
+                                        {
+                                            t = true;
+                                            break;
+                                        }
+                                    }
+                                    for (var i = 0; i < 2; i++)
+                                    {
+                                        if (formulario.txtTipo[i].value !== "E" & formulario.txtTipo[i].value !== "C") {
+                                            alert("Un valor del Tipo ha sido modificado por el usuario, No se enviarán los datos.");
+                                            return false;
+                                        }
+                                    }
+                } else {
+                    alert("El año ingresado es menor que el de la fecha de entrega");
+                    formulario.txtFecha.focus();
+                    return false;
+                }
+            }
+    </script>
+
+</body>
+        
+        <script type="text/javascript">
             function addZero(i) {
                 if (i < 10) {
                     i = '0' + i;
                 }
                 return i;
             }
+        </script> 
+        <script type="text/javascript">
+        function dia() {
+        var hoy = new Date();
+        var dd = hoy.getDate();
+
+        return dd;
+    }
+        </script> 
+        <script type="text/javascript">
+        function mes() {
+        var hoy = new Date();
+        var mm = hoy.getMonth() + 1;
+
+        return mm;
+    }
+        </script> 
+        <script type="text/javascript">
+        function ano() {
+        var hoy = new Date();
+        var yyyy = hoy.getFullYear();
+
+        return yyyy;
+    }
         </script> 
         <script type="text/javascript">
             function hoyFecha() {
