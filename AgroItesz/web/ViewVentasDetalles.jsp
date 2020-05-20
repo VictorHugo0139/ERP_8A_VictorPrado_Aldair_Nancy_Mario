@@ -75,12 +75,41 @@
             }
         </style>
         <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
-        <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <a href="principal.jsp"><img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" /></a>
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>VentasDetalle</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>   
+    <script type="text/javascript" charset="utf8" 
+    src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>   
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+    <script type="text/javascript">
+  window.addEventListener("load", function() {
+        
+  formActualizar.txtprecioVenta.addEventListener("keypress", soloNumerosPunto, false);
+});
+
+//Solo permite introducir numeros.
+function soloNumerosPunto(e){
+    alert("ddssd");
+    /*   var ren = /^([0-9.]*)$/;
+    if (!ren.exec(user)) {
+        alert("Solo se permiten números y punto decimal");
+        return false;
+    }*/
+  var key = window.event ? e.which : e.keyCode;
+  if (key < 48 || key > 57) {
+    e.preventDefault();
+  }
+}
+    
+</script>
 </head>
 <%
     VentasDAO Vdao = VentasDAO.getVentasDAO();
@@ -88,9 +117,8 @@
     PresentacionDAO pRdao = PresentacionDAO.getPresentacionDAO();
     List<VentasDetalles> datos = (List<VentasDetalles>) request.getAttribute("datosCl");
     List<Ventas> v = Vdao.consultar();
+    List<VentasDetalles> lv = VDdao.consultar();
     List<Presentacion> p = pRdao.consultar();
-
-
 %>
 <body style="background-color: #dfd7f5;">
     <header>
@@ -98,7 +126,6 @@
             <ul id="U">
                 <li style="width: 50px;">
                     <a href="principal.jsp" style="width: 50px;"><img src="Images/arrow-left.png" height="70%" width="70%" alt="Regresar" /></a>
-
                 </li>
                 <li class="seccion">
                     <a href="Controlador?accion=Ventas">Ventas</a>
@@ -106,7 +133,6 @@
                 <li class="seccion">
                     <a href="Controlador?accion=VentasDetalles">Detalle de ventas</a>
                 </li>
-
                 <li>
                     <form action="Controlador?accion=VentasDetallesS" method="POST" >
                         <input type="text" placeholder="búsqueda" name="busqueda" style="color: black;">
@@ -124,39 +150,37 @@
                             <span class="glyphicon glyphicon-search"></span>
                             Buscar
                         </button>
-                    </form>
+                    </form> 
                 </li>
             </ul>
         </nav>
     </header>
     <button id="btnMostrarf">+</button>
-    <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
+    <button id="btnMostrar">
+        <span  class="glyphicon glyphicon-plus-sign"></span>
+    </button>
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
-        <form action="Controlador?accion=VentasDetallesI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
+        <form action="Controlador?accion=VentasDetallesI" method="POST" name="formInsertar" onsubmit="return ValidarDetalles(formInsertar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="precio de venta" name="txtPrecioVenta" style="width: 90%;" required/></td>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Cantidad" name="txtCantidad" style="width: 90%;" required /></td>
-                        <td style="width: 25%"><input type="text" placeholder="subtotal" name="txtSubtotal" style="width: 90%;" required/></td>
+                        <td style="width: 25%"><input type="text" placeholder="precio de venta"  id="txtPrecioVenta" name="txtPrecioVenta" style="width: 90%;" required maxlength="10"/></td>
+                        <td style="width: 25%"><input type="text" placeholder="Cantidad" id="txtCantidad" name="txtCantidad" style="width: 90%;" required maxlength="10" /></td>
+                        <td style="width: 25%"><input type="text" placeholder="subtotal" id="txtSubtotal" name="txtSubtotal" style="width: 90%;" required maxlength="10"/></td>
                     </tr>
-
+                    <td>
+                        <input type="radio" id="Activo" name="txtEstatus" value="A" required>
+                        <label for="Activo">Activo</label>
+                        <input type="radio" id="Inactivo" name="txtEstatus" value="I">
+                        <label for="Inactivo">Inactivo</label>
+                    </td>
                     <tr>
-                <input type="radio" id="Activo" name="txtEstatus" value="A" required>
-                <label for="Activo">Activo</label>
-                <input type="radio" id="Inactivo" name="txtEstatus" value="I">
-                <label for="Inactivo">Inactivo</label>
-                
-
-                </tr>
-
-                <tr>                     
                     <td colspan="3"></td>
                     <td colspan="2">
-                        <label style="color: grey;font-weight: lighter; width: 13%;">Ventas</label>
+                        <label style="color: grey;font-weight: lighter;">ventas</label>
                         <select name="txtVentas">
-                            <%                                for (Ventas ve : v) {
-                                    //String Ciudad = city.OneCity(cl.getIdCiudad());
+                            <% 
+                                for (Ventas ve : v) {
                             %>
                             <option value="<%= ve.getIdVenta()%>"><%= ve.getIdVenta()%></option>
                             <%
@@ -168,7 +192,6 @@
                         <select name="txtPresentacion">
                             <%
                                 for (Presentacion pr : p) {
-                                    //String Ciudad = city.OneCity(cl.getIdCiudad());
 
                             %>
                             <option value="<%= pr.getIdPresentacion()%>"><%= pr.getIdPresentacion()%></option>
@@ -176,149 +199,115 @@
                                 }
                             %>
                         </select>
-
                     </td>
                 </tr>
                 </tbody>
             </table>
-
-           <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
+            <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
                 Agregar
-          </button>
+            </button>
         </form>
-
     </div>
-
-
     <div style="margin-left: 180px; margin-top: 10px" id="divA">
-
         <form action="Controlador?accion=VentasDeetallesU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
-            <table border="0" style="width: 100%">
+                <table border="0" style="width: 100%">
+                    <tbody>
+                        <tr>
+                            <td style="width: 25%"><input type="number" name="txtprecioVenta" id="precioVenta" style="width: 90%;" required/></td>
+                            <td style="width: 25%"><input type="number" placeholder="cantidad" name="txtcantidad" id="cantidad" step="0.01" style="width: 90%;" required /></td>
+                            <td style="width: 25%"><input type="number" placeholder="suntotal" name="txtsubtotal" id="suntotal" style="width: 90%;" step="0.01" required/></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
+                                <label for="Activo">Activo</label>
+                                <input type="radio" id="InactivoA" name="txtEstatus" value="I">
+                                <label for="Inactivo">Inactivo</label>
+                            </td>
+                            <td id="CD">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <input type="number" name="idCl" id="idCl"/>
+                            </td>
+                            <td id="CD2" colspan="2">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                    <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
+                        Actualizar
+                    </button>
+                    <button type="button" id="Cancel" style="width: 20%; background-color: #fc1919; color: #fff; font-weight: bold; border-radius: 0.33em;">
+                        Cancelar
+                    </button>
+        </form>
+        <br/>
+    </div>
+    <div id="Contenedor">
+            <table width='100%' border='0' cellpadding='0' id='customers'>
+                <thead>
+                    <tr>
+                        <th  width='1%' style='border: 0;' scope='col'>#VentaDetalle</th>
+                        <th  width='10%' style='border: 0;' scope='col'>pecioVenta</th>
+                        <th  width='10%' style='border: 0;' scope='col'>cantidad</th>
+                        <th  width='10%' style='border: 0;' scope='col'>subtotal</th>
+                        <th  width='25%' style='border: 0;' scope='col'>Estatus</th>
+                        <th  width='10%' style='border: 0;' scope='col'>Venta</th>
+                        <th  width='10%' style='border: 0;' scope='col'>Presentacion</th>
+                    </tr>
+                </thead>
                 <tbody>
+                    <%
+                        int idc;
+                        //datos = dao.consultar();
+                        for (VentasDetalles vD : datos) {
+                    %>
                     <tr>
-
-                        <td style="width: 25%"><input type="number" name="txtFecha" id="precioVenta" style="width: 90%;" required/></td>
-                        <td style="width: 25%"><input type="number" placeholder="cantidad" name="txtcantidad" id="cantidad" step="0.01" style="width: 90%;" required /></td>
-                        <td style="width: 25%"><input type="number" placeholder="suntotal" name="txtsubtotal" id="suntotal" style="width: 90%;" step="0.01" required/></td>
-
+                        <td><%= idc = vD.getIdVentaDetalle()%></td>
+                        <td><%= vD.getPrecioVenta()%></td>
+                        <td><%= vD.getCantidad()%></td>
+                        <td><%= vD.getSubtotal()%></td>                      
+                        <%if (vD.getEstatus() == 'A') { %>
+                        <td>Activo</td>
+                        <% } else if (vD.getEstatus() == 'I') { 
+                        %>
+                        <td>Inactivo</td>
+                        <% }
+                            //v = Vdao.consultarId(vD.getIdVenta());
+                            ///lv = VDdao.consultarId(vD.getIdVenta());
+                            p = pRdao.consultarId(vD.getIdPresentacion());
+                       //lv.get(0).getIdVenta()
+                        %>
+                        <td><%= vD.getIdVenta()%></td>
+                        <td><%= p.get(0).getIdPresentacion()%></td>
                     </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
-                            <label for="Activo">Activo</label>
-                            <input type="radio" id="InactivoA" name="txtEstatus" value="I">
-                            <label for="Inactivo">Inactivo</label>
-
-                        </td>
-                        <td id="CD">
-
-                        </td>
-                    </tr>
-                    <tr>
-
-                        <td colspan="3">
-                            <input type="number" name="idCl" id="idCl"/>
-                        </td>
-                        <td id="CD2" colspan="2">
-
-                        </td>
-                    </tr>
+                    <%
+                        }//fin for
+                    %>
                 </tbody>
             </table>
-
-            <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
-                Actualizar
-            </button>
-            <button type="button" id="Cancel" style="width: 20%; background-color: #fc1919; color: #fff; font-weight: bold; border-radius: 0.33em;">
-                Cancelar
-            </button>
-        </form>
-        </br>
-
-    </div>
-    <div>
-        <table width='100%' border='0' cellpadding='0' id='customers'>
-            <thead>
-                <tr>
-                    <th  width='1%' style='border: 0;' scope='col'>#VentaDetalle</th>
-                    <th  width='10%' style='border: 0;' scope='col'>pecioVenta</th>
-                    <th  width='10%' style='border: 0;' scope='col'>cantidad</th>
-                    <th  width='10%' style='border: 0;' scope='col'>subtotal</th>
-                    <th  width='10%' style='border: 0;' scope='col'>Estatus</th>
-                    <th  width='10%' style='border: 0;' scope='col'>Venta</th>
-                    <th  width='10%' style='border: 0;' scope='col'>Presentacion</th>
-                </tr>
-            </thead>
-            <tbody>
-                <%
-                    int idc;
-                    //datos = dao.consultar();
-                    for (VentasDetalles vD : datos) {
-                %>
-                <tr>
-                    <td><%= idc = vD.getIdVentaDetalle()%></td>
-                    <td><%= vD.getCantidad()%></td>
-                    <td><%= vD.getSubtotal()%></td>
-                    <td><%= vD.getIdVenta()%></td>
-                    <td><%= vD.getIdPresentacion()%></td>
-                    <%if (vD.getEstatus() == 'A') { %>
-                    <td>Activo</td>
-                    <%    } else {                    %>
-                    <td>Inactivo</td>
-                    <%    }
-                        if (vD.getEstatus() == 'P') {%>
-                    <td>Asesoria</td>
-                    <% }
-                        v = Vdao.consultarId(vD.getIdVenta());
-                        p = pRdao.consultarId(vD.getIdPresentacion());
-                    %>
-                    <td><%= v.get(0).getIdVenta()%></td>
-                    <td><%= p.get(0).getIdPresentacion()%></td>
-
-                    <%if (vD.getEstatus() == 'A') {%>
-                    <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                        <form action="Controlador?accion=VentasDetallesD&id=<%= idc%>" method="POST">
-                            <button type="submit" value='<%= idc%>' name="idc" class="boton2">
-                                <span  class='glyphicon glyphicon-ban-circle'></span></button>
-                        </form></td>
-                        <%    } else {%>
-                    <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                        <form action="Controlador?accion=VentasDetallesR&id=<%= idc%>" method="POST">
-                            <button type="submit" value='<%= idc%>' name="idc" class="boton2">
-                                <span  class='glyphicon glyphicon-ok-circle'></span></button>
-                        </form></td>
-                        <%    }%>   
-                </tr>
-                <%
-                    }
-
-                %>
-                }
-            </tbody>
-        </table>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>   
-    <script type="text/javascript" charset="utf8" 
-    src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>   
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-
+        </div>       
 </body>
 
+
 <script type="text/javascript">
-            function addZero(i) {
-                if (i < 10) {
-                    i = '0' + i;
-                }
-                return i;
-            }
+    
+    /* function ValidarDetalles(formulario)
+    {
+         if (formulario.txtPrecioVenta.value === "" )
+        {
+        alert("Todos los campos son obligatorios.");
+        return false;
+        }
+    }*/
+    function addZero(i) {
+        if (i < 10) {
+            i = '0' + i;
+        }
+        return i;
+    }
 </script> 
 <script type="text/javascript">
     function hoyFecha() {

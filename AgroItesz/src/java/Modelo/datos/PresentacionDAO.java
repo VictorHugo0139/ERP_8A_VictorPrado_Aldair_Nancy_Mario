@@ -61,7 +61,7 @@ public class PresentacionDAO implements CRUD {
     public List<Presentacion> consultar() {
         List<Presentacion > datos = new ArrayList<>();
         con = cn.getConexion();
-        sql = ("select * from ´Presentacion");
+        sql = ("select * from PresentacionesProductos;");
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -92,7 +92,7 @@ public class PresentacionDAO implements CRUD {
         public List<Presentacion> consultarId(int id) {
         List<Presentacion> datos = new ArrayList<>();
         con = cn.getConexion();
-        sql = ("select * from Sucursales where idSucursal=" + id);
+        sql = ("select * from PresentacionesProductos where idPresentacion=" + id);
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();

@@ -266,6 +266,27 @@ sql = "select*from clientes c join ciudades ci on c.idCiudad=ci.idCiudad where c
         return datos;
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public List<Clientes> consultarId(int id) {
         List<Clientes> datos = new ArrayList<>();
         con = cn.getConexion();

@@ -367,6 +367,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+      
         $('#divI').hide();
         $('#divA').hide();
         $('#btnMostrarf').hide();
@@ -386,6 +387,7 @@
                 $('#btnMostrar').html("<span  class='glyphicon glyphicon-minus-sign'></span>");
             }
         });
+        
         $('.boton').click(function () {
 
             //valores obtendra el dato del td por posciones [0]
