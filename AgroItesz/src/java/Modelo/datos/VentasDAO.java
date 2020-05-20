@@ -179,21 +179,30 @@ public class VentasDAO implements CRUD{
         return datos;
     }
     
-    public String OneBuild(int idTransport) {
-        String nombre="";
-        con=cn.getConexion();
-        sql=("select*from Ventas where idVenta=?;");
+    public List<Ventas> OneBuild(int idTransport) {
+        
+        List<Ventas> datos = new ArrayList<>();
+        con = cn.getConexion();
+        sql=("select*from Ventas where idVenta="+idTransport);
         try {
-            ps=con.prepareStatement(sql);
-            ps.setString(1, String.valueOf(idTransport));
-            rs=ps.executeQuery();
-            while(rs.next()){
-                nombre=rs.getString("idVenta");
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                datos.add(new Ventas(rs.getInt("idVenta"),
+                        rs.getDate("fecha"),
+                        rs.getFloat("totalPagar"),
+                        rs.getFloat("CantPagada"),
+                        rs.getString("comentarios"),
+                        rs.getString("estatus").charAt(0),
+                        rs.getString("tipo").charAt(0),
+                        rs.getInt("idCliente"),
+                        rs.getInt("idSucursal"),
+                        rs.getInt("idEmpleado")));
             }
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(VentasDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return nombre;
+        return datos;
     }
 }

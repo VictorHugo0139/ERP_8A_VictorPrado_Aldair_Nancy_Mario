@@ -1,3 +1,5 @@
+<%@page import="Modelo.datos.ClientesDAO"%>
+<%@page import="Modelo.Clientes"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="Modelo.datos.TransporteDAO" %>
 <%@page import="Modelo.datos.VentasDAO" %>
@@ -91,9 +93,11 @@
         <title>Edicion de Envios</title>
     </head>
     <%  TransporteDAO transport = TransporteDAO.getTransporteDAO();
+    ClientesDAO cl=ClientesDAO.getClientesDAO();
         CiudadesDAO city = CiudadesDAO.getCiudadesDAO();
         VentasDAO build = VentasDAO.getVentasDAO();
         List<Envios> datos = (List<Envios>) request.getAttribute("datosCl");
+        List<Clientes> datosCl = cl.consultar();
         List<Transporte> datosTr = transport.consultar();
         List<Ciudades> datosCiu = city.consultar();
         List<Ventas> datosVen = build.consultar();
@@ -159,7 +163,7 @@
                                             //String Ciudad = city.OneCity(cl.getIdCiudad());
 
                                     %>
-                                    <option value="<%= ve.getIdVenta()%>"><%= ve.getIdVenta()%></option>
+                                    <option value="<%= ve.getIdVenta()%>"><%= ve.getIdVenta() +" : "+ cl.consultarId(ve.getIdCliente()).get(0).getNombre() +" "+ve.getFecha() %></option>
                                     <%
                                         }
                                     %>
@@ -171,10 +175,10 @@
                                     <%
                                         for (Transporte tr : datosTr) {
                                             //String Ciudad = city.OneCity(cl.getIdCiudad());
-                                            System.out.println(tr.getIdTransporte());
-                                            System.out.println(", " + tr.getModelo());
+                                            //System.out.println(tr.getIdTransporte());
+                                            //System.out.println(", " + tr.getModelo());
                                     %>
-                                    <option value="<%= tr.getIdTransporte()%>"><%= tr.getModelo()%></option>
+                                    <option value="<%= tr.getIdTransporte()%>"><%= tr.getModelo() +" "+ tr.getMarca() +" "+tr.getPlacas() %></option>
                                     <%
                                         }
                                     %>
@@ -273,8 +277,10 @@
                 <tbody>
                     <%
                         int ido;
+                        int contador=-1;
                         //datos = dao.consultar();
                         for (Envios en : datos) {
+                            contador++;
                     %>
                 <tr>
                 <td><%= ido = en.getIdEnvio()%></td>
@@ -283,13 +289,15 @@
                 <td><%= en.getDireccion()%></td>
                 <td><%= en.getCodigoPostal()%></td>
                 <%
-                    String Venta = build.OneBuild(en.getIdVenta());
+                    datosVen = build.OneBuild(en.getIdVenta());
+                String vv=datosVen.get(0).getIdVenta() +" : "+ cl.consultarId(datosVen.get(0).getIdCliente()).get(0).getNombre() +" "+datosVen.get(0).getFecha();
                 %>
-                <td><%=Venta%></td>
+                <td><%= vv %></td>
                 <%
-                    String Transporte = transport.OneTransport(en.getIdTransporte());
+                    datosTr = transport.OneTransport(en.getIdTransporte());
+                    String tt=datosTr.get(0).getModelo() +" "+ datosTr.get(0).getMarca() +" "+datosTr.get(0).getPlacas();
                 %>
-                <td><%=Transporte%></td>
+                <td><%= tt %></td>
                 <%
                     String Ciudad = city.OneCity(en.getIdCiudad());
                 %>
@@ -520,29 +528,34 @@
                     $('#CD').html("<label style='color: grey;font-weight: lighter;'>Venta:</label>" +
                             "<select name='txtVenta'>" +
             <%  
+                datosVen = build.consultar();
+                String a;
                 for (Ventas ve : datosVen) {
+                     a=ve.getIdVenta() +" : "+ cl.consultarId(ve.getIdCliente()).get(0).getNombre() +" "+ve.getFecha();
             %>
-                    "<option value='<%= ve.getIdVenta()%>' id='<%= ve.getIdVenta() %>'><%= ve.getIdVenta()%></option>" +
+                    "<option value='<%= ve.getIdVenta()%>' id='<%= a.replaceAll(" ", "") %>'><%= a %></option>" +
             <%
 
                 }
             %>
                     "</select>");
-                    $('#' + valor).attr('selected', 'selected').change();
+                    $('#' + valor.split(' ').join('')).attr('selected', 'selected').change();
 
                     var valor = $(this).parents("tr").find("td")[6].innerHTML;
                     $('#CD2').html("<label style='color: grey;font-weight: lighter;'>Transporte:</label>" +
                             "<select name='txtTransporte'>"+
             <%
+                datosTr = transport.consultar();
                 for (Transporte tr : datosTr) {
+                    a= tr.getModelo() +" "+ tr.getMarca() +" "+tr.getPlacas();
             %>
-                    "<option value='<%= tr.getIdTransporte()%>' id='<%= tr.getModelo()%>'><%= tr.getModelo()%></option>" +
+                    "<option value='<%= tr.getIdTransporte()%>' id='<%= a.replaceAll(" ", "") %>'><%= a%></option>" +
             <%
                 }
             %>
                     "</select>"
                     );
-                    $('#' + valor).attr('selected', 'selected').change();
+                    $('#' + valor.split(' ').join('')).attr('selected', 'selected').change();
                     var valor = $(this).parents("tr").find("td")[7].innerHTML;
                     $('#CD3').html("<label style='color: grey;font-weight: lighter;'>Ciudad:</label>" +
                             "<select name='txtCiudad' id='Ciudad'>" +

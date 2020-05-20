@@ -144,22 +144,30 @@ private static TransporteDAO trdao;
         return datos;
     }
     
-    public String OneTransport(int idTransport) {
-        String nombre="";
+    public List<Transporte> OneTransport(int idTransport) {
+        
+        List<Transporte> datos=new ArrayList<>();
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
         con=cn.getConexion();
-        sql=("select*from UnidadesTransporte where idUnidadTransporte=?;");
+        sql=("select*from UnidadesTransporte where idUnidadTransporte="+idTransport);
         try {
             ps=con.prepareStatement(sql);
-            ps.setString(1, String.valueOf(idTransport));
             rs=ps.executeQuery();
             while(rs.next()){
-                nombre=rs.getString("Modelo");
+                datos.add(new Transporte(rs.getInt("idUnidadTransporte"),
+                        rs.getString("placas"),
+                        rs.getString("marca"),
+                        rs.getString("modelo"),
+                        rs.getInt("anio"),
+                        rs.getInt("capacidad"),
+                        rs.getString("estatus").charAt(0)));
             }
             cn.closeConnection();
         } catch (SQLException ex) {
             Logger.getLogger(TransporteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return nombre;
+        return datos;
     }
 
     @Override
