@@ -294,14 +294,14 @@ function soloNumerosPunto(e){
 
 <script type="text/javascript">
     
-    /* function ValidarDetalles(formulario)
-    {
+    function ValidarDetalles(formulario)
+    {/*
          if (formulario.txtPrecioVenta.value === "" )
         {
         alert("Todos los campos son obligatorios.");
         return false;
-        }
-    }*/
+        }*/
+    }
     function addZero(i) {
         if (i < 10) {
             i = '0' + i;

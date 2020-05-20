@@ -64,7 +64,7 @@ public class VentasDetallesDAO implements CRUD {
     public String eliminar(int id) {
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update VentasDetalle set estatus='I' where idVentaDetalles=? ");
+        sql = ("update VentasDetalle set estatus='I' where idVentaDetalle=? ");
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -80,7 +80,7 @@ public class VentasDetallesDAO implements CRUD {
     public String reactivar(int id) {
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update VentasDetalle set estatus='A' where idVentaDetalles=? ");
+        sql = ("update VentasDetalle set estatus='A' where idVentaDetalle=? ");
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);

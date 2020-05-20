@@ -487,7 +487,7 @@ public class Controlador extends HttpServlet {
                 //datosVD = (List<VentasDetalles>) VDdao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
                         
                 datosVD = VDdao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
-                request.setAttribute("datosVD", datosVD);
+                request.setAttribute("datosCl", datosVD);
                 request.getRequestDispatcher("ViewVentasDetalles").forward(request, response);
                 break;
                 
