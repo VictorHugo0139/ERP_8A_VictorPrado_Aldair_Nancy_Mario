@@ -134,7 +134,7 @@
     <button id="btnMostrarf">+</button>
     <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
-        <form action="Controlador?accion=VentaI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
+        <form action="Controlador?accion=VentaI" method="POST" name="formInsertar" onsubmit="return validar(formInsertar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
@@ -219,7 +219,7 @@
 
     <div style="margin-left: 180px; margin-top: 10px" id="divA">
 
-        <form action="Controlador?accion=VentasU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
+        <form action="Controlador?accion=VentasU" method="POST" name="formActualizar" onsubmit="return validar(formActualizar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
@@ -232,15 +232,19 @@
                     <tr>
                         <td colspan="2"><textarea type="text" placeholder="Comentarios" name="txtComentarios" id="Comentarios" style="width: 91.8%; margin-top: 5px;" required></textarea></td>
                         <td>
-                            <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
-                            <label for="Activo">Activo</label>
-                            <input type="radio" id="InactivoA" name="txtEstatus" value="I">
-                            <label for="Inactivo">Inactivo</label>
-                            &nbsp &nbsp &nbsp &nbsp
-                            <input type="radio" id="ProductoA" name="txtTipo" value="E" required>
-                            <label for="Activo">Efectivo</label>
-                            <input type="radio" id="OpcionA" name="txtTipo" value="C">
-                            <label for="Inactivo">Crédito</label>
+                            <div>
+                                <label>&nbsp &nbsp &nbsp &nbsp Estatus</label> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp  
+                                <label>&nbsp &nbsp &nbsp &nbsp Tipo</label><br/>
+                                <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
+                                <label for="Activo">Activo</label>
+                                <input type="radio" id="InactivoA" name="txtEstatus" value="I">
+                                <label for="Inactivo">Inactivo</label>
+                                &nbsp &nbsp &nbsp &nbsp
+                                <input type="radio" id="ProductoA" name="txtTipo" value="E" required>
+                                <label for="Activo">Efectivo</label>
+                                <input type="radio" id="OpcionA" name="txtTipo" value="C">
+                                <label for="Inactivo">Crédito</label> </div>
+
                         </td>
                         <td id="CD">
 
@@ -351,28 +355,44 @@
                 var dd = hoy.getDate();
                 var mm = hoy.getMonth() + 1;
                 var yyyy = hoy.getFullYear();
-                var ano = parseInt(formulario.txtF.value.toString().substring(0, 4));
-                var mes = parseInt(formulario.txtF.value.toString().substring(5, 7));
-                var dia = parseInt(formulario.txtF.value.toString().substring(8, 10));
-                var formatoNumero = /^[^a-zA-Z.,\/\\:;_\-\^\{\[\"\!\|°¬#\$%&\(\)\=\?\'¡¿\}\]´¨\*\+\~`@]+$/;
-                var t=false;
-                
+                var ano = parseInt(formulario.txtFecha.value.toString().substring(0, 4));
+                var mes = parseInt(formulario.txtFecha.value.toString().substring(5, 7));
+                var dia = parseInt(formulario.txtFecha.value.toString().substring(8, 10));
+                var formatoNumero = /^[^a-zA-Z,\/\\:;_\-\^\{\[\"\!\|°¬#\$%&\(\)\=\?\'¡¿\}\]´¨\*\+\~`@]+$/;
+                var t = false;
+
                 if (ano <= yyyy) {
                     if (ano === yyyy) {
                         if (mes <= mm) {
                             if (dia > dd) {
                                 alert("El dia ingresado se encuentra en una fecha posterior a la actual");
-                                formulario.txtF.focus();
+                                formulario.txtFecha.focus();
                                 return false;
                             }
                         } else {
                             alert("El mes ingresado se encuentra en una fecha posterior a la actual");
-                            formulario.txtF.focus();
+                            formulario.txtFecha.focus();
                             return false;
                         }
                     }
                     if (formulario.txtTotalPagar.value.match(formatoNumero)) {
                         if (formulario.txtCantPagada.value.match(formatoNumero)) {
+                            if (formulario.txtTotalPagar.value <= 0) {
+                                alert("El total a pagar no puede ser menor ni igual a 0");
+                                formulario.txtTotalPagar.focus();
+                                return false;
+                            }
+                            if (formulario.txtCantPagada.value <= 0) {
+                                alert("La cantidad pagada no puede ser menor ni igual a 0. Es necesario que se reciba un pago");
+                                formulario.txtCantPagada.focus();
+                                return false;
+                            }
+                            if (formulario.txtTotalPagar.value < formulario.txtCantPagada.value) {
+                                alert("La cantidad pagada no puede ser mayor a la cantidad total a pagar.\n\
+        *Revisa los decimales");
+                                formulario.txtCantPagada.focus();
+                                return false;
+                            }
                             if (formulario.txtComentarios.value !== "") {
                                 t = false;
                                 for (var i = 0; i < 2; i++)
@@ -385,19 +405,19 @@
                                 }
                                 for (var i = 0; i < 2; i++)
                                 {
-                                    if(formulario.txtEstatus[i].value !== "A" & formulario.txtEstatus[i].value !== "I"){
-                                       alert("Un valor del estatus ha sido modificado por el usuario, No se enviarán los datos.");
-                                       return false;
+                                    if (formulario.txtEstatus[i].value !== "A" & formulario.txtEstatus[i].value !== "I") {
+                                        alert("Un valor del estatus ha sido modificado por el usuario, No se enviarán los datos.");
+                                        return false;
                                     }
                                 }
-                                
+
                                 if (t === false) {
                                     alert("Debes selecionar el estatus de la venta");
-                                    formulario.txtEstatus[0].focus();
+                                    formulario.txtEstatus.focus();
                                     return false;
                                 } else {
                                     t = false;
-                                    tt=false;
+                                    tt = false;
                                     for (var i = 0; i < 2; i++)
                                     {
                                         if (formulario.txtTipo[i].checked === true)
@@ -407,12 +427,12 @@
                                         }
                                     }
                                     for (var i = 0; i < 2; i++)
-                                {
-                                    if(formulario.txtTipo[i].value !== "E" & formulario.txtTipo[i].value !== "C"){
-                                       alert("Un valor del Tipo ha sido modificado por el usuario, No se enviarán los datos.");
-                                       return false;
+                                    {
+                                        if (formulario.txtTipo[i].value !== "E" & formulario.txtTipo[i].value !== "C") {
+                                            alert("Un valor del Tipo ha sido modificado por el usuario, No se enviarán los datos.");
+                                            return false;
+                                        }
                                     }
-                                }
                                     if (t === false) {
                                         alert("Debes selecionar el tipo de venta");
                                         formulario.txtTipo.focus();
@@ -454,12 +474,12 @@
                     }
                 } else {
                     alert("El año ingresado es posterior al año actual");
-                    formulario.txtF.focus();
+                    formulario.txtFecha.focus();
                     return false;
                 }
             }
     </script>
-    <button onclick="validar(formInsertar)">
+
 </body>
 
 <script type="text/javascript">
