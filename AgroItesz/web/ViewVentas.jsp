@@ -253,7 +253,7 @@
                     <tr>
 
                         <td colspan="3">
-                            <input type="number" name="idCl" id="idCl"/>
+                            <input type="hidden" name="idCl" id="idCl"/>
                         </td>
                         <td id="CD2" colspan="2">
 

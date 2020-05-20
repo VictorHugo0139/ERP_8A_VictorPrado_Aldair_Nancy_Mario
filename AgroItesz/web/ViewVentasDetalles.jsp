@@ -222,9 +222,10 @@ function soloNumerosPunto(e){
                                 <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
                                 <label for="Activo">Activo</label>
                                 <input type="radio" id="InactivoA" name="txtEstatus" value="I">
-                                <label for="Inactivo">Inactivo</label>
+                                <label for="Inactivo">Inactivo</label><input type="hidden" name="idCl" id="idCl"/>
                             </td>
                             <td id="CD">
+                                
                             </td>
                         </tr>
                         <tr>
@@ -358,15 +359,19 @@ function soloNumerosPunto(e){
             }
         });
         $('.boton').click(function () {
-
+ alert($(this).parents("tr").find("td")[0].innerHTML);
+ var valor = $(this).parents("tr").find("td")[0].innerHTML;
+           
+            $('#idCl').val(valor);
+            $('#idCl').hide();
             //valores obtendra el dato del td por posciones [0]
             $('#btnMostrar').hide();
             $('.boton2').hide();
             $('#divI').hide();
             $('#divA').show();
             $('#precioVenta').val($(this).parents("tr").find("td")[1].innerHTML);
-            $('#CantPagada').val($(this).parents("tr").find("td")[2].innerHTML);
-            $('#subtotal').val($(this).parents("tr").find("td")[3].innerHTML);
+            $('#cantidad').val($(this).parents("tr").find("td")[2].innerHTML);
+            $('#suntotal').val($(this).parents("tr").find("td")[3].innerHTML);
             if ($(this).parents("tr").find("td")[4].innerHTML === 'Activo') {
                 $('#ActivoA').prop("checked", true);
             } else {
@@ -386,6 +391,7 @@ function soloNumerosPunto(e){
         }
     %>
             "</select>");
+            
             $('#CD2').append("<label style='color: grey;font-weight: lighter;'>Presentacion</label>" +
                     "<select name='txtPresentacion'>" +
     <%
@@ -408,9 +414,7 @@ function soloNumerosPunto(e){
             $('#nombre').focus();
 
             $('#' + valor).attr('selected', 'selected').change();
-            var valor = $(this).parents("tr").find("td")[0].innerHTML;
-            $('#idCl').val(valor);
-            $('#idCl').hide();
+            
             //console.log($('#idCl').val());
             $('#nombre').focus();
         });

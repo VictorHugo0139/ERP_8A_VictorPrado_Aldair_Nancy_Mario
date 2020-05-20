@@ -107,6 +107,7 @@ public class VentasDetallesDAO implements CRUD {
             ps.setInt(4, vD.getIdVenta());
             ps.setInt(5, vD.getIdPresentacion());
             ps.setString(6, "" + vD.getEstatus());
+            ps.setInt(7, vD.getIdVentaDetalle());
             int filas = ps.executeUpdate();
             respuesta = "se actualizaron " + filas + " filas";
             cn.closeConnection();
