@@ -538,7 +538,7 @@ public class Controlador extends HttpServlet {
                 Integer.parseInt(request.getParameter("txtEnvio")),
                 request.getParameter("txtRol"),
                 request.getParameter("txtEstatus").charAt(0),
-                0);
+                Integer.parseInt(request.getParameter("idTrip")));
                 res = tripdao.insertar(trip);
                 datosTrip = tripdao.consultar();
                 request.setAttribute("datosCl", datosTrip);
