@@ -40,6 +40,7 @@ public class TripulacionDAO implements CRUD {
     }
     
     
+    @Override
     public String insertar(Object obj) {
         Tripulacion trip=(Tripulacion) obj;
         String respuesta="";
@@ -63,6 +64,7 @@ public class TripulacionDAO implements CRUD {
         return respuesta;
     }
 
+    @Override
      public String eliminar(int id) {
         String respuesta = "";
         con = cn.getConexion();
@@ -95,12 +97,14 @@ public class TripulacionDAO implements CRUD {
         return respuesta;
     }
 
+    @Override
     public String actualizar(Object obj) {
        Tripulacion trip=(Tripulacion) obj;
         String respuesta = "";
         con = cn.getConexion();
         sql = ("update Tripulacion set idEmpleado=?, idEnvio=?, rol=?, estatus=? where idTripulacion=? ");
         try {
+            ps = con.prepareStatement(sql);
             ps.setInt(1, trip.getIdEmpleado());
             ps.setInt(2, trip.getIdEnvio());
             ps.setString(3, trip.getRol() );
@@ -115,6 +119,7 @@ public class TripulacionDAO implements CRUD {
         return respuesta;
     }
 
+    @Override
     public List<Tripulacion> consultar() {
         List<Tripulacion> datos=new ArrayList<>();
         cn.setUserName(UsuariosDAO.name);
@@ -138,6 +143,7 @@ public class TripulacionDAO implements CRUD {
         return datos;
     }
 
+    @Override
     public List<?> filtrar(String campo, String criterio) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }  

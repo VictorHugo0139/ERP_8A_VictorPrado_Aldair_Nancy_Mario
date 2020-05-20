@@ -150,8 +150,8 @@
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td style="width: 10%" colspan="2"><input type="text" placeholder="idEmpleado" name="txtidEmpleado" id="idEmpleado" style="width: 90%;" required/></td>
-                        <td style="width: 10%" colspan="2"><input type="text" placeholder="idEnvio" name="txtEnvio" id="Envio" style="width: 90%;" required /></td>
+                        <td style="width: 10%" colspan="2"><input type="number" placeholder="idEmpleado" name="txtidEmpleado" id="idEmpleado" style="width: 90%;" required/></td>
+                        <td style="width: 10%" colspan="2"><input type="number" placeholder="idEnvio" name="txtEnvio" id="Envio" style="width: 90%;" required /></td>
                         <td style="width: 25%" colspan="2"><input type="text" placeholder="rol" name="txtRol" id="Rol" style="width: 90%;" required /></td>
                     </tr>
                     <tr>
@@ -161,7 +161,7 @@
                             <input type="radio" id="InactivoA" name="txtEstatus" value="I">
                             <label for="Inactivo">Inactivo</label>
                         </td>
-                       <td><input type="number" name="idTrip" id="idTrip"/> </td>
+                       <td><input type="hidden" name="idTrip" id="idTrip"/> </td>
                     </tr>
                 </tbody>
             </table>
@@ -257,25 +257,23 @@
             }
         });
         $('.boton').click(function () {
+            var valor=$(this).parents("tr").find("td")[3].innerHTML;            
+            $('#idTrip').val(valor);
+            $('#idTrip').hide();
             $('#btnMostrar').hide();
             $('.boton2').hide();
             $('#divI').hide();
             $('#divA').show();
-            $('#txtidEmpleado').val($(this).parents("tr").find("td")[1].innerHTML);
-            $('#txtidEnvio').val($(this).parents("tr").find("td")[2].innerHTML);
-            $('#txtRol').val($(this).parents("tr").find("td")[3].innerHTML);
+            $('#idEmpleado').val($(this).parents("tr").find("td")[0].innerHTML);
+            $('#Envio').val($(this).parents("tr").find("td")[1].innerHTML);
+            $('#Rol').val($(this).parents("tr").find("td")[2].innerHTML);
                
             if ($(this).parents("tr").find("td")[4].innerHTML === 'Activo') {
                 $('#ActivoA').prop("checked", true);
             } else {
                 $('#InactivoA').prop("checked", true);
             }
-            console.log($(this).parents("tr").find("td")[5].innerHTML);
-            valor=$(this).parents("tr").find("td")[6].innerHTML;
-            console.log(valor);
-            $('#idTrip').val(valor);
-            $('#idTrip').hide();
-            console.log($('#idTrip').val());
+            
             $('#nombre').focus();
                                 
         });
