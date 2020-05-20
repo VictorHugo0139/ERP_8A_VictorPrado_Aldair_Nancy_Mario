@@ -318,6 +318,7 @@
                     <td><%= s.get(0).getNombre()%></td>
                     <td><%= e.get(0).getNombre()%></td>
                     <%if (v.getEstatus() == 'A') {%>
+                    
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
                         <form action="Controlador?accion=VentasD&id=<%= idc%>" method="POST">
                             <button type="submit" value='<%= idc%>' name="idc" class="boton2">
@@ -329,11 +330,9 @@
                             <button type="submit" value='<%= idc%>' name="idc" class="boton2">
                                 <span  class='glyphicon glyphicon-ok-circle'></span></button>
                         </form></td>
-                        <%    }%>   
+                        <% }%>   
                 </tr>
-                <%
-                    }
-                %>
+                <%}%>
             </tbody>
         </table>
     </div>

@@ -463,12 +463,12 @@ public class Controlador extends HttpServlet {
                 
             case "VentasDetallesU":
                 vD = new VentasDetalles(Integer.parseInt(request.getParameter("idCl")),
-                        Float.valueOf(request.getParameter("txtPrecioVenta")),
+                        Float.parseFloat(request.getParameter("txtPrecioVenta")),
                         Float.parseFloat(request.getParameter("txtCantidad")),
                         Float.parseFloat(request.getParameter("txtSubtotal")),
                         Integer.parseInt(request.getParameter("txtVentas")),
                         Integer.parseInt(request.getParameter("txtPresentacion")),
-                        request.getParameter("txtEstatus").charAt(0));
+                         request.getParameter("txtEstatus").charAt(0));
                 res = VDdao.actualizar(vD);
                 datosVD = VDdao.consultar();
                 request.setAttribute("datosCl", datosVD);

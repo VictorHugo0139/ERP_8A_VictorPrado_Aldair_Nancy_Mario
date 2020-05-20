@@ -209,7 +209,7 @@ function soloNumerosPunto(e){
         </form>
     </div>
     <div style="margin-left: 180px; margin-top: 10px" id="divA">
-        <form action="Controlador?accion=VentasDeetallesU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
+        <form action="Controlador?accion=VentasDetallesU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
                 <table border="0" style="width: 100%">
                     <tbody>
                         <tr>
@@ -228,9 +228,7 @@ function soloNumerosPunto(e){
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">
-                                <input type="number" name="idCl" id="idCl"/>
-                            </td>
+                           
                             <td id="CD2" colspan="2">
                             </td>
                         </tr>
