@@ -559,14 +559,14 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewTripulacion.jsp").forward(request, response);
             break;
             case "TripulacionD":
-                res = tripdao.eliminar(Integer.parseInt(request.getParameter("idTrip")));
+                res = tripdao.eliminar(Integer.parseInt(request.getParameter("idc")));
                 request.setAttribute("resp", res);
                 datosTrip = tripdao.consultar();
                 request.setAttribute("datosCl", datosTrip);
                 request.getRequestDispatcher("ViewTripulacion.jsp").forward(request, response);
             break;
             case "TripulacionR":
-                res = tripdao.reactivar(Integer.parseInt(request.getParameter("idTrip")));
+                res = tripdao.reactivar(Integer.parseInt(request.getParameter("idc")));
                 request.setAttribute("resp", res);
                 datosTrip = tripdao.consultar();
                 request.setAttribute("datosCl", datosTrip);

@@ -69,7 +69,7 @@ public class TripulacionDAO implements CRUD {
         sql = ("update Tripulacion set estatus='I' where idTripulacion=? ");
         try {
             ps = con.prepareStatement(sql);
-           ps.setInt(5, id);
+            ps.setInt(1, id);
             int filas = ps.executeUpdate();
             respuesta = "se eliminaron " + filas + " filas";
             cn.closeConnection();
@@ -85,7 +85,7 @@ public class TripulacionDAO implements CRUD {
         sql = ("update Tripulacion set estatus='A' where idTripulacion=? ");
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(5, id);
+            ps.setInt(1, id);
             int filas = ps.executeUpdate();
             respuesta = "se reactivaron " + filas + " filas";
             cn.closeConnection();
