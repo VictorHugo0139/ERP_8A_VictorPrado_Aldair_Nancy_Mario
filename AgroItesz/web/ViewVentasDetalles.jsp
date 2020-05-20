@@ -256,6 +256,7 @@ function soloNumerosPunto(e){
                         <th  width='25%' style='border: 0;' scope='col'>Estatus</th>
                         <th  width='10%' style='border: 0;' scope='col'>Venta</th>
                         <th  width='10%' style='border: 0;' scope='col'>Presentacion</th>
+                        <th  width='10%' style='border: 0;' scope='col'>Acciones</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -282,10 +283,24 @@ function soloNumerosPunto(e){
                         %>
                         <td><%= vD.getIdVenta()%></td>
                         <td><%= p.get(0).getIdPresentacion()%></td>
-                    </tr>
-                    <%
-                        }//fin for
-                    %>
+                       <%if (vD.getEstatus() == 'A') {%>
+                    
+                    <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
+                        <form action="Controlador?accion=VentasDetallesD&id=<%= idc%>" method="POST">
+                            <button type="submit" value='<%= idc%>' name="idc" class="boton2">
+                                <span  class='glyphicon glyphicon-ban-circle'></span></button>
+                        </form></td>
+                        <%    } else {%>
+                    <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
+                        <form action="Controlador?accion=VentasDetallesR&id=<%= idc%>" method="POST">
+                            <button type="submit" value='<%= idc%>' name="idc" class="boton2">
+                                <span  class='glyphicon glyphicon-ok-circle'></span></button>
+                        </form></td>
+                        <% }%>   
+                </tr>
+                <%}%>
+                    
+                    
                 </tbody>
             </table>
         </div>       
