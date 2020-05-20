@@ -51,7 +51,7 @@ public class ProductosDAO implements CRUD{
     public List<Productos> consultar() {
         List<Productos> datos=new ArrayList<>();
         con=cn.getConexion();
-        sql=("select*from Productos;");
+        sql=("select * from Productos;");
         try {
             ps=con.prepareStatement(sql);
             rs=ps.executeQuery();
@@ -81,7 +81,7 @@ public class ProductosDAO implements CRUD{
     public List<Productos> filtrar(String campo, String criterio) {
         List<Productos> datos=new ArrayList<>();
         con=cn.getConexion();
-        sql=("select*from Productos where ? like '%?%';");
+        sql=("select * from Productos where ? like '%?%';");
         try {
             ps=con.prepareStatement(sql);
             ps.setString(1, campo);
@@ -111,7 +111,7 @@ public class ProductosDAO implements CRUD{
     public String OneProduct(int idProduct) {
         String nombre="";
         con=cn.getConexion();
-        sql=("select*from Productos where idProducto=?;");
+        sql=("select * from Productos where idProducto=?;");
         try {
             ps=con.prepareStatement(sql);
             ps.setString(1, String.valueOf(idProduct));

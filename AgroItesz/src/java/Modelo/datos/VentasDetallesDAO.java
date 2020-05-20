@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class VentasDetallesDAO implements CRUD {
 
-    private static VentasDetallesDAO vDao;
+    private static VentasDetallesDAO vDdao;
     Conexion cn = Conexion.getInsConexion();
     Connection con;
     PreparedStatement ps;
@@ -27,10 +27,10 @@ public class VentasDetallesDAO implements CRUD {
     String sql;
 
     public static VentasDetallesDAO getVentasDetallesDAO() {
-        if (vDao == null) {
-            vDao = new VentasDetallesDAO();
+        if (vDdao == null) {
+            vDdao = new VentasDetallesDAO();
         }
-        return vDao;
+        return vDdao;
     }
 
     private VentasDetallesDAO() {
@@ -41,7 +41,7 @@ public class VentasDetallesDAO implements CRUD {
         VentasDetalles vD = (VentasDetalles) obj;
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("insert into VentasDetalle(precioVenta,cantidad,subtotal,idVenta,idPresentacion,estatus;)\n"
+        sql = ("insert into VentasDetalle(precioVenta,cantidad,subtotal,idVenta,idPresentacion,estatus)\n"
                 + "values (?,?,?,?,?,?)");
         try {
             ps = con.prepareStatement(sql);
@@ -50,7 +50,7 @@ public class VentasDetallesDAO implements CRUD {
             ps.setFloat(3, vD.getSubtotal());
             ps.setInt(4, vD.getIdVenta());
             ps.setInt(5, vD.getIdPresentacion());
-            ps.setInt(6, vD.getEstatus());
+            ps.setString(6, "" + vD.getEstatus());
             int filas = ps.executeUpdate();
             respuesta = "se insertaron " + filas + " filas";
             cn.closeConnection();
@@ -107,7 +107,7 @@ public class VentasDetallesDAO implements CRUD {
             ps.setFloat(4, vD.getSubtotal());
             ps.setInt(5, +vD.getIdVenta());
             ps.setInt(6, +vD.getIdPresentacion());
-            ps.setInt(7, vD.getEstatus());
+            ps.setString(7, "" + vD.getEstatus());
             int filas = ps.executeUpdate();
             respuesta = "se actualizaron " + filas + " filas";
             cn.closeConnection();
@@ -127,9 +127,9 @@ public class VentasDetallesDAO implements CRUD {
             rs = ps.executeQuery();
             while (rs.next()) {
                 datos.add(new VentasDetalles(rs.getInt("IdVentaDetalle"),
-                        rs.getFloat("PrecioVenta"),
-                        rs.getFloat("Cantidad"),
-                        rs.getFloat("Subtotal"),
+                        rs.getFloat("precioVenta"),
+                        rs.getFloat("cantidad"),
+                        rs.getFloat("subtotal"),
                         rs.getInt("IdVenta"),
                         rs.getInt("IdPresentacion"),
                         rs.getString("estatus").charAt(0)));
@@ -143,14 +143,116 @@ public class VentasDetallesDAO implements CRUD {
     }
 
     @Override
-    public List<?> filtrar(String campo, String criterio) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<VentasDetalles> filtrar(String campo, String criterio) {
+        List<VentasDetalles> datos = new ArrayList<>();
+        con = cn.getConexion();
+//        String c="\'"+criterio+"\'";
+//        System.out.println(campo+" y "+criterio);
+        if ("Ventas".equals(campo)) {
+          
+            sql = "select*from VentasDetalle vD join ventas v on v  vD.idVentas=v.idVentas where v.cliente like'%"+criterio+"%';";
+            try {
+                ps = con.prepareStatement(sql);
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    while (rs.next()) {
+                        datos.add(new VentasDetalles(rs.getInt("IdVentaDetalle"),
+                                rs.getFloat("precioVenta"),
+                                rs.getFloat("cantidad"),
+                                rs.getFloat("subtotal"),
+                                rs.getInt("IdVenta"),
+                                rs.getInt("IdPresentacion"),
+                                rs.getString("estatus").charAt(0)));
+
+                    }
+                }
+                cn.closeConnection();
+            } catch (SQLException ex) {
+                Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            if ("estatus".equals(campo)) {
+                if (criterio.startsWith("in") | criterio.startsWith("In")) {
+                    sql = "select * from VentasDetalle where " + campo + " = 'I'";
+                    try {
+                        ps = con.prepareStatement(sql);
+                        rs = ps.executeQuery();
+                        while (rs.next()) {
+                            while (rs.next()) {
+                                datos.add(new VentasDetalles(rs.getInt("IdVentaDetalle"),
+                                        rs.getFloat("precioVenta"),
+                                        rs.getFloat("cantidad"),
+                                        rs.getFloat("subtotal"),
+                                        rs.getInt("IdVenta"),
+                                        rs.getInt("IdPresentacion"),
+                                        rs.getString("estatus").charAt(0)));
+
+                            }
+                        }
+                        cn.closeConnection();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    if (criterio.startsWith("ac") | criterio.startsWith("Ac")) {
+                        sql = "select * from VentasDetalle where " + campo + " = 'A'";
+                        try {
+                            ps = con.prepareStatement(sql);
+                            rs = ps.executeQuery();
+                            while (rs.next()) {
+                                while (rs.next()) {
+                                    datos.add(new VentasDetalles(rs.getInt("IdVentaDetalle"),
+                                            rs.getFloat("precioVenta"),
+                                            rs.getFloat("cantidad"),
+                                            rs.getFloat("subtotal"),
+                                            rs.getInt("IdVenta"),
+                                            rs.getInt("IdPresentacion"),
+                                            rs.getString("estatus").charAt(0)));
+
+                                }
+                            }
+                            cn.closeConnection();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } else {
+                        return datos;
+                    }
+                }
+            } else {
+                sql = "select * from VentasDetalle where " + campo + " like '%" + criterio + "%'";
+//        sql=("select * from Clientes where ? like CONCAT( '%',?,'%');");
+                try {
+                    ps = con.prepareStatement(sql);
+//            ps.setString(1, campo);
+//            ps.setString(2, criterio);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        while (rs.next()) {
+                datos.add(new VentasDetalles(rs.getInt("IdVentaDetalle"),
+                        rs.getFloat("precioVenta"),
+                        rs.getFloat("cantidad"),
+                        rs.getFloat("subtotal"),
+                        rs.getInt("IdVenta"),
+                        rs.getInt("IdPresentacion"),
+                        rs.getString("estatus").charAt(0)));
+
+            }
+                    }
+                    cn.closeConnection();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+        return datos;
     }
 
     public List<VentasDetalles> consultarId(int id) {
         List<VentasDetalles> datos = new ArrayList<>();
         con = cn.getConexion();
-        sql = ("select * from Clientes where idCliente=" + id);
+        sql = ("select * from ventasDetalles ");
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();

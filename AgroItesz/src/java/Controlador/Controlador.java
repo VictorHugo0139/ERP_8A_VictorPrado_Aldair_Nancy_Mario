@@ -446,12 +446,27 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewEnvios.jsp").forward(request, response);
                 break;
                 
+                case "VentasDetallesI":
+                vD = new VentasDetalles(0,
+                        Float.parseFloat(request.getParameter("txtPrecioVenta")),
+                        Float.parseFloat(request.getParameter("txtCantidad")),
+                        Float.parseFloat(request.getParameter("txtSubtotal")),
+                        Integer.parseInt(request.getParameter("txtVentas")),
+                        Integer.parseInt(request.getParameter("txtPresentacion")),
+                         request.getParameter("txtEstatus").charAt(0));
+                res = VDdao.insertar(vD);
+                datosVD = VDdao.consultar();
+                request.setAttribute("datosCl", datosVD);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewVentasDetalles.jsp").forward(request, response);
+                break;
+                
             case "VentasDetallesU":
-                vD = new VentasDetalles(Integer.parseInt(request.getParameter("idVDl")),
-                        Float.valueOf(request.getParameter("txtprecioVenta")),
-                        Float.parseFloat(request.getParameter("txtcantidad")),
-                        Float.parseFloat(request.getParameter("txtsubtotal")),
-                        Integer.parseInt(request.getParameter("txtVenta")),
+                vD = new VentasDetalles(Integer.parseInt(request.getParameter("idCl")),
+                        Float.valueOf(request.getParameter("txtPrecioVenta")),
+                        Float.parseFloat(request.getParameter("txtCantidad")),
+                        Float.parseFloat(request.getParameter("txtSubtotal")),
+                        Integer.parseInt(request.getParameter("txtVentas")),
                         Integer.parseInt(request.getParameter("txtPresentacion")),
                         request.getParameter("txtEstatus").charAt(0));
                 res = VDdao.actualizar(vD);
@@ -461,18 +476,25 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewVentasDetalles.jsp").forward(request, response);
                 break;
             case "VentasDetallesD":
-                res = VDdao.eliminar(Integer.parseInt(request.getParameter("idVD")));
+                res = VDdao.eliminar(Integer.parseInt(request.getParameter("idc")));
                 request.setAttribute("resp", res);
                 datosVD = VDdao.consultar();
                 request.setAttribute("datosCl", datosVD);
                 request.getRequestDispatcher("ViewVentasDetalles.jsp").forward(request, response);
                 break;
             case "VentasDestallesR":
-                res = VDdao.reactivar(Integer.parseInt(request.getParameter("idVD")));
+                res = VDdao.reactivar(Integer.parseInt(request.getParameter("idc")));
                 request.setAttribute("resp", res);
                 datosVD = VDdao.consultar();
                 request.setAttribute("datosCl", datosVD);
                 request.getRequestDispatcher("ViewVentasDetalles.jsp").forward(request, response);
+                break;
+                case "VentasDetallesS":
+                //datosVD = (List<VentasDetalles>) VDdao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
+                        
+                datosVD = VDdao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
+                request.setAttribute("datosVD", datosVD);
+                request.getRequestDispatcher("ViewVentasDetalles").forward(request, response);
                 break;
                 
                 case "EnviosU":
