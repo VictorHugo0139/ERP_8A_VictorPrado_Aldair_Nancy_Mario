@@ -209,7 +209,7 @@ function soloNumerosPunto(e){
         </form>
     </div>
     <div style="margin-left: 180px; margin-top: 10px" id="divA">
-        <form action="Controlador?accion=VentasDetallesU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
+        <form action="Controlador?accion=VentasDetallesU" method="POST" name="formActualizar" onsubmit="return validar(formActualizar);">
                 <table border="0" style="width: 100%">
                     <tbody>
                         <tr>

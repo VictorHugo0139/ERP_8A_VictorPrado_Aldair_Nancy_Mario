@@ -482,7 +482,7 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosVD);
                 request.getRequestDispatcher("ViewVentasDetalles.jsp").forward(request, response);
                 break;
-            case "VentasDestallesR":
+            case "VentasDetallesR":
                 res = VDdao.reactivar(Integer.parseInt(request.getParameter("idc")));
                 request.setAttribute("resp", res);
                 datosVD = VDdao.consultar();
@@ -490,7 +490,7 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewVentasDetalles.jsp").forward(request, response);
                 break;
                 case "VentasDetallesS":
-                //datosVD = (List<VentasDetalles>) VDdao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
+                
                         
                 datosVD = VDdao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
                 request.setAttribute("datosCl", datosVD);
