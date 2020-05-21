@@ -88,28 +88,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    
-    <script type="text/javascript">
-  window.addEventListener("load", function() {
-        
-  formActualizar.txtprecioVenta.addEventListener("keypress", soloNumerosPunto, false);
-});
 
-//Solo permite introducir numeros.
-function soloNumerosPunto(e){
-    alert("ddssd");
-    /*   var ren = /^([0-9.]*)$/;
-    if (!ren.exec(user)) {
-        alert("Solo se permiten números y punto decimal");
-        return false;
-    }*/
-  var key = window.event ? e.which : e.keyCode;
-  if (key < 48 || key > 57) {
-    e.preventDefault();
-  }
-}
-    
-</script>
+    <script type="text/javascript">
+        /*window.addEventListener("load", function() {
+         
+         formActualizar.txtprecioVenta.addEventListener("keypress", soloNumerosPunto, false);
+         });*/
+
+
+    </script>
 </head>
 <%
     VentasDAO Vdao = VentasDAO.getVentasDAO();
@@ -162,24 +149,25 @@ function soloNumerosPunto(e){
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
         <form action="Controlador?accion=VentasDetallesI" method="POST" name="formInsertar" onsubmit="return ValidarDetalles(formInsertar);">
             <table border="0" style="width: 100%">
+                DIVI
                 <tbody>
                     <tr>
                         <td style="width: 25%"><input type="text" placeholder="precio de venta"  id="txtPrecioVenta" name="txtPrecioVenta" style="width: 90%;" required maxlength="10"/></td>
                         <td style="width: 25%"><input type="text" placeholder="Cantidad" id="txtCantidad" name="txtCantidad" style="width: 90%;" required maxlength="10" /></td>
-                        <td style="width: 25%"><input type="text" placeholder="subtotal" id="txtSubtotal" name="txtSubtotal" style="width: 90%;" required maxlength="10"/></td>
+                        <td style="width: 25%"><input type="text" placeholder="subtotal" id="txtSubtotal" name="txtSubtotal" style="width: 90%;" disabled required maxlength="10"/></td>
                     </tr>
-                    <td>
-                        <input type="radio" id="Activo" name="txtEstatus" value="A" required>
-                        <label for="Activo">Activo</label>
-                        <input type="radio" id="Inactivo" name="txtEstatus" value="I">
-                        <label for="Inactivo">Inactivo</label>
-                    </td>
-                    <tr>
+                <td>
+                    <input type="radio" id="Activo" name="txtEstatus" value="A" required>
+                    <label for="Activo">Activo</label>
+                    <input type="radio" id="Inactivo" name="txtEstatus" value="I">
+                    <label for="Inactivo">Inactivo</label>
+                </td>
+                <tr>
                     <td colspan="3"></td>
                     <td colspan="2">
                         <label style="color: grey;font-weight: lighter;">ventas</label>
                         <select name="txtVentas">
-                            <% 
+                            <%
                                 for (Ventas ve : v) {
                             %>
                             <option value="<%= ve.getIdVenta()%>"><%= ve.getIdVenta()%></option>
@@ -203,87 +191,88 @@ function soloNumerosPunto(e){
                 </tr>
                 </tbody>
             </table>
-            <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
+            <button type="submit" id="Agregar" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
                 Agregar
             </button>
         </form>
     </div>
     <div style="margin-left: 180px; margin-top: 10px" id="divA">
+        DIVA
         <form action="Controlador?accion=VentasDetallesU" method="POST" name="formActualizar" onsubmit="return validar(formActualizar);">
-                <table border="0" style="width: 100%">
-                    <tbody>
-                        <tr>
-                            <td style="width: 25%"><input type="number" name="txtprecioVenta" id="precioVenta" style="width: 90%;" required/></td>
-                            <td style="width: 25%"><input type="number" placeholder="cantidad" name="txtcantidad" id="cantidad" step="0.01" style="width: 90%;" required /></td>
-                            <td style="width: 25%"><input type="number" placeholder="suntotal" name="txtsubtotal" id="suntotal" style="width: 90%;" step="0.01" required/></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
-                                <label for="Activo">Activo</label>
-                                <input type="radio" id="InactivoA" name="txtEstatus" value="I">
-                                <label for="Inactivo">Inactivo</label><input type="hidden" name="idCl" id="idCl"/>
-                            </td>
-                            <td id="CD">
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                           
-                            <td id="CD2" colspan="2">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                    <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
-                        Actualizar
-                    </button>
-                    <button type="button" id="Cancel" style="width: 20%; background-color: #fc1919; color: #fff; font-weight: bold; border-radius: 0.33em;">
-                        Cancelar
-                    </button>
+            <table border="0" style="width: 100%">
+                <tbody>
+                    <tr>
+                        <td style="width: 25%"><input type="text" placeholder="presio de venta" id="precioVenta" name="txtprecioVenta"  style="width: 90%;"  required/></td>
+                        <td style="width: 25%"><input type="text" placeholder="cantidad" id="cantidad" name="txtcantidad"  style="width: 90%;" required /></td>
+                        <td style="width: 25%"><input type="text" placeholder="subtotal" id="subtotal" name="txtsubtotal"  style="width: 90%;" required/></td>
+                       </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
+                            <label for="Activo">Activo</label>
+                            <input type="radio" id="InactivoA" name="txtEstatus" value="I">
+                            <label for="Inactivo">Inactivo</label><input type="hidden" name="idCl" id="idCl"/>
+                        </td>
+                        <td id="CD">
+
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td id="CD2" colspan="2">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="submit" id="Actualizar" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
+                Actualizar
+            </button>
+            <button type="button" id="Cancel" style="width: 20%; background-color: #fc1919; color: #fff; font-weight: bold; border-radius: 0.33em;">
+                Cancelar
+            </button>
         </form>
         <br/>
     </div>
     <div id="Contenedor">
-            <table width='100%' border='0' cellpadding='0' id='customers'>
-                <thead>
-                    <tr>
-                        <th  width='1%' style='border: 0;' scope='col'>#VentaDetalle</th>
-                        <th  width='10%' style='border: 0;' scope='col'>pecioVenta</th>
-                        <th  width='10%' style='border: 0;' scope='col'>cantidad</th>
-                        <th  width='10%' style='border: 0;' scope='col'>subtotal</th>
-                        <th  width='25%' style='border: 0;' scope='col'>Estatus</th>
-                        <th  width='10%' style='border: 0;' scope='col'>Venta</th>
-                        <th  width='10%' style='border: 0;' scope='col'>Presentacion</th>
-                        <th  width='10%' style='border: 0;' scope='col'>Acciones</th> 
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-                        int idc;
-                        //datos = dao.consultar();
-                        for (VentasDetalles vD : datos) {
+        <table width='100%' border='0' cellpadding='0' id='customers'>
+            <thead>
+                <tr>
+                    <th  width='1%' style='border: 0;' scope='col'>#VentaDetalle</th>
+                    <th  width='10%' style='border: 0;' scope='col'>pecioVenta</th>
+                    <th  width='10%' style='border: 0;' scope='col'>cantidad</th>
+                    <th  width='10%' style='border: 0;' scope='col'>subtotal</th>
+                    <th  width='25%' style='border: 0;' scope='col'>Estatus</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Venta</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Presentacion</th>
+                    <th  width='10%' style='border: 0;' scope='col'>Acciones</th> 
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                    int idc;
+                    //datos = dao.consultar();
+                    for (VentasDetalles vD : datos) {
+                %>
+                <tr>
+                    <td><%= idc = vD.getIdVentaDetalle()%></td>
+                    <td><%= vD.getPrecioVenta()%></td>
+                    <td><%= vD.getCantidad()%></td>
+                    <td><%= vD.getSubtotal()%></td>                      
+                    <%if (vD.getEstatus() == 'A') { %>
+                    <td>Activo</td>
+                    <% } else if (vD.getEstatus() == 'I') {
                     %>
-                    <tr>
-                        <td><%= idc = vD.getIdVentaDetalle()%></td>
-                        <td><%= vD.getPrecioVenta()%></td>
-                        <td><%= vD.getCantidad()%></td>
-                        <td><%= vD.getSubtotal()%></td>                      
-                        <%if (vD.getEstatus() == 'A') { %>
-                        <td>Activo</td>
-                        <% } else if (vD.getEstatus() == 'I') { 
-                        %>
-                        <td>Inactivo</td>
-                        <% }
-                            //v = Vdao.consultarId(vD.getIdVenta());
-                            ///lv = VDdao.consultarId(vD.getIdVenta());
-                            p = pRdao.consultarId(vD.getIdPresentacion());
-                       //lv.get(0).getIdVenta()
-                        %>
-                        <td><%= vD.getIdVenta()%></td>
-                        <td><%= p.get(0).getIdPresentacion()%></td>
-                       <%if (vD.getEstatus() == 'A') {%>
-                    
+                    <td>Inactivo</td>
+                    <% }
+                        //v = Vdao.consultarId(vD.getIdVenta());
+                        ///lv = VDdao.consultarId(vD.getIdVenta());
+                        p = pRdao.consultarId(vD.getIdPresentacion());
+                        //lv.get(0).getIdVenta()
+%>
+                    <td><%= vD.getIdVenta()%></td>
+                    <td><%= p.get(0).getIdPresentacion()%></td>
+                    <%if (vD.getEstatus() == 'A') {%>
+
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
                         <form action="Controlador?accion=VentasDetallesD&id=<%= idc%>" method="POST">
                             <button type="submit" value='<%= idc%>' name="idc" class="boton2">
@@ -298,23 +287,28 @@ function soloNumerosPunto(e){
                         <% }%>   
                 </tr>
                 <%}%>
-                    
-                    
-                </tbody>
-            </table>
-        </div>       
+
+
+            </tbody>
+        </table>
+    </div>       
 </body>
 
 
 <script type="text/javascript">
-    
+
+
+
+
+
+
     function ValidarDetalles(formulario)
     {/*
-         if (formulario.txtPrecioVenta.value === "" )
-        {
-        alert("Todos los campos son obligatorios.");
-        return false;
-        }*/
+     if (formulario.txtPrecioVenta.value === "" )
+     {
+     alert("Todos los campos son obligatorios.");
+     return false;
+     }*/
     }
     function addZero(i) {
         if (i < 10) {
@@ -339,6 +333,10 @@ function soloNumerosPunto(e){
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+
+
+
         $('#divI').hide();
         $('#divA').hide();
         $('#btnMostrarf').hide();
@@ -359,9 +357,9 @@ function soloNumerosPunto(e){
             }
         });
         $('.boton').click(function () {
- alert($(this).parents("tr").find("td")[0].innerHTML);
- var valor = $(this).parents("tr").find("td")[0].innerHTML;
-           
+            alert($(this).parents("tr").find("td")[0].innerHTML);
+            var valor = $(this).parents("tr").find("td")[0].innerHTML;
+
             $('#idCl').val(valor);
             $('#idCl').hide();
             //valores obtendra el dato del td por posciones [0]
@@ -391,7 +389,7 @@ function soloNumerosPunto(e){
         }
     %>
             "</select>");
-            
+
             $('#CD2').append("<label style='color: grey;font-weight: lighter;'>Presentacion</label>" +
                     "<select name='txtPresentacion'>" +
     <%
@@ -414,7 +412,7 @@ function soloNumerosPunto(e){
             $('#nombre').focus();
 
             $('#' + valor).attr('selected', 'selected').change();
-            
+
             //console.log($('#idCl').val());
             $('#nombre').focus();
         });
@@ -444,6 +442,151 @@ function soloNumerosPunto(e){
                 }
             }
         });
+
+        $("#txtPrecioVenta").on("keyup", function () {
+            multiplicar();
+            soloNumerosPuntoVenta();
+        });
+        $("#txtCantidad").on("keyup", function () {
+            multiplicar();
+            soloNumerosPuntoCantidad();
+        });
+        /*
+         $("#txtCantidad").on("keyup", function () {
+            multiplicar();
+            soloNumerosPuntoCantidad();
+        });*/
+        $('#Agregar').click(function (event) {           
+            validaCero(event);   
+     }); 
+     
+      $("#precioVenta").on("keyup", function () {
+            multiplicarA();
+            soloNumerosPuntoVentaA();
+        });
+        $("#cantidad").on("keyup", function () {
+            multiplicarA();
+            soloNumerosPuntoCantidadA();
+        });
+        /*
+         $("#cantidad").on("keyup", function () {
+            multiplicarA();
+            soloNumerosPuntoCantidadA();
+        });*/
+        $('#Actualizar').click(function (event) {           
+            validaCeroA(event);   
+     }); 
     });
+
+    function multiplicar() {
+        var m1 = document.getElementById("txtPrecioVenta").value;
+        var m2 = document.getElementById("txtCantidad").value;
+        var r = m1 * m2;
+        if (isNaN(r)) { 
+       //entonces (no es numero) devuelvo el valor cadena vacia 
+         r= 0 
+        }
+        document.getElementById("txtSubtotal").value = r;
+    }
+    //Solo permite introducir numeros.
+    function soloNumerosPuntoVenta() {
+        var valor = document.getElementById("txtPrecioVenta").value;
+        var v = 0;
+        var out = '';
+        var filtro = '1234567890.';
+        for (var i = 0; i < valor.length; i++) {
+            if (filtro.indexOf(valor.charAt(i)) != -1) {
+                v++;
+                out += valor.charAt(i);
+            }
+        }
+        document.getElementById("txtPrecioVenta").value = out;
+    }
+    function soloNumerosPuntoCantidad() {
+        var valor = document.getElementById("txtCantidad").value;
+        var v = 0;
+        var out = '';
+        var filtro = '1234567890.';
+        for (var i = 0; i < valor.length; i++) {
+            if (filtro.indexOf(valor.charAt(i)) != -1) {
+                v++;
+                out += valor.charAt(i);
+            }
+        }
+        document.getElementById("txtCantidad").value = out;
+    }
+
+    function validaCero(event) {
+        var m1 = document.getElementById("txtPrecioVenta").value;
+        var m2 = document.getElementById("txtCantidad").value;
+       
+        if (m1 == 0 || m1 ==0.0) { 
+       //entonces (no es numero) devuelvo el valor cadena vacia 
+         alert("Precio de venta:No se permiten cantidades en ceros");
+         event.preventDefault();
+        }
+        if (m2 == 0 || m2 ==0.0) { 
+       //entonces (no es numero) devuelvo el valor cadena vacia 
+         alert("Cantidad: No se permiten cantidades en ceros");
+          event.preventDefault();
+        }
+        return true
+    }
+    
+    
+    function multiplicarA() {
+        var m1 = document.getElementById("precioVenta").value;
+        var m2 = document.getElementById("cantidad").value;
+        var r = m1 * m2;
+        if (isNaN(r)) { 
+       //entonces (no es numero) devuelvo el valor cadena vacia 
+         r= 0 
+        }
+        document.getElementById("subtotal").value = r;
+    }
+    //Solo permite introducir numeros.
+    function soloNumerosPuntoVentaA() {
+        var valor = document.getElementById("precioVenta").value;
+        var v = 0;
+        var out = '';
+        var filtro = '.1234567890';
+        for (var i = 0; i < valor.length; i++) {
+            if (filtro.indexOf(valor.charAt(i)) != -1) {
+                v++;
+                out += valor.charAt(i);
+            }
+        }
+        document.getElementById("precioVenta").value = out;
+    }
+    function soloNumerosPuntoCantidadA() {
+        var valor = document.getElementById("cantidad").value;
+        var v = 0;
+        var out = '';
+        var filtro = '.1234567890';
+        for (var i = 0; i < valor.length; i++) {
+            if (filtro.indexOf(valor.charAt(i)) != -1) {
+                v++;
+                out += valor.charAt(i);
+            }
+        }
+        document.getElementById("cantidad").value = out;
+    }
+
+    function validaCeroA(event) {
+        var m1 = document.getElementById("precioVenta").value;
+        var m2 = document.getElementById("cantidad").value;
+       
+        if (m1 == 0 || m1 ==0.0) { 
+       //entonces (no es numero) devuelvo el valor cadena vacia 
+         alert("Precio de venta:No se permiten cantidades en ceros");
+         event.preventDefault();
+        }
+        if (m2 == 0 || m2 ==0.0) { 
+       //entonces (no es numero) devuelvo el valor cadena vacia 
+         alert("Cantidad: No se permiten cantidades en ceros");
+          event.preventDefault();
+        }
+        return true
+    }
 </script>  
 </html>
