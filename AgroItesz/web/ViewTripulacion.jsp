@@ -133,7 +133,7 @@
                         
                             <td style="width: 25%" colspan="2">
                                 <label style="color: grey;font-weight: lighter;">Empleado</label>
-                            <select name="txtidEmpleado">
+                            <select name="txtidEmpleado" id="idEmpleado">
                                 <%
                                     for (Empleados em : e) {
                                         //String Ciudad = city.OneCity(cl.getIdCiudad());
@@ -147,7 +147,7 @@
                             </td>
                             <td style="width: 25%" colspan="2">
                                 <label style="color: grey;font-weight: lighter;">Envio</label>
-                            <select name="txtEnvio">
+                                <select name="txtEnvio" id="idEnvio">
                                 <%
                                     for (Envios env : en) {
                                         //String Ciudad = city.OneCity(cl.getIdCiudad());
@@ -159,7 +159,7 @@
                                 %>
                             </select>
                             </td>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="rol" name="txtRol" style="width: 90%;" required /></td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="rol" name="txtRol" id="Rol" style="width: 90%;" required /></td>
                     </tr>
                         <td><label>Estatus</label>
                             <input type="radio" id="Activo" name="txtEstatus" value="A" required>
@@ -171,7 +171,7 @@
                 </tbody>
             </table>
 
-            <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
+            <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;"   onClick="return validarDatos();">
                 Agregar
             </button>
         </form>
@@ -181,7 +181,7 @@
 
     <div style="margin-left: 180px; margin-top: 10px" id="divA">
         
-        <form action="Controlador?accion=TripulacionU" method="POST" name="formActualizar" onsubmit="">
+        <form action="Controlador?accion=TripulacionU" method="POST" name="formActualizar" onsubmit="return validarDatos();">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
@@ -373,6 +373,52 @@
                 });
             });
         </script>    
+      
+        <script type="text/javascript">
+            function validarDatos() {
+
+    var idEmpleado = document.getElementById("idEmpleado").value;
+    var idEnvio = document.getElementById("idEnvio").value;
+    var Rol = document.getElementById("Rol").value;
+    /*var Estatus = document.getElementsByName("company").value;*/
     
+
+
+
+    if (idEmpleado === "" || idEnvio === "" || Rol === "" /*|| Estatus === ""*/)
+    {
+        alert("Todos los campos son obligatorios.");
+        return false;
+    }
+    var ren = /^([a-zA-Z0-9áéíóúÁÉÍÓÚÄÖßÜäößüñÑ \-,.; ]*)$/;
+
+    var renum = /^([0-9]*)$/;
+    if (!renum.exec(idEmpleado)) {
+        alert("idEmpleado, solo se permite números");
+        return false;
+    }
+     if (!renum.exec(idEnvio)) {
+        alert("idEnvio, solo se permite números");
+        return false;
+    }
+    
+     var ren = /^([a-zA-ZáéíóúÁÉÍÓÚÄÖßÜäößüñÑ \-,.; ]*)$/;
+     
+     if (!ren.exec(Rol)) {
+     alert("No se permiten Numeros o caracteres especiales como ''!$^&*+=[]\|¿?");
+     return false;
+     }
+     
+    
+}
+
+    function validarEnvio()
+    {
+        var idEmpleado = document.getElementById("idEmpleado").value;
+        var idEnvio = document.getElementById("idEnvio").value;
+        
+    }
+
+        </script>
 </body>
 </html>
