@@ -149,12 +149,12 @@
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
         <form action="Controlador?accion=VentasDetallesI" method="POST" name="formInsertar" onsubmit="return ValidarDetalles(formInsertar);">
             <table border="0" style="width: 100%">
-                DIVI
+                
                 <tbody>
                     <tr>
                         <td style="width: 25%"><input type="text" placeholder="precio de venta"  id="txtPrecioVenta" name="txtPrecioVenta" style="width: 90%;" required maxlength="10"/></td>
                         <td style="width: 25%"><input type="text" placeholder="Cantidad" id="txtCantidad" name="txtCantidad" style="width: 90%;" required maxlength="10" /></td>
-                        <td style="width: 25%"><input type="text" placeholder="subtotal" id="txtSubtotal" name="txtSubtotal" style="width: 90%;" disabled required maxlength="10"/></td>
+                        <td style="width: 25%"><input type="text" placeholder="subtotal" id="txtSubtotal" name="txtSubtotal" style="width: 90%;"  required maxlength="10"/></td>
                     </tr>
                 <td>
                     <input type="radio" id="Activo" name="txtEstatus" value="A" required>
@@ -197,7 +197,7 @@
         </form>
     </div>
     <div style="margin-left: 180px; margin-top: 10px" id="divA">
-        DIVA
+       
         <form action="Controlador?accion=VentasDetallesU" method="POST" name="formActualizar" onsubmit="return validar(formActualizar);">
             <table border="0" style="width: 100%">
                 <tbody>
