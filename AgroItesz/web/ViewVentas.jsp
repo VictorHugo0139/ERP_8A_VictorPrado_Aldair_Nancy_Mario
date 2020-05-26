@@ -134,7 +134,7 @@
     <button id="btnMostrarf">+</button>
     <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
-        <form action="Controlador?accion=VentaI" method="POST" name="formInsertar" onsubmit="return validar(formInsertar);">
+        <form action="Controlador?accion=VentasI" method="POST" name="formInsertar" onsubmit="return validar(formInsertar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
