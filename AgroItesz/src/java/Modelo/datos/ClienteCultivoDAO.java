@@ -74,21 +74,29 @@ public static ClienteCultivoDAO getClienteCultivoDAO(){
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public String OneClient(int idCity) {
-        String nombre="";
+    public List<ClienteCultivo> OneClient(int idClient) {
+        
+        List<ClienteCultivo> datos=new ArrayList<>();
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
         con=cn.getConexion();
-        sql=("select*from ClientesCultivo where idClienteCultivo=?;");
+        sql=("select*from ClientesCultivo where idClienteCultivo="+idClient);
         try {
             ps=con.prepareStatement(sql);
-            ps.setString(1, String.valueOf(idCity));
             rs=ps.executeQuery();
             while(rs.next()){
-                nombre=rs.getString("extension");
+                datos.add(new ClienteCultivo(rs.getInt("idClienteCultivo"),
+                        rs.getFloat("extencion"),
+                        rs.getString("ubicacion"), 
+                        rs.getInt("idCliente"),
+                        rs.getInt("idCultivo"),
+                        rs.getInt("idTransporte"),
+                        rs.getString("estatus").charAt(0)));
             }
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TransporteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return nombre;
+        return datos;
     }
 }

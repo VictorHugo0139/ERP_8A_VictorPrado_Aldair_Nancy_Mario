@@ -295,6 +295,16 @@
                     </div>
                 </div>
             </a>
+             <a href="Controlador?accion=Visitas" style="text-decoration: none; color: #191c19;">
+                <div class="col" >
+                    <div class="card" >
+                        <img class="card-img-top" src="Images/visita.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h6 class="card-title">VISITAS</h6>
+                        </div>
+                    </div>
+                </div>
+            </a>
         </div>
         <div class="row align-items-end">
             
