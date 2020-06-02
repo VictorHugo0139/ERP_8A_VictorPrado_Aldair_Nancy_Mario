@@ -1,3 +1,9 @@
+<%@page import="Modelo.Ventas"%>
+<%@page import="Modelo.datos.VentasDAO"%>
+<%@page import="Modelo.Ciudades"%>
+<%@page import="Modelo.datos.CiudadesDAO"%>
+<%@page import="Modelo.Clientes"%>
+<%@page import="Modelo.datos.ClientesDAO"%>
 <%@page import="Modelo.datos.ClienteCultivoDAO"%>
 <%@page import="Modelo.ClienteCultivo"%>
 <%@page import="java.time.LocalDate"%>
@@ -97,6 +103,15 @@
         List<Transporte> datosTr = transport.consultar();
         List<ClienteCultivo> datosCli = cl.consultar();
         List<Empleados> datosEmp = em.consultar();
+        ClientesDAO cdao = ClientesDAO.getClientesDAO();
+    EmpleadosDAO edao = EmpleadosDAO.getEmpleadosDAO();
+    List<Clientes> c = cdao.consultar();
+    List<Empleados> e = edao.consultar();
+     CiudadesDAO city = CiudadesDAO.getCiudadesDAO();
+      VentasDAO Vdao = VentasDAO.getVentasDAO();
+      List<Ventas> datosVen = Vdao.consultar();
+    //List<Clientes> datosF = (List<Clientes>) request.getAttribute("datosCl");
+    List<Ciudades> datosCiu = city.consultar();
     %>
 
     <body style="background-color: #dfd7f5;">
@@ -303,24 +318,7 @@
                     </form></td>
                     <%    }%>     
                 <td><%= vi.getCosto()%></td>
-                <%
-                    datosCli = cl.OneClient(vi.getIdClienteCultivo());
-                String cc=datosCli.get(0).getIdClienteCultivo() +" : "+ cl.consultarId(datosCli.get(0).getIdCliente()).get(0).getNombre() +" "+datosVen.get(0).getFecha();
-                %>
-                <td><%= cc %></td>
-                <%
-                    datosTr = transport.OneTransport(en.getIdTransporte());
-                    String tt=datosTr.get(0).getModelo() +" "+ datosTr.get(0).getMarca() +" "+datosTr.get(0).getPlacas();
-                %>
-                <td><%= tt %></td>
-                <%
-                    String Ciudad = city.OneCity(en.getIdCiudad());
-                %>
-                <td><%=Ciudad%></td>                   
-                </tr>
-                <%
-                    }
-                %>
+               
                 </tbody>
             </table>
         </div>
@@ -526,10 +524,10 @@
                     $('#CD').html("<label style='color: grey;font-weight: lighter;'>Venta:</label>" +
                             "<select name='txtVenta'>" +
             <%  
-                datosVen = build.consultar();
+                datosVen = Vdao.consultar();
                 String a;
                 for (Ventas ve : datosVen) {
-                     a=ve.getIdVenta() +" : "+ cl.consultarId(ve.getIdCliente()).get(0).getNombre() +" "+ve.getFecha();
+                     a=ve.getIdVenta() +" : "+ cdao.consultarId(ve.getIdCliente()).get(0).getNombre() +" "+ve.getFecha();
             %>
                     "<option value='<%= ve.getIdVenta()%>' id='<%= a.replaceAll(" ", "") %>'><%= a %></option>" +
             <%

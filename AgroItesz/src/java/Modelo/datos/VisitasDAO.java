@@ -50,7 +50,7 @@ public static VisitasDAO getVisitasDAO(){
     public List<Visitas> consultar() {
         List<Visitas> datos=new ArrayList<>();
         con=cn.getConexion();
-        sql=("select * from Visitas");
+        sql=("select * from visitas");
         try {
             ps=con.prepareStatement(sql);
             rs=ps.executeQuery();
@@ -59,11 +59,11 @@ public static VisitasDAO getVisitasDAO(){
                         rs.getDate("fechaPlaneada"),
                         rs.getDate("fechaReal"),
                         rs.getString("comentarios"),
-                        rs.getString("Estado").charAt(0),
+                        rs.getString("estatus").charAt(0),
                         rs.getFloat("costo"),
                         rs.getInt("idClienteCultivo"),
                         rs.getInt("idEmpleado"),
-                        rs.getInt("idTransporte")));
+                        rs.getInt("idUnidadTransporte")));
             }
             cn.closeConnection();
         } catch (SQLException ex) {

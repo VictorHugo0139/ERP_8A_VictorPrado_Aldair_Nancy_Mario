@@ -70,7 +70,7 @@ public class PresentacionDAO implements CRUD {
                         rs.getFloat("precioCompra"),
                         rs.getFloat("precioVenta"),
                         rs.getFloat("puntoReorden"),
-                        rs.getInt("puntoReorden"),
+                        rs.getInt("idProducto"),
                         rs.getInt("idEmpaque")));
                                 
             }

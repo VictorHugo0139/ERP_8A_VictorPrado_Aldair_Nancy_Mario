@@ -3,8 +3,12 @@
 <%@page import="Modelo.Sucursal"%>
 <%@page import="Modelo.datos.SucursalDAO"%>
 <%@page import="Modelo.datos.ClientesDAO"%>
+<%@page import="Modelo.datos.ProductosDAO"%>
+<%@page import="Modelo.datos.PresentacionDAO"%>
 <%@page import="Modelo.Clientes"%>
 <%@page import="Modelo.Ventas"%>
+<%@page import="Modelo.Productos"%>
+<%@page import="Modelo.Presentacion"%>
 <%@page import="java.util.*" %>
 <!DOCTYPE html>
 <html>
@@ -85,10 +89,14 @@
 <% ClientesDAO cdao = ClientesDAO.getClientesDAO();
     SucursalDAO sdao = SucursalDAO.getSucursalDAO();
     EmpleadosDAO edao = EmpleadosDAO.getEmpleadosDAO();
+    ProductosDAO pdao = ProductosDAO.getProducosDAO();
+    PresentacionDAO prdao= PresentacionDAO.getPresentacionDAO();
     List<Ventas> datos = (List<Ventas>) request.getAttribute("datosCl");
     List<Clientes> c = cdao.consultar();
     List<Sucursal> s = sdao.consultar();
     List<Empleados> e = edao.consultar();
+    List<Productos> p = pdao.consultar();
+    List<Presentacion> pr = prdao.consultar();
 %>
 <body style="background-color: #dfd7f5;">
     <header>
@@ -102,9 +110,11 @@
                     <a href="Controlador?accion=Ventas">Ventas</a>
                 </li>
                 <li class="seccion">
-                    <a href="Controlador?accion=VentasDetalles">Detalle de ventas</a>
+                    <a href="Controlador?accion=VentasDetalles">Cobros</a>
                 </li>
-
+                <li class="seccion">
+                    <a href="Controlador?accion=VentasDetalles">Facturas</a>
+                </li>
                 <li>
                     <form action="Controlador?accion=VentasS" method="POST" >
                         <input type="text" placeholder="búsqueda" name="busqueda" style="color: black;">
@@ -133,87 +143,117 @@
     </header>
     <button id="btnMostrarf">+</button>
     <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
-    <div style="margin-left: 180px; margin-top: 10px" id="divI">
-        <form action="Controlador?accion=VentasI" method="POST" name="formInsertar" onsubmit="return validar(formInsertar);">
-            <table border="0" style="width: 100%">
+    <div style="margin-left: 180px; padding-top: 0px;" id="divI">
+        <form action="Controlador?accion=VentasI" method="POST" name="formInsertar" id="formInsertar" >
+            <table border="0" style="width: 100%; padding-top: 0px;">
                 <tbody>
                     <tr>
-                        <td style="width: 4.5%" ><label>Fecha:</label></td>
-                        <td style="width: 25%"><input type="date" name="txtFecha" id="txtF" style="width: 90%;" required/></td>
-                        <td style="width: 25%"><input type="number" placeholder="Total a Pagar" name="txtTotalPagar"  step="0.01" style="width: 90%;" required /></td>
-                        <td style="width: 25%"><input type="number" placeholder="Cantidad Pagada" name="txtCantPagada"  style="width: 90%;" step="0.01" required/></td>
-
+                        <td style=" border-bottom: solid red;" colspan="5"><h4 style="color: black;font-weight: lighter;">Detalles de la venta</h4></td>
                     </tr>
                     <tr>
-                        <td colspan="2"><textarea type="text" placeholder="Comentarios" name="txtComentarios"  style="width: 91.8%; margin-top: 5px;" required></textarea></td>
-                        <td>
-                            <div>
-                                <label>&nbsp &nbsp &nbsp &nbsp Estatus</label> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp  
-                                <label>&nbsp &nbsp &nbsp &nbsp Tipo</label><br/>
-                                <input type="radio" id="Activo" name="txtEstatus" value="A" required>
-                                <label for="Activo">Activo</label>
-                                <input type="radio" id="Inactivo" name="txtEstatus" value="I">
-                                <label for="Inactivo">Inactivo</label>
-                                &nbsp &nbsp &nbsp &nbsp
-                                <input type="radio" id="Producto" name="txtTipo" value="E" required>
-                                <label for="Activo">Efectivo</label>
-                                <input type="radio" id="Opcion" name="txtTipo" value="C">
-                                <label for="Inactivo">Crédito</label> </div>
+                        <td style="width: 20%; padding-top: 5px;">
+                            <input type="hidden" id="estas" style="background-color: #b3ecff" readonly="true"/> 
+                            
+                            <input type="text" id="esta" style="background-color: #b3ecff" readonly="true"/> 
+                            <div id="esta2">
+                                <label style="color: grey;font-weight: lighter;" >Cliente</label>
+                                
+                                <select name="txtCliente" id="esta3">
+                                    <option >Selecciona un producto</option>
+                                    <%
+                                        for (Presentacion pre : pr) {
+                                    %>
+                                    
+                                    <option value="<%=  pre.idPresentacion %>" ><%= pdao.OneProduct(pre.idProducto) %></option>
+                                    <%
+                                        }
+                                    %>
+                                </select>
+                              </div >
 
-
+                            <button type="button" id="sel">Seleccionar Producto</button>
                         </td>
-                        <td >
-                            <label style="color: grey;font-weight: lighter;">Cliente</label>
-                            <select name="txtCliente">
-                                <%
-                                    for (Clientes cl : c) {
-                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
-
-                                %>
-                                <option value="<%= cl.getIdCliente()%>"><%= cl.getNombre()%></option>
-                                <%
-                                    }
-                                %>
-                            </select>
-                        </td>
+                        <td style="width: 20%; padding-top: 5px;"><input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" required=""/></td>
+                        <td style="width: 20%; padding-top: 5px;"><input type="text" name="Presentacion" id="Presentacion" placeholder="Presentación" readonly="true" style="background-color: #b3ecff"/></td>
+                        <td style="width: 20%; padding-top: 5px;"><input type="text" name="Subtotal" id="Subtotal" placeholder="Subtotal" readonly="true" style="background-color: #b3ecff"/></td>
+                        <td style="width: 20%; padding-top: 5px;"><button type="submit" id="Enviar"><span class="glyphicon glyphicon-ok"></span></button></td>
                     </tr>
-                    <tr>                        <td colspan="3"></td>
-                        <td colspan="2">
-                            <label style="color: grey;font-weight: lighter; width: 13%;">Sucursal</label>
-                            <select name="txtSucursal">
-                                <%
-                                    for (Sucursal su : s) {
-                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
 
-                                %>
-                                <option value="<%= su.getIdSucursal()%>"><%= su.getNombre()%></option>
-                                <%
-                                    }
-                                %>
-                            </select>
-                            <label style="color: grey;font-weight: lighter;">Empleado</label>
-                            <select name="txtEmpleado">
-                                <%
-                                    for (Empleados em : e) {
-                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
+                    <tr><br/><td colspan="5" style="padding-top: 10px; padding-bottom: 5px;"></tr>
 
-                                %>
-                                <option value="<%= em.getIdEmpleado()%>"><%= em.getNombre()%></option>
-                                <%
-                                    }
-                                %>
-                            </select>
-
-                        </td>
-                    </tr>
-                </tbody>
+                    </tbody>
             </table>
 
-            <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
-                Agregar
-            </button>
         </form>
-        </br>
+        <table id="productoslist">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Presentación</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="detallesVenta">
+                    <td style="width: 20%">Producto Seleccionado</td>
+                    <td style="width: 20%">2 unidades</td>
+                    <td style="width: 20%">costal</td>
+                    <td style="width: 20%">$100</td>
+                    <td style="width: 20%">
+                        <button type="button">
+                            <span  class='glyphicon glyphicon-ban-circle'></span></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <form>
+            <table border="0" style="width: 100%; padding-top: 0px;">
+                <tr>
+                    <td style="width: 20%" ></td>
+                    <td style="width: 20%"></td>
+                    <td style="width: 20%"></td>
+                    <td style="width: 15%"><label style="color: grey;font-weight: lighter;">Cliente</label>
+                        <select name="txtCliente">
+                            <%
+                                for (Clientes cl : c) {
+                            %>
+                            <option value="<%= cl.getIdCliente()%>"><%= cl.getNombre()%></option>
+                            <%
+                                }
+                            %>
+                        </select></td>
+                    <td style="width: 25%;"><button type="button">Agregar Cliente Nvo.</button></td>
+
+                </tr>
+                <tr style="border-top: solid red;">
+                    <td colspan="3"><textarea type="text" placeholder="Comentarios" name="txtComentarios"  style="width: 91.8%; margin-top: 5px;" required></textarea></td>
+                    <td></td>
+                    <td>
+                        <label style="color: grey;font-weight: lighter;width: 37%;padding-top: 5px;">Total a Pagar:</label>
+                        <input name="Total" id="Total" placeholder="Total"  readonly="true" style="width: 60%; background-color: #b3ecff;margin-top: 5px;"/>
+                        <br/>
+                        <label style="color: grey;font-weight: lighter;width: 37%;">Recibí:</label>
+                        <input name="Cantidad Pagada" id="CantidadP" placeholder="Cantidad Pagada"  style="width: 60%"/>
+                        <br/>
+                        <label style="color: grey;font-weight: lighter;width: 40%;">Modo de pago:</label>
+                        <select name="txtModoPago">
+                            <option value="1">Efectivo</option>
+                            <option value="2">Credito</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr ALIGN="right">                      
+                    <td colspan="5">
+                        <button type="submit" style="background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
+                            Procesar venta
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <br/>
     </div>
 
 
@@ -318,7 +358,7 @@
                     <td><%= s.get(0).getNombre()%></td>
                     <td><%= e.get(0).getNombre()%></td>
                     <%if (v.getEstatus() == 'A') {%>
-                    
+
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
                         <form action="Controlador?accion=VentasD&id=<%= idc%>" method="POST">
                             <button type="submit" value='<%= idc%>' name="idc" class="boton2">
@@ -529,7 +569,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-      
+
+        $('#esta').hide();
+        $('#esta2').hide();
         $('#divI').hide();
         $('#divA').hide();
         $('#btnMostrarf').hide();
@@ -549,7 +591,16 @@
                 $('#btnMostrar').html("<span  class='glyphicon glyphicon-minus-sign'></span>");
             }
         });
-        
+$('#cantidad').keyup(function(){
+
+        if (isNaN($('#cantidad').val())) { 
+         $('#Subtotal').val(0); 
+        }else{
+            
+              $('#Subtotal').val($('#cantidad').val()*$('#estas').val()); 
+        }
+});
+
         $('.boton').click(function () {
 
             //valores obtendra el dato del td por posciones [0]
@@ -579,8 +630,7 @@
     <%
         for (Clientes cl : c) {
             //String Ciudad = city.OneCity(cl.getIdCiudad());
-
-    %>
+%>
             "<option value='<%= cl.getIdCliente()%>'><%= cl.getNombre()%></option>" +
     <%
         }
@@ -622,13 +672,50 @@
             //console.log($('#idCl').val());
             $('#nombre').focus();
         });
+
         $('#Cancel').click(function () {
             $('#divA').hide();
             $('#divI').hide();
             $('.boton2').show();
             $('#btnMostrar').show();
         });
+        $('#sel').click(function () {
+            $('#esta').show();
+            $('#esta2').show();
+            $('#sel').hide();
+        });
+
+$("#esta2").change(function(){
+            //alert($('#esta3').val());
+            //alert(select_text = $("#esta3 option:selected").text());
+            select_text = $("#esta3 option:selected").text();
+            $('#esta').val(select_text);
+            $('#estas').val($('#esta3').val());
+	});
+
         $('#customers').DataTable({
+            "iDisplayLength": 2,
+            "aLengthMenu": [[2, 5, 10, -1], [2, 5, 10, "All"]],
+            language: {
+                processing: "Procesando...",
+                search: "Buscar:",
+                lengthMenu: "Mostrar _MENU_ elementos",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
+                infoEmpty: "No se encontraron elementos para mostrar",
+                infoFiltered: "(Filtrado de _MAX_ elementos en total)",
+                loadingRecords: "Cargando datos...",
+                zeroRecords: "No se encontraron elementos para mostrar",
+                paginate: {
+                    first: "Primer",
+                    previous: "Anterior",
+                    next: "Siguiente",
+                    last: "Último"
+                }
+            }
+        });
+        $('#productoslist').DataTable({
+            "iDisplayLength": 2,
+            "aLengthMenu": [[2, 5, 10, -1], [2, 5, 10, "All"]],
             language: {
                 processing: "Procesando...",
                 search: "Buscar:",

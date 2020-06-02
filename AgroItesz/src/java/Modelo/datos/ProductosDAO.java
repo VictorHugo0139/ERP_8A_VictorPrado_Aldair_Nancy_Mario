@@ -60,8 +60,8 @@ public class ProductosDAO implements CRUD{
                         rs.getString("nombre"), 
                         rs.getString("descripcion"),
                         rs.getInt("puntoReorden"),
-                        rs.getInt("precioCompra"),
-                        rs.getInt("precioVenta"),
+                        rs.getFloat("precioCompra"),
+                        rs.getFloat("precioVenta"),
                         rs.getString("ingredienteActivo"),
                         rs.getString("bandatoxicologica"),
                         rs.getString("aplicacion"),
@@ -92,8 +92,8 @@ public class ProductosDAO implements CRUD{
                         rs.getString("nombre"), 
                         rs.getString("descripcion"),
                         rs.getInt("puntoReorden"),
-                        rs.getInt("precioCompra"),
-                        rs.getInt("precioVenta"),
+                        rs.getFloat("precioCompra"),
+                        rs.getFloat("precioVenta"),
                         rs.getString("ingredienteActivo"),
                         rs.getString("bandatoxicologica"),
                         rs.getString("aplicacion"),
@@ -111,7 +111,7 @@ public class ProductosDAO implements CRUD{
     public String OneProduct(int idProduct) {
         String nombre="";
         con=cn.getConexion();
-        sql=("select * from Productos where idProducto=?;");
+        sql=("select * from Productos where idProducto=?");
         try {
             ps=con.prepareStatement(sql);
             ps.setString(1, String.valueOf(idProduct));

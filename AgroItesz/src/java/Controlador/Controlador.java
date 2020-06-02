@@ -16,6 +16,7 @@ import Modelo.Ventas;
 import Modelo.VentasDetalles;
 import Modelo.Tripulacion;
 import Modelo.Mantenimientos;
+import Modelo.Visitas;
 import Modelo.datos.ClientesDAO;
 import Modelo.datos.CultivosDAO;
 import Modelo.datos.TransporteDAO;
@@ -25,6 +26,7 @@ import Modelo.datos.AsociacionesDAO;
 import Modelo.datos.MiembrosDAO;
 import Modelo.datos.VentasDAO;
 import Modelo.datos.EnviosDAO;
+import Modelo.datos.VisitasDAO;
 import Modelo.datos.VentasDetallesDAO;
 import Modelo.datos.TripulacionDAO;
 import Modelo.datos.MantenimientosDAO;
@@ -81,8 +83,11 @@ public class Controlador extends HttpServlet {
     Tripulacion trip = new Tripulacion();
     List<Tripulacion> datosTrip = new ArrayList<>();
     MantenimientosDAO mandao = MantenimientosDAO.getMantenimientosDAO();
+    VisitasDAO visdao = VisitasDAO.getVisitasDAO();
     Mantenimientos mant = new Mantenimientos();
+    Visitas vis = new Visitas();
     List<Mantenimientos> datosMant = new ArrayList<>();
+    List<Visitas> datosVis = new ArrayList<>();
     
     int r;
     String res;
@@ -626,6 +631,12 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("resp", res);
                 request.getRequestDispatcher("ViewMantenimientos.jsp").forward(request, response);
                 break;
+                case "Visitas":
+                datosVis = visdao.consultar();
+                request.setAttribute("datosCl", datosVis);
+                request.getRequestDispatcher("ViewVisitas.jsp").forward(request, response);
+               
+                    break;
 //            case "TripulacionS":
 //                datosTrip = tripdao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
 //                request.setAttribute("datosCl", datosC);

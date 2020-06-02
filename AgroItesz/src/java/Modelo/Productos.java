@@ -6,8 +6,8 @@ public class Productos {
     private String nombre;
     private String descripcion;
     private int puntoReorden;
-    private int precioCompra;
-    private int precioVenta;
+    private float precioCompra;
+    private float precioVenta;
     private String ingredienteActivo;
     private String bandaToxicologica;
     private String aplicacion;
@@ -16,7 +16,7 @@ public class Productos {
     private int idCategoria;
     private char estatus;
     
-    public Productos(int idProducto, String nombre, String descripcion, int puntoReorden, int precioCompra,int precioVenta, String ingredienteActivo,
+    public Productos(int idProducto, String nombre, String descripcion, int puntoReorden, float precioCompra,float precioVenta, String ingredienteActivo,
                 String bandaToxicologica, String aplicacion, String uso, int idLaboratotio, int idCategoria, char estatus){
 
         this.idProducto = idProducto;
@@ -66,19 +66,19 @@ public class Productos {
         this.puntoReorden = puntoReorden;
     }
 
-    public int getPrecioCompra() {
+    public float getPrecioCompra() {
         return precioCompra;
     }
 
-    public void setPrecioCompra(int precioCompra) {
+    public void setPrecioCompra(float precioCompra) {
         this.precioCompra = precioCompra;
     }
 
-    public int getPrecioVenta() {
+    public float getPrecioVenta() {
         return precioVenta;
     }
 
-    public void setPrecioVenta(int precioVenta) {
+    public void setPrecioVenta(float precioVenta) {
         this.precioVenta = precioVenta;
     }
 
