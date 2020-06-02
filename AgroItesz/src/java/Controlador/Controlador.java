@@ -15,6 +15,7 @@ import Modelo.Envios;
 import Modelo.Ventas;
 import Modelo.VentasDetalles;
 import Modelo.Tripulacion;
+import Modelo.Mantenimientos;
 import Modelo.datos.ClientesDAO;
 import Modelo.datos.CultivosDAO;
 import Modelo.datos.TransporteDAO;
@@ -26,6 +27,7 @@ import Modelo.datos.VentasDAO;
 import Modelo.datos.EnviosDAO;
 import Modelo.datos.VentasDetallesDAO;
 import Modelo.datos.TripulacionDAO;
+import Modelo.datos.MantenimientosDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -78,6 +80,9 @@ public class Controlador extends HttpServlet {
     TripulacionDAO tripdao = TripulacionDAO.getTripulacionDAO();
     Tripulacion trip = new Tripulacion();
     List<Tripulacion> datosTrip = new ArrayList<>();
+    MantenimientosDAO mandao = MantenimientosDAO.getMantenimientosDAO();
+    Mantenimientos mant = new Mantenimientos();
+    List<Mantenimientos> datosMant = new ArrayList<>();
     
     int r;
     String res;
@@ -572,6 +577,55 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosTrip);
                 request.getRequestDispatcher("ViewTripulacion.jsp").forward(request, response);
             break;
+            case "Mantenimientos":
+                datosMant = mandao.consultar();
+                request.setAttribute("datosCl", datosMant);
+                request.getRequestDispatcher("ViewMantenimientos.jsp").forward(request, response);  
+            break;
+            case "MantenimientosI":
+                mant = new Mantenimientos(0,
+                        Date.valueOf(request.getParameter("txtFecha")),
+                        request.getParameter("txtTaller"),
+                        Integer.parseInt(request.getParameter("txtCosto")),
+                        request.getParameter("txtComentario"),
+                        request.getParameter("txtTipo"),
+                        Integer.parseInt(request.getParameter("txtTransporte")),
+                        request.getParameter("txtEstatus").charAt(0));
+                res = mandao.insertar(mant);
+                datosMant = mandao.consultar();
+                request.setAttribute("datosCl", datosMant);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewMantenimientos.jsp").forward(request, response);
+                break;
+                case "MantenimientosD":
+                res = mandao.eliminar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosMant = mandao.consultar();
+                request.setAttribute("datosCl", datosMant);
+                request.getRequestDispatcher("ViewMantenimientos.jsp").forward(request, response);
+                break;
+                case "MantenimientosR":
+                res = mandao.reactivar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosMant = mandao.consultar();
+                request.setAttribute("datosCl", datosMant);
+                request.getRequestDispatcher("ViewMantenimientos.jsp").forward(request, response);
+                break;
+                case "MantenimientosU":
+                mant = new Mantenimientos(Integer.parseInt(request.getParameter("idCl")),
+                        Date.valueOf(request.getParameter("txtFecha")),
+                        request.getParameter("txtTaller"),
+                        Integer.parseInt(request.getParameter("txtCosto")),
+                        request.getParameter("txtComentario"),
+                        request.getParameter("txtTipo"),
+                        Integer.parseInt(request.getParameter("txtTransporte")),
+                        request.getParameter("txtEstatus").charAt(0));
+                res = mandao.actualizar(mant);
+                datosMant = mandao.consultar();
+                request.setAttribute("datosCl", datosMant);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewMantenimientos.jsp").forward(request, response);
+                break;
 //            case "TripulacionS":
 //                datosTrip = tripdao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
 //                request.setAttribute("datosCl", datosC);
