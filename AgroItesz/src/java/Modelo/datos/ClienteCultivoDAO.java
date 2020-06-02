@@ -95,8 +95,31 @@ public static ClienteCultivoDAO getClienteCultivoDAO(){
             }
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(TransporteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteCultivoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return datos;
     }
+    public List<ClienteCultivo> consultarId(int id) {
+        List<ClienteCultivo> datos = new ArrayList<>();
+        con = cn.getConexion();
+        sql = ("select * from ClientesCultivo where idCliente=" + id);
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                datos.add(new ClienteCultivo(rs.getInt("idClienteCultivo"),
+                        rs.getFloat("extencion"),
+                        rs.getString("ubicacion"), 
+                        rs.getInt("idCliente"),
+                        rs.getInt("idCultivo"),
+                        rs.getInt("idTransporte"),
+                        rs.getString("estatus").charAt(0)));
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteCultivoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return datos;
+    }
+    
 }

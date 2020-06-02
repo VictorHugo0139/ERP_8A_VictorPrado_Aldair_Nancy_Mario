@@ -140,4 +140,22 @@ public class EmpleadosDAO implements CRUD {
         }
         return datos;
     }
+    
+    public String OneEmpleado(int idEmpleado) {
+        String nombre="";
+        con=cn.getConexion();
+        sql=("select*from Empleados where idEmpeado=?;");
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(idEmpleado));
+            rs=ps.executeQuery();
+            while(rs.next()){
+                nombre=rs.getString("nombre");
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(EmpleadosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nombre;
+    }
 }

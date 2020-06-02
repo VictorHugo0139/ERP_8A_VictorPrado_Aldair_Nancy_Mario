@@ -233,21 +233,12 @@
                 <table border="0" style="width: 100%">
                     <tbody> 
                         <tr>
-                            <td style="width: 25%"><input type="Date" placeholder="Fecha de Entrega Planeada" name="txtFechaEntregaP" id="txtFechaEntP" style="width: 90%;" value="" required/></td>
-                            <td colspan="2"><input type="Date" placeholder="Fecha de Entrega Real" name="txtFechaEntregaR" id="txtFechaEntR" style="width: 90%;" required/></td>
-                            <td style="width: 25%"><input type="text" step="0.01" placeholder="Direccion" name="txtDireccion" id="Direccion" style="width: 90%;" required/></td>
+                            <td style="width: 25%"><input type="Date" placeholder="Fecha Planeada" name="txtFechaP" id="txtFechaP" style="width: 90%;" value="" required/></td>
+                            <td colspan="2"><input type="Date" placeholder="Fecha Real" name="txtFechaR" id="txtFechaR" style="width: 90%;" required/></td>
+                            <td style="width: 25%"><input type="text" step="0.01" placeholder="Comentarios" name="txtComentario" id="Comentario" style="width: 90%;" required/></td>
                             <td style="width: 25%"><input type="numbre" placeholder="Codigo Postal" name="txtCP" id="txtCP" style="width: 90%;" value="" required/></td>
                         </tr>
-                        <tr>
-                            <td id="CD">
-
-                            </td>
-                            <td id="CD2">
-
-                            </td>
-                            <td id="CD3">
-
-                            </td>
+                        </td>
                             <td><label>Estatus</label>
                                 <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
                                 <label for="Activo">Activo</label>
@@ -257,6 +248,17 @@
                              <td colspan="3">
                             <input type="number" name="idCl" id="idCl"/>
                         </td>
+                        <tr>
+                            <td style="width: 25%"><input type="number" placeholder="Costo" name="txtCosto" id="Costo" style="width: 90%;"required/></td>
+                        </tr>
+                        <tr>
+                            <td id="CD">
+
+                            </td>
+                            <td id="CD2">
+
+                            </td>
+                            <td id="CD3">
                         </tr>
                     </tbody>
                 </table>
@@ -318,7 +320,24 @@
                     </form></td>
                     <%    }%>     
                 <td><%= vi.getCosto()%></td>
-               
+                <%
+                    datosCli = cl.OneClient(vi.getIdClienteCultivo());
+                String cc=datosCli.get(0).getIdClienteCultivo() +" : "+ cl.consultarId(datosCli.get(0).getIdCliente()).get(0).getExtencion();
+                %>
+                <td><%= cc %></td>
+                <%
+                    datosTr = transport.OneTransport(vi.getIdTransporte());
+                    String tt=datosTr.get(0).getModelo() +" "+ datosTr.get(0).getMarca() +" "+datosTr.get(0).getPlacas();
+                %>
+                <td><%= tt %></td>
+                <%
+                    String Ciudad = em.OneEmpleado(vi.getIdEmpleado());
+                %>
+                <td><%=Ciudad%></td>                   
+                </tr>
+                <%
+                    }
+                %>
                 </tbody>
             </table>
         </div>
@@ -347,7 +366,7 @@
                     var ano2 = parseInt(formulario.txtFechaEntregaR.value.toString().substring(0, 4));
                     var mes2 = parseInt(formulario.txtFechaEntregaR.value.toString().substring(5, 7));
                     var dia2 = parseInt(formulario.txtFechaEntregaR.value.toString().substring(8, 10));
-                    var formatoNumero = /^[^a-zA-Z.,\/\\:;_\-\^\{\[\"\!\|°¬#\$%&\(\)\=\?\'¡¿\}\]´¨\*\+\~`@]+$/;
+                    var formatoNumero = /^[^a-zA-Z.,\/\\:;_\-\^\{\[\"\!\|ï¿½ï¿½#\$%&\(\)\=\?\'ï¿½ï¿½\}\]ï¿½ï¿½\*\+\~`@]+$/;
                     var formatoubicacion = /^[\w.# ]+$/;
                     var t = false;
 
@@ -374,7 +393,7 @@
                                 return false;
                             }
                         } else {
-                            alert("La ubicación contiene algún caracter no permitido o está vacío");
+                            alert("La ubicaciï¿½n contiene algï¿½n caracter no permitido o estï¿½ vacï¿½o");
                             formulario.txtDireccion.focus();
                             return false;
                         }
@@ -388,7 +407,7 @@
                                 return false;
                             }
                         } else {
-                            alert("El codigo postal contiene algún caracter no permitido o está vacío");
+                            alert("El codigo postal contiene algï¿½n caracter no permitido o estï¿½ vacï¿½o");
                             formulario.txtCP.focus();
                             return false;
                         }
@@ -403,7 +422,7 @@
                         for (var i = 0; i < 2; i++)
                         {
                             if (formulario.txtEstatus[i].value !== "A" & formulario.txtEstatus[i].value !== "I") {
-                                alert("Un valor del estatus ha sido modificado por el usuario, No se enviarán los datos.");
+                                alert("Un valor del estatus ha sido modificado por el usuario, No se enviarï¿½n los datos.");
                                 return false;
                             }
                         }
@@ -414,25 +433,25 @@
                             return false;
                         } else {
                             if (isNaN(formulario.txtVenta.options[formulario.txtVenta.selectedIndex].value)) {
-                                alert("El valor asignado a la venta ha sido modificado por el usuario. No se enviará.");
+                                alert("El valor asignado a la venta ha sido modificado por el usuario. No se enviarï¿½.");
                                 return false;
                             } else {
                                 if (isNaN(formulario.txtTransporte.options[formulario.txtTransporte.selectedIndex].value)) {
-                                    alert("El valor asignado al transporte ha sido modificado por el usuario. No se enviará.");
+                                    alert("El valor asignado al transporte ha sido modificado por el usuario. No se enviarï¿½.");
                                     return false;
                                 } else {
                                     if (isNaN(formulario.txtCiudad.options[formulario.txtCiudad.selectedIndex].value)) {
-                                        alert("El valor asignado a la ciudad ha sido modificado por el usuario. No se enviará.");
+                                        alert("El valor asignado a la ciudad ha sido modificado por el usuario. No se enviarï¿½.");
                                         return false;
                                     } else {
-                                        alert("Datos enviados con éxito");
+                                        alert("Datos enviados con ï¿½xito");
                                         return true;
                                     }
                                 }
                             }
                         }
                     } else {
-                        alert("El año ingresado es menor que el de la fecha de entrega");
+                        alert("El aï¿½o ingresado es menor que el de la fecha de entrega");
                         formulario.txtFechaEntregaP.focus();
                         return false;
                     }
