@@ -218,21 +218,12 @@
                 <table border="0" style="width: 100%">
                     <tbody> 
                         <tr>
-                            <td style="width: 25%"><input type="Date" placeholder="Fecha de Entrega Planeada" name="txtFechaEntregaP" id="txtFechaEntP" style="width: 90%;" value="" required/></td>
-                            <td colspan="2"><input type="Date" placeholder="Fecha de Entrega Real" name="txtFechaEntregaR" id="txtFechaEntR" style="width: 90%;" required/></td>
-                            <td style="width: 25%"><input type="text" step="0.01" placeholder="Direccion" name="txtDireccion" id="Direccion" style="width: 90%;" required/></td>
+                            <td style="width: 25%"><input type="Date" placeholder="Fecha Planeada" name="txtFechaP" id="txtFechaP" style="width: 90%;" value="" required/></td>
+                            <td colspan="2"><input type="Date" placeholder="Fecha Real" name="txtFechaR" id="txtFechaR" style="width: 90%;" required/></td>
+                            <td style="width: 25%"><input type="text" step="0.01" placeholder="Comentarios" name="txtComentario" id="Comentario" style="width: 90%;" required/></td>
                             <td style="width: 25%"><input type="numbre" placeholder="Codigo Postal" name="txtCP" id="txtCP" style="width: 90%;" value="" required/></td>
                         </tr>
-                        <tr>
-                            <td id="CD">
-
-                            </td>
-                            <td id="CD2">
-
-                            </td>
-                            <td id="CD3">
-
-                            </td>
+                        </td>
                             <td><label>Estatus</label>
                                 <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
                                 <label for="Activo">Activo</label>
@@ -242,6 +233,17 @@
                              <td colspan="3">
                             <input type="number" name="idCl" id="idCl"/>
                         </td>
+                        <tr>
+                            <td style="width: 25%"><input type="number" placeholder="Costo" name="txtCosto" id="Costo" style="width: 90%;"required/></td>
+                        </tr>
+                        <tr>
+                            <td id="CD">
+
+                            </td>
+                            <td id="CD2">
+
+                            </td>
+                            <td id="CD3">
                         </tr>
                     </tbody>
                 </table>
@@ -305,16 +307,16 @@
                 <td><%= vi.getCosto()%></td>
                 <%
                     datosCli = cl.OneClient(vi.getIdClienteCultivo());
-                String cc=datosCli.get(0).getIdClienteCultivo() +" : "+ cl.consultarId(datosCli.get(0).getIdCliente()).get(0).getNombre() +" "+datosVen.get(0).getFecha();
+                String cc=datosCli.get(0).getIdClienteCultivo() +" : "+ cl.consultarId(datosCli.get(0).getIdCliente()).get(0).getExtencion();
                 %>
                 <td><%= cc %></td>
                 <%
-                    datosTr = transport.OneTransport(en.getIdTransporte());
+                    datosTr = transport.OneTransport(vi.getIdTransporte());
                     String tt=datosTr.get(0).getModelo() +" "+ datosTr.get(0).getMarca() +" "+datosTr.get(0).getPlacas();
                 %>
                 <td><%= tt %></td>
                 <%
-                    String Ciudad = city.OneCity(en.getIdCiudad());
+                    String Ciudad = em.OneEmpleado(vi.getIdEmpleado());
                 %>
                 <td><%=Ciudad%></td>                   
                 </tr>
