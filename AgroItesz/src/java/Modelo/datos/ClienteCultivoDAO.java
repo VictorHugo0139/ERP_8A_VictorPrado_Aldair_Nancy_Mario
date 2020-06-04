@@ -55,7 +55,7 @@ public static ClienteCultivoDAO getClienteCultivoDAO(){
             rs=ps.executeQuery();
             while(rs.next()){
                 datos.add(new ClienteCultivo(rs.getInt("idClienteCultivo"),
-                        rs.getFloat("extencion"),
+                        rs.getFloat("extension"),
                         rs.getString("ubicacion"), 
                         rs.getInt("idCliente"),
                         rs.getInt("idCultivo"),
@@ -102,18 +102,12 @@ public static ClienteCultivoDAO getClienteCultivoDAO(){
     public List<ClienteCultivo> consultarId(int id) {
         List<ClienteCultivo> datos = new ArrayList<>();
         con = cn.getConexion();
-        sql = ("select * from ClientesCultivo where idCliente=" + id);
+        sql = ("select * from ClientesCultivos where idClienteCultivo=" + id);
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                datos.add(new ClienteCultivo(rs.getInt("idClienteCultivo"),
-                        rs.getFloat("extencion"),
-                        rs.getString("ubicacion"), 
-                        rs.getInt("idCliente"),
-                        rs.getInt("idCultivo"),
-                        rs.getInt("idTransporte"),
-                        rs.getString("estatus").charAt(0)));
+                datos.add(new ClienteCultivo());
             }
             cn.closeConnection();
         } catch (SQLException ex) {

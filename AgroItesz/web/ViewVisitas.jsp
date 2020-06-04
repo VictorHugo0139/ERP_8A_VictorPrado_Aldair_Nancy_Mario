@@ -1,16 +1,10 @@
-<%@page import="Modelo.Ventas"%>
-<%@page import="Modelo.datos.VentasDAO"%>
-<%@page import="Modelo.Ciudades"%>
-<%@page import="Modelo.datos.CiudadesDAO"%>
-<%@page import="Modelo.Clientes"%>
-<%@page import="Modelo.datos.ClientesDAO"%>
 <%@page import="Modelo.datos.ClienteCultivoDAO"%>
-<%@page import="Modelo.ClienteCultivo"%>
-<%@page import="java.time.LocalDate"%>
 <%@page import="Modelo.datos.TransporteDAO" %>
 <%@page import="Modelo.datos.EmpleadosDAO" %>
 <%@page import="Modelo.datos.VisitasDAO" %>
+<%@page import="java.time.LocalDate"%>
 <%@page import="java.util.*" %>
+<%@page import="Modelo.ClienteCultivo"%>
 <%@page import="Modelo.Transporte" %>
 <%@page import="Modelo.Empleados" %>
 <%@page import="Modelo.Visitas" %>
@@ -94,24 +88,15 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Edicion de Visitas</title>
+        <title>Edicion de Envios</title>
     </head>
     <%  TransporteDAO transport = TransporteDAO.getTransporteDAO();
-        ClienteCultivoDAO cl=ClienteCultivoDAO.getClienteCultivoDAO();
         EmpleadosDAO em = EmpleadosDAO.getEmpleadosDAO();
+        ClienteCultivoDAO cli = ClienteCultivoDAO.getClienteCultivoDAO();
         List<Visitas> datos = (List<Visitas>) request.getAttribute("datosCl");
         List<Transporte> datosTr = transport.consultar();
-        List<ClienteCultivo> datosCli = cl.consultar();
         List<Empleados> datosEmp = em.consultar();
-        ClientesDAO cdao = ClientesDAO.getClientesDAO();
-    EmpleadosDAO edao = EmpleadosDAO.getEmpleadosDAO();
-    List<Clientes> c = cdao.consultar();
-    List<Empleados> e = edao.consultar();
-     CiudadesDAO city = CiudadesDAO.getCiudadesDAO();
-      VentasDAO Vdao = VentasDAO.getVentasDAO();
-      List<Ventas> datosVen = Vdao.consultar();
-    //List<Clientes> datosF = (List<Clientes>) request.getAttribute("datosCl");
-    List<Ciudades> datosCiu = city.consultar();
+        List<ClienteCultivo> datosCli = cli.consultar();
     %>
 
     <body style="background-color: #dfd7f5;">
@@ -160,43 +145,43 @@
                 <table border="0" style="width: 100%">
                     <tbody> 
                         <tr>
-                            <td style="width: 25%" colspan="2"><input type="Date" placeholder="Fecha Planeada" name="txtFechaP" id="txtFEP" style="width: 90%;" value="" required/></td>
-                            <td style="width: 25%" colspan="2"><input type="Date" placeholder="fecha Real" name="txtFechaR" id="txtFER" style="width: 90%;" value="" required /></td>
-                            <td style="width: 25%"><input type="text" step="0.01" placeholder="Comentario" name="txtComentario" style="width: 90%;" required/></td>              
+                            <td style="width: 25%" colspan="2"><input type="Date" placeholder="Fecha de Planeada" name="txtFechaEntregaP" id="txtFEP" style="width: 90%;" value="" required/></td>
+                            <td style="width: 25%" colspan="2"><input type="Date" placeholder="fecha de Real" name="txtFechaEntregaR" id="txtFER" style="width: 90%;" value="" required /></td>
+                            <td style="width: 25%"><input type="text" step="0.01" placeholder="Comentarios" name="txtComentarios" style="width: 90%;" required/></td>
                         </tr>
-                        <td><label>Estatus</label>
+                        <tr>
+                            <td><label>Estatus</label>
                                 <input type="radio" id="Activo" name="txtEstatus" value="A" required>
                                 <label for="Activo">Activo</label>
                                 <input type="radio" id="Inactivo" name="txtEstatus" value="I">
                                 <label for="Inactivo">Inactivo</label>
                             </td>
-                        <tr>
-                            <td style="width: 25%"><input type="number" placeholder="Costo" name="txtCosto" style="width: 90%;"required/></td>
+                            <td style="width: 25%"><input type="numbre" placeholder="Costo" name="txtCosto" style="width: 90%;"required/></td>
                         </tr>
                         <tr>
                             <td>
-                                <label style="color: grey;font-weight: lighter;">Venta:</label>
+                                <label style="color: grey;font-weight: lighter;">Cliente Cultivo:</label>
                                 <select name="txtClienteCultivo">
-                                    <%
-                                        for (ClienteCultivo clcu : datosCli) {
+                                   <%
+                                        for (ClienteCultivo clie : datosCli) {
                                             //String Ciudad = city.OneCity(cl.getIdCiudad());
 
                                     %>
-                                    <option value="<%= clcu.getIdClienteCultivo()%>"><%= clcu.getExtencion() %></option>
+                                    <option value="<%= clie.getIdClienteCultivo()%>"><%= clie.getIdClienteCultivo() +" : "+ em.consultarId(clie.getIdClienteCultivo()).get(0).getNombre() +" "+clie.getExtencion()%></option>
                                     <%
                                         }
                                     %>
                                 </select>
                             </td>
-                            <td>
-                                <label style="color: grey;font-weight: lighter;">Ciudad:</label>
+                            <td >
+                                <label style="color: grey;font-weight: lighter;">Empleado:</label>
                                 <select name="txtEmpleado">
                                     <%
-                                        for (Empleados emp : datosEmp) {
+                                        for (Empleados ee : datosEmp) {
                                             //String Ciudad = city.OneCity(cl.getIdCiudad());
 
                                     %>
-                                    <option value="<%= emp.getIdEmpleado()%>"><%= emp.getNombre()%></option>
+                                    <option value="<%= ee.getIdEmpleado()%>"><%= ee.getNombre()%></option>
                                     <%
                                         }
                                     %>
@@ -233,23 +218,18 @@
                 <table border="0" style="width: 100%">
                     <tbody> 
                         <tr>
-                            <td style="width: 25%"><input type="Date" placeholder="Fecha Planeada" name="txtFechaP" id="txtFechaP" style="width: 90%;" value="" required/></td>
-                            <td colspan="2"><input type="Date" placeholder="Fecha Real" name="txtFechaR" id="txtFechaR" style="width: 90%;" required/></td>
-                            <td style="width: 25%"><input type="text" step="0.01" placeholder="Comentarios" name="txtComentario" id="Comentario" style="width: 90%;" required/></td>
-                            <td style="width: 25%"><input type="numbre" placeholder="Codigo Postal" name="txtCP" id="txtCP" style="width: 90%;" value="" required/></td>
+                            <td style="width: 25%"><input type="Date" placeholder="Fecha Planeada" name="txtFechaEntregaP" id="txtFechaEntP" style="width: 90%;" value="" required/></td>
+                            <td colspan="2"><input type="Date" placeholder="Fecha Real" name="txtFechaEntregaR" id="txtFechaEntR" style="width: 90%;" required/></td>
+                            <td style="width: 25%"><input type="text" step="0.01" placeholder="Comentarios" name="txtComentarios" id="Comentarios" style="width: 90%;" required/></td>
                         </tr>
-                        </td>
+                        <tr>
                             <td><label>Estatus</label>
                                 <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
                                 <label for="Activo">Activo</label>
                                 <input type="radio" id="InactivoA" name="txtEstatus" value="I">
                                 <label for="Inactivo">Inactivo</label> 
                             </td>
-                             <td colspan="3">
-                            <input type="number" name="idCl" id="idCl"/>
-                        </td>
-                        <tr>
-                            <td style="width: 25%"><input type="number" placeholder="Costo" name="txtCosto" id="Costo" style="width: 90%;"required/></td>
+                            <td style="width: 25%"><input type="numbre" placeholder="Costo" name="txtCosto" id="txtCP" style="width: 90%;" value="" required/></td>
                         </tr>
                         <tr>
                             <td id="CD">
@@ -259,6 +239,11 @@
 
                             </td>
                             <td id="CD3">
+
+                            </td>
+                             <td colspan="3">
+                            <input type="number" name="idCl" id="idCl"/>
+                        </td>
                         </tr>
                     </tbody>
                 </table>
@@ -280,7 +265,7 @@
                         <th  width='1%' style='border: 0;' scope='col'>#Visita</th>
                         <th  width='10%' style='border: 0;' scope='col'>Fecha Planeada</th>
                         <th  width='25%' style='border: 0;' scope='col'>Fecha Real</th>
-                        <th  width='10%' style='border: 0;' scope='col'>Comentario</th>
+                        <th  width='10%' style='border: 0;' scope='col'>Comentarios</th>
                         <th  width='10%' style='border: 0;' scope='col'>Estatus</th>
                         <th  width='10%' style='border: 0;' scope='col'>Costo</th>
                         <th  width='10%' style='border: 0;' scope='col'>Cliente Cultivo</th>
@@ -307,33 +292,33 @@
                 %>
                 <td>Activo</td> 
                 <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                    <form action="Controlador?accion=EnviosD&id=<%= ido%>" method="POST">
+                    <form action="Controlador?accion=VisitasD&id=<%= ido%>" method="POST">
                         <button type="submit" value='<%= ido%>' name="idc" class="boton2">
                             <span  class='glyphicon glyphicon-ban-circle'></span></button>
                     </form></td>
                     <%    } else {%>
                 <td>Inactivo</td>
                 <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                    <form action="Controlador?accion=EnviosR&id=<%= ido%>" method="POST">
+                    <form action="Controlador?accion=VisitasR&id=<%= ido%>" method="POST">
                         <button type="submit" value='<%= ido%>' name="idc" class="boton2">
                             <span  class='glyphicon glyphicon-ok-circle'></span></button>
                     </form></td>
                     <%    }%>     
                 <td><%= vi.getCosto()%></td>
                 <%
-                    datosCli = cl.OneClient(vi.getIdClienteCultivo());
-                String cc=datosCli.get(0).getIdClienteCultivo() +" : "+ cl.consultarId(datosCli.get(0).getIdCliente()).get(0).getExtencion();
+                    datosCli = cli.OneClient(vi.getIdClienteCultivo());
+                String cc=datosCli.get(0).getIdClienteCultivo() +" : "+ cli.consultarId(datosCli.get(0).getIdClienteCultivo()).get(0).getExtencion();
                 %>
                 <td><%= cc %></td>
+                <%
+                    String Ciudad = em.OneEmpleado(vi.getIdEmpleado());
+                %>
+                <td><%=Ciudad%></td>   
                 <%
                     datosTr = transport.OneTransport(vi.getIdTransporte());
                     String tt=datosTr.get(0).getModelo() +" "+ datosTr.get(0).getMarca() +" "+datosTr.get(0).getPlacas();
                 %>
-                <td><%= tt %></td>
-                <%
-                    String Ciudad = em.OneEmpleado(vi.getIdEmpleado());
-                %>
-                <td><%=Ciudad%></td>                   
+                <td><%= tt %></td>                
                 </tr>
                 <%
                     }
@@ -366,7 +351,7 @@
                     var ano2 = parseInt(formulario.txtFechaEntregaR.value.toString().substring(0, 4));
                     var mes2 = parseInt(formulario.txtFechaEntregaR.value.toString().substring(5, 7));
                     var dia2 = parseInt(formulario.txtFechaEntregaR.value.toString().substring(8, 10));
-                    var formatoNumero = /^[^a-zA-Z.,\/\\:;_\-\^\{\[\"\!\|ï¿½ï¿½#\$%&\(\)\=\?\'ï¿½ï¿½\}\]ï¿½ï¿½\*\+\~`@]+$/;
+                    var formatoNumero = /^[^a-zA-Z.,\/\\:;_\-\^\{\[\"\!\|°¬#\$%&\(\)\=\?\'¡¿\}\]´¨\*\+\~`@]+$/;
                     var formatoubicacion = /^[\w.# ]+$/;
                     var t = false;
 
@@ -393,7 +378,7 @@
                                 return false;
                             }
                         } else {
-                            alert("La ubicaciï¿½n contiene algï¿½n caracter no permitido o estï¿½ vacï¿½o");
+                            alert("La ubicación contiene algún caracter no permitido o está vacío");
                             formulario.txtDireccion.focus();
                             return false;
                         }
@@ -407,7 +392,7 @@
                                 return false;
                             }
                         } else {
-                            alert("El codigo postal contiene algï¿½n caracter no permitido o estï¿½ vacï¿½o");
+                            alert("El codigo postal contiene algún caracter no permitido o está vacío");
                             formulario.txtCP.focus();
                             return false;
                         }
@@ -422,7 +407,7 @@
                         for (var i = 0; i < 2; i++)
                         {
                             if (formulario.txtEstatus[i].value !== "A" & formulario.txtEstatus[i].value !== "I") {
-                                alert("Un valor del estatus ha sido modificado por el usuario, No se enviarï¿½n los datos.");
+                                alert("Un valor del estatus ha sido modificado por el usuario, No se enviarán los datos.");
                                 return false;
                             }
                         }
@@ -433,25 +418,25 @@
                             return false;
                         } else {
                             if (isNaN(formulario.txtVenta.options[formulario.txtVenta.selectedIndex].value)) {
-                                alert("El valor asignado a la venta ha sido modificado por el usuario. No se enviarï¿½.");
+                                alert("El valor asignado a la venta ha sido modificado por el usuario. No se enviará.");
                                 return false;
                             } else {
                                 if (isNaN(formulario.txtTransporte.options[formulario.txtTransporte.selectedIndex].value)) {
-                                    alert("El valor asignado al transporte ha sido modificado por el usuario. No se enviarï¿½.");
+                                    alert("El valor asignado al transporte ha sido modificado por el usuario. No se enviará.");
                                     return false;
                                 } else {
                                     if (isNaN(formulario.txtCiudad.options[formulario.txtCiudad.selectedIndex].value)) {
-                                        alert("El valor asignado a la ciudad ha sido modificado por el usuario. No se enviarï¿½.");
+                                        alert("El valor asignado a la ciudad ha sido modificado por el usuario. No se enviará.");
                                         return false;
                                     } else {
-                                        alert("Datos enviados con ï¿½xito");
+                                        alert("Datos enviados con éxito");
                                         return true;
                                     }
                                 }
                             }
                         }
                     } else {
-                        alert("El aï¿½o ingresado es menor que el de la fecha de entrega");
+                        alert("El año ingresado es menor que el de la fecha de entrega");
                         formulario.txtFechaEntregaP.focus();
                         return false;
                     }
@@ -541,14 +526,14 @@
 
                     console.log(valor);
                     $('#CD').html("<label style='color: grey;font-weight: lighter;'>Venta:</label>" +
-                            "<select name='txtVenta'>" +
+                            "<select name='txtClienteCultivo'>" +
             <%  
-                datosVen = Vdao.consultar();
+                datosCli = cli.consultar();
                 String a;
-                for (Ventas ve : datosVen) {
-                     a=ve.getIdVenta() +" : "+ cdao.consultarId(ve.getIdCliente()).get(0).getNombre() +" "+ve.getFecha();
+                for (ClienteCultivo clie : datosCli) {
+                     a=clie.getIdClienteCultivo() +" : "+ cli.consultarId(datosCli.get(0).getIdClienteCultivo()).get(0).getExtencion();
             %>
-                    "<option value='<%= ve.getIdVenta()%>' id='<%= a.replaceAll(" ", "") %>'><%= a %></option>" +
+                    "<option value='<%= clie.getIdClienteCultivo()%>' id='<%= a.replaceAll(" ", "") %>'><%= a %></option>" +
             <%
 
                 }
@@ -557,7 +542,7 @@
                     $('#' + valor.split(' ').join('')).attr('selected', 'selected').change();
 
                     var valor = $(this).parents("tr").find("td")[6].innerHTML;
-                    $('#CD2').html("<label style='color: grey;font-weight: lighter;'>Transporte:</label>" +
+                    $('#CD3').html("<label style='color: grey;font-weight: lighter;'>Transporte:</label>" +
                             "<select name='txtTransporte'>"+
             <%
                 datosTr = transport.consultar();
@@ -572,10 +557,10 @@
                     );
                     $('#' + valor.split(' ').join('')).attr('selected', 'selected').change();
                     var valor = $(this).parents("tr").find("td")[7].innerHTML;
-                    $('#CD3').html("<label style='color: grey;font-weight: lighter;'>Ciudad:</label>" +
+                    $('#CD2').html("<label style='color: grey;font-weight: lighter;'>Ciudad:</label>" +
                             "<select name='txtCiudad' id='Ciudad'>" +
             <%
-                for (Ciudades ci : datosCiu) {
+                for (Empleados ci : datosEmp) {
                     //String Ciudad = city.OneCity(cl.getIdCiudad());
             %>
                     "<option value='<%= ci.getIdCiudad()%>' id='<%= ci.getNombre()%>'><%= ci.getNombre()%></option>" +
@@ -628,4 +613,3 @@
             });
         </script>  
 </html>
-
