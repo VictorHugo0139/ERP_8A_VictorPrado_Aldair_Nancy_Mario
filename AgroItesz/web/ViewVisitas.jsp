@@ -161,13 +161,13 @@
                         <tr>
                             <td>
                                 <label style="color: grey;font-weight: lighter;">Cliente Cultivo:</label>
-                                <select name="txtClienteCultivo">
+                                <select name="txtClienteCultivog">
                                    <%
                                         for (ClienteCultivo clie : datosCli) {
                                             //String Ciudad = city.OneCity(cl.getIdCiudad());
-
+                                            System.out.println(clie.getExtencion());
                                     %>
-                                    <option value="<%= clie.getIdClienteCultivo()%>"><%= clie.getIdClienteCultivo() +" : "+ em.consultarId(clie.getIdClienteCultivo()).get(0).getNombre() +" "+clie.getExtencion()%></option>
+                                    <option value="<%= clie.getIdClienteCultivo()%>"><%= clie.getExtencion() %></option>
                                     <%
                                         }
                                     %>

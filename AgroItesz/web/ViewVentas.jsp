@@ -143,8 +143,8 @@
     </header>
     <button id="btnMostrarf">+</button>
     <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
-    <div style="margin-left: 180px; padding-top: 0px;" id="divI">
-        <form action="Controlador?accion=VentasI" method="POST" name="formInsertar" id="formInsertar" >
+    <div style="margin-left: 180px; padding-top: 0px;"  id="divI">
+        <form action="Controlador?accion=VentasDetallesI" method="POST" name="formInsertar" id="formInsertar" >
             <table border="0" style="width: 100%; padding-top: 0px;">
                 <tbody>
                     <tr>
@@ -152,19 +152,36 @@
                     </tr>
                     <tr>
                         <td style="width: 20%; padding-top: 5px;">
-                            <input type="hidden" id="estas" style="background-color: #b3ecff" readonly="true"/> 
+                            <%  Ventas ven,ven2;
+                            int elegido=0;
+                                        for (int i = 0; i < datos.size(); i++) {
+                                                ven=datos.get(i);
+                                                for (int j = 0; j < datos.size(); j++) {
+                                                        ven2=datos.get(j);
+                                                        if(ven.getIdVenta()< ven2.getIdVenta()){
+                                                            elegido=ven2.getIdVenta();
+                                                        }else{
+                                                            elegido=ven.getIdVenta();
+                                                        }
+                                                }
+                                            }
+                                    %>
+                                    
+                            <input type="hidden" id="pro" name="pro"  value="<%= elegido +1 %>" style="background-color: #b3ecff" readonly="true"/> 
                             
-                            <input type="text" id="esta" style="background-color: #b3ecff" readonly="true"/> 
+                            <input type="hidden" id="estas" name="estas" style="background-color: #b3ecff" readonly="true"/> 
+                            
+                            <input type="text" id="esta" name="esta" style="background-color: #b3ecff" readonly="true"/> 
                             <div id="esta2">
                                 <label style="color: grey;font-weight: lighter;" >Cliente</label>
                                 
-                                <select name="txtCliente" id="esta3">
-                                    <option >Selecciona un producto</option>
+                                <select name="txtPresentacion" id="esta3">
+                                    <option selected="true">Selecciona un producto</option>
                                     <%
                                         for (Presentacion pre : pr) {
                                     %>
                                     
-                                    <option value="<%=  pre.idPresentacion %>" ><%= pdao.OneProduct(pre.idProducto) %></option>
+                                    <option value="<%=  pre.idPresentacion %>" class="<%=  pre.precioVenta %>" ><%= pdao.OneProduct(pre.idProducto) %></option>
                                     <%
                                         }
                                     %>
@@ -687,10 +704,13 @@ $('#cantidad').keyup(function(){
 
 $("#esta2").change(function(){
             //alert($('#esta3').val());
+            //alert($("#esta3 option:selected").attr('label'));
+            //alert($('#esta3').val());
             //alert(select_text = $("#esta3 option:selected").text());
             select_text = $("#esta3 option:selected").text();
             $('#esta').val(select_text);
-            $('#estas').val($('#esta3').val());
+            $('#Presentacion').val(select_text);
+            $('#estas').val($("#esta3 option:selected").attr('class'));
 	});
 
         $('#customers').DataTable({

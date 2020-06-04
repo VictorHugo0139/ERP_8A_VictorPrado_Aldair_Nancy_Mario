@@ -456,19 +456,19 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewEnvios.jsp").forward(request, response);
                 break;
                 
-                case "VentasDetallesI":
+            case "VentasDetallesI":
                 vD = new VentasDetalles(0,
-                        Float.parseFloat(request.getParameter("txtPrecioVenta")),
-                        Float.parseFloat(request.getParameter("txtCantidad")),
-                        Float.parseFloat(request.getParameter("txtSubtotal")),
-                        Integer.parseInt(request.getParameter("txtVentas")),
+                        Float.parseFloat(request.getParameter("estas")),
+                        Float.parseFloat(request.getParameter("cantidad")),
+                        Float.parseFloat(request.getParameter("Subtotal")),
+                        Integer.parseInt(request.getParameter("pro")),
                         Integer.parseInt(request.getParameter("txtPresentacion")),
-                         request.getParameter("txtEstatus").charAt(0));
+                        'A');
                 res = VDdao.insertar(vD);
                 datosVD = VDdao.consultar();
                 request.setAttribute("datosCl", datosVD);
                 request.setAttribute("resp", res);
-                request.getRequestDispatcher("ViewVentasDetalles.jsp").forward(request, response);
+                request.getRequestDispatcher("ViewVentas.jsp").forward(request, response);
                 break;
                 
             case "VentasDetallesU":

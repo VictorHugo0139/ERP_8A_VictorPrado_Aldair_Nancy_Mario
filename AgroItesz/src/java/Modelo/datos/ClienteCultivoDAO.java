@@ -49,7 +49,7 @@ public static ClienteCultivoDAO getClienteCultivoDAO(){
     public List<ClienteCultivo> consultar() {
         List<ClienteCultivo> datos=new ArrayList<>();
         con=cn.getConexion();
-        sql=("select*from ClientesCultivo;");
+        sql=("select*from ClientesCultivos;");
         try {
             ps=con.prepareStatement(sql);
             rs=ps.executeQuery();
@@ -59,7 +59,7 @@ public static ClienteCultivoDAO getClienteCultivoDAO(){
                         rs.getString("ubicacion"), 
                         rs.getInt("idCliente"),
                         rs.getInt("idCultivo"),
-                        rs.getInt("idTransporte"),
+                        rs.getInt("idCiudad"),
                         rs.getString("estatus").charAt(0)));
             }
             cn.closeConnection();
