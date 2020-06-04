@@ -306,8 +306,7 @@
                     <%    }%>     
                 <td><%= vi.getCosto()%></td>
                 <%
-                    datosCli = cli.OneClient(vi.getIdClienteCultivo());
-                String cc=datosCli.get(0).getIdClienteCultivo() +" : "+ cli.consultarId(datosCli.get(0).getIdClienteCultivo()).get(0).getExtencion();
+                    String cc=cli.OneCliente(vi.getIdClienteCultivo());
                 %>
                 <td><%= cc %></td>
                 <%
@@ -318,7 +317,7 @@
                     datosTr = transport.OneTransport(vi.getIdTransporte());
                     String tt=datosTr.get(0).getModelo() +" "+ datosTr.get(0).getMarca() +" "+datosTr.get(0).getPlacas();
                 %>
-                <td><%= tt %></td>                
+                <td><%= tt %></td>        
                 </tr>
                 <%
                     }
@@ -520,7 +519,7 @@
                     $('#divA').show();
                     $('#txtFechaEntP').val($(this).parents("tr").find("td")[1].innerHTML);
                     $('#txtFechaEntR').val($(this).parents("tr").find("td")[2].innerHTML);
-                    $('#Direccion').val($(this).parents("tr").find("td")[3].innerHTML);
+                    $('#txtComentarios').val($(this).parents("tr").find("td")[3].innerHTML);
                     $('#txtCP').val($(this).parents("tr").find("td")[4].innerHTML);
                     var valor = $(this).parents("tr").find("td")[5].innerHTML;
 
@@ -531,7 +530,7 @@
                 datosCli = cli.consultar();
                 String a;
                 for (ClienteCultivo clie : datosCli) {
-                     a=clie.getIdClienteCultivo() +" : "+ cli.consultarId(datosCli.get(0).getIdClienteCultivo()).get(0).getExtencion();
+                     a=clie.getIdClienteCultivo() +" : "+ clie.getExtencion();
             %>
                     "<option value='<%= clie.getIdClienteCultivo()%>' id='<%= a.replaceAll(" ", "") %>'><%= a %></option>" +
             <%

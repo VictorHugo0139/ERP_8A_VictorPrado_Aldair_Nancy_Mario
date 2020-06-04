@@ -99,21 +99,22 @@ public static ClienteCultivoDAO getClienteCultivoDAO(){
         }
         return datos;
     }
-    public List<ClienteCultivo> consultarId(int id) {
-        List<ClienteCultivo> datos = new ArrayList<>();
-        con = cn.getConexion();
-        sql = ("select * from ClientesCultivos where idClienteCultivo=" + id);
+    public String OneCliente(int idEmpleado) {
+        String nombre="";
+        con=cn.getConexion();
+        sql=("select*from ClientesCultivo where idClienteCultivo=?;");
         try {
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                datos.add(new ClienteCultivo());
+            ps=con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(idEmpleado));
+            rs=ps.executeQuery();
+            while(rs.next()){
+                nombre=rs.getString("extension");
             }
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteCultivoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EmpleadosDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return datos;
+        return nombre;
     }
     
 }
