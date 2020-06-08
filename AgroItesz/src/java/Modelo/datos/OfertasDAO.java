@@ -107,6 +107,7 @@ public static OfertasDAO getOfertasDAO(){
             ps.setInt(6, of.getCanMinProducto());
             ps.setString(7, ""+of.getEstatus());
             ps.setInt(8, of.getIdProducto());
+            ps.setInt(9, of.getIdOfertas());
             int filas = ps.executeUpdate();
             respuesta = "se reactivaron " + filas + " filas";
             cn.closeConnection();

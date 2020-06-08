@@ -161,7 +161,7 @@
                         <tr>
                             <td>
                                 <label style="color: grey;font-weight: lighter;">Cliente Cultivo:</label>
-                                <select name="txtClienteCultivog">
+                                <select name="txtClienteCultivo">
                                    <%
                                         for (ClienteCultivo clie : datosCli) {
                                             //String Ciudad = city.OneCity(cl.getIdCiudad());
@@ -266,11 +266,11 @@
                         <th  width='10%' style='border: 0;' scope='col'>Fecha Planeada</th>
                         <th  width='25%' style='border: 0;' scope='col'>Fecha Real</th>
                         <th  width='10%' style='border: 0;' scope='col'>Comentarios</th>
-                        <th  width='10%' style='border: 0;' scope='col'>Estatus</th>
-                        <th  width='10%' style='border: 0;' scope='col'>Costo</th>
+                        <th  width='10%' style='border: 0;' scope='col'>Costos</th>
                         <th  width='10%' style='border: 0;' scope='col'>Cliente Cultivo</th>
                         <th  width='10%' style='border: 0;' scope='col'>Empleado</th>
                         <th  width='10%' style='border: 0;' scope='col'>Transporte</th>
+                        <th  width='10%' style='border: 0;' scope='col'>Estatus</th>
                         <th  width='10%' style='border: 0;' scope='col'>Acciones</th> 
                     </tr>
                 </thead>
@@ -287,37 +287,38 @@
                 <td><%= vi.getFechaPlaneada()%></td>
                 <td><%= vi.getFechaReal()%></td>
                 <td><%= vi.getComentarios()%></td>
-                <%
-                    if (vi.getEstado() == 'A') {
-                %>
-                <td>Activo</td> 
-                <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                    <form action="Controlador?accion=VisitasD&id=<%= ido%>" method="POST">
-                        <button type="submit" value='<%= ido%>' name="idc" class="boton2">
-                            <span  class='glyphicon glyphicon-ban-circle'></span></button>
-                    </form></td>
-                    <%    } else {%>
-                <td>Inactivo</td>
-                <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                    <form action="Controlador?accion=VisitasR&id=<%= ido%>" method="POST">
-                        <button type="submit" value='<%= ido%>' name="idc" class="boton2">
-                            <span  class='glyphicon glyphicon-ok-circle'></span></button>
-                    </form></td>
-                    <%    }%>     
                 <td><%= vi.getCosto()%></td>
                 <%
-                    String cc=cli.OneCliente(vi.getIdClienteCultivo());
+                    String cc=datosCli.get(0).getUbicacion();
                 %>
                 <td><%= cc %></td>
                 <%
-                    String Ciudad = em.OneEmpleado(vi.getIdEmpleado());
+                    String Ciudad = datosEmp.get(0).getNombre();
                 %>
                 <td><%=Ciudad%></td>   
                 <%
                     datosTr = transport.OneTransport(vi.getIdTransporte());
                     String tt=datosTr.get(0).getModelo() +" "+ datosTr.get(0).getMarca() +" "+datosTr.get(0).getPlacas();
                 %>
-                <td><%= tt %></td>        
+                <td><%= tt %></td>   
+                
+                    <%
+                        if (vi.getEstado() == 'A') {
+                    %>
+                    <td>Activo</td> 
+                    <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
+                        <form action="Controlador?accion=VisitasD&id=<%= ido%>" method="POST">
+                            <button type="submit" value='<%= ido%>' name="ido" class="boton2">
+                                <span  class='glyphicon glyphicon-ban-circle'></span></button>
+                        </form></td>
+                    <%    } else {                    %>
+                    <td>Inactivo</td>
+                    <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
+                        <form action="Controlador?accion=VisitasR&id=<%= ido%>" method="POST">
+                            <button type="submit" value='<%= ido%>' name="ido" class="boton2">
+                            <span  class='glyphicon glyphicon-ok-circle'></span></button>
+                        </form></td>
+                    <%    }%>         
                 </tr>
                 <%
                     }
@@ -520,7 +521,7 @@
                     $('#txtFechaEntP').val($(this).parents("tr").find("td")[1].innerHTML);
                     $('#txtFechaEntR').val($(this).parents("tr").find("td")[2].innerHTML);
                     $('#txtComentarios').val($(this).parents("tr").find("td")[3].innerHTML);
-                    $('#txtCP').val($(this).parents("tr").find("td")[4].innerHTML);
+                    $('#txtCosto').val($(this).parents("tr").find("td")[4].innerHTML);
                     var valor = $(this).parents("tr").find("td")[5].innerHTML;
 
                     console.log(valor);
@@ -530,7 +531,7 @@
                 datosCli = cli.consultar();
                 String a;
                 for (ClienteCultivo clie : datosCli) {
-                     a=clie.getIdClienteCultivo() +" : "+ clie.getExtencion();
+                     a=clie.getIdClienteCultivo() +" : "+ clie.getUbicacion();
             %>
                     "<option value='<%= clie.getIdClienteCultivo()%>' id='<%= a.replaceAll(" ", "") %>'><%= a %></option>" +
             <%
