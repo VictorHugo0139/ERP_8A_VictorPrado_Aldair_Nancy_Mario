@@ -187,13 +187,11 @@
                             <td style="width: 25%"><input type="Date" placeholder="Fecha" name="txtFecha" id="txtFecha" style="width: 90%;" value="" required/></td>
                             <td style="width: 25%" colspan="2"><input type="text" placeholder="Taller" name="txtTaller" id="txtTaller" style="width: 90%;" value="" required /></td>
                             <td style="width: 25%"><input type="number" step="0.01" placeholder="Costo" name="txtCosto" id="txtCosto" style="width: 90%;" required/></td>
-                            <td style="width: 25%"><input type="text" placeholder="Comentario" name="txtComentario" id="txtComentario" style="width: 90%;"required/></td>
-                            
+                            <td style="width: 25%"><input type="text" placeholder="Comentario" name="txtComentario" id="txtComentario" style="width: 90%;"required/></td>                          
                         </tr>
-                        <td style="width: 25%"><input type="text" placeholder="Tipo" name="txtTipo" id="txtTipo" style="width: 90%;"required/></td>
                         <tr>
-                            
-                              </tr>
+                        <td style="width: 25%"><input type="text" placeholder="Tipo" name="txtTipo" id="txtTipo" style="width: 90%;"required/></td>    
+                        </tr>
                         <tr>
                             <td id="CD">
 

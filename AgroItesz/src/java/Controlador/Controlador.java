@@ -272,7 +272,7 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
                 break;
             case "OfertasI":
-                of = new Ofertas(0,
+                of = new Ofertas(Integer.parseInt(request.getParameter("idCl")),
                         request.getParameter("txtNombre"),
                         request.getParameter("txtDescripcion"),
                         Integer.parseInt(request.getParameter("txtPorDescuento")),

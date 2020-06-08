@@ -105,6 +105,7 @@ public static MantenimientosDAO getMantenimientosDAO(){
             ps.setString(5, ma.getTipo());
             ps.setInt(6, ma.getIdUnidadTransporte());
             ps.setString(7, ""+ma.getEstatus()); 
+            ps.setInt(8, ma.getIdMantenimiento());
             int filas = ps.executeUpdate();
             respuesta = "se reactivaron " + filas + " filas";
             cn.closeConnection();

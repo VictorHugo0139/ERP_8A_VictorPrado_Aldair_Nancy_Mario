@@ -178,8 +178,8 @@
             </br>
         </div>
         
-        <div style="margin-left: 180px; margin-top: 10px" id="divA">
-            <form action="Controlador?accion=OfertasU" method="POST" name="formInsertar">
+        <div style="margin-left: 180px; margin-top: 10px" id="divA" >
+            <form action="Controlador?accion=OfertasU" method="POST" name="formActualizar" onsubmit="return validar(formActualizar);">
                 <table border="0" style="width: 100%">
                     <tbody> 
                         <tr>
@@ -202,12 +202,18 @@
                                 <input type="radio" id="InactivoA" name="txtEstatus" value="I">
                                 <label for="Inactivo">Inactivo</label>
                             </td>
+                            <td colspan="3">
+                            <input type="number" name="idCl" id="idCl"/>
+                        </td>
                         </tr>
                     </tbody>
                 </table>
 
                 <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
-                    Agregar
+                    Actualizar
+                </button>
+                <button type="button" id="Cancel" style="width: 20%; background-color: #fc1919; color: #fff; font-weight: bold; border-radius: 0.33em;">
+                    Cancelar
                 </button>
             </form>
             </br>
@@ -337,7 +343,7 @@
             $('#txtFechaIni').val($(this).parents("tr").find("td")[4].innerHTML);
             $('#txtFechaFin').val($(this).parents("tr").find("td")[5].innerHTML);
             $('#cantMin').val($(this).parents("tr").find("td")[6].innerHTML);
-            var valor = $(this).parents("tr").find("td")[7].innerHTML;
+            var valor = $(this).parents("tr").find("td")[8].innerHTML;
             //console.log(valor);
             $('#CD').html("<label style='color: grey;font-weight: lighter;'>Productos:</label>"+
                                 "<select name='txtProducto'>"+
@@ -351,7 +357,7 @@
                                 "</select>");
                                 $('#' + valor).attr('selected', 'selected').change();
                                  
-            if ($(this).parents("tr").find("td")[8].innerHTML === 'Activo') {
+            if ($(this).parents("tr").find("td")[7].innerHTML === 'Activo') {
                 $('#ActivoA').prop("checked", true);
             } else {
                 $('#InactivoA').prop("checked", true);
@@ -360,10 +366,23 @@
             valor=$(this).parents("tr").find("td")[0].innerHTML;
             console.log(valor);
             $('#nombre').focus();
-                                
+            
+            $('#' + valor).attr('selected', 'selected').change();
+                    var valor = $(this).parents("tr").find("td")[0].innerHTML;
+                    $('#idCl').val(valor);
+                    $('#idCl').hide();
+                    //console.log($('#idCl').val());
+                    $('#nombre').focus();
+                                                       
         });
                 $('#txtFechaI').val(hoyFecha());
                 $('#txtFechaF').val(hoyFecha());
+                $('#Cancel').click(function () {
+                $('#divA').hide();
+                $('#divI').hide();
+                $('.boton2').show();
+                $('#btnMostrar').show();
+        });
                 $('#customers').DataTable({
                     language: {
                         processing: "Procesando...",
