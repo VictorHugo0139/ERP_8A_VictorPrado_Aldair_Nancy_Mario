@@ -411,7 +411,7 @@ public class Controlador extends HttpServlet {
             case "VentasU":
                 v = new Ventas(Integer.parseInt(request.getParameter("idCl")),
                         Date.valueOf(request.getParameter("txtFecha")),
-                       Float.parseFloat(request.getParameter("txtTotalPagar")),
+                        Float.parseFloat(request.getParameter("txtTotalPagar")),
                         Float.parseFloat(request.getParameter("txtCantPagada")),
                         request.getParameter("txtComentarios"),
                         request.getParameter("txtEstatus").charAt(0),
@@ -620,7 +620,7 @@ public class Controlador extends HttpServlet {
                 mant = new Mantenimientos(Integer.parseInt(request.getParameter("idCl")),
                         Date.valueOf(request.getParameter("txtFecha")),
                         request.getParameter("txtTaller"),
-                        Integer.parseInt(request.getParameter("txtCosto")),
+                        Float.parseFloat(request.getParameter("txtCosto")),
                         request.getParameter("txtComentario"),
                         request.getParameter("txtTipo"),
                         Integer.parseInt(request.getParameter("txtTransporte")),
