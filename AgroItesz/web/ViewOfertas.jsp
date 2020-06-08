@@ -343,7 +343,7 @@
             $('#txtFechaIni').val($(this).parents("tr").find("td")[4].innerHTML);
             $('#txtFechaFin').val($(this).parents("tr").find("td")[5].innerHTML);
             $('#cantMin').val($(this).parents("tr").find("td")[6].innerHTML);
-            var valor = $(this).parents("tr").find("td")[8].innerHTML;
+            var valor = $(this).parents("tr").find("td")[7].innerHTML;
             //console.log(valor);
             $('#CD').html("<label style='color: grey;font-weight: lighter;'>Productos:</label>"+
                                 "<select name='txtProducto'>"+
@@ -357,16 +357,11 @@
                                 "</select>");
                                 $('#' + valor).attr('selected', 'selected').change();
                                  
-            if ($(this).parents("tr").find("td")[7].innerHTML === 'Activo') {
+            if ($(this).parents("tr").find("td")[8].innerHTML === 'Activo') {
                 $('#ActivoA').prop("checked", true);
             } else {
                 $('#InactivoA').prop("checked", true);
-            }
-            console.log($(this).parents("tr").find("td")[0].innerHTML);
-            valor=$(this).parents("tr").find("td")[0].innerHTML;
-            console.log(valor);
-            $('#nombre').focus();
-            
+            }            
             $('#' + valor).attr('selected', 'selected').change();
                     var valor = $(this).parents("tr").find("td")[0].innerHTML;
                     $('#idCl').val(valor);
