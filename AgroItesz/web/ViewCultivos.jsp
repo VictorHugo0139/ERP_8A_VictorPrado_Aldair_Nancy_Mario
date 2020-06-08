@@ -147,16 +147,13 @@
                         <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" id='nombre'  style="width: 90%;" required/></td>
                         <td style="width: 25%" colspan="2"><input type="text" placeholder="costoAsesoria" name="txtcostoAsesoria" id='costoAsesoria'  style="width: 90%;" required /></td>
                     </tr>
-                        <td id='CD'>
-
-                        </td>
                         <td><label>Estatus:</label>
                             <input type="radio" id="ActivoA" name="txtEstatusA" value="A" required>
                             <label for="Activo">Activo</label>
                             <input type="radio" id="InactivoA" name="txtEstatusA" value="I">
                             <label for="Inactivo">Inactivo</label>
                         </td>
-                        <td><input type="number" name="idCl" id="idCl"/> </td>
+                        <td><input type="number" name="idTr" id="idTr"/> </td>
                     </tr>
                 </tbody>
             </table>
@@ -207,9 +204,7 @@
                             <button type="submit" value='<%= idCul%>' name="idc" class="boton2">
                             <span  class='glyphicon glyphicon-ok-circle'></span></button>
                         </form></td>
-                    <%    }%>                        
-
-                    
+                    <%    }%>                                     
                 </tr>
                 <%
                     }
@@ -254,13 +249,9 @@
             $('.boton2').hide();
             $('#divI').hide();
             $('#divA').show();
-            $('#txtNombre').val($(this).parents("tr").find("td")[1].innerHTML);
-            $('#txtcostoAsesoria').val($(this).parents("tr").find("td")[2].innerHTML);
-            var valor = $(this).parents("tr").find("td")[7].innerHTML;
-            //console.log(valor);
-                                $('#' + valor).attr('selected', 'selected').change();
-                                 
-            if ($(this).parents("tr").find("td")[8].innerHTML === 'Activo') {
+            $('#nombre').val($(this).parents("tr").find("td")[1].innerHTML);
+            $('#costoAsesoria').val($(this).parents("tr").find("td")[2].innerHTML);
+            if ($(this).parents("tr").find("td")[3].innerHTML === 'Activo') {
                 $('#ActivoA').prop("checked", true);
             } else {
                 $('#InactivoA').prop("checked", true);
@@ -268,30 +259,36 @@
             console.log($(this).parents("tr").find("td")[0].innerHTML);
             valor=$(this).parents("tr").find("td")[0].innerHTML;
             console.log(valor);
+            $('#idTr').val(valor);
+            $('#idTr').hide();
+            console.log($('#idTr').val());
             $('#nombre').focus();
-                                
         });
-                $('#txtFechaI').val(hoyFecha());
-                $('#txtFechaF').val(hoyFecha());
-                $('#customers').DataTable({
-                    language: {
-                        processing: "Procesando...",
-                        search: "Buscar:",
-                        lengthMenu: "Mostrar _MENU_ elementos",
-                        info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
-                        infoEmpty: "No se encontraron elementos para mostrar",
-                        infoFiltered: "(Filtrado de _MAX_ elementos en total)",
-                        loadingRecords: "Cargando datos...",
-                        zeroRecords: "No se encontraron elementos para mostrar",
-                        paginate: {
-                            first: "Primer",
-                            previous: "Anterior",
-                            next: "Siguiente",
-                            last: "Último"
-                        }
-                    }
-                });
-            });
+            $('#Cancel').click(function () {
+            $('#divA').hide();
+            $('#divI').hide();
+            $('.boton2').show();
+            $('#btnMostrar').show();
+        });
+        $('#customers').DataTable({
+            language: {
+                processing: "Procesando...",
+                search: "Buscar:",
+                lengthMenu: "Mostrar _MENU_ elementos",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
+                infoEmpty: "No se encontraron elementos para mostrar",
+                infoFiltered: "(Filtrado de _MAX_ elementos en total)",
+                loadingRecords: "Cargando datos...",
+                zeroRecords: "No se encontraron elementos para mostrar",
+                paginate: {
+                    first: "Primer",
+                    previous: "Anterior",
+                    next: "Siguiente",
+                    last: "Último"
+                }
+            }
+        });
+    });
         </script>    
     
 </body>

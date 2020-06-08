@@ -46,13 +46,12 @@ public class CultivosDAO implements CRUD {
         Cultivos cult=(Cultivos) obj;
         String respuesta="";
         con=cn.getConexion();
-        sql = ("insert into Cultivos (idCutivo, nombre, costoAsesoria, estatus) values (?,?,?,?)");
+        sql = ("insert into Cultivos (nombre, costoAsesoria, estatus) values (?,?,?)");
         try {
             ps=con.prepareStatement(sql);
-            ps.setInt(1, cult.getIdCultivo());
-            ps.setString(2, cult.getNombre());
-            ps.setFloat(3, cult.getCostoAsesoria());
-            ps.setInt(4, cult.getEstado());
+            ps.setString(1, cult.getNombre());
+            ps.setFloat(2, cult.getCostoAsesoria());
+            ps.setInt(3, cult.getEstado());
             int filas =ps.executeUpdate();
             respuesta = "Se Insertaron "+filas+" filas correctamente";
             cn.closeConnection();
@@ -64,15 +63,16 @@ public class CultivosDAO implements CRUD {
 
     @Override
     public String eliminar(int id) {
-//        Cultivos cl=(Cultivos) obj;
         String respuesta="";
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
         con=cn.getConexion();
-        sql=("delete from Cultivos where idCultivo=? "); 
+        sql=("update Cultivos set estatus='I' where idCultivo=? "); 
         try {
             ps=con.prepareStatement(sql);
             ps.setInt(1, id);
             int filas= ps.executeUpdate();
-            respuesta="se eliminaron "+filas+" filas correctamente";
+            respuesta="se eliminaron "+filas+" filas";
             cn.closeConnection();
         } catch (SQLException ex) {
             Logger.getLogger(CultivosDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -85,12 +85,13 @@ public class CultivosDAO implements CRUD {
        Cultivos cult=(Cultivos) obj;
         String respuesta="";
         con=cn.getConexion();
-        sql = "update Cultivos set nombre=?,costoAsesoria=?,estatus=?";
+        sql = "update Cultivos set nombre=?,costoAsesoria=?,estatus=? where idCultivo=?";
         try {
             ps=con.prepareStatement(sql);
             ps.setString(1, cult.getNombre());
             ps.setFloat(2, cult.getCostoAsesoria());
             ps.setInt(3, cult.getEstado());
+            ps.setInt(4, cult.getIdCultivo());
             int filas= ps.executeUpdate();
             respuesta="se actualizaron "+filas+" filas correctamente";
             cn.closeConnection();
@@ -101,10 +102,10 @@ public class CultivosDAO implements CRUD {
         return respuesta;
     }
     
-    public String reactivar(int id) {
+   public String reactivar(int id) {
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update Cultivos  set estatus='A' where idCultivo=? ");
+        sql = ("update Cultivos set estatus='A' where idCultivo=? ");
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -112,7 +113,7 @@ public class CultivosDAO implements CRUD {
             respuesta = "se reactivaron " + filas + " filas";
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(OfertasDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CultivosDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return respuesta;
     }

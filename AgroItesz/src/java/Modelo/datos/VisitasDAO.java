@@ -99,6 +99,7 @@ public static VisitasDAO getVisitasDAO(){
         con = cn.getConexion();
         sql = ("update Visitas set fechaPlaneada=?, fechaReal=?, comentarios=?, estatus=?, costo=?, idClienteCultivo=?, idEmpleado=?, idUnidadTransporte=? where idVisita=? ");
         try {
+            ps = con.prepareStatement(sql);
             ps.setDate(1, vi.getFechaPlaneada());
             ps.setDate(2, vi.getFechaReal());
             ps.setString(3, vi.getComentarios());

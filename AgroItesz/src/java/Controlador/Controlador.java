@@ -360,7 +360,6 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("resp", res);
                 request.getRequestDispatcher("ViewCultivos.jsp").forward(request, response);
                 break;
-
             case "CultivosD":
                 res = culdao.eliminar(Integer.parseInt(request.getParameter("id")));
                 request.setAttribute("resp", res);
@@ -373,14 +372,13 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("resp", res);
                 datosCu = culdao.consultar();
                 request.setAttribute("datosCl", datosCu);
-                request.getRequestDispatcher("ViewCultivs.jsp").forward(request, response);
+                request.getRequestDispatcher("ViewCultivos.jsp").forward(request, response);
                 break;
-
             case "CultivosU":
-                cul = new Cultivos(Integer.parseInt(request.getParameter("idCl")),
+                cul = new Cultivos(Integer.parseInt(request.getParameter("idTr")),
                         request.getParameter("txtNombre"),
                         Float.parseFloat(request.getParameter("txtcostoAsesoria")),
-                        request.getParameter("txtEstatus").charAt(0));
+                        request.getParameter("txtEstatusA").charAt(0));
                 res = culdao.actualizar(cul);
                 datosCu = culdao.consultar();
                 request.setAttribute("datosCl", datosCu);
