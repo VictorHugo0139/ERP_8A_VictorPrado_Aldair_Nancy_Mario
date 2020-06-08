@@ -101,7 +101,7 @@ public class PresentacionDAO implements CRUD {
                        rs.getFloat("precioCompra"),
                         rs.getFloat("precioVenta"),
                         rs.getFloat("puntoReorden"),
-                        rs.getInt("puntoReorden"),
+                        rs.getInt("idProducto"),
                         rs.getInt("idEmpaque")));
             }
             cn.closeConnection();
@@ -110,6 +110,62 @@ public class PresentacionDAO implements CRUD {
         }
         return datos;
     }
+    public String OnePro(int idProduct) {
+        String nombre="";
+        con=cn.getConexion();
+        sql=("select nombre from Productos p join PresentacionesProductos pp on p.idProducto=pp.idProducto where pp.idProducto=?");
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(idProduct));
+            rs=ps.executeQuery();
+            while(rs.next()){
+                nombre=rs.getString("nombre");
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nombre;
+    }    
+    
+    public String OneEmpaque(int id) {
+        String nombre="";
+        String empaque="";
+        con=cn.getConexion();
+        sql=("Select e.nombre,e.capacidad from PresentacionesProductos pp join Empaques e on pp.idEmpaque=e.idEmpaque where pp.idEmpaque=?");
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(id));
+            rs=ps.executeQuery();
+            while(rs.next()){
+                nombre=rs.getString("nombre");
+                empaque=rs.getString("capacidad");
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nombre+" "+empaque;
+    }    
+    
+    public String OneUnidad(int id) {
+        
+        String unidad="";
+        con=cn.getConexion();
+        sql=("Select um.nombre from PresentacionesProductos pp join Empaques e on pp.idEmpaque=e.idEmpaque Join UnidadMedida um on e.idUnidad=um.idUnidad where pp.idEmpaque=?;");
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(id));
+            rs=ps.executeQuery();
+            while(rs.next()){
+                unidad=rs.getString("nombre");
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return unidad;
+    } 
     
 }
     

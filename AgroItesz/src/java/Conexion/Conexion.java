@@ -51,6 +51,11 @@ public java.sql.Connection getConexion(){
         this.userName = userName; 
     }                                                      
 
+    public String getUserName() {
+        return userName;
+    }
+    
+    
     public void setPassword(String password) {
         this.password = password;
     }

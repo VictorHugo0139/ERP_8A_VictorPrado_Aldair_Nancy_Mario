@@ -45,6 +45,9 @@ import javax.servlet.http.HttpServletResponse;
 public class Controlador extends HttpServlet {
 
 //    Conexion cn = new Conexion();
+    int j;
+    String array;
+    ArrayList<String> valor =new ArrayList<>();
     Conexion cn = Conexion.getInsConexion();
     Connection con;
     UsuariosDAO usrDao = UsuariosDAO.getUsuariosDAO();
@@ -141,6 +144,9 @@ public class Controlador extends HttpServlet {
                 break;
             case "Ventas":
                 datosV = Vdao.consultar();
+                datosVD = VDdao.consultar();
+                request.setAttribute("rev", 0);
+                request.setAttribute("datosClU", datosVD);
                 request.setAttribute("datosCl", datosV);
                 request.getRequestDispatcher("ViewVentas.jsp").forward(request, response);
                 break;
@@ -391,22 +397,23 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosE);
                 request.getRequestDispatcher("ViewEnvios.jsp").forward(request, response);
                 break;  
-                 case "VentasI":
-                v = new Ventas(0,
-                        Date.valueOf(request.getParameter("txtFecha")),
-                       Float.parseFloat(request.getParameter("txtTotalPagar")),
-                        Float.parseFloat(request.getParameter("txtCantPagada")),
-                        request.getParameter("txtComentarios"),
-                        request.getParameter("txtEstatus").charAt(0),
-                        request.getParameter("txtTipo").charAt(0),
-                        Integer.parseInt(request.getParameter("txtCliente")),
-                        Integer.parseInt(request.getParameter("txtSucursal")),
-                        Integer.parseInt(request.getParameter("txtEmpleado")));
-                res = Vdao.insertar(v);
-                datosV = Vdao.consultar();
-                request.setAttribute("datosCl", datosV);
-                request.setAttribute("resp", res);
-                request.getRequestDispatcher("ViewVentas.jsp").forward(request, response);
+             case "VentasI":
+                 int j=0;
+                 array=request.getParameter("valores");
+                 System.out.println("array: "+ array);
+                 System.out.println("Length: "+array.length());
+                 for (int i = 0; i < array.length(); i++) {
+                     System.out.println("array: "+ array);
+                     System.out.println("J: "+j);
+                     System.out.println("Index: "+array.indexOf("/"));
+                     valor.add(j, array.substring(i,array.indexOf("/")));
+                     array=array.substring(array.indexOf("/")+1);
+                     j++;
+                     i=-1;
+                 }
+                 for (int i = 0; i < valor.size(); i++) {
+                     System.out.println(valor.get(i));
+                 }
                 break;
             case "VentasU":
                 v = new Ventas(Integer.parseInt(request.getParameter("idCl")),
@@ -457,6 +464,7 @@ public class Controlador extends HttpServlet {
                 break;
                 
             case "VentasDetallesI":
+                
                 vD = new VentasDetalles(0,
                         Float.parseFloat(request.getParameter("estas")),
                         Float.parseFloat(request.getParameter("cantidad")),
@@ -465,10 +473,12 @@ public class Controlador extends HttpServlet {
                         Integer.parseInt(request.getParameter("txtPresentacion")),
                         'A');
                 res = VDdao.insertar(vD);
+                datosV = Vdao.consultar();
                 datosVD = VDdao.consultar();
+                request.setAttribute("datosClU", datosVD);
                 request.setAttribute("datosCl", datosVD);
                 request.setAttribute("resp", res);
-                request.getRequestDispatcher("ViewVentas.jsp").forward(request, response);
+                request.getRequestDispatcher("ViewVentasAdd.jsp").forward(request, response);
                 break;
                 
             case "VentasDetallesU":
