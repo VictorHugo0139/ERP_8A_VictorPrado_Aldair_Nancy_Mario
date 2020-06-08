@@ -675,7 +675,7 @@ public class Controlador extends HttpServlet {
                         request.getParameter("txtEstatus").charAt(0),
                         Float.parseFloat(request.getParameter("txtCosto")),
                         Integer.parseInt(request.getParameter("txtClienteCultivo")),
-                        Integer.parseInt(request.getParameter("txtEmpleado")),
+                        Integer.parseInt(request.getParameter("txtCiudad")),
                         Integer.parseInt(request.getParameter("txtTransporte")));
                 res = visdao.actualizar(vis);
                 datosVis = visdao.consultar();

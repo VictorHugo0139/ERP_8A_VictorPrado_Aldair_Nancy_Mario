@@ -520,8 +520,8 @@
                     $('#divA').show();
                     $('#txtFechaEntP').val($(this).parents("tr").find("td")[1].innerHTML);
                     $('#txtFechaEntR').val($(this).parents("tr").find("td")[2].innerHTML);
-                    $('#txtComentarios').val($(this).parents("tr").find("td")[3].innerHTML);
-                    $('#txtCosto').val($(this).parents("tr").find("td")[4].innerHTML);
+                    $('#Comentarios').val($(this).parents("tr").find("td")[3].innerHTML);
+                    $('#txtCP').val($(this).parents("tr").find("td")[4].innerHTML);
                     var valor = $(this).parents("tr").find("td")[5].innerHTML;
 
                     console.log(valor);
