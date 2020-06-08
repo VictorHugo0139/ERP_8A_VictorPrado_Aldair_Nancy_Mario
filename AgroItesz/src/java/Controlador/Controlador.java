@@ -265,7 +265,7 @@ public class Controlador extends HttpServlet {
                         Integer.parseInt(request.getParameter("txtAño")),
                         Integer.parseInt(request.getParameter("txtCapacidad")),
                         request.getParameter("txtEstatus").charAt(0));
-                res = trdao.actualizar(cl);
+                res = trdao.actualizar(tr);
                 datosT = trdao.consultar();
                 request.setAttribute("datosCl", datosT);
                 request.setAttribute("resp", res);
@@ -637,11 +637,52 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewVisitas.jsp").forward(request, response);
                
                     break;
-//            case "TripulacionS":
-//                datosTrip = tripdao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
-//                request.setAttribute("datosCl", datosC);
-//                request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
-//            break;
+                case "VisitasI":
+                vis = new Visitas(0,
+                        Date.valueOf(request.getParameter("txtFechaEntregaP")),
+                        Date.valueOf(request.getParameter("txtFechaEntregaR")),
+                        request.getParameter("txtComentarios"),
+                        request.getParameter("txtEstatus").charAt(0),
+                        Float.parseFloat(request.getParameter("txtCosto")),
+                        Integer.parseInt(request.getParameter("txtClienteCultivo")),
+                        Integer.parseInt(request.getParameter("txtEmpleado")),
+                        Integer.parseInt(request.getParameter("txtTransporte")));
+                res = visdao.insertar(vis);
+                datosVis = visdao.consultar();
+                request.setAttribute("datosCl", datosVis);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewVisitas.jsp").forward(request, response);
+                break;
+                case "VisitasD":
+                res = visdao.eliminar(Integer.parseInt(request.getParameter("ido")));
+                request.setAttribute("resp", res);
+                datosVis = visdao.consultar();
+                request.setAttribute("datosCl", datosVis);
+                request.getRequestDispatcher("ViewVisitas.jsp").forward(request, response);
+                break;
+                case "VisitasR":
+                res = visdao.reactivar(Integer.parseInt(request.getParameter("ido")));
+                request.setAttribute("resp", res);
+                datosVis = visdao.consultar();
+                request.setAttribute("datosCl", datosVis);
+                request.getRequestDispatcher("ViewVisitas.jsp").forward(request, response);
+                break;
+                case "VisitasU":
+                vis = new Visitas(Integer.parseInt(request.getParameter("idCl")),
+                        Date.valueOf(request.getParameter("txtFechaEntregaP")),
+                        Date.valueOf(request.getParameter("txtFechaEntregaR")),
+                        request.getParameter("txtComentarios"),
+                        request.getParameter("txtEstatus").charAt(0),
+                        Float.parseFloat(request.getParameter("txtCosto")),
+                        Integer.parseInt(request.getParameter("txtClienteCultivo")),
+                        Integer.parseInt(request.getParameter("txtEmpleado")),
+                        Integer.parseInt(request.getParameter("txtTransporte")));
+                res = visdao.actualizar(vis);
+                datosVis = visdao.consultar();
+                request.setAttribute("datosCl", datosVis);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewVisitas.jsp").forward(request, response);
+                break;
         }
     }
 
