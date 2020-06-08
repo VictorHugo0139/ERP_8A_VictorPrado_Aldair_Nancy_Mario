@@ -335,14 +335,14 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewMiembros.jsp").forward(request, response);
                 break;
             case "MiembrosD":
-                res = midao.eliminar(Integer.parseInt(request.getParameter("idc")));
+                res = midao.eliminar(Integer.parseInt(request.getParameter("idm")));
                 request.setAttribute("resp", res);
                 datosM = midao.consultar();
                 request.setAttribute("datosCl", datosM);
                 request.getRequestDispatcher("ViewMiembros.jsp").forward(request, response);
                 break;
             case "MiembrosR":
-                res = midao.reactivar(Integer.parseInt(request.getParameter("idc")));
+                res = midao.reactivar(Integer.parseInt(request.getParameter("idm")));
                 request.setAttribute("resp", res);
                 datosM = midao.consultar();
                 request.setAttribute("datosCl", datosM);

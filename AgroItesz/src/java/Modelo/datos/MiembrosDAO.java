@@ -118,13 +118,13 @@ public String reactivar(int id) {
 
     @Override
     public List<Miembros> consultar() {
-    List<Miembros> datos = new ArrayList<>();
-        con = cn.getConexion();
-        sql = ("select * from Miembros;");
+        List<Miembros> datos=new ArrayList<>();
+        con=cn.getConexion();
+        sql=("select * from Miembros");
         try {
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
+            ps=con.prepareStatement(sql);
+            rs=ps.executeQuery();
+            while(rs.next()){
                 datos.add(new Miembros(rs.getInt("idCliente"),
                         rs.getInt("idAsosiacion"),
                         rs.getString("estatus").charAt(0),
@@ -132,10 +132,12 @@ public String reactivar(int id) {
             }
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MiembrosDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return datos;    
+        return datos;
     }
+    
+    
 public String OneClient(int idClient) {
         String nombre="";
         con=cn.getConexion();
