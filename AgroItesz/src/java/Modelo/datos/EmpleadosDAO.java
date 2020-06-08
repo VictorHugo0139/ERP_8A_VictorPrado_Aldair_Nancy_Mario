@@ -158,4 +158,41 @@ public class EmpleadosDAO implements CRUD {
         }
         return nombre;
     }
+    
+    public int OneEmpleado(String idEmpleado) {
+        int id=0;
+        con=cn.getConexion();
+        sql=("select*from Empleados where nombre=?;");
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(idEmpleado));
+            rs=ps.executeQuery();
+            while(rs.next()){
+                id=rs.getInt("idEmpleado");
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(EmpleadosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+    
+     public int OneSucursal(int idEmpleado) {
+        int id=0;
+        con=cn.getConexion();
+        sql=("Select s.idSucursal from Empleados e join Sucursales s on e.idSucursal=s.idSucursal where e.idEmpleado=?;");
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1, String.valueOf(idEmpleado));
+            rs=ps.executeQuery();
+            while(rs.next()){
+                id=rs.getInt("idSucursal");
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(EmpleadosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+    
 }
