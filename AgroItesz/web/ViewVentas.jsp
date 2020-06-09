@@ -168,7 +168,7 @@
     <!-- Sección Insertar -->
     <button id="btnMostrarf">+</button><!-- No eliminar. Este botón controla el cambio de signo de #btnMostrar -->
 
-    <button id="btnMostrar" hidden=""><span  class="glyphicon glyphicon-plus-sign"></span></button><!-- Este botón contrae o expande #divI -->
+    <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button><!-- Este botón contrae o expande #divI -->
     <div style="margin-left: 180px; padding-top: 0px;"  id="divI"><!-- Contiene todo el proceso de insertar Nueva Venta, incluye detalles de Venta -->
         <table border="0" style="width: 100%; padding-top: 0px;"><!-- Tabla que organiza la ubicación en pantalla del contenido -->
             <tbody><!-- Cuerpo de la tabla-No hay encabezado ya que sólo es para organizar la información -->
@@ -683,7 +683,7 @@
         var entero = 0;
         $('#esta').hide();
         $('#esta2').hide();
-        //$('#divI').hide();
+        $('#divI').hide();
         $('#divA').hide();
         $('#btnMostrarf').hide();
         $('#btnMostrar').click(function () {
