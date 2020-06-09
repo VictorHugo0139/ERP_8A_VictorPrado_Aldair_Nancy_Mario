@@ -171,7 +171,7 @@
 
     <div style="margin-left: 180px; margin-top: 10px" id="divA">
         
-        <form action="Controlador?accion=MiembrosA" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
+        <form action="Controlador?accion=MiembrosU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
@@ -183,7 +183,7 @@
                         </td>
                     </tr>
                      <tr>
-                        <td style="width: 25%"><input type="Date" placeholder="Fecha" name="txtFecha" id="txtFechaA" style="width: 90%;" value="" required/></td>
+                        <td style="width: 25%"><input type="Date" placeholder="Fecha" name="txtFechaA" id="txtFechaA" style="width: 90%;" value="" required/></td>
                         <td style="width: 25%" colspan="2" id="CD"></td>
                         <td style="width: 25%" colspan="2" id="CD2"></td>
                         <td><label>Estatus</label>

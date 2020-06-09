@@ -339,20 +339,31 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewMiembros.jsp").forward(request, response);
                 break;
             case "MiembrosD":
-                res = midao.eliminar(Integer.parseInt(request.getParameter("idm")));
+                res = midao.eliminar(Integer.parseInt(request.getParameter("idc")));
                 request.setAttribute("resp", res);
                 datosM = midao.consultar();
                 request.setAttribute("datosCl", datosM);
                 request.getRequestDispatcher("ViewMiembros.jsp").forward(request, response);
                 break;
             case "MiembrosR":
-                res = midao.reactivar(Integer.parseInt(request.getParameter("idm")));
+                res = midao.reactivar(Integer.parseInt(request.getParameter("idc")));
                 request.setAttribute("resp", res);
                 datosM = midao.consultar();
                 request.setAttribute("datosCl", datosM);
                 request.getRequestDispatcher("ViewMiembros.jsp").forward(request, response);
                 break;
-
+            case "MiembrosU":
+                mi = new Miembros(Integer.parseInt(request.getParameter("idCl")),
+                        Integer.parseInt(request.getParameter("txtCliente")),
+                        Integer.parseInt(request.getParameter("txtAsociacion")),
+                        request.getParameter("txtEstatus").charAt(0),
+                        Date.valueOf(request.getParameter("txtFechaA")));
+                res = midao.actualizar(mi);
+                datosM = midao.consultar();
+                request.setAttribute("datosCl", datosM);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewMiembros.jsp").forward(request, response);
+                break;
             case "CultivosI":
                 cul = new Cultivos(0,
                         request.getParameter("txtNombre"),

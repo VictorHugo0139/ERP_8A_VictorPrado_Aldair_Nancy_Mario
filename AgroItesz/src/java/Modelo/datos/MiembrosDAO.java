@@ -103,7 +103,7 @@ public String reactivar(int id) {
         Miembros mi = (Miembros) obj;
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update Miembros set idCliente=?,idAsosiacion=?,estatus=?,fechaIncorporacion=? where idMiembros=?;");
+        sql = ("update Miembros set idCliente=?,idAsosiacion=?,estatus=?,fechaIncorporacion=? where idMiembros=?");
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, mi.getIdCliente());
@@ -115,7 +115,7 @@ public String reactivar(int id) {
             respuesta = "se actualizaron " + filas + " filas";
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MiembrosDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return respuesta;
     }
