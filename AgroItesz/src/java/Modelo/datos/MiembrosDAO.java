@@ -130,7 +130,7 @@ public String reactivar(int id) {
             rs=ps.executeQuery();
             while(rs.next()){
                 datos.add(new Miembros(rs.getInt("idMiembros"),
-                        rs.getInt("id"),
+                        rs.getInt("idCliente"),
                         rs.getInt("idAsosiacion"),
                         rs.getString("estatus").charAt(0),
                         rs.getDate("fechaIncorporacion")));
@@ -161,13 +161,13 @@ public String OneClient(int idClient) {
         return nombre;
     }
 
-public String OneAsociation(int idClient) {
+public String OneAsociation(int idmiembro) {
         String nombre="";
         con=cn.getConexion();
-        sql=("select a.nombre from Miembros m join Asociaciones a on m.idAsosiacion=a.idAsosiacion where m.idCliente=?;");
+        sql=("Select a.nombre from Asociaciones a join Miembros m on a.idAsosiacion=m.idAsosiacion where m.idMiembros=?;");
         try {
             ps=con.prepareStatement(sql);
-            ps.setString(1, String.valueOf(idClient));
+            ps.setString(1, String.valueOf(idmiembro));
             rs=ps.executeQuery();
             while(rs.next()){
                 nombre=rs.getString("nombre");
