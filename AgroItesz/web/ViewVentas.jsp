@@ -179,7 +179,7 @@
                     <td style="width: 20%"></td><!-- Separacion por un 20% del espacio total -->
                     <td style="width: 15%"><label style="color: grey;font-weight: lighter;">Cliente</label>
                         <!-- Lista de clientes para selección -->
-                        <select name="txtCliente">
+                        <select name="txtCliente" id="scli">
                             <%                                    for (Clientes cl : c) {
                             %>
                             <option value="<%= cl.getIdCliente()%>"><%= cl.getNombre()%></option>
@@ -232,21 +232,19 @@
                                                         <select name="txtPresentacion" id="esta3" style="margin-bottom: 20px;">
                                                             <option selected="true">Selecciona un producto</option><!-- opcion seleccionada por defecto -->
                                                             <%
-                                                                    for (Presentacion pre : pr) {//For que extrae los datos de presentacion para mostrar los datos
+                                                                for (Presentacion pre : pr) {//For que extrae los datos de presentacion para mostrar los datos
 %>
 
-                                                            <option value="<%=  pre.idPresentacion%>" class="<%=  pre.precioVenta%>">
-                                                                <%= pdao.OneProduct(pre.idProducto) + " "
-                                                                        +//Nombre del producto
-                                                                        prdao.OneEmpaque(pre.idEmpaque) + " "
-                                                                        +//Nombre del empaque
-                                                                        prdao.OneUnidad(pre.idEmpaque)
-                                                                        +//Tamaño del empaque
-                                                                        " $" + pre.precioVenta /*Precio de venta*/%>
-                                                            </option>
-                                                            <%
-                                                                }
-                                                            %>
+                                                            <option value="<%=  pre.idPresentacion%>" class="<%=  pre.precioVenta%>"><%= pdao.OneProduct(pre.idProducto) + "-"
+                                                                    +//Nombre del producto
+                                                                    prdao.OneEmpaque(pre.idEmpaque) + " "
+                                                                    +//Nombre del empaque
+                                                                    prdao.OneUnidad(pre.idEmpaque)
+                                                                    +//Tamaño del empaque
+                                                                    " $" + pre.precioVenta /*Precio de venta*/%></option>
+                                                                <%
+                                                                    }
+                                                                %>
                                                         </select>
                                                     </td>
                                                     <!-- Cantidad deseada del producto seleccionado -->
@@ -255,23 +253,23 @@
                                                     <td style="width: 20%;"><input type="text" name="Subtotal" id="Subtotal" placeholder="Subtotal" readonly="true" style="background-color: #b3ecff"/></td>
                                                     <!-- Se muestran los datos del producto seleccionado -->
                                                     <td style="width: 20%;"><input type="text" name="Presentacion" id="Presentacion" placeholder="Presentación" readonly="true" style="background-color: #b3ecff"/></td>
-<!-- Cuando el usuario esté de acuerdo presionará este botón para agregar los datos a la tabla del carrito -->
+                                                    <!-- Cuando el usuario esté de acuerdo presionará este botón para agregar los datos a la tabla del carrito -->
                                                     <td style="width: 20%; padding-top: 5px;">
                                                         <button type="submit" id="Enviar"><span class="glyphicon glyphicon-ok"></span></button>
                                                     </td>   
                                                 </tr>
                                             </tbody>
                                         </table><!-- Aqui termina la tabla para agregar productos -->
-<br/>
+                                        <br/>
                                         <!-- Tabla Carrito, Aqui se muestran los productos que va agregando el usuario -->
                                         <table id="productoslist">
                                             <thead><!-- Encabezado, muestra los titulos de la tabla -->
                                                 <tr>
-                                                    <th>Producto</th>
-                                                    <th>Cantidad</th>
-                                                    <th>Presentación</th>
-                                                    <th>Subtotal</th>
-                                                    <th>Acciones</th>
+                                                    <th class="Prueba">Producto</th>
+                                                    <th class="Prueba">Cantidad</th>
+                                                    <th class="Prueba">Presentación</th>
+                                                    <th class="Prueba">Subtotal</th>
+                                                    <th class="Prueba">Acciones</th>
                                                 </tr>
                                             </thead>
                                             <!-- Cuerpo de la tabla. 
@@ -279,17 +277,7 @@
                                             <tbody id="detallesVenta">
                                                 <!-- Al principio muestra que no hay productos agregados -->
                                                 <!-- Posteriormente se llena mediante ajax-->
-                                                <tr>
-                                                    <td style="width: 20%"> No</td>
-                                                    <td style="width: 20%"> Hay </td>
-                                                    <td style="width: 20%">Productos</td>
-                                                    <td style="width: 20%">Agregados</td>
-                                                    <td style="width: 20%">
-                                                        <!-- <button type="button">
-                                                            <span  class='glyphicon glyphicon-ban-circle'></span>
-                                                        </button> -->
-                                                    </td>
-                                                </tr>
+
                                             </tbody>
                                         </table><!-- Termina la tabla Carrito-->
                                     </div><!-- Termina el cuerpo del Modal -->
@@ -297,7 +285,7 @@
                                     <div class="modal-footer">
                                         <!-- Botones para salir y guardar cambios-->
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                        <button type="button" class="btn btn-primary">Siguiente</button>
+                                        <button type="button" class="btn btn-primary" id="Siguiente">Siguiente</button>
                                     </div>
                                 </div>
                             </div>
@@ -307,7 +295,7 @@
                 <!-- Cuarta Fila de datos-->
                 <tr style="border-top: solid red;">
                     <!-- Comentarios-->
-                    <td colspan="3"><textarea type="text" placeholder="Comentarios" name="txtComentarios"  style="width: 91.8%; margin-top: 5px;" required></textarea></td>
+                    <td colspan="3"><textarea id="com" type="text" placeholder="Comentarios" name="txtComentarios"  style="width: 91.8%; margin-top: 5px;" required></textarea></td>
                     <!-- Datos Finales-->
                     <td colspan="2" ALIGN="right">
                         <!-- Total a pagar calculado automáticamente con los datos agregados -->
@@ -321,7 +309,7 @@
                         <!-- Modo de pago realizado -->
                         <label style="color: grey;font-weight: lighter;width: 40%;">Modo de pago:</label>
                         <!-- Deberían cargarse de la base de datos pero por ahora sólo son pruebas -->
-                        <select name="txtModoPago">
+                        <select name="txtModoPago" id="mpago">
                             <option value="1">Efectivo</option>
                             <option value="2">Credito</option>
                         </select>
@@ -334,23 +322,42 @@
                     (conservan el valor para posteriormente ser enviados y recibidos en controlador)
                     -->
                     <td colspan="5">
-                        <div id="esta2"></div>
+                        <!-- Este input Almacena el id de la presentacion temporalmente -->
+                            <input type="hidden" id="prest" name="prest"  readonly="true"/>  
+                        <!-- Este input Almacena temporalmente el precio de venta de cada producto seleccionado en el modal -->
+                            <input type="hidden" id="estas" name="estas" style="background-color: #b3ecff" readonly="true"/> 
+                           
                         <form action="Controlador?accion=VentasI" method="POST" name="formInsertar" id="formInsertar" ><!-- Formulario con datos que serán enviados -->
                             <%
                                 int emp = edao.OneEmpleado(sesion.getUserName());
-                                System.out.println(emp + " " + edao.OneSucursal(emp));//reemplazar esto por input hidden para enviar los dos valores
-                            %><input type="hidden" id="valores" name="valores" value="400/213/124/121/" style="background-color: #b3ecff" readonly="true"/> 
+                            %>
+                            <!-- Este input Almacena Los Subtotales de cada producto en cantidad seleccionada en el modal -->
+                            <input type="hidden" id="valores" name="valores" style="background-color: #b3ecff" readonly="true"/> 
                             <!-- Este input Almacena el id de la sucursal que corresponde al empleado que se ha logeado -->
                             <input type="hidden" id="suc" name="suc" value="<%= edao.OneSucursal(emp)%>"  readonly="true"/> 
                             <!-- Este input Almacena el id del empleado que se ha logeado -->
                             <input type="hidden" id="empl" name="empl" value="<%= emp%>"  readonly="true"/> 
-                            <!-- Este input Almacena el precio de venta del producto seleccionado en el modal -->
-                            <input type="hidden" id="estas" name="estas" style="background-color: #b3ecff" readonly="true"/> 
-
-                            <button type="submit" style="background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
+                            <!-- Este input Almacena el id del cliente que se ha seleccionado -->
+                            <input type="hidden" id="client" name="client"  readonly="true"/>
+                            <!-- Este input Almacena el id del Tipo de pago que se ha seleccionado -->
+                            <input type="hidden" id="pago" name="pago"  readonly="true"/> 
+                            <!-- Este input Almacena el comentario que se ha introducido -->
+                            <input type="hidden" id="coment" name="coment"  readonly="true"/>
+                            <!-- Este input Almacena el Valor del pago recibido del cliente -->
+                            <input type="hidden" id="recibido" name="recibido"  readonly="true"/>
+                            <!-- Este input Almacena el Total a pagar de la venta -->
+                            <input type="hidden" id="totalE" name="totalE"  readonly="true"/> 
+                            <!-- Este input Almacena la cantidad de venta de cada producto seleccionado en el modal -->
+                            <input type="hidden" id="cant" name="cant" style="background-color: #b3ecff" readonly="true"/> 
+                            <!-- Este input Almacena el precio de venta de cada producto seleccionado en el modal -->
+                            <input type="hidden" id="precio" name="precio" style="background-color: #b3ecff" readonly="true"/> 
+                             <!-- Este input Almacena el idPresentacion de venta de cada producto seleccionado en el modal -->
+                            <input type="hidden" id="pres" name="pres" style="background-color: #b3ecff" readonly="true"/>  
+                        </form>
+                            <!-- Este input Almacena el idPresentacion de venta de cada producto seleccionado en el modal -->
+                            <button type="submit" id="Finish" style="background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
                                 Procesar venta
                             </button>
-                        </form>
                     </td>
                 </tr>
         </table><!-- Termina la tabla que organiza el contenido -->
@@ -671,8 +678,9 @@
 </script> 
 
 <script type="text/javascript">
-
+    
     $(document).ready(function () {
+        var entero = 0;
         $('#esta').hide();
         $('#esta2').hide();
         //$('#divI').hide();
@@ -694,20 +702,13 @@
                 $('#btnMostrar').html("<span  class='glyphicon glyphicon-minus-sign'></span>");
             }
         });
-        $('#formInsertar').submit(function () {
-            $('#productoslist').html(
-
-                    );
-        });
         $('#cantidad').keyup(function () {
             if (isNaN($('#cantidad').val())) {
                 $('#Subtotal').val(0);
             } else {
-
                 $('#Subtotal').val($('#cantidad').val() * $('#estas').val());
             }
         });
-
         $('.boton').click(function () {
 
             //valores obtendra el dato del td por posciones [0]
@@ -744,7 +745,6 @@
     %>
             "</select>");
             $('#' + valor).attr('selected', 'selected').change();
-
             var valor = $(this).parents("tr").find("td")[8].innerHTML;
             //console.log(valor);
             $('#CD2').html("<label style='color: grey;font-weight: lighter;'>Sucursal</label>" +
@@ -771,7 +771,6 @@
         }
     %>
             "</select>");
-
             $('#' + valor).attr('selected', 'selected').change();
             var valor = $(this).parents("tr").find("td")[0].innerHTML;
             $('#idCl').val(valor);
@@ -779,7 +778,60 @@
             //console.log($('#idCl').val());
             $('#nombre').focus();
         });
-
+        $('#Siguiente').click(function () {
+            //Primero debes checar si se ha insertado algún elemento en la tabla
+            $('#exampleModalCenter').click();
+        });
+        $('#Finish').click(function () {
+            $('#client').val($('#scli').val());
+            $('#recibido').val($('#CantidadP').val());
+            $('#totalE').val($('#Total').val());
+            $('#coment').val($('#com').val());
+            $('#pago').val($('#mpago').val());
+            $('#formInsertar').submit();
+            
+        });
+        $('.Prueba').ready(function(){
+            $('#productoslist_info').hide();
+            $('#productoslist_length').hide();
+            $('#productoslist_filter').hide();
+            $('#productoslist_paginate').hide();
+            $('.Prueba').removeClass('sorting_asc');
+            $('.Prueba').removeClass('sorting_desc');
+            $('.Prueba').removeClass('sorting');
+            $('.Prueba').click(function(){
+            $('.Prueba').removeClass('sorting_asc');
+            $('.Prueba').removeClass('sorting_desc');
+            $('.Prueba').removeClass('sorting');
+            });
+    });
+        $('#Enviar').click(function () {
+            $('.odd').hide();
+            
+            var sandia = $("#esta3 option:selected").text();
+            var prod = sandia.substring(0, sandia.indexOf("-"));
+            sandia = sandia.substring(sandia.indexOf("-") + 1);
+            $('#detallesVenta').append("<tr>" +
+                    "<td style='width: 20%' class='numero'>" + prod + "</td>" +
+                    "<td style='width: 20%' class='numero'>" + $('#cantidad').val() + "</td>" +
+                    "<td style='width: 20%' class='numero'>" + sandia + "</td>" +
+                    "<td style='width: 20%' class='numero'>" + $('#Subtotal').val() + "</td>" +
+                    "<td style='width: 20%'>" +
+                    "<button type='button'>" +
+                    "<span  class='glyphicon glyphicon-ban-circle'></span>" +
+                    "</button>" +
+                    "</td>" +
+                    "</tr>");
+            
+            $('#pres').val($('#pres').val()+$('#esta3').val()+"/");
+            $('#valores').val($('#valores').val()+$('#Subtotal').val()+"/");
+            $('#cant').val($('#cant').val()+$('#cantidad').val()+"/");
+            $('#precio').val($('#precio').val()+$('#estas').val()+"/");
+            entero=entero+parseInt($('#Subtotal').val(),10);
+            $('#Total').val(entero);
+            //console.log($('#precio').val());
+            
+        });
         $('#Cancel').click(function () {
             $('#divA').hide();
             $('#divI').hide();
@@ -787,21 +839,26 @@
             $('#btnMostrar').show();
         });
         $('#sel').click(function () {
-            $('#esta').show();
-            $('#esta2').show();
             $('#sel').hide();
         });
-
-        $("#esta2").change(function () {
+        $("#esta3").change(function () {
+            var sandia = $("#esta3 option:selected").text();
+            if (isNaN($('#cantidad').val())) {
+                $('#Subtotal').val(0);
+            } else {
+                $('#Subtotal').val($('#cantidad').val() * $('#estas').val());
+            }
+            
             //alert($('#esta3').val());
-            alert($("#esta3 option:selected").attr('label'));
-            //alert($('#esta3').val());
+            
+            //alert($("#esta3 option:selected").attr('class'));
             //alert(select_text = $("#esta3 option:selected").text());
-            select_text = $("#esta3 option:selected").text();
+            
+            var select_text = $("#esta3 option:selected").text();
             $('#Presentacion').val(select_text);
+            //$('#prest').val($('#esta3').val());
             $('#estas').val($("#esta3 option:selected").attr('class'));
         });
-
         $('#customers').DataTable({
             "iDisplayLength": 2,
             "aLengthMenu": [[2, 5, 10, -1], [2, 5, 10, "All"]],

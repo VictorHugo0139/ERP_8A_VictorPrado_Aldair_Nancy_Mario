@@ -46,8 +46,11 @@ public class Controlador extends HttpServlet {
 
 //    Conexion cn = new Conexion();
     int j;
-    String array;
+    String subtotal,pres,cant,precio;
     ArrayList<String> valor =new ArrayList<>();
+    ArrayList<String> valorpres =new ArrayList<>();
+    ArrayList<String> valorcant =new ArrayList<>();
+    ArrayList<String> valorprecio =new ArrayList<>();
     Conexion cn = Conexion.getInsConexion();
     Connection con;
     UsuariosDAO usrDao = UsuariosDAO.getUsuariosDAO();
@@ -397,22 +400,67 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewEnvios.jsp").forward(request, response);
                 break;  
              case "VentasI":
+                 valor.clear();
+                 valorpres.clear();
+                 valorcant.clear();
+                 valorprecio.clear();
+                 v=new Ventas(0,
+                         new Date(20200608),
+                         Float.parseFloat(request.getParameter("totalE")),
+                         Float.parseFloat(request.getParameter("recibido")),
+                         request.getParameter("coment"), 
+                         'P', 
+                         request.getParameter("pago").charAt(0), 
+                         Integer.parseInt(request.getParameter("client")), 
+                         Integer.parseInt(request.getParameter("suc")), 
+                         Integer.parseInt(request.getParameter("empl")));
+                 res=Vdao.insertar(v);
+                 
+                 
+//                 System.out.println("Prueba- Cliente: "+request.getParameter("client")+"\n"
+//                         + "Cant Recibida: "+request.getParameter("recibido")+"\n"
+//                         + "Total a pagar: "+request.getParameter("totalE")+"\n"
+//                         + "Modo de pago: "+request.getParameter("pago")+"\n"
+//                         + "Comentario: "+request.getParameter("coment")+"\n");
                  int j=0;
-                 array=request.getParameter("valores");
-                 System.out.println("array: "+ array);
-                 System.out.println("Length: "+array.length());
-                 for (int i = 0; i < array.length(); i++) {
-                     System.out.println("array: "+ array);
-                     System.out.println("J: "+j);
-                     System.out.println("Index: "+array.indexOf("/"));
-                     valor.add(j, array.substring(i,array.indexOf("/")));
-                     array=array.substring(array.indexOf("/")+1);
+                 subtotal=request.getParameter("valores");
+                 pres=request.getParameter("pres");
+                 cant=request.getParameter("cant");
+                 precio=request.getParameter("precio");
+//                 System.out.println("array: "+ subtotal);
+//                 System.out.println("Length: "+subtotal.length());
+                 for (int i = 0; i < subtotal.length(); i++) {
+//                     System.out.println("array: "+ subtotal);
+//                     System.out.println("J: "+j);
+//                     System.out.println("Index: "+subtotal.indexOf("/"));
+                     valor.add(j, subtotal.substring(0,subtotal.indexOf("/")));
+                     valorpres.add(j, pres.substring(0,pres.indexOf("/")));
+                     valorcant.add(j, cant.substring(0,cant.indexOf("/")));
+                     valorprecio.add(j, precio.substring(0,precio.indexOf("/")));
+                     subtotal=subtotal.substring(subtotal.indexOf("/")+1);
+                     pres=pres.substring(pres.indexOf("/")+1);
+                     cant=cant.substring(cant.indexOf("/")+1);
+                     precio=precio.substring(precio.indexOf("/")+1);
                      j++;
                      i=-1;
                  }
                  for (int i = 0; i < valor.size(); i++) {
-                     System.out.println(valor.get(i));
+//                     System.out.println("Subtotal"+i+": "+valor.get(i)+"\n"
+//                             + "Presentacion"+i+": "+valorpres.get(i)+"\n"
+//                                     + "Cantidad"+i+": "+valorcant.get(i)+"\n"
+//                                             + "Precio"+i+": "+valorprecio.get(i));
+                     vD=new VentasDetalles(0,
+                         Float.parseFloat(valorprecio.get(i)),
+                         Float.parseFloat(valorcant.get(i)),
+                         Float.parseFloat(valor.get(i)),
+                         Vdao.maxid(),
+                         Integer.parseInt(valorpres.get(i)),
+                         'A');
+                     res=VDdao.insertar(vD);
                  }
+                 datosV = Vdao.consultar();
+                request.setAttribute("datosCl", datosV);  
+                request.getRequestDispatcher("ViewVentas.jsp").forward(request, response);
                 break;
             case "VentasU":
                 v = new Ventas(Integer.parseInt(request.getParameter("idCl")),
