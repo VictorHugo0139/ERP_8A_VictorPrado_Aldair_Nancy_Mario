@@ -43,22 +43,24 @@ public class MiembrosDAO implements CRUD {
 
     @Override
     public String insertar(Object obj) {
-        Miembros mi = (Miembros) obj;
-        String respuesta = "";
-        con = cn.getConexion();
-        sql = ("SET IDENTITY_INSERT Miembros ON;\n" +
-"insert into Miembros(idCliente,idAsosiacion,estatus,fechaIncorporacion)\n" +
-"values (?,?,?,GETDATE());");
+        Miembros mi=(Miembros) obj;
+        String respuesta="";
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
+        con=cn.getConexion();
+        sql=("insert into Miembros(idCliente,idAsosiacion,estatus,fechaIncorporacion)\n" +
+            "values (?,?,?,?)"); 
         try {
-            ps = con.prepareStatement(sql);
+            ps=con.prepareStatement(sql);
             ps.setInt(1, mi.getIdCliente());
-            ps.setInt(2, mi.getidAsosaciones());
-            ps.setString(3, "" + mi.getEstatus());
-            int filas = ps.executeUpdate();
-            respuesta = "se insertaron " + filas + " filas";
+            ps.setInt(2, mi.getIdAsosaciones());
+            ps.setString(3, ""+mi.getEstatus());
+            ps.setDate(4, mi.getFechaIncorporacion());
+            int filas= ps.executeUpdate();
+            respuesta="se insertaron "+filas+" filas";
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MiembrosDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return respuesta;
     }
@@ -67,7 +69,7 @@ public class MiembrosDAO implements CRUD {
     public String eliminar(int id) {
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update Miembros set estatus='I' where idCliente=?;");
+        sql = ("update Miembros set estatus='I' where idMiembros=?;");
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -75,7 +77,7 @@ public class MiembrosDAO implements CRUD {
             respuesta = "se eliminaron " + filas + " filas";
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MiembrosDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return respuesta;
     }
@@ -83,7 +85,7 @@ public class MiembrosDAO implements CRUD {
 public String reactivar(int id) {
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update Miembros set estatus='A' where idCliente=?;");
+        sql = ("update Miembros set estatus='A' where idMiembros=?;");
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -91,7 +93,7 @@ public String reactivar(int id) {
             respuesta = "se reactivaron " + filas + " filas";
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MiembrosDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return respuesta;
     }
@@ -101,12 +103,14 @@ public String reactivar(int id) {
         Miembros mi = (Miembros) obj;
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update Miembros set idAsosiacion=?, estatus=?  where idCliente=?;");
+        sql = ("update Miembros set idCliente=?,idAsosiacion=?,estatus=?,fechaIncorporacion=? where idMiembros=?;");
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, mi.getidAsosaciones());
-            ps.setString(2, "" + mi.getEstatus());
-            ps.setInt(3, mi.getIdCliente());
+            ps.setInt(1, mi.getIdCliente());
+            ps.setInt(2, mi.getIdAsosaciones());
+            ps.setString(3, ""+mi.getEstatus());
+            ps.setDate(4, mi.getFechaIncorporacion());
+            ps.setInt(5, mi.getIdMiembro());
             int filas = ps.executeUpdate();
             respuesta = "se actualizaron " + filas + " filas";
             cn.closeConnection();
@@ -125,7 +129,8 @@ public String reactivar(int id) {
             ps=con.prepareStatement(sql);
             rs=ps.executeQuery();
             while(rs.next()){
-                datos.add(new Miembros(rs.getInt("idCliente"),
+                datos.add(new Miembros(rs.getInt("idMiembros"),
+                        rs.getInt("idCliente"),
                         rs.getInt("idAsosiacion"),
                         rs.getString("estatus").charAt(0),
                         rs.getDate("fechaIncorporacion")));

@@ -324,10 +324,11 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
                 break;
             case "MiembrosI":
-                mi = new Miembros(Integer.parseInt(request.getParameter("txtClientes")),
+                mi = new Miembros(Integer.parseInt(request.getParameter("idCl")),
+                        Integer.parseInt(request.getParameter("txtCliente")),
                         Integer.parseInt(request.getParameter("txtAsociaciones")),
                         request.getParameter("txtEstatus").charAt(0),
-                        Date.valueOf(LocalDate.MIN));
+                        Date.valueOf(request.getParameter("txtFecha")));
                 res = midao.insertar(mi);
                 datosM = midao.consultar();
                 request.setAttribute("datosCl", datosM);

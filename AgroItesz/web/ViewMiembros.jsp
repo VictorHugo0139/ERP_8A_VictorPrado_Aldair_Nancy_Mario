@@ -101,7 +101,7 @@
                         <input type="text" placeholder="búsqueda" name="busqueda" style="color: black;">
                         <label>En base a:</label>
                         <select name="campo" style="color: black;">
-                            <option value="idCliente">#Cliente</option>
+                            <option value="idCliente">#Miembro</option>
                             <option value="Asociacion">Asociacion</option>
                             <option value="estatus">Estatus</option>
                             <option value="fechaIncorporación">Fecha</option>
@@ -156,6 +156,7 @@
                             <input type="radio" id="InActivo" name="txtEstatus" value="I" required>
                             <label for="Inactivo">Inactivo</label>
                         </td>
+                        <td style="width: 25%" colspan="2"><input type="Date" placeholder="Fecha Incorporación" name="txtFecha" id="txtFecha" style="width: 90%;" value="" required/></td>
                     </tr>
                 </tbody>
             </table>
@@ -174,14 +175,25 @@
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
+                        <td id="CD">
+
+                        </td>
+                        <td id="CD2">
+
+                        </td>
+                    </tr>
+                     <tr>
+                        <td style="width: 25%"><input type="Date" placeholder="Fecha" name="txtFecha" id="txtFechaA" style="width: 90%;" value="" required/></td>
                         <td style="width: 25%" colspan="2" id="CD"></td>
                         <td style="width: 25%" colspan="2" id="CD2"></td>
-                        <td style="width: 25%"><input type="text" placeholder="Razón Social" name="txtRazonSocial" style="width: 90%;" required/></td>
                         <td><label>Estatus</label>
                             <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
                             <label for="Activo">Activo</label>
                             <input type="radio" id="InactivoA" name="txtEstatus" value="I">
                             <label for="Inactivo">Inactivo</label>
+                        </td>
+                        <td colspan="3">
+                            <input type="number" name="idCl" id="idCl"/>
                         </td>
                     </tr>
                 </tbody>
@@ -200,6 +212,7 @@
         <table width='100%' border='0' cellpadding='0' id='customers'>
             <thead>
                 <tr>
+                    <th  width='1%' style='border: 0;' scope='col'>#Miembro</th>
                     <th  width='1%' style='border: 0;' scope='col'>Cliente</th>
                     <th  width='10%' style='border: 0;' scope='col'>Asociacion</th>
                     <th  width='25%' style='border: 0;' scope='col'>Fecha Incorporacion</th>
@@ -214,12 +227,19 @@
                     for (Miembros mi : datos) {
                 %>
                 <tr>
-                    <td><%= idm = mi.getIdCliente()%></td>
-                        <td><%= mi.getidAsosaciones()%></td>
-                        <td><%= mi.getFechaIncorporacion()%></td>
-                    
-                    <%
-                            if (of.getEstatus() == 'A') {
+                    <td><%= idm = mi.getIdMiembro()%></td>
+                <%
+                    datosCl = cldao.consultarId(mi.getIdCliente());
+                    String cli=datosCl.get(0).getNombre();
+                %>
+                <td><%= cli %></td>
+                 <%
+                    String as=datosas.get(0).getNombre();
+                %>
+                <td><%= as %></td>
+                <td><%=mi.getFechaIncorporacion()%></td>
+                        <%
+                            if (mi.getEstatus() == 'A') {
                         %>
                         <td>Activo</td> 
                         <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
@@ -255,12 +275,58 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>        
 </body>
 <script type="text/javascript">
+            function addZero(i) {
+                if (i < 10) {
+                    i = '0' + i;
+                }
+                return i;
+            }
+        </script> 
+        <script type="text/javascript">
+        function dia() {
+        var hoy = new Date();
+        var dd = hoy.getDate();
+
+        return dd;
+    }
+        </script> 
+        <script type="text/javascript">
+        function mes() {
+        var hoy = new Date();
+        var mm = hoy.getMonth() + 1;
+
+        return mm;
+    }
+        </script> 
+        <script type="text/javascript">
+        function ano() {
+        var hoy = new Date();
+        var yyyy = hoy.getFullYear();
+
+        return yyyy;
+    }
+        </script> 
+        <script type="text/javascript">
+            function hoyFecha() {
+                var hoy = new Date();
+                var dd = hoy.getDate();
+                var mm = hoy.getMonth() + 1;
+                var yyyy = hoy.getFullYear();
+
+                dd = addZero(dd);
+                mm = addZero(mm);
+
+                return yyyy + '-' + mm + '-' + dd;
+            }
+        </script> 
+<script type="text/javascript">
     $(document).ready(function () {
         $('#divI').hide();
         $('#divA').hide();
         $('#btnMostrarf').hide();
         $('#btnMostrar').click(function () {
             if ($('#btnMostrarf').text() === '-') {
+                $('#txtFecha').val(hoyFecha());
                 $('#divI').hide();
                 $('.boton').show();
                 $('.boton2').show();
@@ -281,54 +347,54 @@
             $('.boton2').hide();
             $('#divI').hide();
             $('#divA').show();
-            $('#nombre').val($(this).parents("tr").find("td")[1].innerHTML);
-            $('#razonSocial').val($(this).parents("tr").find("td")[2].innerHTML);
-            $('#limiteCredito').val($(this).parents("tr").find("td")[3].innerHTML);
-            $('#ubicacion').val($(this).parents("tr").find("td")[4].innerHTML);
-            $('#codigoPostal').val($(this).parents("tr").find("td")[5].innerHTML);
-            $('#RFC').val($(this).parents("tr").find("td")[6].innerHTML);
-            $('#telefono').val($(this).parents("tr").find("td")[7].innerHTML);
-            $('#email').val($(this).parents("tr").find("td")[8].innerHTML);
-            switch ($(this).parents("tr").find("td")[9].innerHTML) {
-                case 'F':
-                    $('#FemeninoA').prop("checked", true);
-                    break;
-                case 'M':
-                    $('#MasculinoA').prop("checked", true);
-                    break;
-                case 'O':
-                    $('#OtroA').prop("checked", true);
-                    break;
-            }
-            var valor = $(this).parents("tr").find("td")[10].innerHTML;
-            //console.log(valor);
-            $('#CD').html("<select name='txtClientes'>"+
-                                <%
-                                    for (Clientes cl : datosCl) {
-                                        //String Ciudad = city.OneCity(cl.getIdCiudad());
-
-                                %>
-                                +"<option value='<%= cl.getIdCliente()%>'><%= cl.getNombre()%></option>"+
-                                <%
-                                    }
-                                %>
-                            "</select>");
+            $('#txtFechaA').val($(this).parents("tr").find("td")[3].innerHTML);
+            var valor = $(this).parents("tr").find("td")[1].innerHTML;
+                    $('#CD').html("<label style='color: grey;font-weight: lighter;'>Cliente:</label>" +
+                            "<select name='txtCliente'>"+
+                            
+            <%
+                String a;
+                datosCl = cldao.consultar();
+                for (Clientes tr : datosCl) {
+                    a= tr.getIdCliente() +":"+ tr.getNombre();
+            %>
+                    "<option value='<%= tr.getIdCliente()%>' id='<%= a.replaceAll(" ", "") %>'><%= a%></option>" +
+            <%
+                }
+            %>
+                    "</select>"
+                    );
+            var valor = $(this).parents("tr").find("td")[2].innerHTML;
+                    $('#CD2').html("<label style='color: grey;font-weight: lighter;'>Asosiacion:</label>" +
+                            "<select name='txtAsociacion'>"+
+                            
+            <%
+                datosas = asdao.consultar();
+                for (Asociaciones as : datosas) {
+                    a= as.getIdAsociacion() +":"+ as.getNombre();
+            %>
+                    "<option value='<%= as.getIdAsociacion()%>' id='<%= a.replaceAll(" ", "") %>'><%= a%></option>" +
+            <%
+                }
+            %>
+                    "</select>"
+                    );
+                    $('#' + valor.split(' ').join('')).attr('selected', 'selected').change();
             $('#' + valor).attr('selected', 'selected').change();
-            
-            if ($(this).parents("tr").find("td")[11].innerHTML === 'Activo') {
+            if ($(this).parents("tr").find("td")[4].innerHTML === 'Activo') {
                 $('#ActivoA').prop("checked", true);
             } else {
                 $('#InactivoA').prop("checked", true);
             }
-            console.log($(this).parents("tr").find("td")[0].innerHTML);
-            valor=$(this).parents("tr").find("td")[0].innerHTML;
-            console.log(valor);
-            $('#idCl').val(valor);
-            $('#idCl').hide();
+            $('#' + valor).attr('selected', 'selected').change();
+                    var valor = $(this).parents("tr").find("td")[0].innerHTML;
+                    $('#idCl').val(valor);
+                    $('#idCl').hide();
             console.log($('#idCl').val());
             $('#nombre').focus();
         });
-        $('#Cancel').click(function () {
+            $('#txtFecha').val(hoyFecha());
+            $('#Cancel').click(function () {
             $('#divA').hide();
             $('#divI').hide();
             $('.boton2').show();

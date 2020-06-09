@@ -8,6 +8,7 @@ package Modelo;
 import java.sql.Date;
 
 public class Miembros {
+    private int idMiembro;
     private int idCliente;
     private int idAsosaciones;
     private  char Estatus;
@@ -16,11 +17,20 @@ public class Miembros {
     public Miembros() {
     }
 
-    public Miembros(int idCliente, int idAsosaciones, char Estatus, Date FechaIncorporacion) {
+    public Miembros(int idMiembro, int idCliente, int idAsosaciones, char Estatus, Date FechaIncorporacion) {
+        this.idMiembro = idMiembro;
         this.idCliente = idCliente;
         this.idAsosaciones = idAsosaciones;
         this.Estatus = Estatus;
         this.FechaIncorporacion = FechaIncorporacion;
+    }
+
+    public int getIdMiembro() {
+        return idMiembro;
+    }
+
+    public void setIdMiembro(int idMiembro) {
+        this.idMiembro = idMiembro;
     }
 
     public int getIdCliente() {
@@ -31,11 +41,11 @@ public class Miembros {
         this.idCliente = idCliente;
     }
 
-    public int getidAsosaciones() {
+    public int getIdAsosaciones() {
         return idAsosaciones;
     }
 
-    public void setdAsosacione(int idAsosaciones) {
+    public void setIdAsosaciones(int idAsosaciones) {
         this.idAsosaciones = idAsosaciones;
     }
 
@@ -54,6 +64,6 @@ public class Miembros {
     public void setFechaIncorporacion(Date FechaIncorporacion) {
         this.FechaIncorporacion = FechaIncorporacion;
     }
+
     
-            
 }
