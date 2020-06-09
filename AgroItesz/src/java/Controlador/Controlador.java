@@ -327,8 +327,8 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
                 break;
             case "MiembrosI":
-                mi = new Miembros(Integer.parseInt(request.getParameter("idCl")),
-                        Integer.parseInt(request.getParameter("txtCliente")),
+                mi = new Miembros(0,
+                        Integer.parseInt(request.getParameter("txtClientes")),
                         Integer.parseInt(request.getParameter("txtAsociaciones")),
                         request.getParameter("txtEstatus").charAt(0),
                         Date.valueOf(request.getParameter("txtFecha")));

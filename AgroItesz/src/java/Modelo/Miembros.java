@@ -24,7 +24,7 @@ public class Miembros {
         this.Estatus = Estatus;
         this.FechaIncorporacion = FechaIncorporacion;
     }
-
+    
     public int getIdMiembro() {
         return idMiembro;
     }

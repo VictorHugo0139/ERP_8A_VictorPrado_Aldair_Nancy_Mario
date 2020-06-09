@@ -130,7 +130,7 @@ public String reactivar(int id) {
             rs=ps.executeQuery();
             while(rs.next()){
                 datos.add(new Miembros(rs.getInt("idMiembros"),
-                        rs.getInt("idCliente"),
+                        rs.getInt("id"),
                         rs.getInt("idAsosiacion"),
                         rs.getString("estatus").charAt(0),
                         rs.getDate("fechaIncorporacion")));

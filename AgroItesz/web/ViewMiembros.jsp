@@ -192,9 +192,7 @@
                             <input type="radio" id="InactivoA" name="txtEstatus" value="I">
                             <label for="Inactivo">Inactivo</label>
                         </td>
-                        <td colspan="3">
-                            <input type="number" name="idCl" id="idCl"/>
-                        </td>
+
                     </tr>
                 </tbody>
             </table>
@@ -234,6 +232,7 @@
                 %>
                 <td><%= cli %></td>
                  <%
+                    datos = midao.OneAsociation(mi.getIdAsosaciones());
                     String as=datosas.get(0).getNombre();
                 %>
                 <td><%= as %></td>
