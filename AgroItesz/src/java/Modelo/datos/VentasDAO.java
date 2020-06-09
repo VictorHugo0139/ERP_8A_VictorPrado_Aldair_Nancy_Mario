@@ -40,6 +40,22 @@ public class VentasDAO implements CRUD{
     private VentasDAO() {
     }
 
+    public int maxid() {
+        int respuesta=0;
+        con = cn.getConexion();
+        sql = ("select max(idVenta) as idVenta from Ventas");
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+               respuesta = rs.getInt("idVenta");
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;   
+    }
 
     @Override
     public String insertar(Object obj) {
@@ -47,18 +63,16 @@ public class VentasDAO implements CRUD{
         String respuesta = "";
         con = cn.getConexion();
         sql = ("insert into Ventas(fecha,totalPagar,CantPagada,comentarios,estatus,tipo,idCliente,idSucursal,idEmpleado)\n"
-                + "values (?,?,?,?,?,?,?,?,?)");
+                + "values (GETDATE(),?,?,?,'P',?,?,?,?)");
         try {
             ps = con.prepareStatement(sql);
-            ps.setDate(1, v.getFecha());
-            ps.setFloat(2, v.getTotalPagar());
-            ps.setFloat(3, v.getCantPagada());
-            ps.setString(4, v.getComentarios());
-            ps.setString(5,""+v.getEstatus());
-            ps.setString(6,""+v.getTipo());
-            ps.setInt(7, v.getIdCliente());
-            ps.setInt(8, v.getIdSucursal());
-            ps.setInt(9, v.getIdEmpleado());
+            ps.setFloat(1, v.getTotalPagar());
+            ps.setFloat(2, v.getCantPagada());
+            ps.setString(3, v.getComentarios());
+            ps.setString(4,""+v.getTipo());
+            ps.setInt(5, v.getIdCliente());
+            ps.setInt(6, v.getIdSucursal());
+            ps.setInt(7, v.getIdEmpleado());
             int filas = ps.executeUpdate();
             respuesta = "se insertaron " + filas + " filas";
             cn.closeConnection();

@@ -42,7 +42,7 @@ public class VentasDetallesDAO implements CRUD {
         String respuesta = "";
         con = cn.getConexion();
         sql = ("insert into VentasDetalle(precioVenta,cantidad,subtotal,idVenta,idPresentacion,estatus)\n"
-                + "values (?,?,?,?,?,?)");
+                + "values (?,?,?,?,?,'A')");
         try {
             ps = con.prepareStatement(sql);
             ps.setFloat(1, vD.getPrecioVenta());
@@ -50,7 +50,7 @@ public class VentasDetallesDAO implements CRUD {
             ps.setFloat(3, vD.getSubtotal());
             ps.setInt(4, vD.getIdVenta());
             ps.setInt(5, vD.getIdPresentacion());
-            ps.setString(6, "" + vD.getEstatus());
+//            ps.setString(6, "" + vD.getEstatus());
             int filas = ps.executeUpdate();
             respuesta = "se insertaron " + filas + " filas";
             cn.closeConnection();

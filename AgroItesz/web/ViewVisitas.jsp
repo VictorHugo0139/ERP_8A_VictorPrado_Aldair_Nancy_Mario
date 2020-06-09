@@ -218,8 +218,8 @@
                 <table border="0" style="width: 100%">
                     <tbody> 
                         <tr>
-                            <td style="width: 25%"><input type="Date" placeholder="Fecha Planeada" name="txtFechaEntregaP" id="txtFechaEntP" style="width: 90%;" value="" required/></td>
-                            <td colspan="2"><input type="Date" placeholder="Fecha Real" name="txtFechaEntregaR" id="txtFechaEntR" style="width: 90%;" required/></td>
+                            <td style="width: 25%"><input type="date" placeholder="Fecha Planeada" name="txtFechaEntregaP" id="txtFechaEntP" style="width: 90%;" value="" required/></td>
+                            <td colspan="2"><input type="date" placeholder="Fecha Real" name="txtFechaEntregaR" id="txtFechaEntR" style="width: 90%;" required/></td>
                             <td style="width: 25%"><input type="text" step="0.01" placeholder="Comentarios" name="txtComentarios" id="Comentarios" style="width: 90%;" required/></td>
                         </tr>
                         <tr>
@@ -229,7 +229,7 @@
                                 <input type="radio" id="InactivoA" name="txtEstatus" value="I">
                                 <label for="Inactivo">Inactivo</label> 
                             </td>
-                            <td style="width: 25%"><input type="numbre" placeholder="Costo" name="txtCosto" id="txtCP" style="width: 90%;" value="" required/></td>
+                            <td style="width: 25%"><input type="number" placeholder="Costo" name="txtCosto" id="txtCP" style="width: 90%;" value="" required/></td>
                         </tr>
                         <tr>
                             <td id="CD">
@@ -242,7 +242,7 @@
 
                             </td>
                              <td colspan="3">
-                            <input type="number" name="idCl" id="idCl"/>
+                            <input type="hidden" name="idCl" id="idCl"/>
                         </td>
                         </tr>
                     </tbody>
