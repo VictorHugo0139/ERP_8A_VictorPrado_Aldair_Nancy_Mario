@@ -95,6 +95,7 @@
                 </li>
                 <li>
                     <form action="Controlador?accion=ClientesS" method="POST" >
+                        <a href="ViewClientesCultivos.jsp">Clientes Cultivos</a>
                         <input type="text" placeholder="búsqueda" name="busqueda" style="color: black;">
                         <label>En base a:</label>
                         <select name="campo" style="color: black;">

@@ -27,12 +27,33 @@ public static ClienteCultivoDAO getClienteCultivoDAO(){
     return clcudao;                     
 }
 
-    private ClienteCultivoDAO() {
+    public ClienteCultivoDAO() {
     }
     
     @Override
     public String insertar(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ClienteCultivo clienCul=(ClienteCultivo) obj;
+        String respuesta="";
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
+        con=cn.getConexion();
+        sql=("insert into ClientesCultivos(extension,ubicacion,idCliente,idCultivo,idCiudad,estatus)\n" +
+        "values (?,?,?,?,?,?)");  
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setDouble(1, clienCul.getExtencion());
+            ps.setString(2, clienCul.getUbicacion());
+            ps.setInt(3, clienCul.getIdCliente());
+            ps.setInt(4, clienCul.getIdCultivo());
+            ps.setInt(5, clienCul.getIdCiudad());
+            ps.setString(6, ""+clienCul.getEstatus());
+            int filas= ps.executeUpdate();
+            respuesta="se insertaron "+filas+" filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteCultivoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
     }
 
     @Override
