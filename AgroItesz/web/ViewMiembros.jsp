@@ -191,6 +191,7 @@
                             <label for="Activo">Activo</label>
                             <input type="radio" id="InactivoA" name="txtEstatus" value="I">
                             <label for="Inactivo">Inactivo</label>
+                            <input type="hidden" name="idCl" id="idCl"/>
                         </td>
 
                     </tr>
@@ -354,14 +355,15 @@
                 String a;
                 datosCl = cldao.consultar();
                 for (Clientes tr : datosCl) {
-                    a= tr.getIdCliente() +":"+ tr.getNombre();
+                    a=tr.getNombre();
             %>
-                    "<option value='<%= tr.getIdCliente()%>' id='<%= a.replaceAll(" ", "") %>'><%= a%></option>" +
+                    "<option value='<%= tr.getIdCliente()%>' id='<%= a.substring(0,6) %>'><%= tr.getIdCliente() +":"+a%></option>" +
             <%
                 }
             %>
                     "</select>"
                     );
+            $('#' + valor.substring(0,6)).attr('selected', 'selected').change();
             var valor = $(this).parents("tr").find("td")[2].innerHTML;
                     $('#CD2').html("<label style='color: grey;font-weight: lighter;'>Asosiacion:</label>" +
                             "<select name='txtAsociacion'>"+
@@ -369,16 +371,15 @@
             <%
                 datosas = asdao.consultar();
                 for (Asociaciones as : datosas) {
-                    a= as.getIdAsociacion() +":"+ as.getNombre();
+                    a=as.getNombre();
             %>
-                    "<option value='<%= as.getIdAsociacion()%>' id='<%= a.replaceAll(" ", "") %>'><%= a%></option>" +
+                    "<option value='<%= as.getIdAsociacion()%>' id='<%= a.substring(0, 6) %>'><%= as.getIdAsociacion() +":"+ a%></option>" +
             <%
                 }
             %>
                     "</select>"
                     );
-                    $('#' + valor.split(' ').join('')).attr('selected', 'selected').change();
-            $('#' + valor).attr('selected', 'selected').change();
+            $('#' + valor.substring(0,6)).attr('selected', 'selected').change();
             if ($(this).parents("tr").find("td")[4].innerHTML === 'Activo') {
                 $('#ActivoA').prop("checked", true);
             } else {
