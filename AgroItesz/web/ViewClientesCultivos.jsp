@@ -19,77 +19,6 @@
 
 
                                         <head>
-                                            <style>
-                                                /*estilo nav general*/
-                                                
-                                                #N {
-                                                    background-color: #1b0c45;
-                                                    margin-left: 13.5%;
-                                                    margin-right: 11%;
-                                                }
-                                                
-                                                #U {
-                                                    list-style-type: none;
-                                                    padding: 0;
-                                                    overflow: hidden;
-                                                    background-color: #1b0c45;
-                                                }
-                                                
-                                                #U li {
-                                                    display: inline;
-                                                }
-                                                
-                                                #U li a {
-                                                    font-family: Arial;
-                                                    font-size: 21px;
-                                                    text-decoration: none;
-                                                    float: left;
-                                                    padding: 10px;
-                                                    background-color: #1b0c45;
-                                                    color: #fff;
-                                                    margin: 0;
-                                                }
-                                                
-                                                #U li form {
-                                                    width: 443px;
-                                                    margin: 0;
-                                                    font-family: Arial;
-                                                    font-size: 11px;
-                                                    text-decoration: none;
-                                                    float: right;
-                                                    padding: 10px;
-                                                    background-color: #1b0c45;
-                                                    color: #fff;
-                                                }
-                                                
-                                                #customers {
-                                                    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-                                                    border-collapse: collapse;
-                                                    width: 100%;
-                                                }
-                                                
-                                                #customers td,
-                                                #customers th {
-                                                    border: 1px solid #ddd;
-                                                    padding: 8px;
-                                                }
-                                                
-                                                #customers tr:nth-child(even) {
-                                                    background-color: #f2f2f2;
-                                                }
-                                                
-                                                #customers tr:hover {
-                                                    background-color: #ddd;
-                                                }
-                                                
-                                                #customers th {
-                                                    padding-top: 12px;
-                                                    padding-bottom: 12px;
-                                                    text-align: left;
-                                                    background-color: #1b0c45;
-                                                    color: white;
-                                                }
-                                            </style>
                                             <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
                                             <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
                                             <a href="principal.jsp"><img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" /></a>
@@ -98,15 +27,14 @@
                                             <title>Edicion de Clientes Cultivos</title>
                                         </head>
                                         <% //CultivosDAO dao = new CultivosDAO();
-    
-    ClienteCultivoDAO dao= new ClienteCultivoDAO();
-    ClientesDAO datoscli = new ClientesDAO();
-    CultivosDAO datoscult = new CultivosDAO();
-    CiudadesDAO city = new CiudadesDAO();
-    List<ClienteCultivo> datos = (List<ClienteCultivo>) request.getAttribute("datosCl");
-    List<Clientes> cli = datoscli.consultar();
-    List<Cultivos> cult = datoscult.consultar();
-    List<Ciudades> cit = city.consultar();
+    ClientesDAO cl = ClientesDAO.getClientesDAO();
+    CiudadesDAO city = CiudadesDAO.getCiudadesDAO();
+    ClienteCultivoDAO CC = ClienteCultivoDAO.getClienteCultivoDAO();
+    CultivosDAO Cu = CultivosDAO.getCultivosDAO();
+    List<ClienteCultivo> datos = CC.consultar();
+    List<Clientes> datosCl = cl.consultar();
+    List<Ciudades> datosCiu = city.consultar();
+    List<Cultivos> datosCu = Cu.consultar();
 %>
 
                                             <body style="background-color: #dfd7f5;">
@@ -153,49 +81,44 @@
                                                                 <tr>
                                                                     <td style="width: 25%" colspan="2"><input type="text" placeholder="Extension" name="txtExtension" style="width: 90%;" required/></td>
                                                                     <td style="width: 25%" colspan="2"><input type="text" placeholder="Ubicacion" name="txtUbicacion" style="width: 90%;" required /></td>
-                                                                    <td style="width: 25%" colspan="2">
-                                                                        <label style="color: grey;font-weight: lighter;">Cliente</label>
-                                                                        <select name="txtCliente" id="idCliente">
-                                <%
-                                    for (Clientes clien : cli) {
-                                        
-
-                                %>
-                                <option value="<%= clien.getIdCliente()%>"><%=  clien.getNombre() %></option>
-                                <%
-                                    }
-                                %>
-                            </select>
+                                                                    <td>
+                                                                        <label style="color: grey;font-weight: lighter;">Cliente:</label>
+                                                                        <select name="txtCliente">
+                                    <%
+                                        for (Clientes cli : datosCl) {
+                                    %>
+                                    <option value="<%= cli.getIdCliente()%>"><%= cli.getNombre()%></option>
+                                    <%
+                                        }
+                                    %>
+                                </select>
                                                                     </td>
-                                                                    <td style="width: 25%" colspan="2">
-                                                                        <label style="color: grey;font-weight: lighter;">Cultivos</label>
-                                                                        <select name="txtCultivo" id="idCultivo">
-                                <%
-                                    for (Cultivos cults : cult) {
-                                        
-
-                                %>
-                                <option value="<%= cults.getIdCultivo()%>"><%= cults.getNombre()%></option>
-                                <%
-                                    }
-                                %>
-                            </select>
+                                                                    <td>
+                                                                        <label style="color: grey;font-weight: lighter;">Cultivo:</label>
+                                                                        <select name="txtCultivo">
+                                    <%
+                                        for (Cultivos cu : datosCu) {
+                                    %>
+                                    <option value="<%= cu.getIdCultivo()%>"><%= cu.getIdCultivo()+" "+ cu.getNombre()%></option>
+                                    <%
+                                        }
+                                    %>
+                                </select>
                                                                     </td>
-                                                                    <td style="width: 25%" colspan="2">
-                                                                        <label style="color: grey;font-weight: lighter;">Ciudad</label>
-                                                                        <select name="txtCultivo" id="idCultivo">
-                                <%
-                                    for (Ciudades ciu : cit) {
-                                       
+                                                                    <td>
+                                                                        <label style="color: grey;font-weight: lighter;">Ciudad:</label>
+                                                                        <select name="txtCiudad">
+                                    <%
+                                        for (Ciudades ci : datosCiu) {
+                                            //String Ciudad = city.OneCity(cl.getIdCiudad());
 
-                                %>
-                                <option value="<%= ciu.getIdCiudad()%>"><%= ciu.getNombre()%></option>
-                                <%
-                                    }
-                                %>
-                            </select>
+                                    %>
+                                    <option value="<%= ci.getIdCiudad()%>"><%= ci.getNombre()%></option>
+                                    <%
+                                        }
+                                    %>
+                                </select>
                                                                     </td>
-                                                                    <td style="width: 25%" colspan="2"><input type="text" placeholder="rol" name="txtRol" id="Rol" style="width: 90%;" required /></td>
                                                                 </tr>
                                                                 <td><label>Estatus</label>
                                                                     <input type="radio" id="Activo" name="txtEstatus" value="A" required>
@@ -264,31 +187,41 @@
                //datos =  dao.consultar();
                  for(ClienteCultivo cul : datos){
                 %>
-                <tr>
-                    <td><%= idC = cul.getIdClienteCultivo() %></td>
-                    <td><%= cul.getExtencion() %></td>
-                    <td><%= cul.getUbicacion() %></td>
-                    <td><%= datoscli.consultarId(cul.getIdCliente()).get(0).getNombre() %></td>
-                    <td><%= datoscult.consultarCul(cul.getIdCultivo()) %></td>
-                    <%
+                                                                <tr>
+                                                                    <td>
+                                                                        <%= idC = cul.getIdClienteCultivo() %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= cul.getExtencion() %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= cul.getUbicacion() %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= datoscli.consultarId(cul.getIdCliente()).get(0).getNombre() %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= datoscult.consultarCul(cul.getIdCultivo()) %>
+                                                                    </td>
+                                                                    <%
                         if (cul.getEstatus()== 'A') {
                     %>
-                                                                                <td>Activo</td>
-                                                                                <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                                                                                    <form action="Controlador?accion=ClienteCultivosD&id=<%= idC%>" method="POST">
-                                                                                        <button type="submit" value='<%= idC%>' name="idc" class="boton2">
+                                                                        <td>Activo</td>
+                                                                        <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
+                                                                            <form action="Controlador?accion=ClienteCultivosD&id=<%= idC%>" method="POST">
+                                                                                <button type="submit" value='<%= idC%>' name="idc" class="boton2">
                                 <span  class='glyphicon glyphicon-ban-circle'></span></button>
-                                                                                    </form>
-                                                                                </td>
-                                                                                <%    } else {                    %>
-                                                                                    <td>Inactivo</td>
-                                                                                    <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                                                                                        <form action="Controlador?accion=ClienteCultivosR&id=<%= idC%>" method="POST">
-                                                                                            <button type="submit" value='<%= idC %>' name="idc" class="boton2">
+                                                                            </form>
+                                                                        </td>
+                                                                        <%    } else {                    %>
+                                                                            <td>Inactivo</td>
+                                                                            <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
+                                                                                <form action="Controlador?accion=ClienteCultivosR&id=<%= idC%>" method="POST">
+                                                                                    <button type="submit" value='<%= idC %>' name="idc" class="boton2">
                             <span  class='glyphicon glyphicon-ok-circle'></span></button>
-                                                                                        </form>
-                                                                                    </td>
-                                                                                    <%    }%>
+                                                                                </form>
+                                                                            </td>
+                                                                            <%    }%>
                                                                 </tr>
                                                                 <%
                     }
