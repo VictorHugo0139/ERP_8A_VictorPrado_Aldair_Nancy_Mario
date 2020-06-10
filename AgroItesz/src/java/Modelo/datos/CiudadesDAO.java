@@ -30,7 +30,7 @@ private static CiudadesDAO cdao;
     return cdao;                     
 }
 
-    private CiudadesDAO() {
+    public CiudadesDAO() {
     }
 
     
@@ -109,4 +109,25 @@ private static CiudadesDAO cdao;
         }
         return nombre;
     }
+    
+        public List<Ciudades> consultarId(int id) {
+        List<Ciudades> datos = new ArrayList<>();
+        con = cn.getConexion();
+        sql = ("select * from Ciudades where idCiudad=" + id);
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                 datos.add(new Ciudades(rs.getInt("idCiudad"),
+                        rs.getString("nombre"), 
+                        rs.getInt("idEstado"), 
+                        rs.getString("estatus").charAt(0)));
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(CiudadesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return datos;
+    }
+    
 }

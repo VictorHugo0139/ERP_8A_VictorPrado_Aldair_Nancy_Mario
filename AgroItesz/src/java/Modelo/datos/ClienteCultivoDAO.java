@@ -58,12 +58,58 @@ public static ClienteCultivoDAO getClienteCultivoDAO(){
 
     @Override
     public String eliminar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update ClientesCultivos set estatus='I' where idClienteCultivo=? ");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            respuesta = "se eliminaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteCultivoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
+    }
+
+  public String reactivar(int id) {
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update ClientesCultivos set estatus='A' where idClienteCultivo=? ");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            respuesta = "se reactivaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteCultivoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
     }
 
     @Override
     public String actualizar(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       ClienteCultivo clcu=(ClienteCultivo) obj;
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update ClientesCultivos set extension=?, ubicacion, idCliente=?, idCultivo=?, idCiudad=?, estatus=? where idClienteCultivo=? ");
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setDouble(1, clcu.getExtencion());
+            ps.setString(2, clcu.getUbicacion());
+            ps.setInt(3, clcu.getIdCliente());
+            ps.setInt(4, clcu.getIdCultivo());
+            ps.setInt(5, clcu.getIdCiudad());
+            ps.setString(6, ""+clcu.getEstatus());
+            int filas = ps.executeUpdate();
+            respuesta = "se actualizaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteCultivoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
     }
 
     @Override
