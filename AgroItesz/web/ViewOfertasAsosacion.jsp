@@ -224,12 +224,12 @@
                 <tr>
                     <td><%= idm = OA.getIdOfertaAsociacion()%></td>
                  <%
-                    datosas = asdao.consultarId(OA.getIdOfertaAsociacion());
+                    datosas = asdao.consultarId(OA.getIdAsosiacion());
                     String as=datosas.get(0).getNombre();
                 %>
                 <td><%= as %></td>
                 <%
-                    datosOf = ofdao.consultarId(OA.getIdOfertaAsociacion());
+                    datosOf = ofdao.consultarId(OA.getIdOferta());
                     String cli=datosOf.get(0).getNombre();
                 %>
                 <td><%= cli %></td>
