@@ -98,6 +98,7 @@
                                             <title>Edicion de Clientes Cultivos</title>
                                         </head>
                                         <% //CultivosDAO dao = new CultivosDAO();
+    
     ClienteCultivoDAO dao= new ClienteCultivoDAO();
     ClientesDAO datoscli = new ClientesDAO();
     CultivosDAO datoscult = new CultivosDAO();
@@ -259,48 +260,31 @@
                                                         </thead>
                                                         <tbody>
                                                             <%
-                     int idClientCul;
+                     int idC;
                //datos =  dao.consultar();
-               for(ClienteCultivo clcu : datos){
-                   cli=datoscli.consultarId(clcu.getIdCliente());
+                 for(ClienteCultivo cul : datos){
                 %>
-                                                                <tr>
-                                                                    <td>
-                                                                        <%= idClientCul = clcu.getIdClienteCultivo()%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%= clcu.getExtencion()%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%= clcu.getUbicacion()%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%= cli.get(0).getNombre()%>
-                                                                    </td>//cliente
-                                                                    <%cult = datoscult.consultarId(clcu.getIdCultivo());%>
-                                                                        <td>
-                                                                            <%= cli.get(0).getNombre()%>
-                                                                        </td>//cultivo
-                                                                        <%cit = city.consultarId(clcu.getIdCiudad());%>
-                                                                            <td>
-                                                                                <%= cit.get(0).getNombre()%>
-                                                                            </td>//Ciudad
-
-                                                                            <%
-                        if (clcu.getEstatus()== 'A') {
+                <tr>
+                    <td><%= idC = cul.getIdClienteCultivo() %></td>
+                    <td><%= cul.getExtencion() %></td>
+                    <td><%= cul.getUbicacion() %></td>
+                    <td><%= datoscli.consultarId(cul.getIdCliente()).get(0).getNombre() %></td>
+                    <td><%= datoscult.consultarCul(cul.getIdCultivo()) %></td>
+                    <%
+                        if (cul.getEstatus()== 'A') {
                     %>
                                                                                 <td>Activo</td>
                                                                                 <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                                                                                    <form action="Controlador?accion=ClienteCultivosD&id=<%= idClientCul%>" method="POST">
-                                                                                        <button type="submit" value='<%= idClientCul%>' name="idc" class="boton2">
+                                                                                    <form action="Controlador?accion=ClienteCultivosD&id=<%= idC%>" method="POST">
+                                                                                        <button type="submit" value='<%= idC%>' name="idc" class="boton2">
                                 <span  class='glyphicon glyphicon-ban-circle'></span></button>
                                                                                     </form>
                                                                                 </td>
                                                                                 <%    } else {                    %>
                                                                                     <td>Inactivo</td>
                                                                                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                                                                                        <form action="Controlador?accion=ClienteCultivosR&id=<%= idClientCul%>" method="POST">
-                                                                                            <button type="submit" value='<%= idClientCul%>' name="idc" class="boton2">
+                                                                                        <form action="Controlador?accion=ClienteCultivosR&id=<%= idC%>" method="POST">
+                                                                                            <button type="submit" value='<%= idC %>' name="idc" class="boton2">
                             <span  class='glyphicon glyphicon-ok-circle'></span></button>
                                                                                         </form>
                                                                                     </td>

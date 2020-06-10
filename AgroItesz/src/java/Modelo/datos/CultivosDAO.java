@@ -180,7 +180,7 @@ public class CultivosDAO implements CRUD {
             rs=ps.executeQuery();
             while (rs.next())
             {
-                datos=rs.getInt("idCultivo")+":"+rs.getString("nombre");
+                datos=rs.getString("nombre");
             }
             cn.closeConnection();
         } catch (SQLException ex) {
