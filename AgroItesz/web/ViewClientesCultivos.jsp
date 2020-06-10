@@ -132,10 +132,48 @@
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Extension" name="txtExtension" style="width: 90%;" required/></td>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Ubicacion" name="txtUbicacion" style="width: 90%;" required /></td>
+                        <td style="width: 25%" colspan="2"><input type="number" placeholder="Extension" name="txtExtension" style="width: 90%;" required/></td>
                         <td style="width: 25%" colspan="2"><input type="text" placeholder="Ubicacion" name="txtUbicacion" style="width: 90%;" required /></td>
                     </tr>
+                    <tr>
+                        <td>
+                                <label style="color: grey;font-weight: lighter;">Cliente:</label>
+                                <select name="txtCliente">
+                                    <%
+                                        for (Clientes cli : datosCl) {
+                                    %>
+                                    <option value="<%= cli.getIdCliente()%>"><%= cli.getNombre()%></option>
+                                    <%
+                                        }
+                                    %>
+                                </select>
+                            </td>
+                            <td>
+                                <label style="color: grey;font-weight: lighter;">Cultivo:</label>
+                                <select name="txtCultivo">
+                                    <%
+                                        for (Cultivos cu : datosCu) {
+                                    %>
+                                    <option value="<%= cu.getIdCultivo()%>"><%= cu.getIdCultivo()+" "+ cu.getNombre()%></option>
+                                    <%
+                                        }
+                                    %>
+                                </select>
+                            </td>
+                            <td >
+                                <label style="color: grey;font-weight: lighter;">Ciudad:</label>
+                                <select name="txtCiudad">
+                                    <%
+                                        for (Ciudades ci : datosCiu) {
+                                            //String Ciudad = city.OneCity(cl.getIdCiudad());
+
+                                    %>
+                                    <option value="<%= ci.getIdCiudad()%>"><%= ci.getNombre()%></option>
+                                    <%
+                                        }
+                                    %>
+                                </select>
+                            </td>
                         <td><label>Estatus</label>
                             <input type="radio" id="Activo" name="txtEstatus" value="A" required>
                             <label for="Activo">Activo</label>
@@ -163,6 +201,7 @@
                         <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" id='nombre'  style="width: 90%;" required/></td>
                         <td style="width: 25%" colspan="2"><input type="text" placeholder="costoAsesoria" name="txtcostoAsesoria" id='costoAsesoria'  style="width: 90%;" required /></td>
                     </tr>
+                    <tr>   
                         <td><label>Estatus:</label>
                             <input type="radio" id="ActivoA" name="txtEstatusA" value="A" required>
                             <label for="Activo">Activo</label>
