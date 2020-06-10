@@ -801,6 +801,18 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosCCu);
                 request.getRequestDispatcher("ViewClientesCultivos.jsp").forward(request, response);
                 break;
+                case "ClienteCultivosU":
+                    System.out.println("F: "+Integer.parseInt(request.getParameter("idCl").trim())+"\n"+
+                            Float.parseFloat(request.getParameter("Extension")) );
+                    ccu=new ClienteCultivo(Integer.parseInt(request.getParameter("idCl").trim()),
+                            Float.parseFloat(request.getParameter("Extension")),
+                            request.getParameter("Ubicacion"),
+                            Integer.parseInt(request.getParameter("txtCliente")),
+                            Integer.parseInt(request.getParameter("txtCultivo")), 
+                            Integer.parseInt(request.getParameter("txtCiudad")),
+                            request.getParameter("txtEstatus").charAt(0));
+                    
+                    break;
         }
     }
 

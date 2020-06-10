@@ -94,15 +94,16 @@ public static ClienteCultivoDAO getClienteCultivoDAO(){
        ClienteCultivo clcu=(ClienteCultivo) obj;
         String respuesta = "";
         con = cn.getConexion();
-        sql = ("update ClientesCultivos set extension=?, ubicacion, idCliente=?, idCultivo=?, idCiudad=?, estatus=? where idClienteCultivo=? ");
+        sql = ("update ClientesCultivos set extension=?, ubicacion=?, idCliente=?, idCultivo=?, idCiudad=?, estatus=? where idClienteCultivo=? ");
         try {
             ps=con.prepareStatement(sql);
-            ps.setDouble(1, clcu.getExtencion());
+            ps.setFloat(1, clcu.getExtencion());
             ps.setString(2, clcu.getUbicacion());
             ps.setInt(3, clcu.getIdCliente());
             ps.setInt(4, clcu.getIdCultivo());
             ps.setInt(5, clcu.getIdCiudad());
             ps.setString(6, ""+clcu.getEstatus());
+            ps.setInt(7, clcu.getIdClienteCultivo());
             int filas = ps.executeUpdate();
             respuesta = "se actualizaron " + filas + " filas";
             cn.closeConnection();

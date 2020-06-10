@@ -208,20 +208,29 @@
                                                         <table border="0" style="width: 100%">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" id='nombre' style="width: 90%;" required/></td>
-                                                                    <td style="width: 25%" colspan="2"><input type="text" placeholder="costoAsesoria" name="txtcostoAsesoria" id='costoAsesoria' style="width: 90%;" required /></td>
+                                                                    <td style="width: 25%" colspan="2"><input type="text" placeholder="Extension" id="ext" name="txtExtension" style="width: 90%;" required/></td>
+                                                                    <td style="width: 25%" colspan="2"><input type="text" placeholder="Ubicacion" id="ubi" name="txtUbicacion" style="width: 90%;" required /></td>
+                                                                    <td id="CD">
+                                                                        
+                                                                    </td>
+                                                                    <td id="CD2">
+                                                                        
+                                                                    </td>
+                                                                    <td id="CD3">
+                                                                       
+                                                                    </td>
                                                                 </tr>
-                                                                <td><label>Estatus:</label>
-                                                                    <input type="radio" id="ActivoA" name="txtEstatusA" value="A" required>
+                                                                <td><label>Estatus</label>
+                                                                    <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
                                                                     <label for="Activo">Activo</label>
-                                                                    <input type="radio" id="InactivoA" name="txtEstatusA" value="I">
+                                                                    <input type="radio" id="InactivoA" name="txtEstatus" value="I">
                                                                     <label for="Inactivo">Inactivo</label>
+                                                                    <input type="hidden" name="idCl" id="idCl"/>
                                                                 </td>
-                                                                <td><input type="number" name="idTr" id="idTr" /> </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-
+                                                    </br>
                                                         <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
                 Actualizar
             </button>
@@ -337,23 +346,65 @@
             $('.boton2').hide();
             $('#divI').hide();
             $('#divA').show();
-            $('#txtFechaA').val($(this).parents("tr").find("td")[3].innerHTML);
             var valor = $(this).parents("tr").find("td")[1].innerHTML;
-                    
-            $('#' + valor.substring(0,6)).attr('selected', 'selected').change();
-            if ($(this).parents("tr").find("td")[4].innerHTML === 'Activo') {
+            $('#ext').val(valor.trim());
+            var valor = $(this).parents("tr").find("td")[2].innerHTML;
+            $('#ubi').val(valor.trim());
+            valor = $(this).parents("tr").find("td")[3].innerHTML;
+            
+                    $('#CD').html("<label style='color: grey;font-weight: lighter;'>Cliente:</label>"+
+                                                                        "<select name='txtCliente'>"+
+                                    <%
+                                        datosCl=cl.consultar();
+                                        for (Clientes cli : datosCl) {
+                                    %>
+                                    "<option value='<%= cli.getIdCliente()%>' id='<%= cli.getNombre().substring(0,3)%>'><%= cli.getNombre()%></option>"+
+                                    <%
+                                        }
+                                    %>
+                                "</select>");
+            $('#' + valor.trim().substring(0,3)).attr('selected', 'selected').change();
+            valor = $(this).parents("tr").find("td")[4].innerHTML;
+            valor=valor.trim();
+            $('#CD2').html("<label style='color: grey;font-weight: lighter;'>Cultivo:</label>"+
+                                                                        "<select name='txtCultivo'>"+
+                                    <%
+                                        datosCu=Cu.consultar();
+                                        for (Cultivos cu : datosCu) {
+                                    %>
+                                    "<option value='<%= cu.getIdCultivo()%>' id='<%= cu.getNombre().substring(0,3) %>' ><%= cu.getIdCultivo()+" "+ cu.getNombre()%></option>"+
+                                    <%
+                                        }
+                                    %>
+                                "</select>");
+            $('#' + valor.substring(0,3)).attr('selected', 'selected').change();
+            valor = $(this).parents("tr").find("td")[5].innerHTML;
+            valor=valor.trim();
+            $('#CD3').html("<label style='color: grey;font-weight: lighter;'>Ciudad:</label>"+
+                                                                        "<select name='txtCiudad'>"+
+                                    <%
+                                        for (Ciudades ci : datosCiu) {
+                                            //String Ciudad = city.OneCity(cl.getIdCiudad());
+
+                                    %>
+                                    "<option value='<%= ci.getIdCiudad()%>' id='<%= ci.getNombre().substring(0,3) %>' ><%= ci.getNombre()%></option>"+
+                                    <%
+                                        }
+                                    %>
+                                "</select>");
+            $('#' + valor.substring(0,3)).attr('selected', 'selected').change();
+            if ($(this).parents("tr").find("td")[6].innerHTML === 'Activo') {
                 $('#ActivoA').prop("checked", true);
             } else {
                 $('#InactivoA').prop("checked", true);
             }
             $('#' + valor).attr('selected', 'selected').change();
-                    var valor = $(this).parents("tr").find("td")[0].innerHTML;
+                    valor = $(this).parents("tr").find("td")[0].innerHTML;
                     $('#idCl').val(valor);
                     $('#idCl').hide();
             console.log($('#idCl').val());
             $('#nombre').focus();
         });
-            $('#txtFecha').val(hoyFecha());
             $('#Cancel').click(function () {
             $('#divA').hide();
             $('#divI').hide();
