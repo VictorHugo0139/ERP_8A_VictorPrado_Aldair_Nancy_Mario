@@ -233,7 +233,7 @@
                 %>
                 <td><%= cli %></td>
                  <%
-                    String as=midao.OneAsociation(mi.getIdMiembro());;
+                    String as=midao.OneAsociation(mi.getIdMiembro());
                 %>
                 <td><%= as %></td>
                 <td><%=mi.getFechaIncorporacion()%></td>

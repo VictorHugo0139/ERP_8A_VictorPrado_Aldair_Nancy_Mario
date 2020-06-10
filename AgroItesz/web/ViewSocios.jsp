@@ -1,9 +1,10 @@
-<%@page import="Modelo.datos.AsociacionesDAO" %>
+<%@page import="Modelo.datos.AsociacionesDAO"%>
 <%@page import="java.util.*" %>
 <%@page import="Modelo.Asociaciones" %>
 <!DOCTYPE html>
 <html>
 
+   
     <head>
         <style>
             /*estilo nav general*/
@@ -73,8 +74,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Edición de Asociaciones</title>
 </head>
-<%  AsociacionesDAO product = AsociacionesDAO.geAsociacionestDAO();
-    List<Asociaciones> datos = (List<Asociaciones>) request.getAttribute("datosCl");
+<% //CultivosDAO dao = new CultivosDAO();
+    AsociacionesDAO asao= AsociacionesDAO.geAsociacionestDAO();
+    List<Asociaciones> datos = asao.consultar();
 %>
 <body style="background-color: #dfd7f5;">
     <header>
@@ -82,17 +84,23 @@
             <ul id="U">
                 <li style="width: 50px;">
                     <a href="principal.jsp" style="width: 50px;"><img src="Images/arrow-left.png" height="70%" width="70%" alt="Regresar" /></a>
+                    
                 </li>
-                <li class="seccion">
-                    <a href="Controlador?accion=Asociaciones">Asociaciones</a>
-                </li>
-
                 <li>
-                    <form action="Controlador?accion=AsociacionesS" method="POST" >
-                        <input type="text" placeholder="búsqueda" name="busqueda"   > 
-                        <input type="text" placeholder="en base a:" name="campo" > 
+                    <a>Asociaciones</a>
+                </li>
+                <li>
+                    <form action="Controlador?accion=CultivosS" method="POST" >
+                        <input type="text" placeholder="búsqueda" name="busqueda" style="color: black;">
+                        <label>En base a:</label>
+                        <select name="campo" style="color: black;">
+                            <option value="idCultivo">#Asociacion</option>
+                            <option value="nombre">Nombre</option>
+                            <option value="costoAsesoria">costoAsesoria</option>
+                            <option value="Estatus">Estatus</option>
+                        </select>
                         <button style="width: 20%; background-color: #15b332; color: #fff; font-weight: bold;"  type="submit">
-                            <img src="Images/busqueda.jpg" alt="buscar" style="width: 10%; height: 10%;">
+                            <span class="glyphicon glyphicon-search"></span>
                             Buscar
                         </button>
                     </form>
@@ -101,14 +109,16 @@
             </ul>
         </nav>
     </header>
-    <button id="btnMostrar">+</button>
+   <!--Aqui se comienza a insertar --> 
+    <button id="btnMostrarf">+</button>
+    <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
-        <form action="Controlador?accion=AsociacionesI" method="POST" name="formInsertar" onsubmit="return ValidarDetalles(formInsertar);">
+        <form action="Controlador?accion=AsociacionesI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" style="width: 90%;"/></td>
-                    <tr>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" style="width: 90%;" required/></td>
+                    </tr>
                         <td><label>Estatus</label>
                             <input type="radio" id="Activo" name="txtEstatus" value="A" required>
                             <label for="Activo">Activo</label>
@@ -123,47 +133,74 @@
                 Agregar
             </button>
         </form>
-
+        </br>
     </div>
 
-      
 
+    <div style="margin-left: 180px; margin-top: 10px" id="divA">
+        
+        <form action="Controlador?accion=AsociacionesU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
+            <table border="0" style="width: 100%">
+                <tbody>
+                    <tr>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" id='nombre'  style="width: 90%;" required/></td>
+                    </tr>
+                        <td><label>Estatus:</label>
+                            <input type="radio" id="ActivoA" name="txtEstatusA" value="A" required>
+                            <label for="Activo">Activo</label>
+                            <input type="radio" id="InactivoA" name="txtEstatusA" value="I">
+                            <label for="Inactivo">Inactivo</label>
+                        </td>
+                        <td><input type="number" name="idTr" id="idTr"/> </td>
+                    </tr>
+                </tbody>
+            </table>
 
-
+            <button type="submit" style="width: 20%; background-color: #aa0bb0; color: #fff; font-weight: bold; border-radius: 0.33em;">
+                Actualizar
+            </button>
+            <button type="button" id="Cancel" style="width: 20%; background-color: #fc1919; color: #fff; font-weight: bold; border-radius: 0.33em;">
+                Cancelar
+            </button>
+        </form>
+        </br>
+    </div>
     <div>
         <table width='100%' border='0' cellpadding='0' id='customers'>
             <thead>
                 <tr>
-                    <th  width='1%' style='border: 0;' scope='col'>#Asociacion</th>
-                    <th  width='1%' style='border: 0;' scope='col'>Nombre</th>
-                    <th  width='1%' style='border: 0;' scope='col'>Estatus</th> 
-                    <th  width='1%' style='border: 0;' scope='col'>Acciones</th> 
+                     <th id='tde' width='10%' style='border: 0;' scope='col'>#Asociacion</th>
+                     <th id='tde' width='30%' style='border: 0;' scope='col'>Nombre</th>
+                     <th id='tde' width='10%' style='border: 0;' scope='col'>Estatus</th>
+                     <th  width='10%' style='border: 0;' scope='col'>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <%
-                    int idc;
-                    //datos = dao.consultar();
-                    for (Asociaciones aso : datos) {
+                     int idCul;
+               //datos =  dao.consultar();
+               for(Asociaciones as : datos){
                 %>
                 <tr>
-                    <td><%=  idc = aso.getIdAsociacion()%></td>
-                    <td><%= aso.getNombre()%></td>
+                    <td><%= idCul = as.getIdAsociacion()%></td>
+                    <td><%= as.getNombre()%></td>
                     <%
-                        if (aso.getEstatus() == 'A') {
+                        if (as.getEstatus() == 'A') {
                     %>
                     <td>Activo</td> 
+                    <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
+                        <form action="Controlador?accion=AsociacionesD&id=<%= idCul%>" method="POST">
+                            <button type="submit" value='<%= idCul%>' name="idc" class="boton2">
+                                <span  class='glyphicon glyphicon-ban-circle'></span></button>
+                        </form></td>
                     <%    } else {                    %>
                     <td>Inactivo</td>
-                    <%    }%>                        
-                    </form>
-
-                    <td> <form action="Controlador?accion=AsociacionesD&id=<%= idc%>" method="POST">
-                            <button type="submit" value='<%= idc%>' name="idc">Inactivo</button>
-                        </form>
-                        <form action="Controlador?accion=AsociacionesR&id=<%= idc%>" method="POST">
-                            <button type="submit" value='<%= idc%>' name="idc">Activo</button>
-                        </form>
+                    <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
+                        <form action="Controlador?accion=AsociacionesR&id=<%= idCul%>" method="POST">
+                            <button type="submit" value='<%= idCul%>' name="idc" class="boton2">
+                            <span  class='glyphicon glyphicon-ok-circle'></span></button>
+                        </form></td>
+                    <%    }%>                                     
                 </tr>
                 <%
                     }
@@ -173,38 +210,81 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>   
     <script type="text/javascript" charset="utf8" 
-    src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>  
-</body>
-<script type="text/javascript">
+    src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>   
+    <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+       
+        <script type="text/javascript">
             $(document).ready(function () {
                 $('#divI').hide();
-                $('#btnMostrar').click(function () {
-                    if ($('#btnMostrar').text() == '-') {
-                        $('#divI').hide();
-                        $('#btnMostrar').text('+');
-                    } else {
-                        $('#divI').show();
-                        $('#btnMostrar').text('-');
-                    }
-                });
-                $('#customers').DataTable({
-                    language: {
-                        processing: "Procesando...",
-                        search: "Buscar:",
-                        lengthMenu: "Mostrar _MENU_ elementos",
-                        info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
-                        infoEmpty: "No se encontraron elementos para mostrar",
-                        infoFiltered: "(Filtrado de _MAX_ elementos en total)",
-                        loadingRecords: "Cargando datos...",
-                        zeroRecords: "No se encontraron elementos para mostrar",
-                        paginate: {
-                            first: "Primer",
-                            previous: "Anterior",
-                            next: "Siguiente",
-                            last: "Último"
-                        }
-                    }
-                });
-            });
-</script>  
+        $('#divA').hide();
+        $('#btnMostrarf').hide();
+        $('#btnMostrar').click(function () {
+            if ($('#btnMostrarf').text() === '-') {
+                $('#divI').hide();
+                $('.boton').show();
+                $('.boton2').show();
+                $('#btnMostrarf').text('+');
+                $('#btnMostrar').html("<span  class='glyphicon glyphicon-plus-sign'></span>");
+            } else {
+                $('#divI').show();
+                $('.boton').hide();
+                $('.boton2').hide();
+                $('#btnMostrarf').text('-');
+                $('#btnMostrar').html("<span  class='glyphicon glyphicon-minus-sign'></span>");
+            }
+        });
+        $('.boton').click(function () {
+            $('#btnMostrar').hide();
+            $('.boton2').hide();
+            $('#divI').hide();
+            $('#divA').show();
+            $('#nombre').val($(this).parents("tr").find("td")[1].innerHTML);
+            $('#costoAsesoria').val($(this).parents("tr").find("td")[2].innerHTML);
+            if ($(this).parents("tr").find("td")[3].innerHTML === 'Activo') {
+                $('#ActivoA').prop("checked", true);
+            } else {
+                $('#InactivoA').prop("checked", true);
+            }
+            console.log($(this).parents("tr").find("td")[0].innerHTML);
+            valor=$(this).parents("tr").find("td")[0].innerHTML;
+            console.log(valor);
+            $('#idTr').val(valor);
+            $('#idTr').hide();
+            console.log($('#idTr').val());
+            $('#nombre').focus();
+        });
+            $('#Cancel').click(function () {
+            $('#divA').hide();
+            $('#divI').hide();
+            $('.boton2').show();
+            $('#btnMostrar').show();
+        });
+        $('#customers').DataTable({
+            language: {
+                processing: "Procesando...",
+                search: "Buscar:",
+                lengthMenu: "Mostrar _MENU_ elementos",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
+                infoEmpty: "No se encontraron elementos para mostrar",
+                infoFiltered: "(Filtrado de _MAX_ elementos en total)",
+                loadingRecords: "Cargando datos...",
+                zeroRecords: "No se encontraron elementos para mostrar",
+                paginate: {
+                    first: "Primer",
+                    previous: "Anterior",
+                    next: "Siguiente",
+                    last: "Último"
+                }
+            }
+        });
+    });
+        </script>    
+</body>
 </html>

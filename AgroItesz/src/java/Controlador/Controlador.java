@@ -18,6 +18,7 @@ import Modelo.VentasDetalles;
 import Modelo.Tripulacion;
 import Modelo.Mantenimientos;
 import Modelo.Visitas;
+import Modelo.OfertasAsosaciones;
 import Modelo.datos.ClientesDAO;
 import Modelo.datos.CultivosDAO;
 import Modelo.datos.TransporteDAO;
@@ -32,6 +33,7 @@ import Modelo.datos.VisitasDAO;
 import Modelo.datos.VentasDetallesDAO;
 import Modelo.datos.TripulacionDAO;
 import Modelo.datos.MantenimientosDAO;
+import Modelo.datos.OfertasAsociacionesDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -100,6 +102,9 @@ public class Controlador extends HttpServlet {
     ClienteCultivo ccu = new ClienteCultivo();
     List<ClienteCultivo> datosCCu = new ArrayList<>();
     ClienteCultivoDAO ccudao = ClienteCultivoDAO.getClienteCultivoDAO();
+    OfertasAsosaciones ofa = new OfertasAsosaciones();
+    List<OfertasAsosaciones> datosOFA = new ArrayList<>();
+    OfertasAsociacionesDAO ofadao = OfertasAsociacionesDAO.getOfertasAs();
     
     int r;
     String res;
@@ -180,6 +185,8 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewOfertas.jsp").forward(request, response);
                 break;
             case "OfertasAsosacion":
+                datosOFA = ofadao.consultar();
+                request.setAttribute("datosCl", datosOFA);
                 request.getRequestDispatcher("ViewOfertasAsosacion.jsp").forward(request, response);
                 break;
             case "Miembros":
@@ -256,9 +263,9 @@ public class Controlador extends HttpServlet {
                 break;
 
             case "AsociacionesU":
-                As = new Asociaciones(Integer.parseInt(request.getParameter("idCl")),
+                As = new Asociaciones(Integer.parseInt(request.getParameter("idTr")),
                         request.getParameter("txtNombre"),
-                        request.getParameter("txtEstatus").charAt(0));
+                        request.getParameter("txtEstatusA").charAt(0));
                 res = Asdao.actualizar(As);
                 datosA = Asdao.consultar();
                 request.setAttribute("datosCl", datosA);
@@ -813,6 +820,35 @@ public class Controlador extends HttpServlet {
                             request.getParameter("txtEstatus").charAt(0));
                     
                     break;
+                case "ClienteCultivosI":
+                ccu = new ClienteCultivo(0,
+                        Float.parseFloat(request.getParameter("txtExtension")),
+                        request.getParameter("txtUbicacion"),
+                        Integer.parseInt(request.getParameter("txtCliente")),
+                        Integer.parseInt(request.getParameter("txtCultivo")),
+                        Integer.parseInt(request.getParameter("txtCiudad")),
+                        request.getParameter("txtEstatus").charAt(0));
+                res = ccudao.insertar(ccu);
+                datosCCu = ccudao.consultar();
+                request.setAttribute("datosCl", datosCCu);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewClientesCultivos.jsp").forward(request, response);
+                break;
+                case "ClienteCultivosD":
+                res = ccudao.eliminar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosCCu = ccudao.consultar();
+                request.setAttribute("datosCl", datosCCu);
+                request.getRequestDispatcher("ViewClientesCultivos.jsp").forward(request, response);
+                break;
+                case "ClienteCultivosR":
+                res = ccudao.reactivar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosCCu = ccudao.consultar();
+                request.setAttribute("datosCl", datosCCu);
+                request.getRequestDispatcher("ViewClientesCultivos.jsp").forward(request, response);
+                break;
+             
         }
     }
 

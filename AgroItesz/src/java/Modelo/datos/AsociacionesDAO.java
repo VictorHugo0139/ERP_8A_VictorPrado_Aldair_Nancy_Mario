@@ -130,23 +130,24 @@ public class AsociacionesDAO implements CRUD {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+
     public List<Asociaciones> consultarId(int id) {
         List<Asociaciones> datos = new ArrayList<>();
         con = cn.getConexion();
-        sql = ("select * from Clientes where idCliente=" + id);
+        sql = ("select * from Asociaciones where idAsosiacion=" + id);
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                datos.add(new Asociaciones());
+                datos.add(new Asociaciones(rs.getInt("idAsosiacion"),
+                        rs.getString("Nombre"),
+                        rs.getString("estatus").charAt(0)));
             }
             cn.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AsociacionesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return datos;
     }
-
-
     
 }

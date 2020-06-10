@@ -148,4 +148,28 @@ public static OfertasDAO getOfertasDAO(){
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public List<Ofertas> consultarId(int id) {
+        List<Ofertas> datos = new ArrayList<>();
+        con = cn.getConexion();
+        sql = ("select * from Ofertas where idOferta=" + id);
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                datos.add(new Ofertas(rs.getInt("idOferta"),
+                        rs.getString("nombre"),
+                        rs.getString("descripcion"),
+                        rs.getInt("porDescuento"),
+                        rs.getDate("fechaInicio"),
+                        rs.getDate("fechaFin"),
+                        rs.getInt("canMinProducto"),
+                        rs.getString("estatus").charAt(0),
+                        rs.getInt("idProducto")));
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(OfertasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return datos;
+    }
 }
