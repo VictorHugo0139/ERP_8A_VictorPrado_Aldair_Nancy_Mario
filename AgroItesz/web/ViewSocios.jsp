@@ -80,11 +80,15 @@
     <header>
         <nav id="N">
             <ul id="U">
-                <li>
-                    <a>Asociaciones</a>
+                <li style="width: 50px;">
+                    <a href="principal.jsp" style="width: 50px;"><img src="Images/arrow-left.png" height="70%" width="70%" alt="Regresar" /></a>
                 </li>
+                <li class="seccion">
+                    <a href="Controlador?accion=Asociaciones">Asociaciones</a>
+                </li>
+                
                 <li>
-                    <form action="Controlador?accion=AsociacioneS" method="POST" >
+                    <form action="Controlador?accion=AsociacionesS" method="POST" >
                         <input type="text" placeholder="búsqueda" name="busqueda"   > 
                         <input type="text" placeholder="en base a:" name="campo" > 
                         <button style="width: 20%; background-color: #15b332; color: #fff; font-weight: bold;"  type="submit">
@@ -99,11 +103,11 @@
     </header>
     <button id="btnMostrar">+</button>
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
-        <form action="Controlador?accion=AsociacionesI" method="POST">
+        <form action="Controlador?accion=AsociacionesI" method="POST" name="formInsertar" onsubmit="return ValidarDetalles(formInsertar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtPlacas" style="width: 90%;"/></td
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" style="width: 90%;"/></td
                     <tr>
                         <td><label>Estatus</label>
                             <input type="radio" id="Activo" name="txtEstatus" value="A" required>

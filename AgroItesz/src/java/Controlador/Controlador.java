@@ -79,8 +79,8 @@ public class Controlador extends HttpServlet {
     OfertasDAO ofdao = OfertasDAO.getOfertasDAO();
     Ofertas of = new Ofertas();
     List<Ofertas> datosO = new ArrayList<>();
-    AsociacionesDAO asdao = AsociacionesDAO.geAsociacionestDAO();
-    Asociaciones as = new Asociaciones();
+    AsociacionesDAO Asdao = AsociacionesDAO.geAsociacionestDAO();
+    Asociaciones As = new Asociaciones();
     List<Asociaciones> datosA = new ArrayList<>();
     EnviosDAO endao = EnviosDAO.getEnviosDAO();
     Envios en = new Envios();
@@ -164,7 +164,7 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewTransportes.jsp").forward(request, response);
                 break;
             case "Socios":
-                datosA = asdao.consultar();
+                datosA = Asdao.consultar();
                 request.setAttribute("datosCl", datosA);
                 request.getRequestDispatcher("ViewSocios.jsp").forward(request, response);
                 break;
@@ -237,6 +237,44 @@ public class Controlador extends HttpServlet {
                 datosC = cldao.filtrar(request.getParameter("campo"), request.getParameter("busqueda"));
                 request.setAttribute("datosCl", datosC);
                 request.getRequestDispatcher("ViewClientes.jsp").forward(request, response);
+                break;
+                case "AsociacionesI":
+                As = new Asociaciones(0,
+                        request.getParameter("txtNombre"),
+                        request.getParameter("txtEstatus").charAt(0));
+                res = Asdao.insertar(As);
+                datosA =  Asdao.consultar();
+                request.setAttribute("datosCl", datosA);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewSocios.jsp").forward(request, response);
+                break;
+
+            case "AsociacionesU":
+                As = new Asociaciones(Integer.parseInt(request.getParameter("idCl")),
+                        request.getParameter("txtNombre"),
+                        request.getParameter("txtEstatus").charAt(0));
+                res = Asdao.actualizar(As);
+                datosA = Asdao.consultar();
+                request.setAttribute("datosCl", datosA);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewSocios.jsp").forward(request, response);
+                break;
+                
+                
+                
+            case "AsociacionesD":
+                res = Asdao.eliminar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosA = Asdao.consultar();
+                request.setAttribute("datosCl", datosA);
+                request.getRequestDispatcher("ViewSocios.jsp").forward(request, response);
+                break;
+            case "AsociacionesR":
+                res = Asdao.reactivar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosA = Asdao.consultar();
+                request.setAttribute("datosCl", datosA);
+                request.getRequestDispatcher("ViewSocios.jsp").forward(request, response);
                 break;
             case "TransporteD":
                 res = trdao.eliminar(Integer.parseInt(request.getParameter("idc")));
