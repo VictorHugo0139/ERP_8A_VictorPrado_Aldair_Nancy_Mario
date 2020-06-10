@@ -17,7 +17,7 @@
                 padding: 0;
                 overflow: hidden;
                 background-color: #1b0c45;
-                
+
             }
             #U li {
                 display: inline;
@@ -66,15 +66,15 @@
                 color: white;
             }
         </style>
-         <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
-     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+        <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <a href="principal.jsp"><img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" /></a>
-    
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Edición de Asociaciones</title>
 </head>
 <%  AsociacionesDAO product = AsociacionesDAO.geAsociacionestDAO();
-    List<Asociaciones> datos = (List<Asociaciones>)request.getAttribute("datosCl");
+    List<Asociaciones> datos = (List<Asociaciones>) request.getAttribute("datosCl");
 %>
 <body style="background-color: #dfd7f5;">
     <header>
@@ -86,7 +86,7 @@
                 <li class="seccion">
                     <a href="Controlador?accion=Asociaciones">Asociaciones</a>
                 </li>
-                
+
                 <li>
                     <form action="Controlador?accion=AsociacionesS" method="POST" >
                         <input type="text" placeholder="búsqueda" name="busqueda"   > 
@@ -107,7 +107,7 @@
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" style="width: 90%;"/></td
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" style="width: 90%;"/></td>
                     <tr>
                         <td><label>Estatus</label>
                             <input type="radio" id="Activo" name="txtEstatus" value="A" required>
@@ -125,7 +125,11 @@
         </form>
 
     </div>
-    
+
+      
+
+
+
     <div>
         <table width='100%' border='0' cellpadding='0' id='customers'>
             <thead>
@@ -136,12 +140,12 @@
                     <th  width='1%' style='border: 0;' scope='col'>Acciones</th> 
                 </tr>
             </thead>
-             <tbody>
-            <%
-                int idc;
-                //datos = dao.consultar();
-                for (Asociaciones aso : datos) {
-            %>
+            <tbody>
+                <%
+                    int idc;
+                    //datos = dao.consultar();
+                    for (Asociaciones aso : datos) {
+                %>
                 <tr>
                     <td><%=  idc = aso.getIdAsociacion()%></td>
                     <td><%= aso.getNombre()%></td>
@@ -154,11 +158,11 @@
                     <%    }%>                        
                     </form>
 
-                    <td> <form action="Controlador?accion=AsociacionesU&id=<%= idc%>" method="POST">
-                            <button type="submit" value='<%= idc%>' name="idc">Editar</button>
+                    <td> <form action="Controlador?accion=AsociacionesD&id=<%= idc%>" method="POST">
+                            <button type="submit" value='<%= idc%>' name="idc">Inactivo</button>
                         </form>
-                        <form action="Controlador?accion=Asociaciones&id=<%= idc%>" method="POST">
-                            <button type="submit" value='<%= idc%>' name="idc">Eliminar</button>
+                        <form action="Controlador?accion=AsociacionesR&id=<%= idc%>" method="POST">
+                            <button type="submit" value='<%= idc%>' name="idc">Activo</button>
                         </form>
                 </tr>
                 <%
@@ -172,35 +176,35 @@
     src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>  
 </body>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#divI').hide();
-        $('#btnMostrar').click(function (){
-            if($('#btnMostrar').text()=='-'){
+            $(document).ready(function () {
                 $('#divI').hide();
-                $('#btnMostrar').text('+');
-            }else{
-                $('#divI').show();
-                $('#btnMostrar').text('-');
-            }
-        });
-        $('#customers').DataTable({
-            language: {
-                processing: "Procesando...",
-                search: "Buscar:",
-                lengthMenu: "Mostrar _MENU_ elementos",
-                info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
-                infoEmpty: "No se encontraron elementos para mostrar",
-                infoFiltered: "(Filtrado de _MAX_ elementos en total)",
-                loadingRecords: "Cargando datos...",
-                zeroRecords: "No se encontraron elementos para mostrar",
-                paginate: {
-                    first: "Primer",
-                    previous: "Anterior",
-                    next: "Siguiente",
-                    last: "Último"
-                }
-            }
-        });
-    });
+                $('#btnMostrar').click(function () {
+                    if ($('#btnMostrar').text() == '-') {
+                        $('#divI').hide();
+                        $('#btnMostrar').text('+');
+                    } else {
+                        $('#divI').show();
+                        $('#btnMostrar').text('-');
+                    }
+                });
+                $('#customers').DataTable({
+                    language: {
+                        processing: "Procesando...",
+                        search: "Buscar:",
+                        lengthMenu: "Mostrar _MENU_ elementos",
+                        info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
+                        infoEmpty: "No se encontraron elementos para mostrar",
+                        infoFiltered: "(Filtrado de _MAX_ elementos en total)",
+                        loadingRecords: "Cargando datos...",
+                        zeroRecords: "No se encontraron elementos para mostrar",
+                        paginate: {
+                            first: "Primer",
+                            previous: "Anterior",
+                            next: "Siguiente",
+                            last: "Último"
+                        }
+                    }
+                });
+            });
 </script>  
 </html>

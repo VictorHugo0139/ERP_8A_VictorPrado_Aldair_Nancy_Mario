@@ -99,8 +99,11 @@
 
                     </li>
                     <li>
-                        <a>Clientes</a>
+                        <a href="Controlador?accion=Clientes">Clientes</a>
                     </li>
+                    <li class="seccion">
+                    <a href="Controlador?accion=OfertasAsosacion">OfertasAsosacion</a>
+                </li>
                     <li>
                         <form action="Controlador?accion=OfertasS" method="POST" >
                             <input type="text" placeholder="búsqueda" name="busqueda" style="color: black;">

@@ -148,8 +148,7 @@
     </button>
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
         <form action="Controlador?accion=VentasDetallesI" method="POST" name="formInsertar" onsubmit="return ValidarDetalles(formInsertar);">
-            <table border="0" style="width: 100%">
-                
+            <table border="0" style="width: 100%"> 
                 <tbody>
                     <tr>
                         <td style="width: 25%"><input type="text" placeholder="precio de venta"  id="txtPrecioVenta" name="txtPrecioVenta" style="width: 90%;" required maxlength="10"/></td>
@@ -205,7 +204,7 @@
                         <td style="width: 25%"><input type="text" placeholder="presio de venta" id="precioVenta" name="txtprecioVenta"  style="width: 90%;"  required/></td>
                         <td style="width: 25%"><input type="text" placeholder="cantidad" id="cantidad" name="txtcantidad"  style="width: 90%;" required /></td>
                         <td style="width: 25%"><input type="text" placeholder="subtotal" id="subtotal" name="txtsubtotal"  style="width: 90%;" required/></td>
-                       </tr>
+                    </tr>
                     <tr>
                         <td>
                             <input type="radio" id="ActivoA" name="txtEstatus" value="A" required>
@@ -214,7 +213,6 @@
                             <label for="Inactivo">Inactivo</label><input type="hidden" name="idCl" id="idCl"/>
                         </td>
                         <td id="CD">
-
                         </td>
                     </tr>
                     <tr>
@@ -333,10 +331,6 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-
-
-
-
         $('#divI').hide();
         $('#divA').hide();
         $('#btnMostrarf').hide();
@@ -401,7 +395,9 @@
     <%
         }
     %>
-            "</select>");
+            "</select>"
+                    );
+            
             $('#' + valor).attr('selected', 'selected').change();
 
             if ($(this).parents("tr").find("td")[8].innerHTML === 'Activo') {
@@ -414,7 +410,7 @@
             $('#' + valor).attr('selected', 'selected').change();
 
             //console.log($('#idCl').val());
-            $('#nombre').focus();
+            $('#Nombre').focus();
         });
         $('#txtFechaEntregaP').val(hoyFecha());
         $('#txtFechaEntregaR').val(hoyFecha());
@@ -424,6 +420,7 @@
             $('.boton2').show();
             $('#btnMostrar').show();
         });
+        
         $('#customers').DataTable({
             language: {
                 processing: "Procesando...",
