@@ -225,7 +225,7 @@
                                                                     <label for="Activo">Activo</label>
                                                                     <input type="radio" id="InactivoA" name="txtEstatus" value="I">
                                                                     <label for="Inactivo">Inactivo</label>
-                                                                    <input type="hidden" name="idCl" id="idCl"/>
+                                                                    <td><input type="hidden" name="idTrip" id="idTrip"/> </td>
                                                                 </td>
                                                                 </tr>
                                                             </tbody>
@@ -340,6 +340,9 @@
                                                                 }
                                                             });
                                                             $('.boton').click(function () {
+                                                                var valor = $(this).parents("tr").find("td")[0].innerHTML;
+                $('#idTrip').val(valor);
+                $('#idTrip').hide();
 
             //valores obtendra el dato del td por posciones [0]
             $('#btnMostrar').hide();
@@ -400,8 +403,8 @@
             }
             $('#' + valor).attr('selected', 'selected').change();
                     valor = $(this).parents("tr").find("td")[0].innerHTML;
-                    $('#idCl').val(valor);
-                    $('#idCl').hide();
+                     $('#idCl').val(valor);
+                     $('#idCl').hide();
             console.log($('#idCl').val());
             $('#nombre').focus();
         });
