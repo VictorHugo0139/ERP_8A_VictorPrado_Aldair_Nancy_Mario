@@ -1,8 +1,3 @@
-<%-- 
-    Document   : ViewClientesCultivos
-    Created on : 9/06/2020, 04:51:32 PM
-    Author     : resid
---%>
 
 <%@page import="Modelo.datos.ClienteCultivoDAO"%>
 <%@page import="Modelo.datos.CultivosDAO"%>
@@ -14,13 +9,11 @@
 <%@page import="Modelo.Cultivos" %>
 <%@page import="Modelo.ClienteCultivo" %>
 
-<!DOCTYPE html>
 <html>
 
    
     <head>
         <style>
-            /*estilo nav general*/
             #N {
                 background-color: #1b0c45;
                 margin-left: 13.5%;
@@ -87,9 +80,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Edición de Cultivos</title>
 </head>
-<% //CultivosDAO dao = new CultivosDAO();
-    ClienteCultivoDAO dao= new ClienteCultivoDAO();
-    List<ClienteCultivo> datos = (List<ClienteCultivo>) request.getAttribute("datosCl");
+<% 
+    ClientesDAO cl=ClientesDAO.getClientesDAO();
+    CiudadesDAO city = CiudadesDAO.getCiudadesDAO();
+    ClienteCultivoDAO CC= ClienteCultivoDAO.getClienteCultivoDAO();
+    CultivosDAO Cu = CultivosDAO.getCultivosDAO();
+    List<ClienteCultivo> datos = CC.consultar();
+    List<Clientes> datosCl = cl.consultar();
+    List<Ciudades> datosCiu = city.consultar();
+    List<Cultivos> datosCu = Cu.consultar();
 %>
 <body style="background-color: #dfd7f5;">
     <header>
