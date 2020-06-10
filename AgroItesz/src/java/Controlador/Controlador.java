@@ -256,9 +256,9 @@ public class Controlador extends HttpServlet {
                 break;
 
             case "AsociacionesU":
-                As = new Asociaciones(Integer.parseInt(request.getParameter("idCl")),
+                As = new Asociaciones(Integer.parseInt(request.getParameter("idTr")),
                         request.getParameter("txtNombre"),
-                        request.getParameter("txtEstatus").charAt(0));
+                        request.getParameter("txtEstatusA").charAt(0));
                 res = Asdao.actualizar(As);
                 datosA = Asdao.consultar();
                 request.setAttribute("datosCl", datosA);
