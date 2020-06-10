@@ -8,6 +8,7 @@ import Modelo.Transporte;
 import Modelo.Ofertas;
 import Modelo.Asociaciones;
 import Modelo.Miembros;
+import Modelo.ClienteCultivo;
 import Modelo.Ventas;
 import Modelo.Presentacion;
 import Modelo.datos.PresentacionDAO;
@@ -23,6 +24,7 @@ import Modelo.datos.TransporteDAO;
 import Modelo.datos.UsuariosDAO;
 import Modelo.datos.OfertasDAO;
 import Modelo.datos.AsociacionesDAO;
+import Modelo.datos.ClienteCultivoDAO;
 import Modelo.datos.MiembrosDAO;
 import Modelo.datos.VentasDAO;
 import Modelo.datos.EnviosDAO;
@@ -41,6 +43,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 public class Controlador extends HttpServlet {
 
@@ -94,6 +97,9 @@ public class Controlador extends HttpServlet {
     Visitas vis = new Visitas();
     List<Mantenimientos> datosMant = new ArrayList<>();
     List<Visitas> datosVis = new ArrayList<>();
+    ClienteCultivoDAO clcudao = ClienteCultivoDAO.getClienteCultivoDAO();
+    ClienteCultivo clicul = new ClienteCultivo();
+    List<ClienteCultivo> datosclcu = new ArrayList<>();
     
     int r;
     String res;
@@ -789,6 +795,56 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("resp", res);
                 request.getRequestDispatcher("ViewVisitas.jsp").forward(request, response);
                 break;
+                
+                case "ClienteCultivos":
+                datosclcu = clcudao.consultar();
+                request.setAttribute("datosCl", datosclcu);
+                request.getRequestDispatcher("ViewClientesCultivos.jsp").forward(request, response);  
+            break;    
+                
+            case "ClienteCultivosI":
+                clicul = new ClienteCultivo(0,
+                Float.parseFloat(request.getParameter("txtExtension")),
+                request.getParameter("txtUbicacion"),
+                Integer.parseInt(request.getParameter("txtidCliente")),
+                Integer.parseInt(request.getParameter("txtidCultivo")),
+                Integer.parseInt(request.getParameter("txtidCiudad")),
+                request.getParameter("txtEstatus").charAt(0));
+                res = clcudao.insertar(trip);
+                datosclcu = clcudao.consultar();
+                request.setAttribute("datosCl", datosclcu);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewClienteCultivos.jsp").forward(request, response);
+            break;
+            case "ClienteCultivosU":
+                clicul = new ClienteCultivo(0,
+                Float.parseFloat(request.getParameter("txtExtension")),
+                request.getParameter("txtUbicacion"),
+                Integer.parseInt(request.getParameter("txtidCliente")),
+                Integer.parseInt(request.getParameter("txtidCultivo")),
+                Integer.parseInt(request.getParameter("txtidCiudad")),
+                request.getParameter("txtEstatus").charAt(0));
+                res = clcudao.actualizar(trip);
+                datosclcu = clcudao.consultar();
+                request.setAttribute("datosCl", datosclcu);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewClienteCultivos.jsp").forward(request, response);
+            break;
+            case "ClienteCultivosD":
+                res = clcudao.eliminar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosclcu = clcudao.consultar();
+                request.setAttribute("datosCl", datosclcu);
+                request.getRequestDispatcher("ViewClienteCultivos.jsp").forward(request, response);
+            break;
+            case "ClienteCultivosR":
+                res = clcudao.reactivar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosclcu = clcudao.consultar();
+                request.setAttribute("datosCl", datosclcu);
+                request.getRequestDispatcher("ViewClienteCultivos.jsp").forward(request, response);
+            break;
+                
         }
     }
 

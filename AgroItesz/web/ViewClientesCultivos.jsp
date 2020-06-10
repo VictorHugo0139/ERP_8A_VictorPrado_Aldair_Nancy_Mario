@@ -1,3 +1,8 @@
+<%-- 
+    Document   : ViewClientesCultivos
+    Created on : 9/06/2020, 04:51:32 PM
+    Author     : resid
+--%>
 
 <%@page import="Modelo.datos.ClienteCultivoDAO"%>
 <%@page import="Modelo.datos.CultivosDAO"%>
@@ -9,11 +14,13 @@
 <%@page import="Modelo.Cultivos" %>
 <%@page import="Modelo.ClienteCultivo" %>
 
+<!DOCTYPE html>
 <html>
 
    
     <head>
         <style>
+            /*estilo nav general*/
             #N {
                 background-color: #1b0c45;
                 margin-left: 13.5%;
@@ -78,17 +85,17 @@
     <a href="principal.jsp"><img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" /></a>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Edición de Cultivos</title>
+    <title>Edicion de Clientes Cultivos</title>
 </head>
-<% 
-    ClientesDAO cl=ClientesDAO.getClientesDAO();
-    CiudadesDAO city = CiudadesDAO.getCiudadesDAO();
-    ClienteCultivoDAO CC= ClienteCultivoDAO.getClienteCultivoDAO();
-    CultivosDAO Cu = CultivosDAO.getCultivosDAO();
-    List<ClienteCultivo> datos = CC.consultar();
-    List<Clientes> datosCl = cl.consultar();
-    List<Ciudades> datosCiu = city.consultar();
-    List<Cultivos> datosCu = Cu.consultar();
+<% //CultivosDAO dao = new CultivosDAO();
+    ClienteCultivoDAO dao= new ClienteCultivoDAO();
+    ClientesDAO datoscli = new ClientesDAO();
+    CultivosDAO datoscult = new CultivosDAO();
+    CiudadesDAO city = new CiudadesDAO();
+    List<ClienteCultivo> datos = (List<ClienteCultivo>) request.getAttribute("datosCl");
+    List<Clientes> cli = datoscli.consultar();
+    List<Cultivos> cult = datoscult.consultar();
+    List<Ciudades> cit = city.consultar();
 %>
 <body style="background-color: #dfd7f5;">
     <header>
@@ -99,11 +106,11 @@
                     
                 </li>
                 <li>
-                    <a>Cultivos</a>
+                    <a>ClientesCultivos</a>
                 </li>
                 <li>
                     <form action="Controlador?accion=CultivosS" method="POST" >
-                        <input type="text" placeholder="búsqueda" name="busqueda" style="color: black;">
+                        <input type="text" placeholder="busqueda" name="busqueda" style="color: black;">
                         <label>En base a:</label>
                         <select name="campo" style="color: black;">
                             <option value="idClienteCultivo">#ClienteCultivo</option>
@@ -128,52 +135,56 @@
     <button id="btnMostrarf">+</button>
     <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button>
     <div style="margin-left: 180px; margin-top: 10px" id="divI">
-        <form action="Controlador?accion=ClienteCultivoI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
+        <form action="Controlador?accion=ClienteCultivosI" method="POST" name="formInsertar" onsubmit="return Validar(formInsertar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
-                        <td style="width: 25%" colspan="2"><input type="number" placeholder="Extension" name="txtExtension" style="width: 90%;" required/></td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="Extension" name="txtExtension" style="width: 90%;" required/></td>
                         <td style="width: 25%" colspan="2"><input type="text" placeholder="Ubicacion" name="txtUbicacion" style="width: 90%;" required /></td>
-                    </tr>
-                    <tr>
-                        <td>
-                                <label style="color: grey;font-weight: lighter;">Cliente:</label>
-                                <select name="txtCliente">
-                                    <%
-                                        for (Clientes cli : datosCl) {
-                                    %>
-                                    <option value="<%= cli.getIdCliente()%>"><%= cli.getNombre()%></option>
-                                    <%
-                                        }
-                                    %>
-                                </select>
-                            </td>
-                            <td>
-                                <label style="color: grey;font-weight: lighter;">Cultivo:</label>
-                                <select name="txtCultivo">
-                                    <%
-                                        for (Cultivos cu : datosCu) {
-                                    %>
-                                    <option value="<%= cu.getIdCultivo()%>"><%= cu.getIdCultivo()+" "+ cu.getNombre()%></option>
-                                    <%
-                                        }
-                                    %>
-                                </select>
-                            </td>
-                            <td >
-                                <label style="color: grey;font-weight: lighter;">Ciudad:</label>
-                                <select name="txtCiudad">
-                                    <%
-                                        for (Ciudades ci : datosCiu) {
-                                            //String Ciudad = city.OneCity(cl.getIdCiudad());
+                            <td style="width: 25%" colspan="2">
+                                <label style="color: grey;font-weight: lighter;">Cliente</label>
+                            <select name="txtCliente" id="idCliente">
+                                <%
+                                    for (Clientes clien : cli) {
+                                        
 
-                                    %>
-                                    <option value="<%= ci.getIdCiudad()%>"><%= ci.getNombre()%></option>
-                                    <%
-                                        }
-                                    %>
-                                </select>
+                                %>
+                                <option value="<%= clien.getIdCliente()%>"><%=  clien.getNombre() %></option>
+                                <%
+                                    }
+                                %>
+                            </select>
                             </td>
+                            <td style="width: 25%" colspan="2">
+                                <label style="color: grey;font-weight: lighter;">Cultivos</label>
+                                <select name="txtCultivo" id="idCultivo">
+                                <%
+                                    for (Cultivos cults : cult) {
+                                        
+
+                                %>
+                                <option value="<%= cults.getIdCultivo()%>"><%= cults.getNombre()%></option>
+                                <%
+                                    }
+                                %>
+                            </select>
+                            </td>
+                            <td style="width: 25%" colspan="2">
+                                <label style="color: grey;font-weight: lighter;">Ciudad</label>
+                                <select name="txtCultivo" id="idCultivo">
+                                <%
+                                    for (Ciudades ciu : cit) {
+                                       
+
+                                %>
+                                <option value="<%= ciu.getIdCiudad()%>"><%= ciu.getNombre()%></option>
+                                <%
+                                    }
+                                %>
+                            </select>
+                            </td>
+                        <td style="width: 25%" colspan="2"><input type="text" placeholder="rol" name="txtRol" id="Rol" style="width: 90%;" required /></td>
+                    </tr>
                         <td><label>Estatus</label>
                             <input type="radio" id="Activo" name="txtEstatus" value="A" required>
                             <label for="Activo">Activo</label>
@@ -194,14 +205,13 @@
 
     <div style="margin-left: 180px; margin-top: 10px" id="divA">
         
-        <form action="Controlador?accion=CultivosU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
+        <form action="Controlador?accion=ClienteCultivosU" method="POST" name="formActualizar" onsubmit="return ValidarA(formActualizar);">
             <table border="0" style="width: 100%">
                 <tbody>
                     <tr>
                         <td style="width: 25%" colspan="2"><input type="text" placeholder="Nombre" name="txtNombre" id='nombre'  style="width: 90%;" required/></td>
                         <td style="width: 25%" colspan="2"><input type="text" placeholder="costoAsesoria" name="txtcostoAsesoria" id='costoAsesoria'  style="width: 90%;" required /></td>
                     </tr>
-                    <tr>   
                         <td><label>Estatus:</label>
                             <input type="radio" id="ActivoA" name="txtEstatusA" value="A" required>
                             <label for="Activo">Activo</label>
@@ -226,37 +236,47 @@
         <table width='100%' border='0' cellpadding='0' id='customers'>
             <thead>
                 <tr>
-                     <th id='tde' width='10%' style='border: 0;' scope='col'>idCultivo</th>
-                     <th id='tde' width='30%' style='border: 0;' scope='col'>Nombre</th>
-                     <th id='tde' width='20%' style='border: 0;' scope='col'>costoAseesoria</th>
+                     <th id='tde' width='10%' style='border: 0;' scope='col'>idClienteCultivo</th>
+                     <th id='tde' width='30%' style='border: 0;' scope='col'>Extension</th>
+                     <th id='tde' width='20%' style='border: 0;' scope='col'>Ubicacion</th>
+                     <th id='tde' width='30%' style='border: 0;' scope='col'>idCliente</th>
+                     <th id='tde' width='30%' style='border: 0;' scope='col'>idCultivo</th>
+                     <th id='tde' width='20%' style='border: 0;' scope='col'>idCiudad</th>
                      <th id='tde' width='10%' style='border: 0;' scope='col'>Estatus</th>
                      <th  width='10%' style='border: 0;' scope='col'>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <%
-                     int idCul;
+                     int idClientCul;
                //datos =  dao.consultar();
-               for(Cultivos cl : datos){
+               for(ClienteCultivo clcu : datos){
+                   cli=datoscli.consultarId(clcu.getIdCliente());
                 %>
                 <tr>
-                    <td><%= idCul = cl.getIdCultivo()%></td>
-                    <td><%= cl.getNombre()%></td>
-                    <td><%= cl.getCostoAsesoria()%></td>
+                    <td><%= idClientCul = clcu.getIdClienteCultivo()%></td>
+                    <td><%= clcu.getExtencion()%></td>
+                    <td><%= clcu.getUbicacion()%></td>
+                    <td><%= cli.get(0).getNombre()%></td>//cliente
+                    <%cult = datoscult.consultarId(clcu.getIdCultivo());%>
+                    <td><%= cli.get(0).getNombre()%></td>//cultivo
+                    <%cit = city.consultarId(clcu.getIdCiudad());%>
+                    <td><%= cit.get(0).getNombre()%></td>//Ciudad
+                    
                     <%
-                        if (cl.getEstado() == 'A') {
+                        if (clcu.getEstatus()== 'A') {
                     %>
                     <td>Activo</td> 
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                        <form action="Controlador?accion=CultivosD&id=<%= idCul%>" method="POST">
-                            <button type="submit" value='<%= idCul%>' name="idc" class="boton2">
+                        <form action="Controlador?accion=ClienteCultivosD&id=<%= idClientCul%>" method="POST">
+                            <button type="submit" value='<%= idClientCul%>' name="idc" class="boton2">
                                 <span  class='glyphicon glyphicon-ban-circle'></span></button>
                         </form></td>
                     <%    } else {                    %>
                     <td>Inactivo</td>
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                        <form action="Controlador?accion=CultivosR&id=<%= idCul%>" method="POST">
-                            <button type="submit" value='<%= idCul%>' name="idc" class="boton2">
+                        <form action="Controlador?accion=ClienteCultivosR&id=<%= idClientCul%>" method="POST">
+                            <button type="submit" value='<%= idClientCul%>' name="idc" class="boton2">
                             <span  class='glyphicon glyphicon-ok-circle'></span></button>
                         </form></td>
                     <%    }%>                                     
@@ -279,72 +299,7 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
        
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#divI').hide();
-        $('#divA').hide();
-        $('#btnMostrarf').hide();
-        $('#btnMostrar').click(function () {
-            if ($('#btnMostrarf').text() === '-') {
-                $('#divI').hide();
-                $('.boton').show();
-                $('.boton2').show();
-                $('#btnMostrarf').text('+');
-                $('#btnMostrar').html("<span  class='glyphicon glyphicon-plus-sign'></span>");
-            } else {
-                $('#divI').show();
-                $('.boton').hide();
-                $('.boton2').hide();
-                $('#btnMostrarf').text('-');
-                $('#btnMostrar').html("<span  class='glyphicon glyphicon-minus-sign'></span>");
-            }
-        });
-        $('.boton').click(function () {
-            $('#btnMostrar').hide();
-            $('.boton2').hide();
-            $('#divI').hide();
-            $('#divA').show();
-            $('#nombre').val($(this).parents("tr").find("td")[1].innerHTML);
-            $('#costoAsesoria').val($(this).parents("tr").find("td")[2].innerHTML);
-            if ($(this).parents("tr").find("td")[3].innerHTML === 'Activo') {
-                $('#ActivoA').prop("checked", true);
-            } else {
-                $('#InactivoA').prop("checked", true);
-            }
-            console.log($(this).parents("tr").find("td")[0].innerHTML);
-            valor=$(this).parents("tr").find("td")[0].innerHTML;
-            console.log(valor);
-            $('#idTr').val(valor);
-            $('#idTr').hide();
-            console.log($('#idTr').val());
-            $('#nombre').focus();
-        });
-            $('#Cancel').click(function () {
-            $('#divA').hide();
-            $('#divI').hide();
-            $('.boton2').show();
-            $('#btnMostrar').show();
-        });
-        $('#customers').DataTable({
-            language: {
-                processing: "Procesando...",
-                search: "Buscar:",
-                lengthMenu: "Mostrar _MENU_ elementos",
-                info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
-                infoEmpty: "No se encontraron elementos para mostrar",
-                infoFiltered: "(Filtrado de _MAX_ elementos en total)",
-                loadingRecords: "Cargando datos...",
-                zeroRecords: "No se encontraron elementos para mostrar",
-                paginate: {
-                    first: "Primer",
-                    previous: "Anterior",
-                    next: "Siguiente",
-                    last: "Último"
-                }
-            }
-        });
-    });
-        </script>    
+        
     
 </body>
 </html>
