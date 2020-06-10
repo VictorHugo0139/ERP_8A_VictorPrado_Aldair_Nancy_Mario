@@ -97,9 +97,9 @@ public class Controlador extends HttpServlet {
     Visitas vis = new Visitas();
     List<Mantenimientos> datosMant = new ArrayList<>();
     List<Visitas> datosVis = new ArrayList<>();
-    ClienteCultivoDAO clcudao = ClienteCultivoDAO.getClienteCultivoDAO();
-    ClienteCultivo clicul = new ClienteCultivo();
-    List<ClienteCultivo> datosclcu = new ArrayList<>();
+    ClienteCultivo ccu = new ClienteCultivo();
+    List<ClienteCultivo> datosCCu = new ArrayList<>();
+    ClienteCultivoDAO ccudao = ClienteCultivoDAO.getClienteCultivoDAO();
     
     int r;
     String res;
@@ -796,55 +796,11 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewVisitas.jsp").forward(request, response);
                 break;
                 
-                case "ClienteCultivos":
-                datosclcu = clcudao.consultar();
-                request.setAttribute("datosCl", datosclcu);
-                request.getRequestDispatcher("ViewClientesCultivos.jsp").forward(request, response);  
-            break;    
-                
-            case "ClienteCultivosI":
-                clicul = new ClienteCultivo(0,
-                Float.parseFloat(request.getParameter("txtExtension")),
-                request.getParameter("txtUbicacion"),
-                Integer.parseInt(request.getParameter("txtidCliente")),
-                Integer.parseInt(request.getParameter("txtidCultivo")),
-                Integer.parseInt(request.getParameter("txtidCiudad")),
-                request.getParameter("txtEstatus").charAt(0));
-                res = clcudao.insertar(trip);
-                datosclcu = clcudao.consultar();
-                request.setAttribute("datosCl", datosclcu);
-                request.setAttribute("resp", res);
-                request.getRequestDispatcher("ViewClienteCultivos.jsp").forward(request, response);
-            break;
-            case "ClienteCultivosU":
-                clicul = new ClienteCultivo(Integer.parseInt(request.getParameter("idc")),
-                Float.parseFloat(request.getParameter("txtExtension")),
-                request.getParameter("txtUbicacion"),
-                Integer.parseInt(request.getParameter("txtidCliente")),
-                Integer.parseInt(request.getParameter("txtidCultivo")),
-                Integer.parseInt(request.getParameter("txtidCiudad")),
-                request.getParameter("txtEstatus").charAt(0));
-                res = clcudao.actualizar(trip);
-                datosclcu = clcudao.consultar();
-                request.setAttribute("datosCl", datosclcu);
-                request.setAttribute("resp", res);
-                request.getRequestDispatcher("ViewClienteCultivos.jsp").forward(request, response);
-            break;
-            case "ClienteCultivosD":
-                res = clcudao.eliminar(Integer.parseInt(request.getParameter("idc")));
-                request.setAttribute("resp", res);
-                datosclcu = clcudao.consultar();
-                request.setAttribute("datosCl", datosclcu);
-                request.getRequestDispatcher("ViewClienteCultivos.jsp").forward(request, response);
-            break;
-            case "ClienteCultivosR":
-                res = clcudao.reactivar(Integer.parseInt(request.getParameter("idc")));
-                request.setAttribute("resp", res);
-                datosclcu = clcudao.consultar();
-                request.setAttribute("datosCl", datosclcu);
-                request.getRequestDispatcher("ViewClienteCultivos.jsp").forward(request, response);
-            break;
-                
+                case "ClientesCultivos":
+                datosCCu = ccudao.consultar();
+                request.setAttribute("datosCl", datosCCu);
+                request.getRequestDispatcher("ViewClientesCultivos.jsp").forward(request, response);
+                break;
         }
     }
 
