@@ -19,6 +19,70 @@
 
 
                                         <head>
+                                             <style>
+            /*estilo nav general*/
+            #N {
+                background-color: #1b0c45;
+                margin-left: 13.5%;
+                margin-right: 11%;
+            }
+            #U {
+                list-style-type: none;
+                padding: 0;
+                overflow: hidden;
+                background-color: #1b0c45;
+
+            }
+            #U li {
+                display: inline;
+            }
+            #U li a {
+                font-family: Arial;
+                font-size: 21px;
+                text-decoration: none;
+                float: left;
+                padding: 10px;
+                background-color: #1b0c45;
+                color: #fff;
+                margin: 0;     
+            }
+            #U .seccion a:hover{
+                background-color: #15b332;
+            }
+            #U li form {
+                width: 443px;
+                margin: 0;
+                font-family: Arial;
+                font-size: 11px;
+                text-decoration: none;
+                float: right;
+                padding: 10px;
+                background-color: #1b0c45;
+                color: #fff;
+            }
+            #customers {
+                font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            #customers td, #customers th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+            #customers tr:hover {background-color: #ddd;}
+
+            #customers th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #1b0c45;
+                color: white;
+            }
+        </style>
                                             <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
                                             <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
                                             <a href="principal.jsp"><img src="Images/pla1.png" height="10%" width="10%" id="logo" alt="AgroItesz" /></a>
@@ -198,10 +262,13 @@
                                                                         <%= cul.getUbicacion() %>
                                                                     </td>
                                                                     <td>
-                                                                        <%= datoscli.consultarId(cul.getIdCliente()).get(0).getNombre() %>
+                                                                        <%= cl.consultarId(cul.getIdCliente()).get(0).getNombre() %>
                                                                     </td>
                                                                     <td>
-                                                                        <%= datoscult.consultarCul(cul.getIdCultivo()) %>
+                                                                        <%= Cu.consultarCul(cul.getIdCultivo()) %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= city.OneCity(cul.getIdCiudad()) %>
                                                                     </td>
                                                                     <%
                         if (cul.getEstatus()== 'A') {
@@ -243,5 +310,74 @@
 
 
                                             </body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#divI').hide();
+        $('#divA').hide();
+        $('#btnMostrarf').hide();
+        $('#btnMostrar').click(function () {
+            if ($('#btnMostrarf').text() === '-') {
+                $('#divI').hide();
+                $('.boton').show();
+                $('.boton2').show();
+                $('#btnMostrarf').text('+');
+                $('#btnMostrar').html("<span  class='glyphicon glyphicon-plus-sign'></span>");
+            } else {
+                $('#divI').show();
+                $('.boton').hide();
+                $('.boton2').hide();
+                $('#btnMostrarf').text('-');
+                $('#btnMostrar').html("<span  class='glyphicon glyphicon-minus-sign'></span>");
+            }
+        });
+        $('.boton').click(function () {
 
+            //valores obtendra el dato del td por posciones [0]
+            $('#btnMostrar').hide();
+            $('.boton2').hide();
+            $('#divI').hide();
+            $('#divA').show();
+            $('#txtFechaA').val($(this).parents("tr").find("td")[3].innerHTML);
+            var valor = $(this).parents("tr").find("td")[1].innerHTML;
+                    
+            $('#' + valor.substring(0,6)).attr('selected', 'selected').change();
+            if ($(this).parents("tr").find("td")[4].innerHTML === 'Activo') {
+                $('#ActivoA').prop("checked", true);
+            } else {
+                $('#InactivoA').prop("checked", true);
+            }
+            $('#' + valor).attr('selected', 'selected').change();
+                    var valor = $(this).parents("tr").find("td")[0].innerHTML;
+                    $('#idCl').val(valor);
+                    $('#idCl').hide();
+            console.log($('#idCl').val());
+            $('#nombre').focus();
+        });
+            $('#txtFecha').val(hoyFecha());
+            $('#Cancel').click(function () {
+            $('#divA').hide();
+            $('#divI').hide();
+            $('.boton2').show();
+            $('#btnMostrar').show();
+        });
+        $('#customers').DataTable({
+            language: {
+                processing: "Procesando...",
+                search: "Buscar:",
+                lengthMenu: "Mostrar _MENU_ elementos",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
+                infoEmpty: "No se encontraron elementos para mostrar",
+                infoFiltered: "(Filtrado de _MAX_ elementos en total)",
+                loadingRecords: "Cargando datos...",
+                zeroRecords: "No se encontraron elementos para mostrar",
+                paginate: {
+                    first: "Primer",
+                    previous: "Anterior",
+                    next: "Siguiente",
+                    last: "Último"
+                }
+            }
+        });
+    });
+</script>  
                                         </html>

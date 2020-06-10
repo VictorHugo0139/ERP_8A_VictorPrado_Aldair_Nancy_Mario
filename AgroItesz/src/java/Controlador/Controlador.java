@@ -796,7 +796,7 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewVisitas.jsp").forward(request, response);
                 break;
                 
-                case "ClientesCultivos":
+                case "ClienteCultivos":
                 datosCCu = ccudao.consultar();
                 request.setAttribute("datosCl", datosCCu);
                 request.getRequestDispatcher("ViewClientesCultivos.jsp").forward(request, response);
