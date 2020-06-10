@@ -1,26 +1,39 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Modelo;
 
-/**
- *
- * @author Nancy
- */
+
 public class OfertasAsosaciones {
     
-    private int idAsosaciones;
+    private int idOfertaAsociacion;
+    private int idAsosiacion;
     private int idOferta;
     private char  Estatus;
 
-    public int getIdAsosaciones() {
-        return idAsosaciones;
+    public OfertasAsosaciones(int idOfertaAsociacion, int idAsosiacion, int idOferta, char Estatus) {
+        this.idOfertaAsociacion = idOfertaAsociacion;
+        this.idAsosiacion = idAsosiacion;
+        this.idOferta = idOferta;
+        this.Estatus = Estatus;
+    }
+    
+    public OfertasAsosaciones(){
+        
     }
 
-    public void setIdAsosaciones(int idAsosaciones) {
-        this.idAsosaciones = idAsosaciones;
+    public int getIdOfertaAsociacion() {
+        return idOfertaAsociacion;
+    }
+
+    public void setIdOfertaAsociacion(int idOfertaAsociacion) {
+        this.idOfertaAsociacion = idOfertaAsociacion;
+    }
+
+    public int getIdAsosiacion() {
+        return idAsosiacion;
+    }
+
+    public void setIdAsosiacion(int idAsosiacion) {
+        this.idAsosiacion = idAsosiacion;
     }
 
     public int getIdOferta() {
@@ -38,5 +51,7 @@ public class OfertasAsosaciones {
     public void setEstatus(char Estatus) {
         this.Estatus = Estatus;
     }
+
+    
     
 }
