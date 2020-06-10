@@ -817,7 +817,7 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("ViewClienteCultivos.jsp").forward(request, response);
             break;
             case "ClienteCultivosU":
-                clicul = new ClienteCultivo(0,
+                clicul = new ClienteCultivo(Integer.parseInt(request.getParameter("idc")),
                 Float.parseFloat(request.getParameter("txtExtension")),
                 request.getParameter("txtUbicacion"),
                 Integer.parseInt(request.getParameter("txtidCliente")),
