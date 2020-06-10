@@ -143,6 +143,26 @@ public class CultivosDAO implements CRUD {
   return datos;
     }
 
+    public List<Cultivos> consultarId(int id) {
+        List<Cultivos> datos = new ArrayList<>();
+        con = cn.getConexion();
+        sql = ("select * from Cultivos where idCultivo=" + id);
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                datos.add(new Cultivos (rs.getInt("idCultivo"),
+                rs.getString("nombre"),
+                rs.getFloat("costoAsesoria"),
+                rs.getString("estatus").charAt(0)));
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(CultivosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return datos;
+    }
+    
     @Override
     public List<Cultivos> filtrar(String campo, String criterio) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

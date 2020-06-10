@@ -28,7 +28,7 @@ public class ClientesDAO implements CRUD {
         return cldao;
     }
 
-    private ClientesDAO() {
+    public ClientesDAO() {
     }
 
     @Override
