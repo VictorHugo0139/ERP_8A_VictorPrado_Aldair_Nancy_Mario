@@ -850,7 +850,31 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosCCu);
                 request.getRequestDispatcher("ViewClientesCultivos.jsp").forward(request, response);
                 break;
-             
+                case "OfertasAsociacionI":
+                ofa = new OfertasAsosaciones(0,
+                        Integer.parseInt(request.getParameter("txtOfertas")),
+                        Integer.parseInt(request.getParameter("txtAsociaciones")),
+                        request.getParameter("txtEstatus").charAt(0));
+                res = ofadao.insertar(ofa);
+                datosOFA = ofadao.consultar();
+                request.setAttribute("datosCl", datosOFA);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewOfertasAsosacion.jsp").forward(request, response);
+                break;
+                case "OfertasAsociacionD":
+                res = ofadao.eliminar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosOFA = ofadao.consultar();
+                request.setAttribute("datosCl", datosOFA);
+                request.getRequestDispatcher("ViewOfertasAsosacion.jsp").forward(request, response);
+                break;
+                case "OfertasAsociacionR":
+                res = ofadao.reactivar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosOFA = ofadao.consultar();
+                request.setAttribute("datosCl", datosOFA);
+                request.getRequestDispatcher("ViewOfertasAsosacion.jsp").forward(request, response);
+                break;
         }
     }
 

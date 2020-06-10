@@ -34,12 +34,58 @@ public class OfertasAsociacionesDAO implements CRUD{
 
     @Override
     public String insertar(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        OfertasAsosaciones ofa=(OfertasAsosaciones) obj;
+        String respuesta="";
+        cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
+        con=cn.getConexion();
+        sql=("insert into OfertasAsociacion(idAsociacion,idOferta,estatus)\n" +
+            "values (?,?,?)"); 
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setInt(1, ofa.getIdAsosiacion());
+            ps.setInt(2, ofa.getIdOferta());
+            ps.setString(3, ""+ofa.getEstatus());
+            int filas= ps.executeUpdate();
+            respuesta="se insertaron "+filas+" filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(OfertasAsociacionesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
     }
 
     @Override
     public String eliminar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update OfertasAsociacion set estatus='I' where idOfertaAsociacion=?;");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            respuesta = "se eliminaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(OfertasAsociacionesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
+    }
+    
+    public String reactivar(int id) {
+        String respuesta = "";
+        con = cn.getConexion();
+        sql = ("update OfertasAsociacion set estatus='A' where idOfertaAsociacion=?;");
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            respuesta = "se reactivaron " + filas + " filas";
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(OfertasAsociacionesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
     }
 
     @Override

@@ -245,7 +245,7 @@
                             <%    } else {%>
                         <td>Inactivo</td>
                         <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>
-                            <form action="Controlador?accion=OfertasAsociacion&id=<%= idm%>" method="POST">
+                            <form action="Controlador?accion=OfertasAsociacionR&id=<%= idm%>" method="POST">
                                 <button type="submit" value='<%= idm%>' name="idc" class="boton2">
                                     <span  class='glyphicon glyphicon-ok-circle'></span></button>
                             </form></td>
