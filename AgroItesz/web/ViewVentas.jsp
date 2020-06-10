@@ -14,6 +14,7 @@
 <%@page import="Modelo.Presentacion"%>
 <%@page import="java.util.*" %>
 <%@page import="java.io.File" %>
+<%@page import="Modelo.datos.GeneraDoc"%>
 <!DOCTYPE html>
 <html>
 
@@ -92,6 +93,7 @@
 </head>
 <%
     Conexion sesion = Conexion.getInsConexion();
+    GeneraDoc exc=new GeneraDoc();
     ClientesDAO cdao;
     SucursalDAO sdao;
     EmpleadosDAO edao;
@@ -170,6 +172,16 @@
     <button id="btnMostrarf">+</button><!-- No eliminar. Este botón controla el cambio de signo de #btnMostrar -->
 
     <button id="btnMostrar"><span  class="glyphicon glyphicon-plus-sign"></span></button><!-- Este botón contrae o expande #divI -->
+    <!-- Este botón Genera el excel -->
+    <button id="Excel"><span  class="glyphicon glyphicon-circle-arrow-down"></span>
+        <span  class="glyphicon glyphicon-stats"></span> Excel</button>
+    <!-- Este botón Genera el pdf -->
+    <button id="PDF"><span  class="glyphicon glyphicon-circle-arrow-down"></span>
+        <span  class="glyphicon glyphicon-save-file"></span>PDF</button>
+    <!-- Este botón Genera el XML -->
+    <button id="xml"><span  class="glyphicon glyphicon-circle-arrow-down"></span>
+        <span  class="glyphicon glyphicon-tags"></span>&nbsp XML</button>
+        
     <div style="margin-left: 180px; padding-top: 0px;"  id="divI"><!-- Contiene todo el proceso de insertar Nueva Venta, incluye detalles de Venta -->
         <table border="0" style="width: 100%; padding-top: 0px;"><!-- Tabla que organiza la ubicación en pantalla del contenido -->
             <tbody><!-- Cuerpo de la tabla-No hay encabezado ya que sólo es para organizar la información -->
@@ -710,6 +722,18 @@
                 $('#Subtotal').val($('#cantidad').val() * $('#estas').val());
             }
         });
+        $('#Excel').click(function(){
+            <% exc.generaExcel(); %>
+             alert('El archivo de excel se encuentra en C:\\Ficheros-Excel');       
+        }); 
+        $('#PDF').click(function(){
+            <% exc.generaPDF(); %>
+         alert('El archivo PDF se encuentra en C:\\Ficheros-Excel');       
+        });
+        $('#xml').click(function(){
+            <% exc.generarXML(); %>
+         alert('El archivo XML se encuentra en C:\\Ficheros-Excel');       
+        }); 
         $('.boton').click(function () {
 
             //valores obtendra el dato del td por posciones [0]

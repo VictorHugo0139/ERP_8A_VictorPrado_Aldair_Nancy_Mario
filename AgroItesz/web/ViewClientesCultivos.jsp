@@ -95,7 +95,7 @@
         <nav id="N">
             <ul id="U">
                 <li style="width: 50px;">
-                    <a href="principal.jsp" style="width: 50px;"><img src="Images/arrow-left.png" height="70%" width="70%" alt="Regresar" /></a>
+                    <a href="principal.jsp" style="width: 50px;"><img src="Images/arrow-left.png" height="5%" width="70%" alt="Regresar" /></a>
                     
                 </li>
                 <li>
@@ -187,10 +187,12 @@
         <table width='100%' border='0' cellpadding='0' id='customers'>
             <thead>
                 <tr>
-                     <th id='tde' width='10%' style='border: 0;' scope='col'>idCultivo</th>
-                     <th id='tde' width='30%' style='border: 0;' scope='col'>Nombre</th>
-                     <th id='tde' width='20%' style='border: 0;' scope='col'>costoAseesoria</th>
-                     <th id='tde' width='10%' style='border: 0;' scope='col'>Estatus</th>
+                     <th id='tde' width='10%' style='border: 0;' scope='col'>idClienteCultivo</th>
+                     <th id='tde' width='30%' style='border: 0;' scope='col'>extension</th>
+                     <th id='tde' width='20%' style='border: 0;' scope='col'>ubicacion</th>
+                     <th id='tde' width='10%' style='border: 0;' scope='col'>cliente</th>
+                     <th id='tde' width='10%' style='border: 0;' scope='col'>cultivo</th>
+                     <th id='tde' width='10%' style='border: 0;' scope='col'>ciudad</th>
                      <th  width='10%' style='border: 0;' scope='col'>Acciones</th>
                 </tr>
             </thead>
@@ -198,14 +200,16 @@
                 <%
                      int idCul;
                //datos =  dao.consultar();
-               for(Cultivos cl : datos){
+               for(ClienteCultivo cul : datos){
                 %>
                 <tr>
-                    <td><%= idCul = cl.getIdCultivo()%></td>
-                    <td><%= cl.getNombre()%></td>
-                    <td><%= cl.getCostoAsesoria()%></td>
+                    <td><%= idCul = cul.getIdClienteCultivo() %></td>
+                    <td><%= cul.getExtencion() %></td>
+                    <td><%= cul.getUbicacion() %></td>
+                    <td><%= cl.consultarId(cul.getIdCliente()).get(0).getNombre() %></td>
+                    <td><%= Cu.consultarCul(cul.getIdCultivo()) %></td>
                     <%
-                        if (cl.getEstado() == 'A') {
+                        if (cul.getEstatus()== 'A') {
                     %>
                     <td>Activo</td> 
                     <td><button class="boton"><span  class='glyphicon glyphicon-edit'></span></button>

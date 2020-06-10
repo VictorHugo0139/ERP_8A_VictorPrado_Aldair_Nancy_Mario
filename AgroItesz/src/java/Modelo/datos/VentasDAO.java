@@ -219,4 +219,42 @@ public class VentasDAO implements CRUD{
         }
         return datos;
     }
+    
+    public int numV() {
+        
+        int datos=0;
+        con = cn.getConexion();
+        sql=("select count(idVenta) as idVenta from Ventas;");
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                datos=rs.getInt("idVenta");
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return datos;
+    }
+    
+     
+    public int numVD() {
+        
+        int datos=0;
+        con = cn.getConexion();
+        sql=("select count(idVentaDetalle) as idVenta from VentasDetalle");
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                datos=rs.getInt("idVenta");
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return datos;
+    }
+    
 }

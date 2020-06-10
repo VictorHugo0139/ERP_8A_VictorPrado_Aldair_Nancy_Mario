@@ -148,4 +148,25 @@ public class CultivosDAO implements CRUD {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    public String consultarCul(int id) 
+    {
+          String datos="";
+          cn.setUserName(UsuariosDAO.name);
+        cn.setPassword(UsuariosDAO.p);
+        con=cn.getConexion();
+        sql = "select * from Cultivos where idCultivo="+id;
+        try {
+            ps=con.prepareStatement(sql);
+            rs=ps.executeQuery();
+            while (rs.next())
+            {
+                datos=rs.getInt("idCultivo")+":"+rs.getString("nombre");
+            }
+            cn.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(CultivosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+  return datos;
+    }
+    
 }

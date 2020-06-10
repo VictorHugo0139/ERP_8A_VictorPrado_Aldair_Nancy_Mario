@@ -252,12 +252,18 @@ public class VentasDetallesDAO implements CRUD {
     public List<VentasDetalles> consultarId(int id) {
         List<VentasDetalles> datos = new ArrayList<>();
         con = cn.getConexion();
-        sql = ("select * from ventasDetalles ");
+        sql = ("select * from VentasDetalle where idVenta="+id);
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                datos.add(new VentasDetalles());
+                datos.add(new VentasDetalles(rs.getInt("IdVentaDetalle"),
+                                            rs.getFloat("precioVenta"),
+                                            rs.getFloat("cantidad"),
+                                            rs.getFloat("subtotal"),
+                                            rs.getInt("IdVenta"),
+                                            rs.getInt("IdPresentacion"),
+                                            rs.getString("estatus").charAt(0)));
             }
             cn.closeConnection();
         } catch (SQLException ex) {
