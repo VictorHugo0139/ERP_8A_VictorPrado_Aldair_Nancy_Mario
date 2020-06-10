@@ -801,6 +801,34 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("datosCl", datosCCu);
                 request.getRequestDispatcher("ViewClientesCultivos.jsp").forward(request, response);
                 break;
+                case "ClienteCultivosI":
+                ccu = new ClienteCultivo(0,
+                        Float.parseFloat(request.getParameter("txtExtension")),
+                        request.getParameter("txtUbicacion"),
+                        Integer.parseInt(request.getParameter("txtCliente")),
+                        Integer.parseInt(request.getParameter("txtCultivo")),
+                        Integer.parseInt(request.getParameter("txtCiudad")),
+                        request.getParameter("txtEstatus").charAt(0));
+                res = ccudao.insertar(ccu);
+                datosCCu = ccudao.consultar();
+                request.setAttribute("datosCl", datosCCu);
+                request.setAttribute("resp", res);
+                request.getRequestDispatcher("ViewClientesCultivos.jsp").forward(request, response);
+                break;
+                case "ClienteCultivosD":
+                res = ccudao.eliminar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosCCu = ccudao.consultar();
+                request.setAttribute("datosCl", datosCCu);
+                request.getRequestDispatcher("ViewClientesCultivos.jsp").forward(request, response);
+                break;
+                case "ClienteCultivosR":
+                res = ccudao.reactivar(Integer.parseInt(request.getParameter("idc")));
+                request.setAttribute("resp", res);
+                datosCCu = ccudao.consultar();
+                request.setAttribute("datosCl", datosCCu);
+                request.getRequestDispatcher("ViewClientesCultivos.jsp").forward(request, response);
+                break;
         }
     }
 
